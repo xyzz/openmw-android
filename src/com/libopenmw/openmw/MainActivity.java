@@ -1,7 +1,7 @@
 package com.libopenmw.openmw;
 
 import org.libsdl.app.SDLActivity;
-
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -22,10 +22,12 @@ public class MainActivity extends Activity {
 		context = this;
 		final Button button = (Button) findViewById(R.id.start);
 		button.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
+			@SuppressLint("InlinedApi") public void onClick(View v) {
 				Intent intent = new Intent(context, SDLActivity.class);
 
+				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 				context.startActivity(intent);
+			//	finish();
 
 			}
 
