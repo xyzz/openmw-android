@@ -9,6 +9,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.lang.reflect.Method;
 
+import com.libopenmw.openmw.MainActivity;
 import com.libopenmw.openmw.R;
 
 import android.app.*;
@@ -103,7 +104,6 @@ public class SDLActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		Log.v("SDL", "onCreate():" + mSingleton);
 		super.onCreate(savedInstanceState);
-	
 
 		SDLActivity.initialize();
 		// So we can call stuff from static callbacks
@@ -129,445 +129,441 @@ public class SDLActivity extends Activity {
 
 		mLayout.addView(mSurface);
 
-				// Perform action on click
+		// Perform action on click
 
-				// mLayout.addView(new GameSurface(context));
-				// Surface.
-				setContentView(mLayout);
-				// LayoutInflater inflater = getLayoutInflater();
-				// getWindow().addContentView(new JoystickView(context), new
-				// ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,
-				// ViewGroup.LayoutParams.FILL_PARENT));
+		// mLayout.addView(new GameSurface(context));
+		// Surface.
+		setContentView(mLayout);
+		// LayoutInflater inflater = getLayoutInflater();
+		// getWindow().addContentView(new JoystickView(context), new
+		// ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,
+		// ViewGroup.LayoutParams.FILL_PARENT));
 
-				LayoutInflater inflater = getLayoutInflater();
-				getWindow().addContentView(
-						inflater.inflate(R.layout.controls, null),
-						new ViewGroup.LayoutParams(
-								ViewGroup.LayoutParams.FILL_PARENT,
-								ViewGroup.LayoutParams.FILL_PARENT));
-				final ImageButton button1 = (ImageButton) findViewById(R.id.button234);
-				button1.setOnTouchListener(new View.OnTouchListener() {
-					@Override
-					public boolean onTouch(View v, MotionEvent event) {
-						switch (event.getAction()) {
-						case MotionEvent.ACTION_DOWN:
+		if (MainActivity.contols==true){
+		LayoutInflater inflater = getLayoutInflater();
+		getWindow().addContentView(
+				inflater.inflate(R.layout.controls, null),
+				new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,
+						ViewGroup.LayoutParams.FILL_PARENT));
+		final ImageButton button1 = (ImageButton) findViewById(R.id.button234);
+		button1.setOnTouchListener(new View.OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				switch (event.getAction()) {
+				case MotionEvent.ACTION_DOWN:
 
-							// PRESSED
-							SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_W);
-							return true; // if you want to handle the touch
-											// event
-						case MotionEvent.ACTION_UP:
-							// RELEASED
-							SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_W);
-							return true; // if you want to handle the touch
-											// event
-						}
-						return false;
-					}
-				});
+					// PRESSED
+					SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_W);
+					return true; // if you want to handle the touch
+									// event
+				case MotionEvent.ACTION_UP:
+					// RELEASED
+					SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_W);
+					return true; // if you want to handle the touch
+									// event
+				}
+				return false;
+			}
+		});
 
-				final ImageButton button2 = (ImageButton) findViewById(R.id.buttons);
-				button2.setOnTouchListener(new View.OnTouchListener() {
-					@Override
-					public boolean onTouch(View v, MotionEvent event) {
-						switch (event.getAction()) {
-						case MotionEvent.ACTION_DOWN:
+		final ImageButton button2 = (ImageButton) findViewById(R.id.buttons);
+		button2.setOnTouchListener(new View.OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				switch (event.getAction()) {
+				case MotionEvent.ACTION_DOWN:
 
-							// PRESSED
-							SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_S);
-							return true; // if you want to handle the touch
-											// event
-						case MotionEvent.ACTION_UP:
-							// RELEASED
-							SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_S);
-							return true; // if you want to handle the touch
-											// event
-						}
-						return false;
-					}
-				});
+					// PRESSED
+					SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_S);
+					return true; // if you want to handle the touch
+									// event
+				case MotionEvent.ACTION_UP:
+					// RELEASED
+					SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_S);
+					return true; // if you want to handle the touch
+									// event
+				}
+				return false;
+			}
+		});
 
-				final ImageButton button3 = (ImageButton) findViewById(R.id.buttona);
-				button3.setOnTouchListener(new View.OnTouchListener() {
-					@Override
-					public boolean onTouch(View v, MotionEvent event) {
-						switch (event.getAction()) {
-						case MotionEvent.ACTION_DOWN:
+		final ImageButton button3 = (ImageButton) findViewById(R.id.buttona);
+		button3.setOnTouchListener(new View.OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				switch (event.getAction()) {
+				case MotionEvent.ACTION_DOWN:
 
-							// PRESSED
-							SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_A);
-							return true; // if you want to handle the touch
-											// event
-						case MotionEvent.ACTION_UP:
-							// RELEASED
-							SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_A);
-							return true; // if you want to handle the touch
-											// event
-						}
-						return false;
-					}
-				});
-				final ImageButton button4 = (ImageButton) findViewById(R.id.buttond);
-				button4.setOnTouchListener(new View.OnTouchListener() {
-					@Override
-					public boolean onTouch(View v, MotionEvent event) {
-						switch (event.getAction()) {
-						case MotionEvent.ACTION_DOWN:
+					// PRESSED
+					SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_A);
+					return true; // if you want to handle the touch
+									// event
+				case MotionEvent.ACTION_UP:
+					// RELEASED
+					SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_A);
+					return true; // if you want to handle the touch
+									// event
+				}
+				return false;
+			}
+		});
+		final ImageButton button4 = (ImageButton) findViewById(R.id.buttond);
+		button4.setOnTouchListener(new View.OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				switch (event.getAction()) {
+				case MotionEvent.ACTION_DOWN:
 
-							// PRESSED
-							SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_D);
-							return true; // if you want to handle the touch
-											// event
-						case MotionEvent.ACTION_UP:
-							// RELEASED
-							SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_D);
-							return true; // if you want to handle the touch
-											// event
-						}
-						return false;
-					}
-				});
+					// PRESSED
+					SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_D);
+					return true; // if you want to handle the touch
+									// event
+				case MotionEvent.ACTION_UP:
+					// RELEASED
+					SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_D);
+					return true; // if you want to handle the touch
+									// event
+				}
+				return false;
+			}
+		});
 
-				final ImageButton button5 = (ImageButton) findViewById(R.id.buttonwep);
-				button5.setOnTouchListener(new View.OnTouchListener() {
-					@Override
-					public boolean onTouch(View v, MotionEvent event) {
-						switch (event.getAction()) {
-						case MotionEvent.ACTION_DOWN:
+		final ImageButton button5 = (ImageButton) findViewById(R.id.buttonwep);
+		button5.setOnTouchListener(new View.OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				switch (event.getAction()) {
+				case MotionEvent.ACTION_DOWN:
 
-							// PRESSED
-							SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_F);
-							return true; // if you want to handle the touch
-											// event
-						case MotionEvent.ACTION_UP:
-							// RELEASED
-							SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_F);
-							return true; // if you want to handle the touch
-											// event
-						}
-						return false;
-					}
-				});
+					// PRESSED
+					SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_F);
+					return true; // if you want to handle the touch
+									// event
+				case MotionEvent.ACTION_UP:
+					// RELEASED
+					SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_F);
+					return true; // if you want to handle the touch
+									// event
+				}
+				return false;
+			}
+		});
 
-				final ImageButton button6 = (ImageButton) findViewById(R.id.buttonrun);
-				button6.setOnTouchListener(new View.OnTouchListener() {
-					@Override
-					public boolean onTouch(View v, MotionEvent event) {
-						switch (event.getAction()) {
-						case MotionEvent.ACTION_DOWN:
+		final ImageButton button6 = (ImageButton) findViewById(R.id.buttonrun);
+		button6.setOnTouchListener(new View.OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				switch (event.getAction()) {
+				case MotionEvent.ACTION_DOWN:
 
-							// PRESSED
-							SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_Y);
-							return true; // if you want to handle the touch
-											// event
-						case MotionEvent.ACTION_UP:
-							// RELEASED
-							SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_Y);
-							return true; // if you want to handle the touch
-											// event
-						}
-						return false;
-					}
-				});
+					// PRESSED
+					SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_Y);
+					return true; // if you want to handle the touch
+									// event
+				case MotionEvent.ACTION_UP:
+					// RELEASED
+					SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_Y);
+					return true; // if you want to handle the touch
+									// event
+				}
+				return false;
+			}
+		});
 
-				final ImageButton button7 = (ImageButton) findViewById(R.id.buttonconsole);
-				button7.setOnTouchListener(new View.OnTouchListener() {
-					@Override
-					public boolean onTouch(View v, MotionEvent event) {
-						switch (event.getAction()) {
-						case MotionEvent.ACTION_DOWN:
+		final ImageButton button7 = (ImageButton) findViewById(R.id.buttonconsole);
+		button7.setOnTouchListener(new View.OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				switch (event.getAction()) {
+				case MotionEvent.ACTION_DOWN:
 
-							// PRESSED
-							SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_F2);
-							return true; // if you want to handle the touch
-											// event
-						case MotionEvent.ACTION_UP:
-							// RELEASED
-							SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_F2);
-							return true; // if you want to handle the touch
-											// event
-						}
-						return false;
-					}
-				});
+					// PRESSED
+					SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_F2);
+					return true; // if you want to handle the touch
+									// event
+				case MotionEvent.ACTION_UP:
+					// RELEASED
+					SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_F2);
+					return true; // if you want to handle the touch
+									// event
+				}
+				return false;
+			}
+		});
 
-				final ImageButton button8 = (ImageButton) findViewById(R.id.buttonquick);
-				button8.setOnTouchListener(new View.OnTouchListener() {
-					@Override
-					public boolean onTouch(View v, MotionEvent event) {
-						switch (event.getAction()) {
-						case MotionEvent.ACTION_DOWN:
+		final ImageButton button8 = (ImageButton) findViewById(R.id.buttonquick);
+		button8.setOnTouchListener(new View.OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				switch (event.getAction()) {
+				case MotionEvent.ACTION_DOWN:
 
-							// PRESSED
-							SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_F1);
-							return true; // if you want to handle the touch
-											// event
-						case MotionEvent.ACTION_UP:
-							// RELEASED
-							SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_F1);
-							return true; // if you want to handle the touch
-											// event
-						}
-						return false;
-					}
-				});
+					// PRESSED
+					SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_F1);
+					return true; // if you want to handle the touch
+									// event
+				case MotionEvent.ACTION_UP:
+					// RELEASED
+					SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_F1);
+					return true; // if you want to handle the touch
+									// event
+				}
+				return false;
+			}
+		});
 
-				final ImageButton button9 = (ImageButton) findViewById(R.id.buttondiary);
-				button9.setOnTouchListener(new View.OnTouchListener() {
-					@Override
-					public boolean onTouch(View v, MotionEvent event) {
-						switch (event.getAction()) {
-						case MotionEvent.ACTION_DOWN:
+		final ImageButton button9 = (ImageButton) findViewById(R.id.buttondiary);
+		button9.setOnTouchListener(new View.OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				switch (event.getAction()) {
+				case MotionEvent.ACTION_DOWN:
 
-							// PRESSED
-							SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_J);
-							return true; // if you want to handle the touch
-											// event
-						case MotionEvent.ACTION_UP:
-							// RELEASED
-							SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_J);
-							return true; // if you want to handle the touch
-											// event
-						}
-						return false;
-					}
-				});
+					// PRESSED
+					SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_J);
+					return true; // if you want to handle the touch
+									// event
+				case MotionEvent.ACTION_UP:
+					// RELEASED
+					SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_J);
+					return true; // if you want to handle the touch
+									// event
+				}
+				return false;
+			}
+		});
 
-				final ImageButton button10 = (ImageButton) findViewById(R.id.buttonT);
-				button10.setOnTouchListener(new View.OnTouchListener() {
-					@Override
-					public boolean onTouch(View v, MotionEvent event) {
-						switch (event.getAction()) {
-						case MotionEvent.ACTION_DOWN:
+		final ImageButton button10 = (ImageButton) findViewById(R.id.buttonT);
+		button10.setOnTouchListener(new View.OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				switch (event.getAction()) {
+				case MotionEvent.ACTION_DOWN:
 
-							// PRESSED
-							SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_T);
-							return true; // if you want to handle the touch
-											// event
-						case MotionEvent.ACTION_UP:
-							// RELEASED
-							SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_T);
-							return true; // if you want to handle the touch
-											// event
-						}
-						return false;
-					}
-				});
+					// PRESSED
+					SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_T);
+					return true; // if you want to handle the touch
+									// event
+				case MotionEvent.ACTION_UP:
+					// RELEASED
+					SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_T);
+					return true; // if you want to handle the touch
+									// event
+				}
+				return false;
+			}
+		});
 
-				final ImageButton button11 = (ImageButton) findViewById(R.id.button3d);
-				button11.setOnTouchListener(new View.OnTouchListener() {
-					@Override
-					public boolean onTouch(View v, MotionEvent event) {
-						switch (event.getAction()) {
-						case MotionEvent.ACTION_DOWN:
+		final ImageButton button11 = (ImageButton) findViewById(R.id.button3d);
+		button11.setOnTouchListener(new View.OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				switch (event.getAction()) {
+				case MotionEvent.ACTION_DOWN:
 
-							// PRESSED
-							SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_TAB);
-							return true; // if you want to handle the touch
-											// event
-						case MotionEvent.ACTION_UP:
-							// RELEASED
-							SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_TAB);
-							return true; // if you want to handle the touch
-											// event
-						}
-						return false;
-					}
-				});
+					// PRESSED
+					SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_TAB);
+					return true; // if you want to handle the touch
+									// event
+				case MotionEvent.ACTION_UP:
+					// RELEASED
+					SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_TAB);
+					return true; // if you want to handle the touch
+									// event
+				}
+				return false;
+			}
+		});
 
-				final ImageButton button12 = (ImageButton) findViewById(R.id.buttonload);
-				button12.setOnTouchListener(new View.OnTouchListener() {
-					@Override
-					public boolean onTouch(View v, MotionEvent event) {
-						switch (event.getAction()) {
-						case MotionEvent.ACTION_DOWN:
+		final ImageButton button12 = (ImageButton) findViewById(R.id.buttonload);
+		button12.setOnTouchListener(new View.OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				switch (event.getAction()) {
+				case MotionEvent.ACTION_DOWN:
 
-							// PRESSED
-							SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_F9);
-							return true; // if you want to handle the touch
-											// event
-						case MotionEvent.ACTION_UP:
-							// RELEASED
-							SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_F9);
-							return true; // if you want to handle the touch
-											// event
-						}
-						return false;
-					}
-				});
+					// PRESSED
+					SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_F9);
+					return true; // if you want to handle the touch
+									// event
+				case MotionEvent.ACTION_UP:
+					// RELEASED
+					SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_F9);
+					return true; // if you want to handle the touch
+									// event
+				}
+				return false;
+			}
+		});
 
-				final ImageButton button13 = (ImageButton) findViewById(R.id.ImageButton02);
-				button13.setOnTouchListener(new View.OnTouchListener() {
-					@Override
-					public boolean onTouch(View v, MotionEvent event) {
-						switch (event.getAction()) {
-						case MotionEvent.ACTION_DOWN:
+		final ImageButton button13 = (ImageButton) findViewById(R.id.ImageButton02);
+		button13.setOnTouchListener(new View.OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				switch (event.getAction()) {
+				case MotionEvent.ACTION_DOWN:
 
-							// PRESSED
-							SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_F5);
-							return true; // if you want to handle the touch
-											// event
-						case MotionEvent.ACTION_UP:
-							// RELEASED
-							SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_F5);
-							return true; // if you want to handle the touch
-											// event
-						}
-						return false;
-					}
-				});
+					// PRESSED
+					SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_F5);
+					return true; // if you want to handle the touch
+									// event
+				case MotionEvent.ACTION_UP:
+					// RELEASED
+					SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_F5);
+					return true; // if you want to handle the touch
+									// event
+				}
+				return false;
+			}
+		});
 
-				final ImageButton button14 = (ImageButton) findViewById(R.id.buttonpause);
-				button14.setOnTouchListener(new View.OnTouchListener() {
-					@Override
-					public boolean onTouch(View v, MotionEvent event) {
-						switch (event.getAction()) {
-						case MotionEvent.ACTION_DOWN:
+		final ImageButton button14 = (ImageButton) findViewById(R.id.buttonpause);
+		button14.setOnTouchListener(new View.OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				switch (event.getAction()) {
+				case MotionEvent.ACTION_DOWN:
 
-							// PRESSED
-							SDLActivity
-									.onNativeKeyDown(KeyEvent.KEYCODE_ESCAPE);
-							return true; // if you want to handle the touch
-											// event
-						case MotionEvent.ACTION_UP:
-							// RELEASED
-							SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_ESCAPE);
-							return true; // if you want to handle the touch
-											// event
-						}
-						return false;
-					}
-				});
+					// PRESSED
+					SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_ESCAPE);
+					return true; // if you want to handle the touch
+									// event
+				case MotionEvent.ACTION_UP:
+					// RELEASED
+					SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_ESCAPE);
+					return true; // if you want to handle the touch
+									// event
+				}
+				return false;
+			}
+		});
 
-				final ImageButton button15 = (ImageButton) findViewById(R.id.buttoninv);
-				button15.setOnTouchListener(new View.OnTouchListener() {
-					@Override
-					public boolean onTouch(View v, MotionEvent event) {
-						switch (event.getAction()) {
-						case MotionEvent.ACTION_DOWN:
+		final ImageButton button15 = (ImageButton) findViewById(R.id.buttoninv);
+		button15.setOnTouchListener(new View.OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				switch (event.getAction()) {
+				case MotionEvent.ACTION_DOWN:
 
-							// PRESSED
-							SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_L);
-							return true; // if you want to handle the touch
-											// event
-						case MotionEvent.ACTION_UP:
-							// RELEASED
-							SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_L);
-							return true; // if you want to handle the touch
-											// event
-						}
-						return false;
-					}
-				});
+					// PRESSED
+					SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_L);
+					return true; // if you want to handle the touch
+									// event
+				case MotionEvent.ACTION_UP:
+					// RELEASED
+					SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_L);
+					return true; // if you want to handle the touch
+									// event
+				}
+				return false;
+			}
+		});
 
-				final ImageButton button16 = (ImageButton) findViewById(R.id.buttonjump);
-				button16.setOnTouchListener(new View.OnTouchListener() {
-					@Override
-					public boolean onTouch(View v, MotionEvent event) {
-						switch (event.getAction()) {
-						case MotionEvent.ACTION_DOWN:
+		final ImageButton button16 = (ImageButton) findViewById(R.id.buttonjump);
+		button16.setOnTouchListener(new View.OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				switch (event.getAction()) {
+				case MotionEvent.ACTION_DOWN:
 
-							// PRESSED
-							SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_E);
-							return true; // if you want to handle the touch
-											// event
-						case MotionEvent.ACTION_UP:
-							// RELEASED
-							SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_E);
-							return true; // if you want to handle the touch
-											// event
-						}
-						return false;
-					}
-				});
+					// PRESSED
+					SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_E);
+					return true; // if you want to handle the touch
+									// event
+				case MotionEvent.ACTION_UP:
+					// RELEASED
+					SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_E);
+					return true; // if you want to handle the touch
+									// event
+				}
+				return false;
+			}
+		});
 
-				final ImageButton button17 = (ImageButton) findViewById(R.id.buttonr);
-				button17.setOnTouchListener(new View.OnTouchListener() {
-					@Override
-					public boolean onTouch(View v, MotionEvent event) {
-						switch (event.getAction()) {
-						case MotionEvent.ACTION_DOWN:
+		final ImageButton button17 = (ImageButton) findViewById(R.id.buttonr);
+		button17.setOnTouchListener(new View.OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				switch (event.getAction()) {
+				case MotionEvent.ACTION_DOWN:
 
-							// PRESSED
-							SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_Z);
-							return true; // if you want to handle the touch
-											// event
-						case MotionEvent.ACTION_UP:
-							// RELEASED
-							SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_Z);
-							return true; // if you want to handle the touch
-											// event
-						}
-						return false;
-					}
-				});
+					// PRESSED
+					SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_Z);
+					return true; // if you want to handle the touch
+									// event
+				case MotionEvent.ACTION_UP:
+					// RELEASED
+					SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_Z);
+					return true; // if you want to handle the touch
+									// event
+				}
+				return false;
+			}
+		});
 
-				final ImageButton button18 = (ImageButton) findViewById(R.id.buttonuse1);
-				button18.setOnTouchListener(new View.OnTouchListener() {
-					@Override
-					public boolean onTouch(View v, MotionEvent event) {
-						switch (event.getAction()) {
-						case MotionEvent.ACTION_DOWN:
+		final ImageButton button18 = (ImageButton) findViewById(R.id.buttonuse1);
+		button18.setOnTouchListener(new View.OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				switch (event.getAction()) {
+				case MotionEvent.ACTION_DOWN:
 
-							// PRESSED
-							SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_SPACE);
-							return true; // if you want to handle the touch
-											// event
-						case MotionEvent.ACTION_UP:
-							// RELEASED
-							SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_SPACE);
-							return true; // if you want to handle the touch
-											// event
-						}
-						return false;
-					}
-				});
+					// PRESSED
+					SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_SPACE);
+					return true; // if you want to handle the touch
+									// event
+				case MotionEvent.ACTION_UP:
+					// RELEASED
+					SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_SPACE);
+					return true; // if you want to handle the touch
+									// event
+				}
+				return false;
+			}
+		});
 
-				final ImageButton button19 = (ImageButton) findViewById(R.id.buttonmagic);
-				button19.setOnTouchListener(new View.OnTouchListener() {
-					@Override
-					public boolean onTouch(View v, MotionEvent event) {
-						switch (event.getAction()) {
-						case MotionEvent.ACTION_DOWN:
+		final ImageButton button19 = (ImageButton) findViewById(R.id.buttonmagic);
+		button19.setOnTouchListener(new View.OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				switch (event.getAction()) {
+				case MotionEvent.ACTION_DOWN:
 
-							// PRESSED
-							SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_R);
-							return true; // if you want to handle the touch
-											// event
-						case MotionEvent.ACTION_UP:
-							// RELEASED
-							SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_R);
-							return true; // if you want to handle the touch
-											// event
-						}
-						return false;
-					}
-				});
+					// PRESSED
+					SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_R);
+					return true; // if you want to handle the touch
+									// event
+				case MotionEvent.ACTION_UP:
+					// RELEASED
+					SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_R);
+					return true; // if you want to handle the touch
+									// event
+				}
+				return false;
+			}
+		});
 
-				final ImageButton button20 = (ImageButton) findViewById(R.id.buttonc);
-				button20.setOnTouchListener(new View.OnTouchListener() {
-					@Override
-					public boolean onTouch(View v, MotionEvent event) {
-						switch (event.getAction()) {
-						case MotionEvent.ACTION_DOWN:
+		final ImageButton button20 = (ImageButton) findViewById(R.id.buttonc);
+		button20.setOnTouchListener(new View.OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				switch (event.getAction()) {
+				case MotionEvent.ACTION_DOWN:
 
-							// PRESSED
-							SDLActivity
-									.onNativeKeyDown(KeyEvent.KEYCODE_CTRL_LEFT);
-							return true; // if you want to handle the touch
-											// event
-						case MotionEvent.ACTION_UP:
-							// RELEASED
-							SDLActivity
-									.onNativeKeyUp(KeyEvent.KEYCODE_CTRL_LEFT);
-							return true; // if you want to handle the touch
-											// event
-						}
-						return false;
-					}
-				});
-
-
+					// PRESSED
+					SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_CTRL_LEFT);
+					return true; // if you want to handle the touch
+									// event
+				case MotionEvent.ACTION_UP:
+					// RELEASED
+					SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_CTRL_LEFT);
+					return true; // if you want to handle the touch
+									// event
+				}
+				return false;
+			}
+		});
+		}
 
 		/*
 		 * final Button button1 = (Button) findViewById(R.id.buttonview);
