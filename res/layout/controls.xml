@@ -86,15 +86,6 @@
           android:src="@drawable/wait" />
 
       <ImageButton
-          android:id="@+id/buttonc"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_alignParentBottom="true"
-          android:layout_alignParentRight="true"
-          android:background="@null"
-          android:src="@drawable/c" />
-
-      <ImageButton
           android:id="@+id/buttonjump"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
@@ -180,8 +171,8 @@
              android:id="@+id/buttonconsole"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
-             android:layout_alignParentBottom="true"
-             android:layout_alignParentLeft="true"
+             android:layout_alignParentTop="true"
+             android:layout_toRightOf="@+id/buttonrun"
              android:background="@null"
              android:src="@drawable/ontarget" />
 
@@ -189,9 +180,18 @@
              android:id="@+id/buttonquick"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
-             android:layout_alignParentBottom="true"
-             android:layout_toLeftOf="@+id/buttons"
+             android:layout_alignBottom="@+id/buttondiary"
+             android:layout_toLeftOf="@+id/buttonT"
              android:background="@null"
              android:src="@drawable/spin" />
+
+         <ImageButton
+             android:id="@+id/buttonc"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_alignParentBottom="true"
+             android:layout_alignParentRight="true"
+             android:background="@null"
+             android:src="@drawable/c" />
 
 </RelativeLayout>
