@@ -9,6 +9,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.lang.reflect.Method;
 
+import com.libopenmw.openmw.R;
+
 import android.app.*;
 import android.content.*;
 import android.view.*;
@@ -101,7 +103,7 @@ public class SDLActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		Log.v("SDL", "onCreate():" + mSingleton);
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main);
+	
 
 		SDLActivity.initialize();
 		// So we can call stuff from static callbacks
@@ -127,9 +129,6 @@ public class SDLActivity extends Activity {
 
 		mLayout.addView(mSurface);
 
-		final Button button = (Button) findViewById(R.id.start);
-		button.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
 				// Perform action on click
 
 				// mLayout.addView(new GameSurface(context));
@@ -568,8 +567,7 @@ public class SDLActivity extends Activity {
 					}
 				});
 
-			}
-		});
+
 
 		/*
 		 * final Button button1 = (Button) findViewById(R.id.buttonview);
