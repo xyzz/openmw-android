@@ -51,6 +51,16 @@ public class MainActivity extends Activity {
 
 		});
 
+		final Button button1 = (Button) findViewById(R.id.button1);
+		button1.setOnClickListener(new View.OnClickListener() {
+			@SuppressLint("InlinedApi")
+			public void onClick(View v) {
+				
+
+			}
+
+		});
+
 	}
 
 }
