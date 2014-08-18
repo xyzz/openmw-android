@@ -142,9 +142,10 @@ public class SDLActivity extends Activity {
 		if (MainActivity.contols==true){
 		LayoutInflater inflater = getLayoutInflater();
 		getWindow().addContentView(
-				inflater.inflate(R.layout.controls, null),
+				inflater.inflate(R.layout.screencontrols, null),
 				new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,
 						ViewGroup.LayoutParams.FILL_PARENT));
+		/*
 		final ImageButton button1 = (ImageButton) findViewById(R.id.button234);
 		button1.setOnTouchListener(new View.OnTouchListener() {
 			@Override
@@ -227,7 +228,7 @@ public class SDLActivity extends Activity {
 				return false;
 			}
 		});
-
+*/
 		final ImageButton button5 = (ImageButton) findViewById(R.id.buttonwep);
 		button5.setOnTouchListener(new View.OnTouchListener() {
 			@Override
@@ -237,7 +238,7 @@ public class SDLActivity extends Activity {
 
 					// PRESSED
 					SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_F);
-					return true; // if you want to handle the touch
+								return true; // if you want to handle the touch
 									// event
 				case MotionEvent.ACTION_UP:
 					// RELEASED
@@ -282,7 +283,7 @@ public class SDLActivity extends Activity {
 					return true; // if you want to handle the touch
 									// event
 				case MotionEvent.ACTION_UP:
-					// RELEASED
+								// RELEASED
 					SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_F2);
 					return true; // if you want to handle the touch
 									// event
