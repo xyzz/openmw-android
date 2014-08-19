@@ -3,13 +3,9 @@ package com.libopenmw.openmw;
 import org.libsdl.app.SDLActivity;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Shader;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -17,7 +13,7 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 
-public class Controls extends View {
+public class TouchCamera extends View {
 
 	// =========================================
 	// Private Members
@@ -32,22 +28,26 @@ public class Controls extends View {
 	private int handleInnerBoundaries;
 	private JoystickMovedListener listener;
 	private int sensitivity;
+	public static float mWidth, mHeight;
+	public int count = 0;
+	public double[] xmas = new double[3];
+	public double[] ymas = new double[3];
 
 	// =========================================
 	// Constructors
 	// =========================================
 
-	public Controls(Context context) {
+	public TouchCamera(Context context) {
 		super(context);
 		initJoystickView();
 	}
 
-	public Controls(Context context, AttributeSet attrs) {
+	public TouchCamera(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		initJoystickView();
 	}
 
-	public Controls(Context context, AttributeSet attrs, int defStyle) {
+	public TouchCamera(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		initJoystickView();
 	}
@@ -57,24 +57,17 @@ public class Controls extends View {
 	// =========================================
 
 	private void initJoystickView() {
+		mWidth = 1.0f;
+		mHeight = 1.0f;
 		setFocusable(true);
-		//int d = Math.min(getMeasuredWidth(), getMeasuredHeight());
-	//	circlePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-	//	circlePaint.setColor(Color.GRAY);
-	//	circlePaint.setStrokeWidth(1);
-	//	circlePaint.setStyle(Paint.Style.FILL_AND_STROKE);
 
 		circlePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-		circlePaint.setStyle(Paint.Style.FILL_AND_STROKE);
+		circlePaint.setColor(Color.TRANSPARENT);
 		circlePaint.setStrokeWidth(1);
-		 Bitmap backTexture = BitmapFactory.decodeResource(getResources(), R.drawable.joystick_bg);
-		    int dimX = 300;
-			int dimY = 300;
-			backTexture = Bitmap.createScaledBitmap(backTexture, dimX, dimY, true);
-		    BitmapShader backShader = new BitmapShader(backTexture, Shader.TileMode.MIRROR, Shader.TileMode.MIRROR);
-		    circlePaint.setShader(backShader);
+		circlePaint.setStyle(Paint.Style.FILL_AND_STROKE);
+
 		handlePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-		handlePaint.setColor(Color.DKGRAY);
+		handlePaint.setColor(Color.TRANSPARENT);
 		handlePaint.setStrokeWidth(1);
 		handlePaint.setStyle(Paint.Style.FILL_AND_STROKE);
 
@@ -143,6 +136,7 @@ public class Controls extends View {
 	public boolean onTouchEvent(MotionEvent event) {
 		int actionType = event.getAction();
 		if (actionType == MotionEvent.ACTION_MOVE) {
+
 			int px = getMeasuredWidth() / 2;
 			int py = getMeasuredHeight() / 2;
 			int radius = Math.min(px, py) - handleInnerBoundaries;
@@ -154,31 +148,155 @@ public class Controls extends View {
 
 			touchY = Math.max(Math.min(touchY, radius), -radius);
 
-			if (touchY < -25 && (touchX > 0 || touchX < 0))
-				SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_W);
-			else
-				SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_W);
+			xmas[1] = touchX;
+			ymas[1] = touchY;
+			final int touchDevId = event.getDeviceId();
+			final int pointerCount = event.getPointerCount();
+			int action = event.getActionMasked();
+			int pointerFingerId = 0;
+			int i = -1;
+			float x = 0, y = 0, p = 0;
 
-			if (touchY > 25 && (touchX > 0 || touchX < 0))
-				SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_S);
-			else
-				SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_S);
+			Log.d(TAG, "X:" + ymas[0] + "|Y:" + ymas[1]);
+			if (xmas[0] == xmas[1] && ymas[0] < ymas[1])
 
-			if ((touchX < -25) && (touchY > 0 || touchY < 0))
-				SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_A);
-			else
-				SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_A);
+			{
+				i = event.getActionIndex();
 
-			if ((touchX > 25) && (touchY > 0 || touchY < 0))
-				SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_D);
-			else
-				SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_D);
+				pointerFingerId = event.getPointerId(i);
 
-		
+				x = (float) 0.5;
+
+				y = (float) 0.9;
+
+				p = event.getPressure(i);
+
+				Log.d(TAG, "X:" + x + "|Y:" + y);
+				SDLActivity.onNativeTouch(touchDevId, pointerFingerId,
+						MotionEvent.ACTION_MOVE, x, y, p);
+			} else if (xmas[0] == xmas[1] && ymas[0] > ymas[1])
+
+			{
+				i = event.getActionIndex();
+
+				pointerFingerId = event.getPointerId(i);
+
+				x = (float) 0.5;
+
+				y = (float) 0.3;
+
+				p = event.getPressure(i);
+
+				Log.d(TAG, "X:" + x + "|Y:" + y);
+				SDLActivity.onNativeTouch(touchDevId, pointerFingerId,
+						MotionEvent.ACTION_MOVE, x, y, p);
+			}
+
+			else if (xmas[0] < xmas[1] && ymas[0] == ymas[1])
+
+			{
+				i = event.getActionIndex();
+
+				pointerFingerId = event.getPointerId(i);
+
+				x = (float) 0.9;
+
+				y = (float) 0.5;
+
+				p = event.getPressure(i);
+
+				Log.d(TAG, "X:" + x + "|Y:" + y);
+				SDLActivity.onNativeTouch(touchDevId, pointerFingerId,
+						MotionEvent.ACTION_MOVE, x, y, p);
+			} else if (xmas[0] > xmas[1] && ymas[0] == ymas[1])
+
+			{
+				i = event.getActionIndex();
+
+				pointerFingerId = event.getPointerId(i);
+
+				x = (float) 0.3;
+
+				y = (float) 0.5;
+
+				p = event.getPressure(i);
+
+				Log.d(TAG, "X:" + x + "|Y:" + y);
+				SDLActivity.onNativeTouch(touchDevId, pointerFingerId,
+						MotionEvent.ACTION_MOVE, x, y, p);
+			} else if (xmas[0] < xmas[1] && ymas[0] < ymas[1])
+
+			{
+				i = event.getActionIndex();
+
+				pointerFingerId = event.getPointerId(i);
+
+				x = (float) 0.9;
+
+				y = (float) 0.9;
+
+				p = event.getPressure(i);
+
+				Log.d(TAG, "X:" + x + "|Y:" + y);
+				SDLActivity.onNativeTouch(touchDevId, pointerFingerId,
+						MotionEvent.ACTION_MOVE, x, y, p);
+			} else if (xmas[0] > xmas[1] && ymas[0] > ymas[1])
+
+			{
+				i = event.getActionIndex();
+
+				pointerFingerId = event.getPointerId(i);
+
+				x = (float) 0.3;
+
+				y = (float) 0.3;
+
+				p = event.getPressure(i);
+
+				Log.d(TAG, "X:" + x + "|Y:" + y);
+				SDLActivity.onNativeTouch(touchDevId, pointerFingerId,
+						MotionEvent.ACTION_MOVE, x, y, p);
+			} else if (xmas[0] < xmas[1] && ymas[0] > ymas[1])
+
+			{
+				i = event.getActionIndex();
+
+				pointerFingerId = event.getPointerId(i);
+
+				x = (float) 0.9;
+
+				y = (float) 0.3;
+
+				p = event.getPressure(i);
+
+				Log.d(TAG, "X:" + x + "|Y:" + y);
+				SDLActivity.onNativeTouch(touchDevId, pointerFingerId,
+						MotionEvent.ACTION_MOVE, x, y, p);
+			} else if (xmas[0] > xmas[1] && ymas[0] < ymas[1])
+
+			{
+				i = event.getActionIndex();
+
+				pointerFingerId = event.getPointerId(i);
+
+				x = (float) 0.3;
+
+				y = (float) 0.9;
+
+				p = event.getPressure(i);
+
+				Log.d(TAG, "X:" + x + "|Y:" + y);
+				SDLActivity.onNativeTouch(touchDevId, pointerFingerId,
+						MotionEvent.ACTION_MOVE, x, y, p);
+			}
+
+			xmas[0] = xmas[1];
+
 			// Coordinates
-			Log.d(TAG, "X:" + touchX + "|Y:" + touchY);
+			// Log.d(TAG, "X:" + touchX + "|Y:" + touchY);
 
 			// Pressure
+
 			if (listener != null) {
 				listener.OnMoved((int) (touchX / radius * sensitivity),
 						(int) (touchY / radius * sensitivity));
@@ -186,12 +304,17 @@ public class Controls extends View {
 
 			invalidate();
 		} else if (actionType == MotionEvent.ACTION_UP) {
+			xmas[0] = xmas[1] = ymas[0] = ymas[1] = 0;
 			returnHandleToCenter();
 			Log.d(TAG, "X:" + touchX + "|Y:" + touchY);
-			SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_W);
-			SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_S);
-			SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_A);
-			SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_D);
+			final int touchDevId = event.getDeviceId();
+			final int pointerCount = event.getPointerCount();
+			int action = event.getActionMasked();
+			int pointerFingerId = 0;
+			int i = -1;
+			float x = 0, y = 0, p = 0;
+			SDLActivity.onNativeTouch(touchDevId, pointerFingerId,
+					MotionEvent.ACTION_UP, x, y, p);
 
 		}
 		return true;

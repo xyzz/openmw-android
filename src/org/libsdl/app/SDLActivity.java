@@ -11,6 +11,7 @@ import java.lang.reflect.Method;
 
 import com.libopenmw.openmw.MainActivity;
 import com.libopenmw.openmw.R;
+import com.libopenmw.openmw.TouchCamera;
 
 import android.app.*;
 import android.content.*;
@@ -140,11 +141,17 @@ public class SDLActivity extends Activity {
 		// ViewGroup.LayoutParams.FILL_PARENT));
 
 		if (MainActivity.contols==true){
-		LayoutInflater inflater = getLayoutInflater();
+			/*LayoutInflater inflater1 = getLayoutInflater();
+			getWindow().addContentView(
+					inflater1.inflate(R.layout.screencontrols, null),
+					new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,
+							ViewGroup.LayoutParams.FILL_PARENT));*/
+			LayoutInflater inflater = getLayoutInflater();
 		getWindow().addContentView(
-				inflater.inflate(R.layout.screencontrols, null),
+				inflater.inflate(R.layout.controls, null),
 				new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,
 						ViewGroup.LayoutParams.FILL_PARENT));
+
 		/*
 		final ImageButton button1 = (ImageButton) findViewById(R.id.button234);
 		button1.setOnTouchListener(new View.OnTouchListener() {
@@ -1279,6 +1286,9 @@ class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
 
 		mWidth = width;
 		mHeight = height;
+		TouchCamera.mWidth=width;
+		TouchCamera.mHeight=height;
+			
 		SDLActivity.onNativeResize(width, height, sdlFormat);
 		Log.v("SDL", "Window size:" + width + "x" + height);
 
@@ -1377,6 +1387,7 @@ class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
 		float x, y, p;
 
 		switch (action) {
+		
 		case MotionEvent.ACTION_MOVE:
 			for (i = 0; i < pointerCount; i++) {
 				pointerFingerId = event.getPointerId(i);
@@ -1385,6 +1396,8 @@ class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
 				p = event.getPressure(i);
 				SDLActivity.onNativeTouch(touchDevId, pointerFingerId, action,
 						x, y, p);
+				Log.d("TAG", "X:" + x + "|Y:" + y);
+			//	Log.d("TAG", "X:" + pointerFingerId+"YX:" + p);	
 			}
 			break;
 
@@ -1393,6 +1406,7 @@ class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
 			// Primary pointer up/down, the index is always zero
 			i = 0;
 		case MotionEvent.ACTION_POINTER_UP:
+			
 		case MotionEvent.ACTION_POINTER_DOWN:
 			// Non primary pointer up/down
 			if (i == -1) {
