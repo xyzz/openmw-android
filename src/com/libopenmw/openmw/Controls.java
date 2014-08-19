@@ -139,22 +139,22 @@ public class Controls extends View {
 
 			touchY = (event.getY() - py);
 
-			if (touchY < -15 && (touchX > 0 || touchX < 0))
+			if (touchY < -25 && (touchX > 0 || touchX < 0))
 				SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_W);
 			else
 				SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_W);
 
-			if (touchY > 15 && (touchX > 0 || touchX < 0))
+			if (touchY > 25 && (touchX > 0 || touchX < 0))
 				SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_S);
 			else
 				SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_S);
 
-			if ((touchX < -15) && (touchY > 0 || touchY < 0))
+			if ((touchX < -25) && (touchY > 0 || touchY < 0))
 				SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_A);
 			else
 				SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_A);
 
-			if ((touchX > 15) && (touchY > 0 || touchY < 0))
+			if ((touchX > 25) && (touchY > 0 || touchY < 0))
 				SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_D);
 			else
 				SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_D);
