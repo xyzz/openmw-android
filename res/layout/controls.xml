@@ -30,8 +30,7 @@
         android:layout_alignBottom="@+id/buttondiary"
         android:layout_toLeftOf="@+id/buttonconsole"
         android:background="@null"
-        android:src="@drawable/spin"
-       />
+        android:src="@drawable/spin" />
 
     <ImageButton
         android:id="@+id/button3d"
@@ -59,11 +58,6 @@
         android:layout_toRightOf="@+id/buttondiary"
         android:background="@null"
         android:src="@drawable/wait" />
-
-
-
-  
-
 
     <com.libopenmw.openmw.Controls
         android:id="@+id/controls1"
@@ -128,7 +122,6 @@
                 android:layout_alignParentTop="true"
                 android:background="@null"
                 android:src="@drawable/load" />
-
         </RelativeLayout>
 
         <ImageButton
@@ -159,47 +152,40 @@
             android:layout_alignParentRight="true"
             android:layout_gravity="right"
             android:layout_marginTop="95dp"
-            
             android:background="@null"
             android:src="@drawable/jump" />
-        
-          <ImageButton
-        android:id="@+id/buttonr"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-  android:layout_alignParentRight="true"
+
+        <ImageButton
+            android:id="@+id/buttonr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
             android:layout_gravity="right"
+            android:layout_marginRight="60dp"
             android:layout_marginTop="105dp"
-             android:layout_marginRight="60dp"
-        android:background="@null"
-        android:src="@drawable/crossbow" />
-          
-          
-              <ImageButton
-        android:id="@+id/buttonuse1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/buttonjump"
-        android:background="@null"
-        
-      
+            android:background="@null"
+            android:src="@drawable/crossbow" />
+
+        <ImageButton
+            android:id="@+id/buttonuse1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/buttonjump"
             android:layout_gravity="right"
             android:layout_marginTop="150dp"
-         
-        android:src="@drawable/use" />
-              
-              
-    <ImageButton
-        android:id="@+id/buttonmagic"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-     
+            android:background="@null"
+            android:src="@drawable/use" />
+
+        <ImageButton
+            android:id="@+id/buttonmagic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
             android:layout_gravity="right"
             android:layout_marginTop="200dp"
-        android:background="@null"
-        android:src="@drawable/starsattelites" />
+            android:background="@null"
+            android:src="@drawable/starsattelites" />
     </FrameLayout>
 
 </RelativeLayout>
