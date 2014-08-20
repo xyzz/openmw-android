@@ -99,7 +99,7 @@
             android:layout_gravity="right"
             android:layout_marginRight="100dp"
             android:background="@null"
-            android:src="@drawable/save" />
+            android:src="@drawable/pause" />
 
         <ImageButton
             android:id="@+id/buttonpause"
@@ -108,7 +108,7 @@
             android:layout_alignParentRight="true"
             android:layout_gravity="right"
             android:background="@null"
-            android:src="@drawable/pause" />
+            android:src="@drawable/save" />
 
         <ImageButton
             android:id="@+id/buttonload"
