@@ -45,8 +45,8 @@ public class FileRW {
 			JSONObject c;
 			c = new JSONObject();
 
-			c.put("note", loadedFile.get(i).name);
-			c.put("name", loadedFile.get(i).nameBsa);
+			c.put("name", loadedFile.get(i).name);
+			c.put("nameBsa", loadedFile.get(i).nameBsa);
 
 			jsonArray.put(c);
 		}
