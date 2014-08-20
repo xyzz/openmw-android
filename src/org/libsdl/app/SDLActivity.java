@@ -1287,9 +1287,7 @@ class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
 
 		mWidth = width;
 		mHeight = height;
-		TouchCamera.mWidth=width;
-		TouchCamera.mHeight=height;
-			
+	
 		SDLActivity.onNativeResize(width, height, sdlFormat);
 		Log.v("SDL", "Window size:" + width + "x" + height);
 
