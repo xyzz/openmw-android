@@ -14,6 +14,7 @@ import com.libopenmw.openmw.R;
 import com.libopenmw.openmw.TouchCamera;
 
 import android.app.*;
+import android.app.ActionBar.LayoutParams;
 import android.content.*;
 import android.view.*;
 import android.view.inputmethod.BaseInputConnection;
@@ -22,6 +23,7 @@ import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsoluteLayout;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.os.*;
 import android.util.Log;
@@ -38,6 +40,7 @@ public class SDLActivity extends Activity {
 	// Keep track of the paused state
 	public static boolean mIsPaused, mIsSurfaceReady, mHasFocus;
 	public static boolean mExitCalledFromJava;
+	public boolean enableTouch=false;
 
 	// Main components
 	protected static SDLActivity mSingleton;
@@ -152,6 +155,7 @@ public class SDLActivity extends Activity {
 				new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,
 						ViewGroup.LayoutParams.FILL_PARENT));
 
+		
 		/*
 		final ImageButton button1 = (ImageButton) findViewById(R.id.button234);
 		button1.setOnTouchListener(new View.OnTouchListener() {
@@ -299,24 +303,21 @@ public class SDLActivity extends Activity {
 			}
 		});
 
+	   final TouchCamera touch = (TouchCamera)findViewById(R.id.touchCamera1);
 		final ImageButton button8 = (ImageButton) findViewById(R.id.buttonquick);
-		button8.setOnTouchListener(new View.OnTouchListener() {
+		button8.setOnClickListener(new View.OnClickListener() {
+			
 			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-				switch (event.getAction()) {
-				case MotionEvent.ACTION_DOWN:
-
-					// PRESSED
-					SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_F1);
-					return true; // if you want to handle the touch
-									// event
-				case MotionEvent.ACTION_UP:
-					// RELEASED
-					SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_F1);
-					return true; // if you want to handle the touch
-									// event
+			public void onClick(View v) {
+				if (enableTouch==false){
+					enableTouch=true;
+				touch.setVisibility(TouchCamera.VISIBLE);
 				}
-				return false;
+				else{
+					enableTouch=false;
+					touch.setVisibility(TouchCamera.INVISIBLE);
+				}
+				
 			}
 		});
 

@@ -12,12 +12,6 @@
         android:layout_height="wrap_content"
         android:text="Start game" />
 
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Configure screen controls" />
-
     <CheckBox
         android:id="@+id/checkBox1"
         android:layout_width="wrap_content"
@@ -28,31 +22,7 @@
         android:id="@+id/button1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Reset screen controls" />
-
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:text="Plugins" />
-
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Data files directory"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-    
-    <EditText
-        android:id="@+id/editText1"
-        android:text="/sdcard/morrowind/data" 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10" >
-        
-        
-        <requestFocus />
-    </EditText>
 
 </LinearLayout>
 
