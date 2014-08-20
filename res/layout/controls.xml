@@ -91,38 +91,34 @@
             android:layout_alignParentTop="true"
             android:visibility="invisible" />
 
-        <RelativeLayout
+        <ImageButton
+            android:id="@+id/ImageButton02"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" >
+            android:layout_alignParentRight="true"
+            android:layout_gravity="right"
+            android:layout_marginRight="100dp"
+            android:background="@null"
+            android:src="@drawable/save" />
 
-            <ImageButton
-                android:id="@+id/buttonpause"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
-                android:background="@null"
-                android:src="@drawable/pause" />
+        <ImageButton
+            android:id="@+id/buttonpause"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="right"
+            android:background="@null"
+            android:src="@drawable/pause" />
 
-            <ImageButton
-                android:id="@+id/ImageButton02"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_toLeftOf="@+id/buttonpause"
-                android:background="@null"
-                android:src="@drawable/save" />
-
-            <ImageButton
-                android:id="@+id/buttonload"
-                android:layout_width="239dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
-                android:background="@null"
-                android:src="@drawable/load" />
-        </RelativeLayout>
+        <ImageButton
+            android:id="@+id/buttonload"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="right"
+            android:layout_marginRight="50dp"
+            android:background="@null"
+            android:src="@drawable/load" />
 
         <ImageButton
             android:id="@+id/buttoninv"
@@ -171,7 +167,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_below="@+id/buttonjump"
             android:layout_gravity="right"
             android:layout_marginTop="150dp"
             android:background="@null"
