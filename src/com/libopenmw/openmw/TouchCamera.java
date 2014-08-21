@@ -15,31 +15,28 @@ import android.view.View;
 
 public class TouchCamera extends View {
 
-	private final String TAG = "JoystickView";
+	
 	private Paint circlePaint;
 
-	private int innerPadding;
-
-	public int count = 0;
 	public double[] xmas = new double[3];
 	public double[] ymas = new double[3];
 
 	public TouchCamera(Context context) {
 		super(context);
-		initJoystickView();
+		initView();
 	}
 
 	public TouchCamera(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		initJoystickView();
+		initView();
 	}
 
 	public TouchCamera(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-		initJoystickView();
+		initView();
 	}
 
-	private void initJoystickView() {
+	private void initView() {
 
 		setFocusable(true);
 
@@ -52,12 +49,11 @@ public class TouchCamera extends View {
 
 	@Override
 	protected void onDraw(Canvas canvas) {
-		int px = getMeasuredWidth() / 2;
-		int py = getMeasuredHeight() / 2;
-		int radius = Math.min(px, py);
+		int px = getMeasuredWidth() ;
+		int py = getMeasuredHeight() ;
+	
 
-		canvas.drawCircle(px, py, radius - innerPadding, circlePaint);
-
+		canvas.drawPoint(px, py, circlePaint);
 		canvas.save();
 	}
 
@@ -86,8 +82,8 @@ public class TouchCamera extends View {
 			int i = -1;
 			float x = 0, y = 0, p = 0;
 
-			Log.d(TAG, "X:" + event.getX() + "|Y:" + event.getY());
-			if (xmas[0] == xmas[1] && ymas[0] < ymas[1] && ymas[1]-ymas[0]>2)
+		
+			if (xmas[0] == xmas[1] && ymas[0] < ymas[1] && ymas[1]-ymas[0]>1)
 
 			{
 				i = event.getActionIndex();
@@ -102,7 +98,7 @@ public class TouchCamera extends View {
 
 				SDLActivity.onNativeTouch(touchDevId, pointerFingerId,
 						MotionEvent.ACTION_MOVE, x, y, p);
-			} else if (xmas[0] == xmas[1] && ymas[0] > ymas[1] && ymas[0]-ymas[1]>2)
+			} else if (xmas[0] == xmas[1] && ymas[0] > ymas[1] && ymas[0]-ymas[1]>1)
 
 			{
 				i = event.getActionIndex();
@@ -119,7 +115,7 @@ public class TouchCamera extends View {
 						MotionEvent.ACTION_MOVE, x, y, p);
 			}
 
-			else if (xmas[0] < xmas[1] && ymas[0] == ymas[1] && xmas[1]-xmas[0]>2)
+			else if (xmas[0] < xmas[1] && ymas[0] == ymas[1] && xmas[1]-xmas[0]>1)
 
 			{
 				i = event.getActionIndex();
@@ -135,7 +131,7 @@ public class TouchCamera extends View {
 				// Log.d(TAG, "X:" + x + "|Y:" + y);
 				SDLActivity.onNativeTouch(touchDevId, pointerFingerId,
 						MotionEvent.ACTION_MOVE, x, y, p);
-			} else if (xmas[0] > xmas[1] && ymas[0] == ymas[1] && xmas[0]-xmas[1]>2)
+			} else if (xmas[0] > xmas[1] && ymas[0] == ymas[1] && xmas[0]-xmas[1]>1)
 
 			{
 				i = event.getActionIndex();
@@ -151,7 +147,7 @@ public class TouchCamera extends View {
 				// Log.d(TAG, "X:" + x + "|Y:" + y);
 				SDLActivity.onNativeTouch(touchDevId, pointerFingerId,
 						MotionEvent.ACTION_MOVE, x, y, p);
-			} else if (xmas[0] < xmas[1] && ymas[0] < ymas[1] && ymas[1]-ymas[0]>2 &&  xmas[1]-xmas[0]>2)
+			} else if (xmas[0] < xmas[1] && ymas[0] < ymas[1] && ymas[1]-ymas[0]>1 &&  xmas[1]-xmas[0]>1)
 
 			{
 				i = event.getActionIndex();
@@ -168,7 +164,7 @@ public class TouchCamera extends View {
 
 				SDLActivity.onNativeTouch(touchDevId, pointerFingerId,
 						MotionEvent.ACTION_MOVE, x, y, p);
-			} else if (xmas[0] > xmas[1] && ymas[0] > ymas[1] && ymas[0]-ymas[1]>2 &&  xmas[0]-xmas[1]>2)
+			} else if (xmas[0] > xmas[1] && ymas[0] > ymas[1] && ymas[0]-ymas[1]>1 &&  xmas[0]-xmas[1]>1)
 
 			{
 				i = event.getActionIndex();
@@ -185,7 +181,7 @@ public class TouchCamera extends View {
 
 				SDLActivity.onNativeTouch(touchDevId, pointerFingerId,
 						MotionEvent.ACTION_MOVE, x, y, p);
-			} else if (xmas[0] < xmas[1] && ymas[0] > ymas[1] && ymas[0]-ymas[1]>2 &&  xmas[1]-xmas[0]>2)
+			} else if (xmas[0] < xmas[1] && ymas[0] > ymas[1] && ymas[0]-ymas[1]>1 &&  xmas[1]-xmas[0]>1)
 
 			{
 				i = event.getActionIndex();
@@ -202,7 +198,7 @@ public class TouchCamera extends View {
 
 				SDLActivity.onNativeTouch(touchDevId, pointerFingerId,
 						MotionEvent.ACTION_MOVE, x, y, p);
-			} else if (xmas[0] > xmas[1] && ymas[0] < ymas[1] && ymas[1]-ymas[0]>2 &&  xmas[0]-xmas[1]>2)
+			} else if (xmas[0] > xmas[1] && ymas[0] < ymas[1] && ymas[1]-ymas[0]>1 &&  xmas[0]-xmas[1]>1)
 
 			{
 				i = event.getActionIndex();
