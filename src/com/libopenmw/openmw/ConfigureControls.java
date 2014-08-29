@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageButton;
 
 public class ConfigureControls extends Activity {
 
@@ -23,6 +24,12 @@ public class ConfigureControls extends Activity {
 		setContentView(R.layout.controls);
 
 		context = this;
+		MultiTouchListener touchListener=new MultiTouchListener(this);
+		final Controls touch = (Controls) findViewById(R.id.controls1);
+		touch.setOnTouchListener(touchListener);
+		ImageButton buttonRun = (ImageButton) findViewById(R.id.buttonrun);
+		buttonRun.setOnTouchListener(touchListener);
+		
 		
 	}
 
