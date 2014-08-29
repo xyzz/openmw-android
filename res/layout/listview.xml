@@ -8,7 +8,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/buttonsave" >
-
     </ListView>
 
     <Button
@@ -18,7 +17,9 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:text="Save" />
+        android:onClick="savePlugins"
+        android:text="Save" >
+        />
+    </Button>
 
 </RelativeLayout>
-

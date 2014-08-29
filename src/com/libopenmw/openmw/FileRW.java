@@ -19,8 +19,11 @@ import org.json.JSONObject;
 public class FileRW {
 
 	private static final String jsonFilePath = "/sdcard/morrowind/files.json";
+	public static int pos=-1;
+
 	public static FilesData fileName;
 
+	public static FilesData dataUpdate;
 	public static void savetofile(FilesData ti) throws IOException {
 		List<FilesData> loadedFile = loadFile();
 		loadedFile.add(ti);
@@ -47,7 +50,7 @@ public class FileRW {
 
 			c.put("name", loadedFile.get(i).name);
 			c.put("nameBsa", loadedFile.get(i).nameBsa);
-			c.put("id", i);
+			c.put("enabled", loadedFile.get(i).enabled);
 
 			jsonArray.put(c);
 		}
@@ -63,6 +66,60 @@ public class FileRW {
 
 	}
 
+	public static void updatetofile(FilesData ti) throws IOException {
+		List<FilesData> loadedFile = loadFile();
+		dataUpdate=ti;
+
+		try {
+			updateFile(loadedFile);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	private static void updateFile(List<FilesData> loadedFile)
+			throws JSONException, IOException {
+
+		String file = "";
+
+		JSONArray jsonArray = new JSONArray();
+		for (int i = 0; i < loadedFile.size(); i++) {
+
+			JSONObject c;
+			c = new JSONObject();
+
+			if (i==pos)
+			{
+
+				c.put("name", loadedFile.get(i).name);
+				c.put("nameBsa", loadedFile.get(i).nameBsa);
+				c.put("enabled", dataUpdate.enabled);
+
+			
+			}
+			else
+			{
+			c.put("name", loadedFile.get(i).name);
+			c.put("nameBsa", loadedFile.get(i).nameBsa);
+			c.put("enabled", loadedFile.get(i).enabled);
+			}
+
+			jsonArray.put(c);
+		}
+		JSONObject array = new JSONObject();
+		array.put("data_array", jsonArray);
+		file = array.toString();
+
+		FileWriter jsonFileWriter = new FileWriter(jsonFilePath);
+
+		jsonFileWriter.write(file);
+
+		jsonFileWriter.flush();
+
+	}
+	
 	public static String convertStreamToString(InputStream is)
 			throws IOException {
 		if (is != null) {
@@ -105,7 +162,7 @@ public class FileRW {
 					FilesData ti = new FilesData();
 					ti.name = obj.getString("name");
 					ti.nameBsa = obj.getString("nameBsa");
-					ti.id = obj.getLong("id");
+					ti.enabled = obj.getLong("enabled");
 					ret.add(ti);
 				}
 			}
@@ -121,13 +178,13 @@ public class FileRW {
 		public FilesData() {
 			this.name = "";
 			this.nameBsa = "";
-			this.id = 0;
+			this.enabled = 0;
 			
 		}
 
 		public String name;
 		public String nameBsa;
-		public long id;
+		public long enabled;
 
 	}
 

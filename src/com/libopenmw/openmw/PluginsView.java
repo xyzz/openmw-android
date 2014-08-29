@@ -1,6 +1,7 @@
 package com.libopenmw.openmw;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
@@ -15,10 +16,17 @@ import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
 
 public class PluginsView extends Activity {
 
@@ -52,8 +60,6 @@ public class PluginsView extends Activity {
 				String[] esp = f.getName().split("\\.");
 				if (esp[1].equals("esm") || esp[1].equals("esp")) {
 
-					data.name = f.getName();
-
 					try {
 						int i = 0;
 						while (i < loadedFileCheck.size() && check == false) {
@@ -63,8 +69,11 @@ public class PluginsView extends Activity {
 								check = false;
 							i++;
 						}
-						if (check == false)
+						if (check == false) {
+							data.name = f.getName();
+							data.nameBsa = esp[0] + ".bsa";
 							FileRW.savetofile(data);
+						}
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -89,6 +98,36 @@ public class PluginsView extends Activity {
 
 		listView.setAdapter(new Adapter());
 
+	}
+
+	public void savePlugins(View v) throws IOException {
+		List<FilesData> plugins = null;
+
+		try {
+			plugins = FileRW.loadFile();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		FileWriter writer = new FileWriter(
+				"/sdcard/morrowind/openmw/openmw.cfg");
+
+		int i = 0;
+		while (i < plugins.size()) {
+
+			if (plugins.get(i).enabled == 1) {
+				writer.write("content= " + plugins.get(i).name + "\n");
+				writer.write("archive= " + plugins.get(i).nameBsa + "\n");
+
+				writer.flush();
+			}
+			i++;
+
+		}
+		writer.close();
+		Toast toast = Toast.makeText(getApplicationContext(), 
+				   "Saving done", Toast.LENGTH_LONG); 
+				toast.show();
 	}
 
 	public class Adapter implements ListAdapter
@@ -134,43 +173,48 @@ public class PluginsView extends Activity {
 			rowView = inflater.inflate(R.layout.rowlistview, parent, false);
 
 			TextView data = (TextView) rowView.findViewById(R.id.textView1);
+			TextView bsa = (TextView) rowView.findViewById(R.id.textViewBsa);
+			TextView enabled = (TextView) rowView
+					.findViewById(R.id.textViewenabled);
+
+			final CheckBox Box = (CheckBox) rowView
+					.findViewById(R.id.checkBoxenable);
+			enabled.setText(String.valueOf(loadedFile.get(position).enabled));
+
+			if (loadedFile.get(position).enabled == 1)
+				Box.setChecked(true);
+
+			Box.setOnClickListener(new View.OnClickListener() {
+				public void onClick(View v) {
+					if (Box.isChecked()) {
+						FilesData data = new FilesData();
+						data.enabled = 1;
+						FileRW.pos = position;
+						try {
+							FileRW.updatetofile(data);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					} else {
+
+						FilesData data = new FilesData();
+						data.enabled = 0;
+						FileRW.pos = position;
+						try {
+							FileRW.updatetofile(data);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+
+					}
+				}
+
+			});
 
 			data.setText(loadedFile.get(position).name);
 			return rowView;
-
-			/*
-			 * rowView.findViewById(R.id.button1).setOnClickListener( new
-			 * OnClickListener() {
-			 * 
-			 * @Override public void onClick(View v) {
-			 * 
-			 * Intent dialog = new Intent(getActivity(), EditFile.class);
-			 * 
-			 * dialog.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			 * 
-			 * EditFile.notebuffer = loadedFile.get(position).note;
-			 * 
-			 * EditFile.pos = position;
-			 * 
-			 * getActivity().startActivity(dialog);
-			 * 
-			 * }
-			 * 
-			 * });
-			 * 
-			 * rowView.findViewById(R.id.button2).setOnClickListener( new
-			 * OnClickListener() {
-			 * 
-			 * @Override public void onClick(View v) {
-			 * 
-			 * }
-			 * 
-			 * });
-			 * 
-			 * note.setText(loadedFile.get(position).note);
-			 * 
-			 * return rowView;
-			 */
 
 		}
 
