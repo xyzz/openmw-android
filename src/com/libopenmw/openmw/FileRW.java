@@ -18,7 +18,7 @@ import org.json.JSONObject;
 
 public class FileRW {
 
-	private static final String jsonFilePath = "/sdcard/openmw/files.json";
+	private static final String jsonFilePath = "/sdcard/morrowind/files.json";
 	public static FilesData fileName;
 
 	public static void savetofile(FilesData ti) throws IOException {
@@ -47,6 +47,7 @@ public class FileRW {
 
 			c.put("name", loadedFile.get(i).name);
 			c.put("nameBsa", loadedFile.get(i).nameBsa);
+			c.put("id", i);
 
 			jsonArray.put(c);
 		}
@@ -104,6 +105,7 @@ public class FileRW {
 					FilesData ti = new FilesData();
 					ti.name = obj.getString("name");
 					ti.nameBsa = obj.getString("nameBsa");
+					ti.id = obj.getLong("id");
 					ret.add(ti);
 				}
 			}
@@ -119,10 +121,13 @@ public class FileRW {
 		public FilesData() {
 			this.name = "";
 			this.nameBsa = "";
+			this.id = 0;
+			
 		}
 
 		public String name;
 		public String nameBsa;
+		public long id;
 
 	}
 
