@@ -64,6 +64,20 @@ public class MainActivity extends Activity {
 			}
 
 		});
+		
+		final Button button2 = (Button) findViewById(R.id.buttoncontrols);
+		button2.setOnClickListener(new View.OnClickListener() {
+			@SuppressLint("InlinedApi")
+			public void onClick(View v) {
+				
+				Intent intent = new Intent(context, ConfigureControls.class);
+
+				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				context.startActivity(intent);
+
+			}
+
+		});
 
 	}
 
