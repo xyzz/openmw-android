@@ -59,12 +59,12 @@ public class Controls extends View {
 	private void initJoystickView() {
 		setFocusable(true);
 		//int d = Math.min(getMeasuredWidth(), getMeasuredHeight());
-	//	circlePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-	//	circlePaint.setColor(Color.GRAY);
-	//	circlePaint.setStrokeWidth(1);
-	//	circlePaint.setStyle(Paint.Style.FILL_AND_STROKE);
-
 		circlePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+		circlePaint.setColor(Color.GRAY);
+		circlePaint.setStrokeWidth(1);
+		circlePaint.setStyle(Paint.Style.FILL_AND_STROKE);
+
+	/*	circlePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		circlePaint.setStyle(Paint.Style.FILL_AND_STROKE);
 		circlePaint.setStrokeWidth(1);
 		 Bitmap backTexture = BitmapFactory.decodeResource(getResources(), R.drawable.joystick_bg);
@@ -72,7 +72,7 @@ public class Controls extends View {
 			int dimY = 300;
 			backTexture = Bitmap.createScaledBitmap(backTexture, dimX, dimY, true);
 		    BitmapShader backShader = new BitmapShader(backTexture, Shader.TileMode.MIRROR, Shader.TileMode.MIRROR);
-		    circlePaint.setShader(backShader);
+		    circlePaint.setShader(backShader);*/
 		handlePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		handlePaint.setColor(Color.DKGRAY);
 		handlePaint.setStrokeWidth(1);

@@ -4,6 +4,7 @@
     <issue id="EasterEgg" severity="warning" />
     <issue id="FieldGetter" severity="warning" />
     <issue id="IconExpectedSize" severity="warning" />
+    <issue id="NewApi" severity="ignore" />
     <issue id="RtlCompat" severity="error" />
     <issue id="RtlEnabled" severity="warning" />
     <issue id="RtlHardcoded" severity="warning" />

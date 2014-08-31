@@ -71,8 +71,8 @@ public class TouchCamera extends View {
 		}
 		if (actionType == MotionEvent.ACTION_MOVE) {
 
-			xmas[1] = event.getX();
-			ymas[1] = event.getY();
+			xmas[1] = event.getRawX();
+			ymas[1] = event.getRawY();
 			final int touchDevId = event.getDeviceId();
 			event.getPointerCount();
 			event.getActionMasked();

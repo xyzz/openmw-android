@@ -13,6 +13,8 @@ public class MultiTouchListener implements OnTouchListener
 
 private float mPrevX;
 private float mPrevY;
+public static int x=0;
+public static int y=0;
 
 public ConfigureControls Activity;
 public MultiTouchListener(ConfigureControls configureControls) {
@@ -40,10 +42,14 @@ public boolean onTouch(View view, MotionEvent event) {
 
                 MarginLayoutParams marginParams = new MarginLayoutParams(view.getLayoutParams());   
                 marginParams.setMargins((int)(currX - mPrevX), (int)(currY - mPrevY),0, 0);
-                RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(marginParams);
+                   RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(marginParams);
                 view.setLayoutParams(layoutParams); 
 
+                
 
+                x=(int)(currX - mPrevX);
+                y=(int)(currY - mPrevY);
+                		
             break;
         }
 
