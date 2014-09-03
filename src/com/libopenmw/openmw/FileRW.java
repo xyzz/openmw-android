@@ -7,9 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -58,6 +56,7 @@ public class FileRW {
 		array.put("data_array", jsonArray);
 		file = array.toString();
 
+		@SuppressWarnings("resource")
 		FileWriter jsonFileWriter = new FileWriter(jsonFilePath);
 
 		jsonFileWriter.write(file);

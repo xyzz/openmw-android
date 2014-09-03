@@ -8,25 +8,18 @@ import java.util.List;
 import com.libopenmw.openmw.FileRW.FilesData;
 
 import android.app.Activity;
-import android.app.ListActivity;
 import android.content.Context;
 import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileWriter;
 
 public class PluginsView extends Activity {
 

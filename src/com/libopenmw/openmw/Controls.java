@@ -58,21 +58,13 @@ public class Controls extends View {
 
 	private void initJoystickView() {
 		setFocusable(true);
-		//int d = Math.min(getMeasuredWidth(), getMeasuredHeight());
+		
 		circlePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-		circlePaint.setColor(Color.GRAY);
+		circlePaint.setColor(Color.argb(230, 255, 255, 255));
 		circlePaint.setStrokeWidth(1);
 		circlePaint.setStyle(Paint.Style.FILL_AND_STROKE);
 
-	/*	circlePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-		circlePaint.setStyle(Paint.Style.FILL_AND_STROKE);
-		circlePaint.setStrokeWidth(1);
-		 Bitmap backTexture = BitmapFactory.decodeResource(getResources(), R.drawable.joystick_bg);
-		    int dimX = 300;
-			int dimY = 300;
-			backTexture = Bitmap.createScaledBitmap(backTexture, dimX, dimY, true);
-		    BitmapShader backShader = new BitmapShader(backTexture, Shader.TileMode.MIRROR, Shader.TileMode.MIRROR);
-		    circlePaint.setShader(backShader);*/
+	
 		handlePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		handlePaint.setColor(Color.DKGRAY);
 		handlePaint.setStrokeWidth(1);
@@ -154,22 +146,22 @@ public class Controls extends View {
 
 			touchY = Math.max(Math.min(touchY, radius), -radius);
 
-			if (touchY < -25 && (touchX > 0 || touchX < 0))
+			if (touchY < -radius/3 && (touchX > 0 || touchX < 0))
 				SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_W);
 			else
 				SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_W);
 
-			if (touchY > 25 && (touchX > 0 || touchX < 0))
+			if (touchY > radius/3 && (touchX > 0 || touchX < 0))
 				SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_S);
 			else
 				SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_S);
 
-			if ((touchX < -25) && (touchY > 0 || touchY < 0))
+			if ((touchX < -radius/3) && (touchY > 0 || touchY < 0))
 				SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_A);
 			else
 				SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_A);
 
-			if ((touchX > 25) && (touchY > 0 || touchY < 0))
+			if ((touchX > radius/3) && (touchY > 0 || touchY < 0))
 				SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_D);
 			else
 				SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_D);
