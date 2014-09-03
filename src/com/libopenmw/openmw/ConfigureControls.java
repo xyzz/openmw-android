@@ -56,6 +56,12 @@ public class ConfigureControls extends Activity {
 
 		buttonTouch.setLayoutParams(ControlsParams.coordinates(buttonTouch,
 				406, 0, 80, 80));
+		
+		final ImageButton buttonDiary = (ImageButton) findViewById(R.id.buttonDiary);
+		buttonDiary.setOnTouchListener(touchListener);
+
+		buttonDiary.setLayoutParams(ControlsParams.coordinates(buttonDiary,
+				488, 0, 80, 80));
 
 		final ImageButton buttonPause = (ImageButton) findViewById(R.id.buttonpause);
 		buttonPause.setOnTouchListener(touchListener);
@@ -109,7 +115,13 @@ public class ConfigureControls extends Activity {
 		buttonMagic.setOnTouchListener(touchListener);
 
 		buttonMagic.setLayoutParams(ControlsParams.coordinates(buttonMagic,
-				1200, 364, 100, 100));
+				1175, 480, 100, 100));
+		final ImageButton buttonUse = (ImageButton) findViewById(R.id.buttonUse);
+
+		buttonUse.setOnTouchListener(touchListener);
+
+		buttonUse.setLayoutParams(ControlsParams.coordinates(buttonUse,
+				1175, 368, 100, 100));
 
 		final ImageButton buttonCrouch = (ImageButton) findViewById(R.id.buttoncrouch);
 

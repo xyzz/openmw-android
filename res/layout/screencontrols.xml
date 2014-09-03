@@ -3,9 +3,10 @@
     android:layout_height="fill_parent" >
 
     <com.libopenmw.openmw.TouchCamera
-        android:id="@+id/touchCamera1"
+        android:id="@+id/superTouch"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:visibility="invisible" />
 
     <RelativeLayout
         android:layout_width="fill_parent"
@@ -159,6 +160,26 @@
             android:focusableInTouchMode="true"
             android:scaleType="fitXY"
             android:src="@drawable/c" />
+        
+          <ImageButton
+            android:id="@+id/buttonDiary"
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:background="@null"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/di" />
+          
+           <ImageButton
+            android:id="@+id/buttonUse"
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:background="@null"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/use" />
     </RelativeLayout>
 
 </FrameLayout>
