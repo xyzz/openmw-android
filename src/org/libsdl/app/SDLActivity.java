@@ -11,7 +11,6 @@ import java.lang.reflect.Method;
 
 import com.libopenmw.openmw.Controls;
 import com.libopenmw.openmw.ControlsParams;
-import com.libopenmw.openmw.CoordinateHelper;
 import com.libopenmw.openmw.MainActivity;
 import com.libopenmw.openmw.MultiTouchListener;
 import com.libopenmw.openmw.R;
