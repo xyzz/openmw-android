@@ -259,23 +259,37 @@ public class SDLActivity extends Activity {
 			final TouchCamera touch = (TouchCamera) findViewById(R.id.superTouch);
 
 			buttonTouch.setText("off");
-			buttonTouch.setOnClickListener(new View.OnClickListener() {
-
+			
+			buttonTouch.setOnTouchListener(new View.OnTouchListener() {
 				@Override
-				public void onClick(View v) {
-					if (enableTouch == false) {
-						buttonTouch.setText("on");
-						enableTouch = true;
-						touch.setVisibility(TouchCamera.VISIBLE);
-						
-					} else {
-						enableTouch = false;
-						touch.setVisibility(TouchCamera.INVISIBLE);
-						buttonTouch.setText("off");
-					}
+				public boolean onTouch(View v, MotionEvent event) {
+					switch (event.getAction()) {
+					case MotionEvent.ACTION_DOWN:
 
+						// PRESSED
+					
+						return true; // if you want to handle the touch
+										// event
+					case MotionEvent.ACTION_UP:
+						// RELEASED
+						if (enableTouch == false) {
+							buttonTouch.setText("on");
+							enableTouch = true;
+							touch.setVisibility(TouchCamera.VISIBLE);
+							
+						} else {
+							enableTouch = false;
+							touch.setVisibility(TouchCamera.INVISIBLE);
+							buttonTouch.setText("off");
+						}
+						return true; // if you want to handle the touch
+										// event
+					}
+					return false;
 				}
 			});
+
+			
 
 			buttonTouch.setLayoutParams(ControlsParams.coordinates(buttonTouch,
 					406, 0, 80, 80));
