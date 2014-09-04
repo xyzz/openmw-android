@@ -11,6 +11,7 @@ import java.lang.reflect.Method;
 
 import com.libopenmw.openmw.Controls;
 import com.libopenmw.openmw.ControlsParams;
+import com.libopenmw.openmw.CoordinateHelper;
 import com.libopenmw.openmw.MainActivity;
 import com.libopenmw.openmw.MultiTouchListener;
 import com.libopenmw.openmw.R;
@@ -20,6 +21,7 @@ import android.app.*;
 import android.app.ActionBar.LayoutParams;
 import android.content.*;
 import android.view.*;
+import android.view.ViewGroup.MarginLayoutParams;
 import android.view.inputmethod.BaseInputConnection;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
@@ -28,6 +30,7 @@ import android.widget.AbsoluteLayout;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.os.*;
 import android.util.Log;
 import android.graphics.*;
@@ -138,7 +141,7 @@ public class SDLActivity extends Activity {
 		setContentView(mLayout);
 
 		if (MainActivity.contols == true) {
-			enableTouch=false;
+			enableTouch = false;
 
 			LayoutInflater inflater = getLayoutInflater();
 			getWindow().addContentView(
@@ -146,10 +149,6 @@ public class SDLActivity extends Activity {
 					new ViewGroup.LayoutParams(
 							ViewGroup.LayoutParams.FILL_PARENT,
 							ViewGroup.LayoutParams.FILL_PARENT));
-
-			
-
-			
 
 			final Controls joystick = (Controls) findViewById(R.id.joystick);
 
@@ -259,14 +258,16 @@ public class SDLActivity extends Activity {
 			final Button buttonTouch = (Button) findViewById(R.id.buttontouch);
 			final TouchCamera touch = (TouchCamera) findViewById(R.id.superTouch);
 
+			buttonTouch.setText("off");
 			buttonTouch.setOnClickListener(new View.OnClickListener() {
 
 				@Override
 				public void onClick(View v) {
 					if (enableTouch == false) {
+						buttonTouch.setText("on");
 						enableTouch = true;
 						touch.setVisibility(TouchCamera.VISIBLE);
-						buttonTouch.setText("on");
+						
 					} else {
 						enableTouch = false;
 						touch.setVisibility(TouchCamera.INVISIBLE);
@@ -278,6 +279,20 @@ public class SDLActivity extends Activity {
 
 			buttonTouch.setLayoutParams(ControlsParams.coordinates(buttonTouch,
 					406, 0, 80, 80));
+				
+			
+				/*
+
+			MarginLayoutParams marginParamsRun = new MarginLayoutParams(
+					touch.getLayoutParams());
+			
+			marginParamsRun
+					.setMargins((int) (CoordinateHelper.getInstance()
+							.getScaledCoordinateX(650)), (int) (CoordinateHelper
+							.getInstance().getScaledCoordinateY(0)), 0, 0);
+			RelativeLayout.LayoutParams layoutParamsRun = new RelativeLayout.LayoutParams(
+					marginParamsRun); 
+			touch.setLayoutParams(layoutParamsRun);*/
 
 			final ImageButton buttonPause = (ImageButton) findViewById(R.id.buttonpause);
 

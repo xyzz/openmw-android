@@ -6,6 +6,9 @@
         android:id="@+id/superTouch"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginRight="80dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="60dp"
         android:visibility="invisible" />
 
     <RelativeLayout
@@ -78,7 +81,6 @@
             android:focusable="true"
             android:focusableInTouchMode="true"
             android:scaleType="fitXY"
-            android:text="off"
             android:textSize="10dp" />
 
         <ImageButton
@@ -140,7 +142,7 @@
             android:focusableInTouchMode="true"
             android:scaleType="fitXY"
             android:src="@drawable/crossbow" />
-        
+
         <ImageButton
             android:id="@+id/buttonMagic"
             android:layout_width="50dip"
@@ -150,7 +152,7 @@
             android:focusableInTouchMode="true"
             android:scaleType="fitXY"
             android:src="@drawable/starsattelites" />
-        
+
         <ImageButton
             android:id="@+id/buttoncrouch"
             android:layout_width="50dip"
@@ -160,8 +162,8 @@
             android:focusableInTouchMode="true"
             android:scaleType="fitXY"
             android:src="@drawable/c" />
-        
-          <ImageButton
+
+        <ImageButton
             android:id="@+id/buttonDiary"
             android:layout_width="50dip"
             android:layout_height="50dip"
@@ -170,8 +172,8 @@
             android:focusableInTouchMode="true"
             android:scaleType="fitXY"
             android:src="@drawable/di" />
-          
-           <ImageButton
+
+        <ImageButton
             android:id="@+id/buttonUse"
             android:layout_width="50dip"
             android:layout_height="50dip"

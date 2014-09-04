@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -67,6 +68,7 @@ public class TouchCamera extends View {
 		}
 		if (actionType == MotionEvent.ACTION_MOVE) {
 
+			Log.d("dwda", "X:" +  "|Y:" );
 			xmas[1] = event.getRawX();
 			ymas[1] = event.getRawY();
 			final int touchDevId = event.getDeviceId();

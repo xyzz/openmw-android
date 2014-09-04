@@ -60,7 +60,7 @@ public class Controls extends View {
 		setFocusable(true);
 		
 		circlePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-		circlePaint.setColor(Color.argb(230, 255, 255, 255));
+		circlePaint.setColor(Color.argb(60, 255, 255, 255));
 		circlePaint.setStrokeWidth(1);
 		circlePaint.setStyle(Paint.Style.FILL_AND_STROKE);
 
