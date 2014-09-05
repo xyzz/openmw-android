@@ -167,6 +167,7 @@ public class SDLActivity extends Activity {
 			joystick.setLayoutParams(ControlsParams.coordinates(joystick, 20, 400,
 					250, 250));
 
+			joystick.setAlpha((float) 0.5);
 			final ImageButton buttonRun = (ImageButton) findViewById(R.id.buttonrun1);
 
 			buttonRun.setOnTouchListener(new View.OnTouchListener() {
@@ -191,6 +192,8 @@ public class SDLActivity extends Activity {
 			buttonRun.setLayoutParams(ControlsParams.coordinates(buttonRun, 10,
 					330, 70, 70));
 
+			buttonRun.setAlpha((float) 0.5);
+			
 			final ImageButton buttonConsole = (ImageButton) findViewById(R.id.buttonconsole);
 
 			buttonConsole.setOnTouchListener(new View.OnTouchListener() {
@@ -215,7 +218,8 @@ public class SDLActivity extends Activity {
 
 			buttonConsole.setLayoutParams(ControlsParams.coordinates(buttonConsole,
 					140, 0, 70, 70));
-
+			buttonConsole.setAlpha((float) 0.5);
+			
 			final ImageButton buttonChangePerson = (ImageButton) findViewById(R.id.buttonchangeperson);
 
 			buttonChangePerson.setOnTouchListener(new View.OnTouchListener() {
@@ -240,7 +244,8 @@ public class SDLActivity extends Activity {
 
 			buttonChangePerson.setLayoutParams(ControlsParams.coordinates(buttonChangePerson,
 					212, 0, 70, 70));
-
+			buttonChangePerson.setAlpha((float) 0.5);
+			
 			final ImageButton buttonWait = (ImageButton) findViewById(R.id.buttonwait);
 
 			buttonWait.setOnTouchListener(new View.OnTouchListener() {
@@ -266,6 +271,7 @@ public class SDLActivity extends Activity {
 			buttonWait.setLayoutParams(ControlsParams.coordinates(buttonWait,
 					274, 0, 70, 70));
 
+			buttonWait.setAlpha((float) 0.5);
 			
 			final Button buttonTouch = (Button) findViewById(R.id.buttontouch);
 			final TouchCamera touch = (TouchCamera) findViewById(R.id.superTouch);
@@ -329,8 +335,9 @@ public class SDLActivity extends Activity {
 			});
 
 			buttonPause.setLayoutParams(ControlsParams.coordinates(buttonPause,
-					950, 0, 60, 70));
-
+					950, 0, 60, 60));
+			buttonPause.setAlpha((float) 0.5);
+			
 			final ImageButton buttonLoad = (ImageButton) findViewById(R.id.buttonsuperload);
 
 			buttonLoad.setOnTouchListener(new View.OnTouchListener() {
@@ -355,7 +362,8 @@ public class SDLActivity extends Activity {
 
 			buttonLoad.setLayoutParams(ControlsParams.coordinates(buttonLoad,
 					880, 0, 60, 60));
-
+			buttonLoad.setAlpha((float) 0.5);
+			
 			final ImageButton buttonSave = (ImageButton) findViewById(R.id.buttonsupersave);
 
 			buttonSave.setOnTouchListener(new View.OnTouchListener() {
@@ -380,7 +388,8 @@ public class SDLActivity extends Activity {
 
 			buttonSave.setLayoutParams(ControlsParams.coordinates(buttonSave,
 					820, 0, 60, 60));
-
+			buttonSave.setAlpha((float) 0.5);
+			
 			final ImageButton buttonWeapon = (ImageButton) findViewById(R.id.buttonweapon);
 
 			buttonWeapon.setOnTouchListener(new View.OnTouchListener() {
@@ -405,6 +414,8 @@ public class SDLActivity extends Activity {
 
 			buttonWeapon.setLayoutParams(ControlsParams.coordinates(buttonWeapon,
 					880, 95, 70, 70));
+			
+			buttonWeapon.setAlpha((float) 0.5);
 		
 			final ImageButton buttonInventory = (ImageButton) findViewById(R.id.buttoninventory);
 
@@ -430,7 +441,8 @@ public class SDLActivity extends Activity {
 
 			buttonInventory.setLayoutParams(ControlsParams.coordinates(buttonInventory,
 					950, 95, 70, 70));
-	
+			buttonInventory.setAlpha((float) 0.5);
+			
 			final ImageButton buttonJump = (ImageButton) findViewById(R.id.buttonsuperjump);
 
 			buttonJump.setOnTouchListener(new View.OnTouchListener() {
@@ -455,7 +467,8 @@ public class SDLActivity extends Activity {
 
 			buttonJump.setLayoutParams(ControlsParams.coordinates(buttonJump,
 					920, 195, 90, 90));
-
+			buttonJump.setAlpha((float) 0.5);
+			
 			final ImageButton buttonFire = (ImageButton) findViewById(R.id.buttonFire);
 
 			buttonFire.setOnTouchListener(new View.OnTouchListener() {
@@ -480,7 +493,8 @@ public class SDLActivity extends Activity {
 
 			buttonFire.setLayoutParams(ControlsParams.coordinates(buttonFire,
 					790, 300, 100, 100));
-		
+			buttonFire.setAlpha((float) 0.5);
+			
 			final ImageButton buttonMagic = (ImageButton) findViewById(R.id.buttonMagic);
 
 			buttonMagic.setOnTouchListener(new View.OnTouchListener() {
@@ -505,7 +519,8 @@ public class SDLActivity extends Activity {
 
 			buttonMagic.setLayoutParams(ControlsParams.coordinates(buttonMagic,
 					940, 480, 80, 80));
-	
+			buttonMagic.setAlpha((float) 0.5);
+			
 			final ImageButton buttonCrouch = (ImageButton) findViewById(R.id.buttoncrouch);
 
 			buttonCrouch.setOnTouchListener(new View.OnTouchListener() {
@@ -530,7 +545,8 @@ public class SDLActivity extends Activity {
 
 			buttonCrouch.setLayoutParams(ControlsParams.coordinates(buttonCrouch,
 					940, 670, 80, 80));
-	
+			buttonCrouch.setAlpha((float) 0.5);
+			
 			final ImageButton buttonDiary = (ImageButton) findViewById(R.id.buttonDiary);
 
 			buttonDiary.setOnTouchListener(new View.OnTouchListener() {
@@ -555,7 +571,8 @@ public class SDLActivity extends Activity {
 
 			buttonDiary.setLayoutParams(ControlsParams.coordinates(buttonDiary,
 					414, 0, 70, 70));
-
+			buttonDiary.setAlpha((float) 0.5);
+			
 			final ImageButton buttonUse = (ImageButton) findViewById(R.id.buttonUse);
 
 			buttonUse.setOnTouchListener(new View.OnTouchListener() {
@@ -580,7 +597,8 @@ public class SDLActivity extends Activity {
 
 			buttonUse.setLayoutParams(ControlsParams.coordinates(buttonUse,
 					940, 368, 80, 80));
-
+			buttonUse.setAlpha((float) 0.5);
+			
 		}
 
 	}
