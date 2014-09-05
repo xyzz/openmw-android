@@ -58,14 +58,15 @@ public class ConfigureControls extends Activity {
 		buttonWait.setLayoutParams(ControlsParams.coordinates(buttonWait,
 				274, 0, 70, 70));
 		
-
+	
+		
 		final Button buttonTouch = (Button) findViewById(R.id.buttontouch);
 		buttonTouch.setOnTouchListener(touchListener);
 
 		buttonTouch.setLayoutParams(ControlsParams.coordinates(buttonTouch,
 				346, 0, 70, 70));
-		
-		final ImageButton buttonDiary = (ImageButton) findViewById(R.id.buttonDiary);
+		buttonTouch.setAlpha((float) 0.5);
+			final ImageButton buttonDiary = (ImageButton) findViewById(R.id.buttonDiary);
 		buttonDiary.setOnTouchListener(touchListener);
 
 		buttonDiary.setLayoutParams(ControlsParams.coordinates(buttonDiary,
@@ -75,7 +76,7 @@ public class ConfigureControls extends Activity {
 		buttonPause.setOnTouchListener(touchListener);
 
 		buttonPause.setLayoutParams(ControlsParams.coordinates(buttonPause,
-				950, 0, 70, 70));
+				950, 0, 60, 60));
 		
 		final ImageButton buttonLoad= (ImageButton) findViewById(R.id.buttonsuperload);
 		buttonLoad.setOnTouchListener(touchListener);
@@ -123,20 +124,20 @@ public class ConfigureControls extends Activity {
 		buttonMagic.setOnTouchListener(touchListener);
 
 		buttonMagic.setLayoutParams(ControlsParams.coordinates(buttonMagic,
-				920, 480, 80, 80));
+				940, 480, 80, 80));
 		final ImageButton buttonUse = (ImageButton) findViewById(R.id.buttonUse);
 
 		buttonUse.setOnTouchListener(touchListener);
 
 		buttonUse.setLayoutParams(ControlsParams.coordinates(buttonUse,
-				920, 368, 80, 80));
+				940, 368, 80, 80));
 
 		final ImageButton buttonCrouch = (ImageButton) findViewById(R.id.buttoncrouch);
 
 		buttonCrouch.setOnTouchListener(touchListener);
 
 		buttonCrouch.setLayoutParams(ControlsParams.coordinates(buttonCrouch,
-				930, 650, 80, 80));
+				940, 670, 80, 80));
 
 	}
 

@@ -266,6 +266,7 @@ public class SDLActivity extends Activity {
 			buttonWait.setLayoutParams(ControlsParams.coordinates(buttonWait,
 					274, 0, 70, 70));
 
+			
 			final Button buttonTouch = (Button) findViewById(R.id.buttontouch);
 			final TouchCamera touch = (TouchCamera) findViewById(R.id.superTouch);
 
@@ -303,7 +304,7 @@ public class SDLActivity extends Activity {
 			buttonTouch.setLayoutParams(ControlsParams.coordinates(buttonTouch,
 					346, 0, 70, 70));
 		
-		
+			buttonTouch.setAlpha((float) 0.5);		
 
 			final ImageButton buttonPause = (ImageButton) findViewById(R.id.buttonpause);
 
@@ -328,7 +329,7 @@ public class SDLActivity extends Activity {
 			});
 
 			buttonPause.setLayoutParams(ControlsParams.coordinates(buttonPause,
-					950, 0, 70, 70));
+					950, 0, 60, 70));
 
 			final ImageButton buttonLoad = (ImageButton) findViewById(R.id.buttonsuperload);
 
@@ -503,7 +504,7 @@ public class SDLActivity extends Activity {
 			});
 
 			buttonMagic.setLayoutParams(ControlsParams.coordinates(buttonMagic,
-					920, 480, 80, 80));
+					940, 480, 80, 80));
 	
 			final ImageButton buttonCrouch = (ImageButton) findViewById(R.id.buttoncrouch);
 
@@ -528,7 +529,7 @@ public class SDLActivity extends Activity {
 			});
 
 			buttonCrouch.setLayoutParams(ControlsParams.coordinates(buttonCrouch,
-					930, 650, 80, 80));
+					940, 670, 80, 80));
 	
 			final ImageButton buttonDiary = (ImageButton) findViewById(R.id.buttonDiary);
 
@@ -578,7 +579,7 @@ public class SDLActivity extends Activity {
 			});
 
 			buttonUse.setLayoutParams(ControlsParams.coordinates(buttonUse,
-					920, 368, 80, 80));
+					940, 368, 80, 80));
 
 		}
 
