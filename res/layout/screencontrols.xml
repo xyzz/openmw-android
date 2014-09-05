@@ -78,7 +78,7 @@
             android:focusable="true"
             android:focusableInTouchMode="true"
             android:scaleType="fitXY"
-            android:textSize="10dp" />
+            android:textSize="20dp" />
 
         <ImageButton
             android:id="@+id/buttonpause"

@@ -60,13 +60,13 @@ public class Controls extends View {
 		setFocusable(true);
 		
 		circlePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-		circlePaint.setColor(Color.argb(60, 255, 255, 255));
+		circlePaint.setColor(Color.argb(40, 255, 255, 255));
 		circlePaint.setStrokeWidth(1);
 		circlePaint.setStyle(Paint.Style.FILL_AND_STROKE);
 
 	
 		handlePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-		handlePaint.setColor(Color.DKGRAY);
+		handlePaint.setColor(Color.argb(90, 255, 255, 255));
 		handlePaint.setStrokeWidth(1);
 		handlePaint.setStyle(Paint.Style.FILL_AND_STROKE);
 

@@ -10,10 +10,14 @@ public static RelativeLayout.LayoutParams coordinates (View v,int x,int y,int wi
 		
 		MarginLayoutParams marginParamsRun = new MarginLayoutParams(
 				v.getLayoutParams());
-		marginParamsRun.height = height;
-		marginParamsRun.width = width;
+		marginParamsRun.height = CoordinatesAllScreens.getInstance()
+				.getScaledCoordinateX(height);
+		marginParamsRun.width = CoordinatesAllScreens.getInstance()
+				.getScaledCoordinateX(width);
 		marginParamsRun
-				.setMargins((int) x, (int) y, 0, 0);
+				.setMargins((int) (CoordinatesAllScreens.getInstance()
+						.getScaledCoordinateX(x)), (int) (CoordinatesAllScreens
+						.getInstance().getScaledCoordinateY(y)), 0, 0);
 		RelativeLayout.LayoutParams layoutParamsRun = new RelativeLayout.LayoutParams(
 				marginParamsRun); 
 		return layoutParamsRun;
