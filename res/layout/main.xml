@@ -25,7 +25,7 @@
         android:text="Configure on-screen controls" />
 
     <Button
-        android:id="@+id/buttoncontrols"
+        android:id="@+id/buttonresetcontrols"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Reset on-screen controls" />

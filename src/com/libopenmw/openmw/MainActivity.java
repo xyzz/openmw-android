@@ -6,6 +6,8 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -13,13 +15,14 @@ import android.view.Display;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
 	public static Context context;
 	public static boolean contols = true;
 
-	
+	public SharedPreferences Settings;
 
 
 	@Override
@@ -29,13 +32,9 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.main);
 
 		context = this;
-	 
-	//	Display display = getWindowManager().getDefaultDisplay();
-	//	Point size = new Point();
-	//	display.getSize(size);
-	//	CoordinatesAllScreens.width  = size.x;
-	//	CoordinatesAllScreens.height = size.y;
-		
+
+
+		Settings = getSharedPreferences(Constants.APP_PREFERENCES, Context.MODE_MULTI_PROCESS);
 
 		final CheckBox Box = (CheckBox) findViewById(R.id.checkBox1);
 
@@ -88,6 +87,22 @@ public class MainActivity extends Activity {
 
 				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 				context.startActivity(intent);
+
+			}
+
+		});
+		
+		final Button button3 = (Button) findViewById(R.id.buttonresetcontrols);
+		button3.setOnClickListener(new View.OnClickListener() {
+			@SuppressLint("InlinedApi")
+			public void onClick(View v) {
+				
+				Editor editor = Settings.edit();
+				editor.putInt(Constants.APP_PREFERENCES_RESET_CONTROLS, 1);
+				editor.apply();
+				Toast toast = Toast.makeText(getApplicationContext(), 
+						   "Reset on-screen controls", Toast.LENGTH_LONG); 
+						toast.show();
 
 			}
 
