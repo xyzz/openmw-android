@@ -1,7 +1,29 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
-
+<RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+   
+         <TextView
+            android:id="@+id/textViewSize"
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:text="size"
+            android:visibility="gone" />
+   <TextView
+            android:id="@+id/textViewOpacity"
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:text="opacity"
+            android:visibility="gone" />
+           <TextView
+            android:id="@+id/textViewTitle"
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:text="button"
+            android:visibility="gone" />
+    </RelativeLayout>
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" >
@@ -11,7 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="invisible" />
-
+        
         <ImageButton
             android:id="@+id/buttonrun1"
             android:layout_width="50dip"
@@ -21,6 +43,8 @@
             android:focusableInTouchMode="true"
             android:scaleType="fitXY"
             android:src="@drawable/run" />
+    
+ 
 
         <ImageButton
             android:id="@+id/buttoninventory"
@@ -179,6 +203,60 @@
             android:focusableInTouchMode="true"
             android:scaleType="fitXY"
             android:src="@drawable/use" />
+
+        <Button
+            android:id="@+id/buttonsize1"
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:background="@null"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:scaleType="fitXY"
+            android:text="-"
+            android:textSize="20dp"
+            android:visibility="gone" />
+
+       
+        <Button
+            android:id="@+id/buttonsize2"
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:background="@null"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:scaleType="fitXY"
+            android:text="+"
+            android:textSize="20dp"
+            android:visibility="gone" />
+
+
+        <Button
+            android:id="@+id/buttonopacity1"
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:background="@null"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:scaleType="fitXY"
+            android:text="-"
+            android:textSize="20dp"
+            android:visibility="gone" />
+
+      
+
+        <Button
+            android:id="@+id/buttonopacity2"
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:background="@null"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:scaleType="fitXY"
+            android:text="+"
+            android:textSize="20dp"
+            android:visibility="gone" />
+        
+       
     </RelativeLayout>
 
 </FrameLayout>
