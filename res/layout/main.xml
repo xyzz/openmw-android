@@ -35,6 +35,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Plugins" />
+    <Button
+        android:id="@+id/buttoncopy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Copy config files to sdcard" />
 
 </LinearLayout>
 

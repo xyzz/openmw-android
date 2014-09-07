@@ -3,6 +3,7 @@ package com.libopenmw.openmw;
 public class Constants {
 
 	public static final String APP_PREFERENCES = "settings";
+	public static final String APP_PREFERENCES_CONTROLS_FLAG = "hidecontrols";
 	public static final String APP_PREFERENCES_RESET_CONTROLS = "resetcontrols";
 	public static final String APP_PREFERENCES_BUTTON_RUN_X = "buttonrunx";
 	public static final String APP_PREFERENCES_BUTTON_RUN_Y = "buttonruny";
