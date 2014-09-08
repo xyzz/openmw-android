@@ -59,7 +59,9 @@ public boolean onTouch(View view, MotionEvent event) {
             break;
 
         case MotionEvent.ACTION_UP:
-
+        	ConfigureControls.buttonFlag=view.getId();
+        	if (view.getId()==1)
+        		ConfigureControls.button.setText("buttonRun");
             break;
     }
 

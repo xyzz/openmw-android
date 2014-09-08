@@ -8,11 +8,13 @@ import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class ConfigureControls extends Activity {
 
@@ -31,7 +33,7 @@ public class ConfigureControls extends Activity {
 	public Button buttonOpacity1;
 	public TextView opacity;
 	public TextView size;
-	public TextView button;
+	public static TextView button;
 
 	public ImageButton buttonDiary;
 	public ImageButton buttonPause;
@@ -44,6 +46,8 @@ public class ConfigureControls extends Activity {
 	public ImageButton buttonMagic;
 	public ImageButton buttonUse;
 	public ImageButton buttonCrouch;
+	public static int buttonFlag=0;
+	public static float buttonRunOpacity;
 	
 
 	public SharedPreferences Settings;
@@ -58,7 +62,7 @@ public class ConfigureControls extends Activity {
 		int controlsFlag;
 
 		context = this;
-
+		buttonRunOpacity=(float) 1.0;
 		Settings = getSharedPreferences(Constants.APP_PREFERENCES,
 				Context.MODE_MULTI_PROCESS);
 		controlsFlag = Settings.getInt(
@@ -73,80 +77,77 @@ public class ConfigureControls extends Activity {
 		buttonSize = (Button) findViewById(R.id.buttonsize1);
 		buttonSize1 = (Button) findViewById(R.id.buttonsize2);
 		button=(TextView) findViewById(R.id.textViewTitle);
-		size=(TextView) findViewById(R.id.textViewSize);
-			
-		buttonSize.setTextColor(Color.WHITE);
-		buttonSize.setTextSize((float) CoordinatesAllScreens.getInstance()
-				.getScaledCoordinateX(40));
+
 		buttonSize.setLayoutParams(ControlsParams.coordinates(
-				buttonSize, 400, 280, 70, 70));
+				buttonSize, 400, 280, 100, 80));
 		buttonSize.setVisibility(Button.VISIBLE);
-		
-		size.setTextColor(Color.WHITE);
-		size.setTextSize((float) CoordinatesAllScreens.getInstance()
-				.getScaledCoordinateX(30));
-		size.setLayoutParams(ControlsParams.coordinates(
-				size, 463, 300, 150, 150));
-		size.setVisibility(TextView.VISIBLE);
-		
-		buttonSize1.setTextColor(Color.WHITE);
-		buttonSize1.setTextSize((float) CoordinatesAllScreens.getInstance()
-				.getScaledCoordinateX(40));
+		buttonSize.setAlpha((float) 0.5);
+	
 		buttonSize1.setLayoutParams(ControlsParams.coordinates(
-				buttonSize1, 570, 280, 70, 80));
+				buttonSize1, 520, 280, 100, 80));
+		buttonSize1.setAlpha((float) 0.5);
+
 		buttonSize1.setVisibility(Button.VISIBLE);
 		
 		buttonOpacity = (Button) findViewById(R.id.buttonopacity1);
 		buttonOpacity1 = (Button) findViewById(R.id.buttonopacity2);
 
-		opacity=(TextView) findViewById(R.id.textViewOpacity);
-			
-		buttonOpacity.setTextColor(Color.WHITE);
-		buttonOpacity.setTextSize((float) CoordinatesAllScreens.getInstance()
-				.getScaledCoordinateX(40));
+	
 		buttonOpacity.setLayoutParams(ControlsParams.coordinates(
-				buttonOpacity, 400, 355, 70, 70));
+				buttonOpacity, 400, 400, 120, 100));
 		buttonOpacity.setVisibility(Button.VISIBLE);
-		
-		opacity.setTextColor(Color.WHITE);
-		opacity.setTextSize((float) CoordinatesAllScreens.getInstance()
-				.getScaledCoordinateX(30));
-		opacity.setLayoutParams(ControlsParams.coordinates(
-				opacity, 463, 368, 200, 150));
-		opacity.setVisibility(TextView.VISIBLE);
-		
-		buttonOpacity1.setTextColor(Color.WHITE);
-		buttonOpacity1.setTextSize((float) CoordinatesAllScreens.getInstance()
-				.getScaledCoordinateX(40));
+	
 		buttonOpacity1.setLayoutParams(ControlsParams.coordinates(
-				buttonOpacity1, 650, 355, 70, 80));
+				buttonOpacity1, 540, 400, 120, 100));
 		buttonOpacity1.setVisibility(Button.VISIBLE);
 		
+		buttonOpacity.setAlpha((float) 0.5);
+		buttonOpacity1.setAlpha((float) 0.5);
 		
 		button.setTextColor(Color.WHITE);
 		button.setTextSize((float) CoordinatesAllScreens.getInstance()
-				.getScaledCoordinateX(30));
+				.getScaledCoordinateX(20));
 		button.setLayoutParams(ControlsParams.coordinates(
 				button, 450, 220, 200, 150));
 		button.setVisibility(TextView.VISIBLE);
 		
 		joystick = (Controls) findViewById(R.id.joystick);
 		joystick.setOnTouchListener(touchListener);
-
+		joystick.setId(17);
 		joystick.setAlpha((float) 0.5);
 
-		buttonRun = (ImageButton) findViewById(R.id.buttonrun1);
 		
-		
-		buttonRun.setOnTouchListener(new View.OnTouchListener() {
+		buttonOpacity.setOnTouchListener(new View.OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				switch (event.getAction()) {
 				case MotionEvent.ACTION_DOWN:
-
 					
-					buttonRun.setOnTouchListener(touchListener);
+             	if (buttonFlag==1 &&  buttonRunOpacity!=0.1){
+             		buttonRunOpacity=buttonRunOpacity-(float)0.1;			
+						buttonRun.setAlpha(buttonRunOpacity);
+					}	
 									
+					return true; 
+				case MotionEvent.ACTION_UP:
+				
+					
+					return true; 
+				}
+				return false;
+			}
+		});
+		
+
+		buttonOpacity1.setOnTouchListener(new View.OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				switch (event.getAction()) {
+				case MotionEvent.ACTION_DOWN:
+					if (buttonFlag==1 && buttonRunOpacity!=1.0 ){
+					buttonRunOpacity=buttonRunOpacity+(float)0.1;			
+					buttonRun.setAlpha(buttonRunOpacity);
+					}
 					return true; 
 				case MotionEvent.ACTION_UP:
 					
@@ -156,63 +157,109 @@ public class ConfigureControls extends Activity {
 				return false;
 			}
 		});
+		
+		buttonSize.setOnTouchListener(new View.OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				switch (event.getAction()) {
+				case MotionEvent.ACTION_DOWN:
+					
+             	if (buttonFlag==1 &&  buttonRunOpacity!=0.1){
+             		buttonRunOpacity=buttonRunOpacity-(float)0.1;			
+						buttonRun.setAlpha(buttonRunOpacity);
+					}	
+									
+					return true; 
+				case MotionEvent.ACTION_UP:
+				
+					
+					return true; 
+				}
+				return false;
+			}
+		});
+		
 
+		buttonOpacity1.setOnTouchListener(new View.OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				switch (event.getAction()) {
+				case MotionEvent.ACTION_DOWN:
+					if (buttonFlag==1 && buttonRunOpacity!=1.0 ){
+					buttonRunOpacity=buttonRunOpacity+(float)0.1;			
+					buttonRun.setAlpha(buttonRunOpacity);
+					}
+					return true; 
+				case MotionEvent.ACTION_UP:
+					
+					
+					return true; 
+				}
+				return false;
+			}
+		});
+		buttonRun = (ImageButton) findViewById(R.id.buttonrun1);
+		buttonRun.setId(1);
+		buttonRun.setOnTouchListener(touchListener);
+		
 
-		buttonRun.setAlpha((float) 0.5);
+		
+
+		buttonRun.setAlpha(buttonRunOpacity);
 
 		buttonConsole = (ImageButton) findViewById(R.id.buttonconsole);
 		buttonConsole.setOnTouchListener(touchListener);
-
+		buttonConsole.setId(2);
 		buttonConsole.setAlpha((float) 0.5);
-
+		buttonConsole.setId(104);
 		buttonChangePerson = (ImageButton) findViewById(R.id.buttonchangeperson);
 		buttonChangePerson.setOnTouchListener(touchListener);
-
+		buttonChangePerson.setId(3);
 		buttonChangePerson.setAlpha((float) 0.5);
 
 		buttonWait = (ImageButton) findViewById(R.id.buttonwait);
 		buttonWait.setOnTouchListener(touchListener);
-
+		buttonWait.setId(4);
 		buttonWait.setAlpha((float) 0.5);
 
 		buttonTouch = (Button) findViewById(R.id.buttontouch);
 		buttonTouch.setOnTouchListener(touchListener);
-
+		buttonTouch.setId(5);
 		buttonTouch.setAlpha((float) 0.5);
 		buttonDiary = (ImageButton) findViewById(R.id.buttonDiary);
 		buttonDiary.setOnTouchListener(touchListener);
-
+		buttonDiary.setId(6);
 		buttonDiary.setAlpha((float) 0.5);
 
 		buttonPause = (ImageButton) findViewById(R.id.buttonpause);
 		buttonPause.setOnTouchListener(touchListener);
-
+		buttonPause.setId(7);
 		buttonPause.setAlpha((float) 0.5);
 
 		buttonLoad = (ImageButton) findViewById(R.id.buttonsuperload);
 		buttonLoad.setOnTouchListener(touchListener);
-
+		buttonLoad.setId(8);
 		buttonLoad.setAlpha((float) 0.5);
 
 		buttonSave = (ImageButton) findViewById(R.id.buttonsupersave);
 		buttonSave.setOnTouchListener(touchListener);
-
+		buttonSave.setId(9);
 		buttonSave.setAlpha((float) 0.5);
 
 		buttonWeapon = (ImageButton) findViewById(R.id.buttonweapon);
-
+		buttonWeapon.setId(10);
 		buttonWeapon.setOnTouchListener(touchListener);
 
 		buttonWeapon.setAlpha((float) 0.5);
 
 		buttonInventory = (ImageButton) findViewById(R.id.buttoninventory);
-
+		buttonInventory.setId(11);
 		buttonInventory.setOnTouchListener(touchListener);
 
 		buttonInventory.setAlpha((float) 0.5);
 
 		buttonJump = (ImageButton) findViewById(R.id.buttonsuperjump);
-
+		buttonJump.setId(12);
 		buttonJump.setOnTouchListener(touchListener);
 
 		buttonJump.setAlpha((float) 0.5);
@@ -220,23 +267,23 @@ public class ConfigureControls extends Activity {
 		buttonFire = (ImageButton) findViewById(R.id.buttonFire);
 
 		buttonFire.setOnTouchListener(touchListener);
-
+		buttonFire.setId(13);
 		buttonFire.setAlpha((float) 0.5);
 
 		buttonMagic = (ImageButton) findViewById(R.id.buttonMagic);
-
+		buttonMagic.setId(14);
 		buttonMagic.setOnTouchListener(touchListener);
 
 		buttonMagic.setAlpha((float) 0.5);
 
 		buttonUse = (ImageButton) findViewById(R.id.buttonUse);
-
+		buttonUse.setId(15);
 		buttonUse.setOnTouchListener(touchListener);
 
 		buttonUse.setAlpha((float) 0.5);
 
 		buttonCrouch = (ImageButton) findViewById(R.id.buttoncrouch);
-
+		buttonCrouch.setId(16);
 		buttonCrouch.setOnTouchListener(touchListener);
 
 		buttonCrouch.setAlpha((float) 0.5);
@@ -412,6 +459,20 @@ public class ConfigureControls extends Activity {
 	public void onDestroy() {
 
 		super.onDestroy();
+		setSharedPreferences ();
+		
+	}
+
+	@Override
+	public void onPause() {
+
+		super.onDestroy();
+		setSharedPreferences ();
+		
+	}
+
+
+	public void setSharedPreferences (){
 		Editor editor = Settings.edit();
 		editor.putInt(Constants.APP_PREFERENCES_BUTTON_RUN_X,
 				(int) buttonRun.getX());
