@@ -28,11 +28,10 @@ public class ConfigureControls extends Activity {
 	public Button buttonSize;
 	public Button buttonSize1;
 	public Button buttonTouch;
-	
+
 	public Button buttonOpacity;
 	public Button buttonOpacity1;
-	public TextView opacity;
-	public TextView size;
+
 	public static TextView button;
 
 	public ImageButton buttonDiary;
@@ -46,9 +45,8 @@ public class ConfigureControls extends Activity {
 	public ImageButton buttonMagic;
 	public ImageButton buttonUse;
 	public ImageButton buttonCrouch;
-	public static int buttonFlag=0;
+	public static int buttonFlag = 0;
 	public static float buttonRunOpacity;
-	
 
 	public SharedPreferences Settings;
 
@@ -62,7 +60,7 @@ public class ConfigureControls extends Activity {
 		int controlsFlag;
 
 		context = this;
-		buttonRunOpacity=(float) 1.0;
+		buttonRunOpacity = (float) 1.0;
 		Settings = getSharedPreferences(Constants.APP_PREFERENCES,
 				Context.MODE_MULTI_PROCESS);
 		controlsFlag = Settings.getInt(
@@ -73,137 +71,126 @@ public class ConfigureControls extends Activity {
 		CoordinatesAllScreens.height = displaymetrics.heightPixels;
 		CoordinatesAllScreens.width = displaymetrics.widthPixels;
 		final MultiTouchListener touchListener = new MultiTouchListener(this);
-		
+
 		buttonSize = (Button) findViewById(R.id.buttonsize1);
 		buttonSize1 = (Button) findViewById(R.id.buttonsize2);
-		button=(TextView) findViewById(R.id.textViewTitle);
+		button = (TextView) findViewById(R.id.textViewTitle);
 
-		buttonSize.setLayoutParams(ControlsParams.coordinates(
-				buttonSize, 400, 280, 100, 80));
+		buttonSize.setLayoutParams(ControlsParams.coordinates(buttonSize, 400,
+				280, 100, 80));
 		buttonSize.setVisibility(Button.VISIBLE);
 		buttonSize.setAlpha((float) 0.5);
-	
-		buttonSize1.setLayoutParams(ControlsParams.coordinates(
-				buttonSize1, 520, 280, 100, 80));
+
+		buttonSize1.setLayoutParams(ControlsParams.coordinates(buttonSize1,
+				520, 280, 100, 80));
 		buttonSize1.setAlpha((float) 0.5);
 
 		buttonSize1.setVisibility(Button.VISIBLE);
-		
+
 		buttonOpacity = (Button) findViewById(R.id.buttonopacity1);
 		buttonOpacity1 = (Button) findViewById(R.id.buttonopacity2);
 
-	
-		buttonOpacity.setLayoutParams(ControlsParams.coordinates(
-				buttonOpacity, 400, 400, 120, 100));
+		buttonOpacity.setLayoutParams(ControlsParams.coordinates(buttonOpacity,
+				400, 400, 120, 100));
 		buttonOpacity.setVisibility(Button.VISIBLE);
-	
+
 		buttonOpacity1.setLayoutParams(ControlsParams.coordinates(
 				buttonOpacity1, 540, 400, 120, 100));
 		buttonOpacity1.setVisibility(Button.VISIBLE);
-		
+
 		buttonOpacity.setAlpha((float) 0.5);
 		buttonOpacity1.setAlpha((float) 0.5);
-		
+
 		button.setTextColor(Color.WHITE);
 		button.setTextSize((float) CoordinatesAllScreens.getInstance()
 				.getScaledCoordinateX(20));
-		button.setLayoutParams(ControlsParams.coordinates(
-				button, 450, 220, 200, 150));
+		button.setLayoutParams(ControlsParams.coordinates(button, 400, 220,
+				300, 150));
 		button.setVisibility(TextView.VISIBLE);
-		
-		joystick = (Controls) findViewById(R.id.joystick);
-		joystick.setOnTouchListener(touchListener);
-		joystick.setId(17);
-		joystick.setAlpha((float) 0.5);
 
-		
 		buttonOpacity.setOnTouchListener(new View.OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				switch (event.getAction()) {
 				case MotionEvent.ACTION_DOWN:
-					
-             	if (buttonFlag==1 &&  buttonRunOpacity!=0.1){
-             		buttonRunOpacity=buttonRunOpacity-(float)0.1;			
+
+					if (buttonFlag == 1 && buttonRunOpacity != 0.1) {
+						buttonRunOpacity = buttonRunOpacity - (float) 0.1;
 						buttonRun.setAlpha(buttonRunOpacity);
-					}	
-									
-					return true; 
+					}
+
+					return true;
 				case MotionEvent.ACTION_UP:
-				
-					
-					return true; 
+
+					return true;
 				}
 				return false;
 			}
 		});
-		
 
 		buttonOpacity1.setOnTouchListener(new View.OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				switch (event.getAction()) {
 				case MotionEvent.ACTION_DOWN:
-					if (buttonFlag==1 && buttonRunOpacity!=1.0 ){
-					buttonRunOpacity=buttonRunOpacity+(float)0.1;			
-					buttonRun.setAlpha(buttonRunOpacity);
+					if (buttonFlag == 1 && buttonRunOpacity != 1.0) {
+						buttonRunOpacity = buttonRunOpacity + (float) 0.1;
+						buttonRun.setAlpha(buttonRunOpacity);
 					}
-					return true; 
+					return true;
 				case MotionEvent.ACTION_UP:
-					
-					
-					return true; 
+
+					return true;
 				}
 				return false;
 			}
 		});
-		
+
 		buttonSize.setOnTouchListener(new View.OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				switch (event.getAction()) {
 				case MotionEvent.ACTION_DOWN:
-					
-             	if (buttonFlag==1 &&  buttonRunOpacity!=0.1){
-             		buttonRunOpacity=buttonRunOpacity-(float)0.1;			
+
+					if (buttonFlag == 1 && buttonRunOpacity != 0.1) {
+						buttonRunOpacity = buttonRunOpacity - (float) 0.1;
 						buttonRun.setAlpha(buttonRunOpacity);
-					}	
-									
-					return true; 
+					}
+
+					return true;
 				case MotionEvent.ACTION_UP:
-				
-					
-					return true; 
+
+					return true;
 				}
 				return false;
 			}
 		});
-		
 
 		buttonOpacity1.setOnTouchListener(new View.OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				switch (event.getAction()) {
 				case MotionEvent.ACTION_DOWN:
-					if (buttonFlag==1 && buttonRunOpacity!=1.0 ){
-					buttonRunOpacity=buttonRunOpacity+(float)0.1;			
-					buttonRun.setAlpha(buttonRunOpacity);
+					if (buttonFlag == 1 && buttonRunOpacity != 1.0) {
+						buttonRunOpacity = buttonRunOpacity + (float) 0.1;
+						buttonRun.setAlpha(buttonRunOpacity);
 					}
-					return true; 
+					return true;
 				case MotionEvent.ACTION_UP:
-					
-					
-					return true; 
+
+					return true;
 				}
 				return false;
 			}
 		});
+
+		joystick = (Controls) findViewById(R.id.joystick);
+		joystick.setOnTouchListener(touchListener);
+		joystick.setId(17);
+		joystick.setAlpha((float) 0.5);
 		buttonRun = (ImageButton) findViewById(R.id.buttonrun1);
 		buttonRun.setId(1);
 		buttonRun.setOnTouchListener(touchListener);
-		
-
-		
 
 		buttonRun.setAlpha(buttonRunOpacity);
 
@@ -211,7 +198,6 @@ public class ConfigureControls extends Activity {
 		buttonConsole.setOnTouchListener(touchListener);
 		buttonConsole.setId(2);
 		buttonConsole.setAlpha((float) 0.5);
-		buttonConsole.setId(104);
 		buttonChangePerson = (ImageButton) findViewById(R.id.buttonchangeperson);
 		buttonChangePerson.setOnTouchListener(touchListener);
 		buttonChangePerson.setId(3);
@@ -341,11 +327,12 @@ public class ConfigureControls extends Activity {
 							Settings.getInt(
 									Constants.APP_PREFERENCES_BUTTON_RUN_Y, -1),
 							70, 70));
-			buttonConsole.setLayoutParams(ControlsParams.coordinatesConfigureControls(
-					buttonConsole, Settings.getInt(
-							Constants.APP_PREFERENCES_BUTTON_CONSOLE_X, -1),
-					Settings.getInt(Constants.APP_PREFERENCES_BUTTON_CONSOLE_Y,
-							-1), 70, 70));
+			buttonConsole.setLayoutParams(ControlsParams
+					.coordinatesConfigureControls(buttonConsole, Settings
+							.getInt(Constants.APP_PREFERENCES_BUTTON_CONSOLE_X,
+									-1), Settings.getInt(
+							Constants.APP_PREFERENCES_BUTTON_CONSOLE_Y, -1),
+							70, 70));
 			buttonChangePerson
 					.setLayoutParams(ControlsParams
 							.coordinatesConfigureControls(
@@ -450,7 +437,7 @@ public class ConfigureControls extends Activity {
 									-1), Settings.getInt(
 							Constants.APP_PREFERENCES_BUTTON_CROUCH_Y, -1), 80,
 							80));
-			
+
 		}
 
 	}
@@ -459,20 +446,19 @@ public class ConfigureControls extends Activity {
 	public void onDestroy() {
 
 		super.onDestroy();
-		setSharedPreferences ();
-		
+		setSharedPreferences();
+
 	}
 
 	@Override
 	public void onPause() {
 
-		super.onDestroy();
-		setSharedPreferences ();
-		
+		super.onPause();
+		setSharedPreferences();
+
 	}
 
-
-	public void setSharedPreferences (){
+	public void setSharedPreferences() {
 		Editor editor = Settings.edit();
 		editor.putInt(Constants.APP_PREFERENCES_BUTTON_RUN_X,
 				(int) buttonRun.getX());

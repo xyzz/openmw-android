@@ -2,7 +2,18 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
 
- 
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <TextView
+            android:id="@+id/textViewTitle"
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:text="button"
+            android:visibility="gone" />
+    </RelativeLayout>
+
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" >
@@ -78,8 +89,7 @@
             android:layout_height="50dip"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:scaleType="fitXY"
-            android:textSize="14dp" />
+            android:scaleType="fitXY" />
 
         <ImageButton
             android:id="@+id/buttonpause"
