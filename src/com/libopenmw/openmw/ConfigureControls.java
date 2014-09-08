@@ -46,7 +46,6 @@ public class ConfigureControls extends Activity {
 	public ImageButton buttonUse;
 	public ImageButton buttonCrouch;
 	public static int buttonFlag = 0;
-	public static float buttonRunOpacity;
 
 	public SharedPreferences Settings;
 
@@ -60,7 +59,7 @@ public class ConfigureControls extends Activity {
 		int controlsFlag;
 
 		context = this;
-		buttonRunOpacity = (float) 1.0;
+
 		Settings = getSharedPreferences(Constants.APP_PREFERENCES,
 				Context.MODE_MULTI_PROCESS);
 		controlsFlag = Settings.getInt(
@@ -104,8 +103,8 @@ public class ConfigureControls extends Activity {
 		button.setTextColor(Color.WHITE);
 		button.setTextSize((float) CoordinatesAllScreens.getInstance()
 				.getScaledCoordinateX(20));
-		button.setLayoutParams(ControlsParams.coordinates(button, 400, 220,
-				300, 150));
+		button.setLayoutParams(ControlsParams.coordinates(button, 400, 210,
+				400, 150));
 		button.setVisibility(TextView.VISIBLE);
 
 		buttonOpacity.setOnTouchListener(new View.OnTouchListener() {
@@ -113,10 +112,45 @@ public class ConfigureControls extends Activity {
 			public boolean onTouch(View v, MotionEvent event) {
 				switch (event.getAction()) {
 				case MotionEvent.ACTION_DOWN:
+					float opacity;
 
-					if (buttonFlag == 1 && buttonRunOpacity != 0.1) {
-						buttonRunOpacity = buttonRunOpacity - (float) 0.1;
-						buttonRun.setAlpha(buttonRunOpacity);
+					if (buttonFlag == 1) {
+						opacity = Settings.getFloat(
+								Constants.APP_PREFERENCES_BUTTON_RUN_OPACITY,
+								-1);
+						if (opacity != 0.1) {
+							opacity = opacity - (float) 0.1;
+							buttonRun.setAlpha(opacity);
+							setAlphaToSharedPreferences(
+									Constants.APP_PREFERENCES_BUTTON_RUN_OPACITY,
+									opacity);
+						}
+					} else if (buttonFlag == 2) {
+						opacity = Settings
+								.getFloat(
+										Constants.APP_PREFERENCES_BUTTON_CONSOLE_OPACITY,
+										-1);
+						if (opacity != 0.1) {
+							opacity = opacity - (float) 0.1;
+							buttonConsole.setAlpha(opacity);
+
+							setAlphaToSharedPreferences(
+									Constants.APP_PREFERENCES_BUTTON_CONSOLE_OPACITY,
+									opacity);
+						}
+					} else if (buttonFlag == 3) {
+						opacity = Settings
+								.getFloat(
+										Constants.APP_PREFERENCES_BUTTON_CHANGEPERSON_OPACITY,
+										-1);
+						if (opacity != 0.1) {
+							opacity = opacity - (float) 0.1;
+							buttonChangePerson.setAlpha(opacity);
+
+							setAlphaToSharedPreferences(
+									Constants.APP_PREFERENCES_BUTTON_CHANGEPERSON_OPACITY,
+									opacity);
+						}
 					}
 
 					return true;
@@ -133,47 +167,18 @@ public class ConfigureControls extends Activity {
 			public boolean onTouch(View v, MotionEvent event) {
 				switch (event.getAction()) {
 				case MotionEvent.ACTION_DOWN:
-					if (buttonFlag == 1 && buttonRunOpacity != 1.0) {
-						buttonRunOpacity = buttonRunOpacity + (float) 0.1;
-						buttonRun.setAlpha(buttonRunOpacity);
-					}
-					return true;
-				case MotionEvent.ACTION_UP:
-
-					return true;
-				}
-				return false;
-			}
-		});
-
-		buttonSize.setOnTouchListener(new View.OnTouchListener() {
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-				switch (event.getAction()) {
-				case MotionEvent.ACTION_DOWN:
-
-					if (buttonFlag == 1 && buttonRunOpacity != 0.1) {
-						buttonRunOpacity = buttonRunOpacity - (float) 0.1;
-						buttonRun.setAlpha(buttonRunOpacity);
-					}
-
-					return true;
-				case MotionEvent.ACTION_UP:
-
-					return true;
-				}
-				return false;
-			}
-		});
-
-		buttonOpacity1.setOnTouchListener(new View.OnTouchListener() {
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-				switch (event.getAction()) {
-				case MotionEvent.ACTION_DOWN:
-					if (buttonFlag == 1 && buttonRunOpacity != 1.0) {
-						buttonRunOpacity = buttonRunOpacity + (float) 0.1;
-						buttonRun.setAlpha(buttonRunOpacity);
+					float opacity;
+					if (buttonFlag == 1) {
+						opacity = Settings.getFloat(
+								Constants.APP_PREFERENCES_BUTTON_RUN_OPACITY,
+								-1);
+						if (opacity != 1.0) {
+							opacity = opacity + (float) 0.1;
+							buttonRun.setAlpha(opacity);
+							setAlphaToSharedPreferences(
+									Constants.APP_PREFERENCES_BUTTON_RUN_OPACITY,
+									opacity);
+						}
 					}
 					return true;
 				case MotionEvent.ACTION_UP:
@@ -192,12 +197,11 @@ public class ConfigureControls extends Activity {
 		buttonRun.setId(1);
 		buttonRun.setOnTouchListener(touchListener);
 
-		buttonRun.setAlpha(buttonRunOpacity);
-
 		buttonConsole = (ImageButton) findViewById(R.id.buttonconsole);
 		buttonConsole.setOnTouchListener(touchListener);
 		buttonConsole.setId(2);
 		buttonConsole.setAlpha((float) 0.5);
+
 		buttonChangePerson = (ImageButton) findViewById(R.id.buttonchangeperson);
 		buttonChangePerson.setOnTouchListener(touchListener);
 		buttonChangePerson.setId(3);
@@ -279,6 +283,9 @@ public class ConfigureControls extends Activity {
 					400, 250, 250));
 			buttonRun.setLayoutParams(ControlsParams.coordinates(buttonRun, 10,
 					330, 70, 70));
+			buttonRun.setAlpha((float) 0.5);
+			setAlphaToSharedPreferences(
+					Constants.APP_PREFERENCES_BUTTON_RUN_OPACITY, (float) 0.5);
 			buttonConsole.setLayoutParams(ControlsParams.coordinates(
 					buttonConsole, 140, 0, 70, 70));
 			buttonChangePerson.setLayoutParams(ControlsParams.coordinates(
@@ -327,6 +334,8 @@ public class ConfigureControls extends Activity {
 							Settings.getInt(
 									Constants.APP_PREFERENCES_BUTTON_RUN_Y, -1),
 							70, 70));
+			buttonRun.setAlpha(Settings.getFloat(
+					Constants.APP_PREFERENCES_BUTTON_RUN_OPACITY, -1));
 			buttonConsole.setLayoutParams(ControlsParams
 					.coordinatesConfigureControls(buttonConsole, Settings
 							.getInt(Constants.APP_PREFERENCES_BUTTON_CONSOLE_X,
@@ -531,4 +540,9 @@ public class ConfigureControls extends Activity {
 		editor.apply();
 	}
 
+	public void setAlphaToSharedPreferences(String name, float opacity) {
+		Editor editor = Settings.edit();
+		editor.putFloat(name, opacity);
+		editor.apply();
+	}
 }

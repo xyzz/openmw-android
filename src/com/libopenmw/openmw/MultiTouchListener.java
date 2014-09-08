@@ -57,7 +57,7 @@ public class MultiTouchListener implements OnTouchListener {
 			else if (view.getId() == 2)
 				ConfigureControls.button.setText("buttonConsole");
 			else if (view.getId() == 3)
-				ConfigureControls.button.setText("buttonChangePerson");
+				ConfigureControls.button.setText("buttonPerson");
 			else if (view.getId() == 4)
 				ConfigureControls.button.setText("buttonWait");
 			else if (view.getId() == 5)
