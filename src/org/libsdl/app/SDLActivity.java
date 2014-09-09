@@ -532,12 +532,13 @@ public class SDLActivity extends Activity {
 					return false;
 				}
 			});
-
 			if (controlsFlag == -1 || controlsFlag == 1) {
-				joystick.setLayoutParams(ControlsParams.coordinates(joystick,
-						20, 400, 250, 250));
-				buttonRun.setLayoutParams(ControlsParams.coordinates(buttonRun,
-						10, 330, 70, 70));
+				joystick.setLayoutParams(ControlsParams.coordinates(joystick, 20,
+						400, 250, 250));
+
+				buttonRun.setLayoutParams(ControlsParams.coordinates(buttonRun, 10,
+						330, 70, 70));
+
 				buttonRun.setAlpha((float) 0.5);
 				joystick.setAlpha((float) 0.5);
 				buttonCrouch.setAlpha((float) 0.5);
@@ -547,8 +548,9 @@ public class SDLActivity extends Activity {
 				buttonJump.setAlpha((float) 0.5);
 				buttonWeapon.setAlpha((float) 0.5);
 				buttonInventory.setAlpha((float) 0.5);
-				buttonSave.setAlpha((float) 0.5);
 				buttonLoad.setAlpha((float) 0.5);
+
+				buttonSave.setAlpha((float) 0.5);
 				buttonPause.setAlpha((float) 0.5);
 				buttonDiary.setAlpha((float) 0.5);
 				buttonTouch.setAlpha((float) 0.5);
@@ -556,57 +558,51 @@ public class SDLActivity extends Activity {
 				buttonWait.setAlpha((float) 0.5);
 				buttonConsole.setAlpha((float) 0.5);
 
+
 				buttonConsole.setLayoutParams(ControlsParams.coordinates(
 						buttonConsole, 140, 0, 70, 70));
+
 				buttonChangePerson.setLayoutParams(ControlsParams.coordinates(
 						buttonChangePerson, 212, 0, 70, 70));
-				buttonWait.setLayoutParams(ControlsParams.coordinates(
-						buttonWait, 274, 0, 70, 70));
-				buttonTouch.setLayoutParams(ControlsParams.coordinates(
-						buttonTouch, 346, 0, 70, 70));
+				buttonWait.setLayoutParams(ControlsParams.coordinates(buttonWait,
+						274, 0, 70, 70));
+				buttonTouch.setLayoutParams(ControlsParams.coordinates(buttonTouch,
+						346, 0, 70, 70));
 				buttonWeapon.setLayoutParams(ControlsParams.coordinates(
 						buttonWeapon, 880, 95, 70, 70));
-				buttonDiary.setLayoutParams(ControlsParams.coordinates(
-						buttonDiary, 414, 0, 70, 70));
-				buttonPause.setLayoutParams(ControlsParams.coordinates(
-						buttonPause, 950, 0, 60, 60));
-				buttonLoad.setLayoutParams(ControlsParams.coordinates(
-						buttonLoad, 880, 0, 60, 60));
-				buttonSave.setLayoutParams(ControlsParams.coordinates(
-						buttonSave, 820, 0, 60, 60));
+				buttonDiary.setLayoutParams(ControlsParams.coordinates(buttonDiary,
+						414, 0, 70, 70));
+				buttonPause.setLayoutParams(ControlsParams.coordinates(buttonPause,
+						950, 0, 60, 60));
+				buttonLoad.setLayoutParams(ControlsParams.coordinates(buttonLoad,
+						880, 0, 60, 60));
+				buttonSave.setLayoutParams(ControlsParams.coordinates(buttonSave,
+						820, 0, 60, 60));
 				buttonInventory.setLayoutParams(ControlsParams.coordinates(
 						buttonInventory, 950, 95, 70, 70));
-				buttonJump.setLayoutParams(ControlsParams.coordinates(
-						buttonJump, 920, 195, 90, 90));
-				buttonFire.setLayoutParams(ControlsParams.coordinates(
-						buttonFire, 790, 300, 100, 100));
-				buttonMagic.setLayoutParams(ControlsParams.coordinates(
-						buttonMagic, 940, 480, 80, 80));
+
+				buttonJump.setLayoutParams(ControlsParams.coordinates(buttonJump,
+						920, 195, 90, 90));
+
+				buttonFire.setLayoutParams(ControlsParams.coordinates(buttonFire,
+						790, 300, 100, 100));
+
+				buttonMagic.setLayoutParams(ControlsParams.coordinates(buttonMagic,
+						940, 480, 80, 80));
+
 				buttonUse.setLayoutParams(ControlsParams.coordinates(buttonUse,
 						940, 368, 80, 80));
+
 				buttonCrouch.setLayoutParams(ControlsParams.coordinates(
 						buttonCrouch, 940, 670, 80, 80));
 
 			} else if (controlsFlag == 0) {
-				joystick.setLayoutParams(ControlsParams
-						.coordinatesConfigureControls(joystick, Settings
-								.getInt(Constants.APP_PREFERENCES_JOYSTICK_X,
-										-1), Settings.getInt(
-								Constants.APP_PREFERENCES_JOYSTICK_Y, -1), 250,
-								250));
-				buttonRun.setLayoutParams(ControlsParams
-						.coordinatesConfigureControls(buttonRun, Settings
-								.getInt(Constants.APP_PREFERENCES_BUTTON_RUN_X,
-										-1), Settings.getInt(
-								Constants.APP_PREFERENCES_BUTTON_RUN_Y, -1),
-								70, 70));
 				buttonRun.setAlpha(Settings.getFloat(
 						Constants.APP_PREFERENCES_BUTTON_RUN_OPACITY, -1));
 				buttonConsole.setAlpha(Settings.getFloat(
 						Constants.APP_PREFERENCES_BUTTON_CONSOLE_OPACITY, -1));
 				buttonChangePerson.setAlpha(Settings.getFloat(
-						Constants.APP_PREFERENCES_BUTTON_CHANGEPERSON_OPACITY,
-						-1));
+						Constants.APP_PREFERENCES_BUTTON_CHANGEPERSON_OPACITY, -1));
 				buttonWait.setAlpha(Settings.getFloat(
 						Constants.APP_PREFERENCES_BUTTON_WAIT_OPACITY, -1));
 				buttonTouch.setAlpha(Settings.getFloat(
@@ -621,11 +617,8 @@ public class SDLActivity extends Activity {
 						Constants.APP_PREFERENCES_BUTTON_SAVE_OPACITY, -1));
 				buttonWeapon.setAlpha(Settings.getFloat(
 						Constants.APP_PREFERENCES_BUTTON_WEAPON_OPACITY, -1));
-				buttonInventory
-						.setAlpha(Settings
-								.getFloat(
-										Constants.APP_PREFERENCES_BUTTON_INVENTORY_OPACITY,
-										-1));
+				buttonInventory.setAlpha(Settings.getFloat(
+						Constants.APP_PREFERENCES_BUTTON_INVENTORY_OPACITY, -1));
 				buttonJump.setAlpha(Settings.getFloat(
 						Constants.APP_PREFERENCES_BUTTON_JUMP_OPACITY, -1));
 				buttonFire.setAlpha(Settings.getFloat(
@@ -639,6 +632,25 @@ public class SDLActivity extends Activity {
 				joystick.setAlpha(Settings.getFloat(
 						Constants.APP_PREFERENCES_JOYSTICK_OPACITY, -1));
 
+				joystick.setLayoutParams(ControlsParams.coordinatesConfigureControls(
+						joystick,
+						Settings.getInt(Constants.APP_PREFERENCES_JOYSTICK_X, -1),
+						Settings.getInt(Constants.APP_PREFERENCES_JOYSTICK_Y, -1),
+						Settings.getInt(Constants.APP_PREFERENCES_JOYSTICK_SIZE, -1),
+						Settings.getInt(Constants.APP_PREFERENCES_JOYSTICK_SIZE, -1)));
+				buttonRun
+						.setLayoutParams(ControlsParams.coordinatesConfigureControls(
+								buttonRun,
+								Settings.getInt(
+										Constants.APP_PREFERENCES_BUTTON_RUN_X, -1),
+								Settings.getInt(
+										Constants.APP_PREFERENCES_BUTTON_RUN_Y, -1),
+								Settings.getInt(
+										Constants.APP_PREFERENCES_BUTTON_RUN_SIZE,
+										-1), Settings.getInt(
+										Constants.APP_PREFERENCES_BUTTON_RUN_SIZE,
+										-1)));
+
 				buttonConsole
 						.setLayoutParams(ControlsParams
 								.coordinatesConfigureControls(
@@ -648,36 +660,56 @@ public class SDLActivity extends Activity {
 												-1),
 										Settings.getInt(
 												Constants.APP_PREFERENCES_BUTTON_CONSOLE_Y,
-												-1), 70, 70));
+												-1),
+										Settings.getInt(
+												Constants.APP_PREFERENCES_BUTTON_CONSOLE_SIZE,
+												-1),
+										Settings.getInt(
+												Constants.APP_PREFERENCES_BUTTON_CONSOLE_SIZE,
+												-1)));
 				buttonChangePerson
+						.setLayoutParams(ControlsParams
+								.coordinatesConfigureControls(
+										buttonChangePerson,
+										Settings.getInt(
+												Constants.APP_PREFERENCES_BUTTON_CHANGEPERSON_X,
+												-1),
+										Settings.getInt(
+												Constants.APP_PREFERENCES_BUTTON_CHANGEPERSON_Y,
+												-1),
+										Settings.getInt(
+												Constants.APP_PREFERENCES_BUTTON_CHANGEPERSON_SIZE,
+												-1),
+										Settings.getInt(
+												Constants.APP_PREFERENCES_BUTTON_CHANGEPERSON_SIZE,
+												-1)));
+				buttonWait
 						.setLayoutParams(ControlsParams.coordinatesConfigureControls(
-								buttonChangePerson,
+								buttonWait,
 								Settings.getInt(
-										Constants.APP_PREFERENCES_BUTTON_CHANGEPERSON_X,
+										Constants.APP_PREFERENCES_BUTTON_WAIT_X, -1),
+								Settings.getInt(
+										Constants.APP_PREFERENCES_BUTTON_WAIT_Y, -1),
+								Settings.getInt(
+										Constants.APP_PREFERENCES_BUTTON_WAIT_SIZE,
+										-1), Settings.getInt(
+										Constants.APP_PREFERENCES_BUTTON_WAIT_SIZE,
+										-1)));
+				buttonTouch
+						.setLayoutParams(ControlsParams.coordinatesConfigureControls(
+								buttonTouch,
+								Settings.getInt(
+										Constants.APP_PREFERENCES_BUTTON_TOUCH_X,
 										-1),
 								Settings.getInt(
-										Constants.APP_PREFERENCES_BUTTON_CHANGEPERSON_Y,
-										-1), 70, 70));
-				buttonWait
-						.setLayoutParams(ControlsParams
-								.coordinatesConfigureControls(
-										buttonWait,
-										Settings.getInt(
-												Constants.APP_PREFERENCES_BUTTON_WAIT_X,
-												-1),
-										Settings.getInt(
-												Constants.APP_PREFERENCES_BUTTON_WAIT_Y,
-												-1), 70, 70));
-				buttonTouch
-						.setLayoutParams(ControlsParams
-								.coordinatesConfigureControls(
-										buttonTouch,
-										Settings.getInt(
-												Constants.APP_PREFERENCES_BUTTON_TOUCH_X,
-												-1),
-										Settings.getInt(
-												Constants.APP_PREFERENCES_BUTTON_TOUCH_Y,
-												-1), 70, 70));
+										Constants.APP_PREFERENCES_BUTTON_TOUCH_Y,
+										-1),
+								Settings.getInt(
+										Constants.APP_PREFERENCES_BUTTON_TOUCH_SIZE,
+										-1),
+								Settings.getInt(
+										Constants.APP_PREFERENCES_BUTTON_TOUCH_SIZE,
+										-1)));
 				buttonWeapon
 						.setLayoutParams(ControlsParams
 								.coordinatesConfigureControls(
@@ -687,47 +719,67 @@ public class SDLActivity extends Activity {
 												-1),
 										Settings.getInt(
 												Constants.APP_PREFERENCES_BUTTON_WEAPON_Y,
-												-1), 70, 70));
+												-1),
+										Settings.getInt(
+												Constants.APP_PREFERENCES_BUTTON_WEAPON_SIZE,
+												-1),
+										Settings.getInt(
+												Constants.APP_PREFERENCES_BUTTON_WEAPON_SIZE,
+												-1)));
 				buttonDiary
-						.setLayoutParams(ControlsParams
-								.coordinatesConfigureControls(
-										buttonDiary,
-										Settings.getInt(
-												Constants.APP_PREFERENCES_BUTTON_DIARY_X,
-												-1),
-										Settings.getInt(
-												Constants.APP_PREFERENCES_BUTTON_DIARY_Y,
-												-1), 70, 70));
+						.setLayoutParams(ControlsParams.coordinatesConfigureControls(
+								buttonDiary,
+								Settings.getInt(
+										Constants.APP_PREFERENCES_BUTTON_DIARY_X,
+										-1),
+								Settings.getInt(
+										Constants.APP_PREFERENCES_BUTTON_DIARY_Y,
+										-1),
+								Settings.getInt(
+										Constants.APP_PREFERENCES_BUTTON_DIARY_SIZE,
+										-1),
+								Settings.getInt(
+										Constants.APP_PREFERENCES_BUTTON_DIARY_SIZE,
+										-1)));
 				buttonPause
-						.setLayoutParams(ControlsParams
-								.coordinatesConfigureControls(
-										buttonPause,
-										Settings.getInt(
-												Constants.APP_PREFERENCES_BUTTON_PAUSE_X,
-												-1),
-										Settings.getInt(
-												Constants.APP_PREFERENCES_BUTTON_PAUSE_Y,
-												-1), 60, 60));
+						.setLayoutParams(ControlsParams.coordinatesConfigureControls(
+								buttonPause,
+								Settings.getInt(
+										Constants.APP_PREFERENCES_BUTTON_PAUSE_X,
+										-1),
+								Settings.getInt(
+										Constants.APP_PREFERENCES_BUTTON_PAUSE_Y,
+										-1),
+								Settings.getInt(
+										Constants.APP_PREFERENCES_BUTTON_PAUSE_SIZE,
+										-1),
+								Settings.getInt(
+										Constants.APP_PREFERENCES_BUTTON_PAUSE_SIZE,
+										-1)));
 				buttonLoad
-						.setLayoutParams(ControlsParams
-								.coordinatesConfigureControls(
-										buttonLoad,
-										Settings.getInt(
-												Constants.APP_PREFERENCES_BUTTON_LOAD_X,
-												-1),
-										Settings.getInt(
-												Constants.APP_PREFERENCES_BUTTON_LOAD_Y,
-												-1), 60, 60));
+						.setLayoutParams(ControlsParams.coordinatesConfigureControls(
+								buttonLoad,
+								Settings.getInt(
+										Constants.APP_PREFERENCES_BUTTON_LOAD_X, -1),
+								Settings.getInt(
+										Constants.APP_PREFERENCES_BUTTON_LOAD_Y, -1),
+								Settings.getInt(
+										Constants.APP_PREFERENCES_BUTTON_LOAD_SIZE,
+										-1), Settings.getInt(
+										Constants.APP_PREFERENCES_BUTTON_LOAD_SIZE,
+										-1)));
 				buttonSave
-						.setLayoutParams(ControlsParams
-								.coordinatesConfigureControls(
-										buttonSave,
-										Settings.getInt(
-												Constants.APP_PREFERENCES_BUTTON_SAVE_X,
-												-1),
-										Settings.getInt(
-												Constants.APP_PREFERENCES_BUTTON_SAVE_Y,
-												-1), 60, 60));
+						.setLayoutParams(ControlsParams.coordinatesConfigureControls(
+								buttonSave,
+								Settings.getInt(
+										Constants.APP_PREFERENCES_BUTTON_SAVE_X, -1),
+								Settings.getInt(
+										Constants.APP_PREFERENCES_BUTTON_SAVE_Y, -1),
+								Settings.getInt(
+										Constants.APP_PREFERENCES_BUTTON_SAVE_SIZE,
+										-1), Settings.getInt(
+										Constants.APP_PREFERENCES_BUTTON_SAVE_SIZE,
+										-1)));
 				buttonInventory
 						.setLayoutParams(ControlsParams
 								.coordinatesConfigureControls(
@@ -737,43 +789,64 @@ public class SDLActivity extends Activity {
 												-1),
 										Settings.getInt(
 												Constants.APP_PREFERENCES_BUTTON_INVENTORY_Y,
-												-1), 70, 70));
+												-1),
+										Settings.getInt(
+												Constants.APP_PREFERENCES_BUTTON_INVENTORY_SIZE,
+												-1),
+										Settings.getInt(
+												Constants.APP_PREFERENCES_BUTTON_INVENTORY_SIZE,
+												-1)));
 				buttonJump
-						.setLayoutParams(ControlsParams
-								.coordinatesConfigureControls(
-										buttonJump,
-										Settings.getInt(
-												Constants.APP_PREFERENCES_BUTTON_JUMP_X,
-												-1),
-										Settings.getInt(
-												Constants.APP_PREFERENCES_BUTTON_JUMP_Y,
-												-1), 90, 90));
-				buttonFire
-						.setLayoutParams(ControlsParams
-								.coordinatesConfigureControls(
-										buttonFire,
-										Settings.getInt(
-												Constants.APP_PREFERENCES_BUTTON_FIRE_X,
-												-1),
-										Settings.getInt(
-												Constants.APP_PREFERENCES_BUTTON_FIRE_Y,
-												-1), 100, 100));
-				buttonMagic
-						.setLayoutParams(ControlsParams
-								.coordinatesConfigureControls(
-										buttonMagic,
-										Settings.getInt(
-												Constants.APP_PREFERENCES_BUTTON_MAGIC_X,
-												-1),
-										Settings.getInt(
-												Constants.APP_PREFERENCES_BUTTON_MAGIC_Y,
-												-1), 80, 80));
-				buttonUse.setLayoutParams(ControlsParams
-						.coordinatesConfigureControls(buttonUse, Settings
-								.getInt(Constants.APP_PREFERENCES_BUTTON_USE_X,
+						.setLayoutParams(ControlsParams.coordinatesConfigureControls(
+								buttonJump,
+								Settings.getInt(
+										Constants.APP_PREFERENCES_BUTTON_JUMP_X, -1),
+								Settings.getInt(
+										Constants.APP_PREFERENCES_BUTTON_JUMP_Y, -1),
+								Settings.getInt(
+										Constants.APP_PREFERENCES_BUTTON_JUMP_SIZE,
 										-1), Settings.getInt(
-								Constants.APP_PREFERENCES_BUTTON_USE_Y, -1),
-								80, 80));
+										Constants.APP_PREFERENCES_BUTTON_JUMP_SIZE,
+										-1)));
+				buttonFire
+						.setLayoutParams(ControlsParams.coordinatesConfigureControls(
+								buttonFire,
+								Settings.getInt(
+										Constants.APP_PREFERENCES_BUTTON_FIRE_X, -1),
+								Settings.getInt(
+										Constants.APP_PREFERENCES_BUTTON_FIRE_Y, -1),
+								Settings.getInt(
+										Constants.APP_PREFERENCES_BUTTON_FIRE_SIZE,
+										-1), Settings.getInt(
+										Constants.APP_PREFERENCES_BUTTON_FIRE_SIZE,
+										-1)));
+				buttonMagic
+						.setLayoutParams(ControlsParams.coordinatesConfigureControls(
+								buttonMagic,
+								Settings.getInt(
+										Constants.APP_PREFERENCES_BUTTON_MAGIC_X,
+										-1),
+								Settings.getInt(
+										Constants.APP_PREFERENCES_BUTTON_MAGIC_Y,
+										-1),
+								Settings.getInt(
+										Constants.APP_PREFERENCES_BUTTON_MAGIC_SIZE,
+										-1),
+								Settings.getInt(
+										Constants.APP_PREFERENCES_BUTTON_MAGIC_SIZE,
+										-1)));
+				buttonUse
+						.setLayoutParams(ControlsParams.coordinatesConfigureControls(
+								buttonUse,
+								Settings.getInt(
+										Constants.APP_PREFERENCES_BUTTON_USE_X, -1),
+								Settings.getInt(
+										Constants.APP_PREFERENCES_BUTTON_USE_Y, -1),
+								Settings.getInt(
+										Constants.APP_PREFERENCES_BUTTON_USE_SIZE,
+										-1), Settings.getInt(
+										Constants.APP_PREFERENCES_BUTTON_USE_SIZE,
+										-1)));
 				buttonCrouch
 						.setLayoutParams(ControlsParams
 								.coordinatesConfigureControls(
@@ -783,10 +856,15 @@ public class SDLActivity extends Activity {
 												-1),
 										Settings.getInt(
 												Constants.APP_PREFERENCES_BUTTON_CROUCH_Y,
-												-1), 80, 80));
+												-1),
+										Settings.getInt(
+												Constants.APP_PREFERENCES_BUTTON_CROUCH_SIZE,
+												-1),
+										Settings.getInt(
+												Constants.APP_PREFERENCES_BUTTON_CROUCH_SIZE,
+												-1)));
 
 			}
-
 		}
 
 	}

@@ -31,10 +31,8 @@ public static RelativeLayout.LayoutParams coordinatesConfigureControls (View v,i
 	MarginLayoutParams marginParams = new MarginLayoutParams(
 			v.getLayoutParams());
 	
-	marginParams.height = CoordinatesAllScreens.getInstance()
-			.getScaledCoordinateX(height);
-	marginParams.width = CoordinatesAllScreens.getInstance()
-			.getScaledCoordinateX(width);
+	marginParams.height = height;
+	marginParams.width = width;
 	marginParams
 			.setMargins((int) x, (int) y, 0, 0);
 	RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
@@ -43,6 +41,8 @@ public static RelativeLayout.LayoutParams coordinatesConfigureControls (View v,i
 	return layoutParams;
 	
 }
+
+
 
 
 }
