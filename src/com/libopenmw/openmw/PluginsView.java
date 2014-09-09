@@ -43,7 +43,8 @@ public class PluginsView extends Activity {
 			e.printStackTrace();
 		}
 		File sdCardRoot = Environment.getExternalStorageDirectory();
-		File yourDir = new File(sdCardRoot, "/morrowind/data");
+		File yourDir = new File(sdCardRoot, "/libopenmw/data");
+
 		for (File f : yourDir.listFiles()) {
 
 			if (f.isFile()) {
@@ -51,7 +52,136 @@ public class PluginsView extends Activity {
 				check = false;
 				FilesData data = new FilesData();
 				String[] esp = f.getName().split("\\.");
-				if (esp[1].equals("esm") || esp[1].equals("esp")) {
+				if (f.getName().equals("Morrowind.esm")) {
+
+					try {
+						int i = 0;
+						while (i < loadedFileCheck.size() && check == false) {
+							if (loadedFileCheck.get(i).name.equals(f.getName()))
+								check = true;
+							else
+								check = false;
+							i++;
+						}
+						if (check == false) {
+							data.name = f.getName();
+							data.nameBsa = esp[0] + ".bsa";
+							FileRW.savetofile(data);
+						}
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+
+		}
+
+		for (File f : yourDir.listFiles()) {
+
+			if (f.isFile()) {
+
+				check = false;
+				FilesData data = new FilesData();
+				String[] esp = f.getName().split("\\.");
+				if (f.getName().equals("Bloodmoon.esm")) {
+
+					try {
+						int i = 0;
+						while (i < loadedFileCheck.size() && check == false) {
+							if (loadedFileCheck.get(i).name.equals(f.getName()))
+								check = true;
+							else
+								check = false;
+							i++;
+						}
+						if (check == false) {
+							data.name = f.getName();
+							data.nameBsa = esp[0] + ".bsa";
+							FileRW.savetofile(data);
+						}
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+
+		}
+		for (File f : yourDir.listFiles()) {
+
+			if (f.isFile()) {
+
+				check = false;
+				FilesData data = new FilesData();
+				String[] esp = f.getName().split("\\.");
+				if (f.getName().equals("Tribunal.esm")) {
+
+					try {
+						int i = 0;
+						while (i < loadedFileCheck.size() && check == false) {
+							if (loadedFileCheck.get(i).name.equals(f.getName()))
+								check = true;
+							else
+								check = false;
+							i++;
+						}
+						if (check == false) {
+							data.name = f.getName();
+							data.nameBsa = esp[0] + ".bsa";
+							FileRW.savetofile(data);
+						}
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+
+		}
+
+		for (File f : yourDir.listFiles()) {
+
+			if (f.isFile()) {
+
+				check = false;
+				FilesData data = new FilesData();
+				String[] esp = f.getName().split("\\.");
+				if (esp[1].equals("esm")
+						&& !f.getName().equals("Bloodmoon.esm")
+						&& !f.getName().equals("Morrowind.esm") && !f.getName().equals("Tribunal.esm")) {
+
+					try {
+						int i = 0;
+						while (i < loadedFileCheck.size() && check == false) {
+							if (loadedFileCheck.get(i).name.equals(f.getName()))
+								check = true;
+							else
+								check = false;
+							i++;
+						}
+						if (check == false) {
+							data.name = f.getName();
+							data.nameBsa = esp[0] + ".bsa";
+							FileRW.savetofile(data);
+						}
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+
+		}
+
+		for (File f : yourDir.listFiles()) {
+
+			if (f.isFile()) {
+
+				check = false;
+				FilesData data = new FilesData();
+				String[] esp = f.getName().split("\\.");
+				if (esp[1].equals("esp")) {
 
 					try {
 						int i = 0;
@@ -103,14 +233,14 @@ public class PluginsView extends Activity {
 			e.printStackTrace();
 		}
 		FileWriter writer = new FileWriter(
-				"/sdcard/morrowind/openmw/openmw.cfg");
+				"/sdcard/libopenmw/openmw/openmw.cfg");
 
 		int i = 0;
 		while (i < plugins.size()) {
 
 			if (plugins.get(i).enabled == 1) {
 				writer.write("content= " + plugins.get(i).name + "\n");
-				writer.write("archive= " + plugins.get(i).nameBsa + "\n");
+				writer.write("fallback-archive= " + plugins.get(i).nameBsa + "\n");
 
 				writer.flush();
 			}
@@ -118,9 +248,9 @@ public class PluginsView extends Activity {
 
 		}
 		writer.close();
-		Toast toast = Toast.makeText(getApplicationContext(), 
-				   "Saving done", Toast.LENGTH_LONG); 
-				toast.show();
+		Toast toast = Toast.makeText(getApplicationContext(), "Saving done",
+				Toast.LENGTH_LONG);
+		toast.show();
 	}
 
 	public class Adapter implements ListAdapter

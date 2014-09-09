@@ -1,0 +1,142 @@
+
+[GUI]
+menu transparency = 0.84
+subtitles = false
+tooltip delay = 0
+
+[Game]
+best attack = false
+difficulty = 0
+
+[General]
+anisotropy = 4
+field of view = 55
+num mipmaps = 8
+texture filtering = anisotropic
+shader mode = glsles
+
+[HUD]
+crosshair = true
+fps = 0
+
+[Input]
+always run = false
+camera sensitivity = 0.05
+camera y multiplier = 2
+grab cursor = true
+invert y axis = false
+ui sensitivity = 1.0
+ui y multiplier = 1.0
+
+[Objects]
+num lights = 8
+shaders = true
+use static geometry = true
+
+[Saves]
+autosave = true
+
+[Shadows]
+actor shadows = true
+debug = false
+enabled = false
+fade start = 0.8
+misc shadows = true
+shadow distance = 1300
+split = false
+split shadow distance = 14000
+statics shadows = true
+terrain shadows = true
+texture size = 1024
+
+[Sound]
+footsteps volume = 0.15
+master volume = 1.0
+music volume = 0.4
+sfx volume = 1.0
+voice volume = 1.0
+
+[Terrain]
+distant land = false
+shader = true
+
+[Video]
+antialiasing = Off
+fullscreen = false
+minimize on focus loss = true
+opengl rtt mode = FBO
+render system = OpenGL ES 2.x Rendering Subsystem
+resolution x = 800
+resolution y = 600
+screen = 0
+vsync = false
+
+[Viewing distance]
+fog end factor = 1.0
+fog start factor = 0.5
+limit small object distance = false
+max viewing distance = 5600
+small object distance = 3500
+small object size = 250
+
+[Water]
+reflect actors = false
+reflect statics = false
+reflect terrain = true
+refraction = false
+rtt size = 512
+shader = false
+
+[Windows]
+alchemy h = 0.5
+alchemy w = 0.5
+alchemy x = 0.25
+alchemy y = 0.25
+barter h = 0.375
+barter w = 0.75
+barter x = 0.25
+barter y = 0
+companion h = 0.375
+companion w = 0.75
+companion x = 0.25
+companion y = 0
+console h = 0.5
+console w = 1
+console x = 0
+console y = 0
+container h = 0.375
+container w = 0.75
+container x = 0.25
+container y = 0
+dialogue h = 0.810
+dialogue w = 0.810
+dialogue x = 0.095
+dialogue y = 0.095
+inventory barter h = 0.5725
+inventory barter w = 0.6225
+inventory barter x = 0
+inventory barter y = 0.4275
+inventory companion h = 0.5725
+inventory companion w = 0.6225
+inventory companion x = 0
+inventory companion y = 0.4275
+inventory container h = 0.5725
+inventory container w = 0.6225
+inventory container x = 0
+inventory container y = 0.4275
+inventory h = 0.5725
+inventory w = 0.6225
+inventory x = 0
+inventory y = 0.4275
+map h = 0.5725
+map w = 0.375
+map x = 0.625
+map y = 0
+spells h = 0.5725
+spells w = 0.375
+spells x = 0.3775
+spells y = 0.4275
+stats h = 0.4275
+stats w = 0.375
+stats x = 0
+stats y = 0

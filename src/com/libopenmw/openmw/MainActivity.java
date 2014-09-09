@@ -137,7 +137,7 @@ public class MainActivity extends Activity {
 		button4.setOnClickListener(new View.OnClickListener() {
 			@SuppressLint("InlinedApi")
 			public void onClick(View v) {
-				copyFileOrDir("openmw");
+				copyFileOrDir("libopenmw");
 
 				Toast toast = Toast.makeText(getApplicationContext(),
 						"files are copied", Toast.LENGTH_LONG);
