@@ -287,6 +287,8 @@ public class ConfigureControls extends Activity {
 			setAlphaToSharedPreferences(
 					Constants.APP_PREFERENCES_BUTTON_WAIT_OPACITY, (float) 0.5);
 			setAlphaToSharedPreferences(
+					Constants.APP_PREFERENCES_BUTTON_CONSOLE_OPACITY, (float) 0.5);
+			setAlphaToSharedPreferences(
 					Constants.APP_PREFERENCES_BUTTON_TOUCH_OPACITY, (float) 0.5);
 			setAlphaToSharedPreferences(
 					Constants.APP_PREFERENCES_BUTTON_DIARY_OPACITY, (float) 0.5);
