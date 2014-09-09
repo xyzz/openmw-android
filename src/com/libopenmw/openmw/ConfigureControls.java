@@ -114,57 +114,7 @@ public class ConfigureControls extends Activity {
 				switch (event.getAction()) {
 				case MotionEvent.ACTION_DOWN:
 					buttonOpacityFlag = false;
-					if (buttonFlag == 1)
-						buttonRun
-								.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_RUN_OPACITY));
-					else if (buttonFlag == 2)
-						buttonConsole
-								.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_CONSOLE_OPACITY));
-					else if (buttonFlag == 3)
-						buttonChangePerson
-								.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_CHANGEPERSON_OPACITY));
-					else if (buttonFlag == 4)
-						buttonWait
-								.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_WAIT_OPACITY));
-					else if (buttonFlag == 5)
-						buttonTouch
-								.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_TOUCH_OPACITY));
-					else if (buttonFlag == 6)
-						buttonDiary
-								.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_DIARY_OPACITY));
-					else if (buttonFlag == 7)
-						buttonPause
-								.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_PAUSE_OPACITY));
-					if (buttonFlag == 8)
-						buttonLoad
-								.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_LOAD_OPACITY));
-					else if (buttonFlag == 9)
-						buttonSave
-								.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_SAVE_OPACITY));
-					else if (buttonFlag == 10)
-						buttonWeapon
-								.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_WEAPON_OPACITY));
-					else if (buttonFlag == 11)
-						buttonInventory
-								.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_INVENTORY_OPACITY));
-					else if (buttonFlag == 12)
-						buttonJump
-								.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_JUMP_OPACITY));
-					else if (buttonFlag == 13)
-						buttonFire
-								.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_FIRE_OPACITY));
-					else if (buttonFlag == 14)
-						buttonMagic
-								.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_MAGIC_OPACITY));
-					else if (buttonFlag == 15)
-						buttonUse
-								.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_USE_OPACITY));
-					else if (buttonFlag == 16)
-						buttonCrouch
-								.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_CROUCH_OPACITY));
-					else if (buttonFlag == 17)
-						joystick.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_JOYSTICK_OPACITY));
-
+					setButtonsOpacity();
 					return true;
 				case MotionEvent.ACTION_UP:
 
@@ -180,57 +130,7 @@ public class ConfigureControls extends Activity {
 				switch (event.getAction()) {
 				case MotionEvent.ACTION_DOWN:
 					buttonOpacityFlag = true;
-					if (buttonFlag == 1)
-						buttonRun
-								.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_RUN_OPACITY));
-					else if (buttonFlag == 2)
-						buttonConsole
-								.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_CONSOLE_OPACITY));
-					else if (buttonFlag == 3)
-						buttonChangePerson
-								.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_CHANGEPERSON_OPACITY));
-					else if (buttonFlag == 4)
-						buttonWait
-								.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_WAIT_OPACITY));
-					else if (buttonFlag == 5)
-						buttonTouch
-								.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_TOUCH_OPACITY));
-					else if (buttonFlag == 6)
-						buttonDiary
-								.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_DIARY_OPACITY));
-					else if (buttonFlag == 7)
-						buttonPause
-								.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_PAUSE_OPACITY));
-					if (buttonFlag == 8)
-						buttonLoad
-								.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_LOAD_OPACITY));
-					else if (buttonFlag == 9)
-						buttonSave
-								.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_SAVE_OPACITY));
-					else if (buttonFlag == 10)
-						buttonWeapon
-								.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_WEAPON_OPACITY));
-					else if (buttonFlag == 11)
-						buttonInventory
-								.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_INVENTORY_OPACITY));
-					else if (buttonFlag == 12)
-						buttonJump
-								.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_JUMP_OPACITY));
-					else if (buttonFlag == 13)
-						buttonFire
-								.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_FIRE_OPACITY));
-					else if (buttonFlag == 14)
-						buttonMagic
-								.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_MAGIC_OPACITY));
-					else if (buttonFlag == 15)
-						buttonUse
-								.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_USE_OPACITY));
-					else if (buttonFlag == 16)
-						buttonCrouch
-								.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_CROUCH_OPACITY));
-					else if (buttonFlag == 17)
-						joystick.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_JOYSTICK_OPACITY));
-
+					setButtonsOpacity();
 					return true;
 				case MotionEvent.ACTION_UP:
 
@@ -323,7 +223,7 @@ public class ConfigureControls extends Activity {
 			buttonWeapon.setAlpha((float) 0.5);
 			buttonInventory.setAlpha((float) 0.5);
 			buttonLoad.setAlpha((float) 0.5);
-			
+
 			buttonSave.setAlpha((float) 0.5);
 			buttonPause.setAlpha((float) 0.5);
 			buttonDiary.setAlpha((float) 0.5);
@@ -677,5 +577,59 @@ public class ConfigureControls extends Activity {
 		Editor editor = Settings.edit();
 		editor.putFloat(name, opacity);
 		editor.apply();
+	}
+
+	public void setButtonsOpacity() {
+		if (buttonFlag == 1)
+			buttonRun
+					.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_RUN_OPACITY));
+		else if (buttonFlag == 2)
+			buttonConsole
+					.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_CONSOLE_OPACITY));
+		else if (buttonFlag == 3)
+			buttonChangePerson
+					.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_CHANGEPERSON_OPACITY));
+		else if (buttonFlag == 4)
+			buttonWait
+					.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_WAIT_OPACITY));
+		else if (buttonFlag == 5)
+			buttonTouch
+					.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_TOUCH_OPACITY));
+		else if (buttonFlag == 6)
+			buttonDiary
+					.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_DIARY_OPACITY));
+		else if (buttonFlag == 7)
+			buttonPause
+					.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_PAUSE_OPACITY));
+		if (buttonFlag == 8)
+			buttonLoad
+					.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_LOAD_OPACITY));
+		else if (buttonFlag == 9)
+			buttonSave
+					.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_SAVE_OPACITY));
+		else if (buttonFlag == 10)
+			buttonWeapon
+					.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_WEAPON_OPACITY));
+		else if (buttonFlag == 11)
+			buttonInventory
+					.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_INVENTORY_OPACITY));
+		else if (buttonFlag == 12)
+			buttonJump
+					.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_JUMP_OPACITY));
+		else if (buttonFlag == 13)
+			buttonFire
+					.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_FIRE_OPACITY));
+		else if (buttonFlag == 14)
+			buttonMagic
+					.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_MAGIC_OPACITY));
+		else if (buttonFlag == 15)
+			buttonUse
+					.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_USE_OPACITY));
+		else if (buttonFlag == 16)
+			buttonCrouch
+					.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_CROUCH_OPACITY));
+		else if (buttonFlag == 17)
+			joystick.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_JOYSTICK_OPACITY));
+
 	}
 }
