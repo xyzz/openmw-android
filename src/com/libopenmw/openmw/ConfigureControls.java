@@ -322,6 +322,8 @@ public class ConfigureControls extends Activity {
 			buttonJump.setAlpha((float) 0.5);
 			buttonWeapon.setAlpha((float) 0.5);
 			buttonInventory.setAlpha((float) 0.5);
+			buttonLoad.setAlpha((float) 0.5);
+			
 			buttonSave.setAlpha((float) 0.5);
 			buttonPause.setAlpha((float) 0.5);
 			buttonDiary.setAlpha((float) 0.5);

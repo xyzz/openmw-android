@@ -191,7 +191,6 @@ public class SDLActivity extends Activity {
 				}
 			});
 
-
 			final ImageButton buttonConsole = (ImageButton) findViewById(R.id.buttonconsole);
 
 			buttonConsole.setOnTouchListener(new View.OnTouchListener() {
@@ -213,7 +212,6 @@ public class SDLActivity extends Activity {
 					return false;
 				}
 			});
-
 
 			final ImageButton buttonChangePerson = (ImageButton) findViewById(R.id.buttonchangeperson);
 
@@ -237,7 +235,6 @@ public class SDLActivity extends Activity {
 				}
 			});
 
-
 			final ImageButton buttonWait = (ImageButton) findViewById(R.id.buttonwait);
 
 			buttonWait.setOnTouchListener(new View.OnTouchListener() {
@@ -259,7 +256,6 @@ public class SDLActivity extends Activity {
 					return false;
 				}
 			});
-
 
 			final Button buttonTouch = (Button) findViewById(R.id.buttontouch);
 			final TouchCamera touch = (TouchCamera) findViewById(R.id.superTouch);
@@ -295,7 +291,6 @@ public class SDLActivity extends Activity {
 				}
 			});
 
-
 			final ImageButton buttonPause = (ImageButton) findViewById(R.id.buttonpause);
 
 			buttonPause.setOnTouchListener(new View.OnTouchListener() {
@@ -317,7 +312,6 @@ public class SDLActivity extends Activity {
 					return false;
 				}
 			});
-
 
 			final ImageButton buttonLoad = (ImageButton) findViewById(R.id.buttonsuperload);
 
@@ -385,7 +379,6 @@ public class SDLActivity extends Activity {
 				}
 			});
 
-
 			final ImageButton buttonInventory = (ImageButton) findViewById(R.id.buttoninventory);
 
 			buttonInventory.setOnTouchListener(new View.OnTouchListener() {
@@ -407,7 +400,6 @@ public class SDLActivity extends Activity {
 					return false;
 				}
 			});
-
 
 			final ImageButton buttonJump = (ImageButton) findViewById(R.id.buttonsuperjump);
 
@@ -431,7 +423,6 @@ public class SDLActivity extends Activity {
 				}
 			});
 
-
 			final ImageButton buttonFire = (ImageButton) findViewById(R.id.buttonFire);
 
 			buttonFire.setOnTouchListener(new View.OnTouchListener() {
@@ -453,7 +444,6 @@ public class SDLActivity extends Activity {
 					return false;
 				}
 			});
-
 
 			final ImageButton buttonMagic = (ImageButton) findViewById(R.id.buttonMagic);
 
@@ -477,7 +467,6 @@ public class SDLActivity extends Activity {
 				}
 			});
 
-
 			final ImageButton buttonCrouch = (ImageButton) findViewById(R.id.buttoncrouch);
 
 			buttonCrouch.setOnTouchListener(new View.OnTouchListener() {
@@ -500,7 +489,6 @@ public class SDLActivity extends Activity {
 				}
 			});
 
-		
 			final ImageButton buttonDiary = (ImageButton) findViewById(R.id.buttonDiary);
 
 			buttonDiary.setOnTouchListener(new View.OnTouchListener() {
@@ -523,7 +511,6 @@ public class SDLActivity extends Activity {
 				}
 			});
 
-		
 			final ImageButton buttonUse = (ImageButton) findViewById(R.id.buttonUse);
 
 			buttonUse.setOnTouchListener(new View.OnTouchListener() {
@@ -546,7 +533,6 @@ public class SDLActivity extends Activity {
 				}
 			});
 
-		
 			if (controlsFlag == -1 || controlsFlag == 1) {
 				joystick.setLayoutParams(ControlsParams.coordinates(joystick,
 						20, 400, 250, 250));
@@ -562,6 +548,7 @@ public class SDLActivity extends Activity {
 				buttonWeapon.setAlpha((float) 0.5);
 				buttonInventory.setAlpha((float) 0.5);
 				buttonSave.setAlpha((float) 0.5);
+				buttonLoad.setAlpha((float) 0.5);
 				buttonPause.setAlpha((float) 0.5);
 				buttonDiary.setAlpha((float) 0.5);
 				buttonTouch.setAlpha((float) 0.5);
