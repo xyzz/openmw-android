@@ -68,7 +68,7 @@ public class Controls extends View {
 	
 		handlePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		//handlePaint.setColor(Color.argb(90, 255, 255, 255));
-		handlePaint.setColor(Color.LTGRAY);
+		handlePaint.setColor(Color.DKGRAY);
 			handlePaint.setStrokeWidth(1);
 		handlePaint.setStyle(Paint.Style.FILL_AND_STROKE);
 
