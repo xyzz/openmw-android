@@ -35,33 +35,30 @@ https://github.com/MyGUI/mygui
 
 Then you should add PATH for crystax ndk and google sdk.
 you should copy this library 
-<syntaxhighlight lang="bash"> 
+
 android-ndk-r8-crystax-1/sources/crystax/libs/armeabi-v7a/libcrystax.so
-</syntaxhighlight>
+
 and
-<syntaxhighlight lang="bash"> 
+
 android-ndk-r8-crystax-1/sources/crystax/libs/armeabi-v7a/libcrystax.a
-</syntaxhighlight>
+
 to path 
-<syntaxhighlight lang="bash"> 
 android-ndk-r8-crystax-1/sources/cxx-stl/gnu-libstdc++/4.7/libs/armeabi-v7a
 /android-ndk-r8-crystax-1/toolchains/arm-linux-androideabi-4.7/prebuilt/linux-x86/lib/gcc/arm-linux-androideabi/4.7
 /android-ndk-r8-crystax-1/toolchains/arm-linux-androideabi-4.7/prebuilt/linux-x86/lib/gcc/arm-linux-androideabi/4.7/armv7-a
-</syntaxhighlight>
 if you not do it, you will not be able to build anything
+
 ==== Building Boost ====
 For building boost I used it. You must build Ogre with Boost!
 https://github.com/MysticTreeGames/Boost-for-Android
 Build boost with crystax ndk had problems, so here modified scripts
- https://github.com/OpenMW/eclipse-project/tree/master/jni/Boost-for-Android-master
+https://github.com/OpenMW/eclipse-project/tree/master/jni/Boost-for-Android-master
 
 ==== Building Freetype ====
 Then you must build freetype
 http://www.freetype.org/
 For example like this
-<syntaxhighlight lang="bash">
 cmake /home/sylar/freetype -DCMAKE_TOOLCHAIN_FILE=/home/sylar/android-cmake-master/android.toolchain.cmake -DANDROID_NATIVE_API_LEVEL=14
-</syntaxhighlight>
 
 ==== Building Freeimage ====
 Then you must build freeimage. I used this tutorial for building.
@@ -75,23 +72,20 @@ So I put the source code with the modified code here.
 https://github.com/OpenMW/eclipse-project/tree/master/jni/Freeimage/jni
 
 Since my phone supports architecture armeabi-v7a I used this architecture for building. For example.
-<syntaxhighlight lang="bash">
 ndk-build APP_PLATFORM=android-14 APP_ABI=armeabi-v7a
-</syntaxhighlight>
 ==== Building Ogre3D ====
 Next you must build ogre from source. I build ogre 1.9 with this tutorial.
 
 http://www.ogre3d.org/tikiwiki/tiki-index.php?page=CMake+Quick+Start+Guide&tikiversion=Android
 
 Next you must add it
-<syntaxhighlight lang="cpp">
+
 if((opt = miscParams->find("externalSurface")) != end)
 {
   mSurface = (EGLSurface*)(Ogre::StringConverter::parseInt(opt->second));
 }
-</syntaxhighlight>
 and it
-<syntaxhighlight lang="cpp">
+
 if (!mEglConfig)
 {
   _createInternalResources(mWindow, config);
@@ -100,12 +94,10 @@ if (!mEglConfig)
         
 mEglDisplay = mGLSupport->getGLDisplay();
 
-</syntaxhighlight>
 To
 /sinbad-ogre-7c776867621e/RenderSystems/GLES2/src/EGL/Android/OgreAndroidEGLWindow.cpp
 
 Next you must comment this 
-<syntaxhighlight lang="cpp">
  else if (mSoftwareMipmap)
         {
 /*
@@ -148,17 +140,14 @@ Next you must comment this
                             "GLES2TextureBuffer::upload");
             }
 */
-</syntaxhighlight>
 in
 /home/sylar/sinbad-ogre-/RenderSystems/GLES2/src/OgreGLES2HardwarePixelBuffer.cpp
 If you  not do it, the locations in game will not be loaded .
 
 Also in Ogre 1.9 forgot to add this line to  cmake file
-<syntaxhighlight lang="cmake">
 if(ANDROID)
   set(CMAKE_FIND_ROOT_PATH ${OGRE_DEPENDENCIES_DIR} "${CMAKE_FIND_ROOT_PATH}")
 endif()
-</syntaxhighlight>
 
 
 ==== Building MyGUI ====
@@ -179,12 +168,12 @@ http://repo.or.cz/w/openal-soft/android.git
 Note: Qt is only used by the launcher and OpenCS, and can be skipped.
 To build Qt 4.8 for android:
 http://necessitas.kde.org/ I used this tutorial for building: https://community.kde.org/Necessitas/CompileQtFramework
+
 ==== Building FFmpeg ====
 Then you must build ffmpeg . Important! You must use ffmpeg 1.26: 
 tutorial how to build ffmpeg for android
 http://www.roman10.net/how-to-build-ffmpeg-with-ndk-r9/
 my script for build
-syntaxhighlight lang="bash"> 
 ./configure \
     --prefix=$(pwd)/android/$CPU  \
     --enable-shared \
@@ -204,7 +193,6 @@ syntaxhighlight lang="bash">
     --sysroot=/home/sylar/android-ndk-r8-crystax-1/platforms/android-14/arch-arm \
     --extra-cflags="-Os -fpic $ADDI_CFLAGS" \
     --extra-ldflags="$ADDI_LDFLAGS"
-</syntaxhighlight>
     
 ==== Building SDL2 ====
 Then you must build SDL2: https://www.libsdl.org/hg.php
@@ -228,19 +216,14 @@ https://github.com/OpenMW/eclipse-project/tree/master/libs
 it is used by ogre to determine the parameters  processor
 and build openmw like this
 
-<syntaxhighlight lang="cmake">
 cmake /home/sylar/openmw -DCMAKE_TOOLCHAIN_FILE=/home/sylar/android-cmake-master/android.toolchain.cmake 
 -DOPENMW_DEPENDENCIES_DIR=/home/sylar/AndroidDependencies -DANDROID_NATIVE_API_LEVEL=14
-</syntaxhighlight>
+
 In building, you will have bug with pthread library .
 I solved this problem as follows . I found this file
-<syntaxhighlight lang="bash">
 /home/sylar/openmw21/apps/openmw/CMakeFiles/openmw.dir/link.txt
-</syntaxhighlight>
 and change -lpthread on -pthread
 After builing openmw library, you must copy all the libraries to libs folder in the  java project folder
 for example :
-<syntaxhighlight lang="bash">
  /home/sylar/SDL/android-project/libs/armeabi-v7a
-</syntaxhighlight>
 Then you must import this java project in eclipse , which included with the android sdk
