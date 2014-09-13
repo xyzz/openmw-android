@@ -227,3 +227,5 @@ After builing openmw library, you must copy all the libraries to libs folder in 
 for example :
  /home/sylar/SDL/android-project/libs/armeabi-v7a
 Then you must import this java project in eclipse , which included with the android sdk
+And last thing . You must add line  filtering linear linear none to texture_unit diffuse_Map in file objects.mat 
+If you not do it you will have a black screen in the game
