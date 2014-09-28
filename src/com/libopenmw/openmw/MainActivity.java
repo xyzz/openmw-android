@@ -146,7 +146,29 @@ public class MainActivity extends Activity {
 			@SuppressLint("InlinedApi")
 			public void onClick(View v) {
 				linlaHeaderProgress.setVisibility(View.VISIBLE);
-				copyFileOrDir("libopenmw");
+				th = new Thread(new Runnable() {
+
+					public Handler UI = new Handler() {
+						@Override
+						public void dispatchMessage(Message msg) {
+							super.dispatchMessage(msg);
+
+							linlaHeaderProgress.setVisibility(View.GONE);
+							Toast toast = Toast.makeText(
+									getApplicationContext(),
+									"files are copied", Toast.LENGTH_LONG);
+							toast.show();
+						}
+					};
+
+					@Override
+					public void run() {
+						copyFileOrDir("libopenmw");
+
+						UI.sendEmptyMessage(0);
+					}
+				});
+				th.start();
 
 			}
 
@@ -155,77 +177,30 @@ public class MainActivity extends Activity {
 	}
 
 	private void copyFileOrDir(final String path) {
-		th = new Thread(new Runnable() {
 
-		public	Handler UI = new Handler() {
-				@Override
-				public void dispatchMessage(Message msg) {
-					super.dispatchMessage(msg);
-
-					linlaHeaderProgress.setVisibility(View.GONE);
-					Toast toast = Toast.makeText(getApplicationContext(),
-							"files are copied", Toast.LENGTH_LONG);
-					toast.show();
+		AssetManager assetManager = context.getAssets();
+		String assets[] = null;
+		try {
+			assets = assetManager.list(path);
+			if (assets.length == 0) {
+				copyFile(path);
+			} else {
+				String fullPath = "/sdcard" + "/" + path;
+				File dir = new File(fullPath);
+				if (!dir.exists())
+					dir.mkdir();
+				for (int i = 0; i < assets.length; ++i) {
+					copyFileOrDir(path + "/" + assets[i]);
 				}
-			};
-
-			@Override
-			public void run() {
-				
-				
-				AssetManager assetManager = context.getAssets();
-				String assets[] = null;
-				try {
-					assets = assetManager.list(path);
-					if (assets.length == 0) {
-						copyFile(path);
-					} else {
-						String fullPath = "/sdcard" + "/" + path;
-						File dir = new File(fullPath);
-						if (!dir.exists())
-							dir.mkdir();
-						for (int i = 0; i < assets.length; ++i) {
-							copyFile1(path + "/" + assets[i]);
-						}
-					}
-				} catch (IOException ex) {
-					Log.e("tag", "I/O Exception", ex);
-				}
-			
-				UI.sendEmptyMessage(0);
 			}
-		});
-		th.start();
+		} catch (IOException ex) {
+			Log.e("tag", "I/O Exception", ex);
+		}
+
 	}
 
-	private void copyFile1(final String path) {
-
-				
-				AssetManager assetManager = context.getAssets();
-				String assets[] = null;
-				try {
-					assets = assetManager.list(path);
-					if (assets.length == 0) {
-						copyFile(path);
-					} else {
-						String fullPath = "/sdcard" + "/" + path;
-						File dir = new File(fullPath);
-						if (!dir.exists())
-							dir.mkdir();
-						for (int i = 0; i < assets.length; ++i) {
-							copyFile1(path + "/" + assets[i]);
-						}
-					}
-				} catch (IOException ex) {
-					Log.e("tag", "I/O Exception", ex);
-				}
-			}
-
-	
-
-	
 	private void copyFile(String filename) {
-		
+
 		AssetManager assetManager = this.getAssets();
 
 		InputStream in = null;
@@ -248,9 +223,6 @@ public class MainActivity extends Activity {
 		} catch (Exception e) {
 			Log.e("tag", e.getMessage());
 		}
-
-		
-		
 
 	}
 
