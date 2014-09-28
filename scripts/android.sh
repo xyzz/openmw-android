@@ -1,0 +1,86 @@
+#!/bin/bash
+
+DEST=`pwd`/build/android && rm -rf $DEST
+SOURCE=`pwd`
+
+TOOLCHAIN=/tmp/Shou
+SYSROOT=$TOOLCHAIN/sysroot
+$ANDROID_NDK/build/tools/make-standalone-toolchain.sh --toolchain=arm-linux-androideabi-4.7 \
+  --system=linux-x86 --platform=android-14 --install-dir=$TOOLCHAIN
+
+
+export PATH=$TOOLCHAIN/bin:$PATH
+export CC="ccache arm-linux-androideabi-gcc"
+export AR=arm-linux-androideabi-ar
+export LD=arm-linux-androideabi-ld
+export STRIP=arm-linux-androideabi-strip
+
+CFLAGS="-std=c99 -O3 -Wall -marm -pipe -fpic -fasm -funsafe-math-optimizations -mcpu=generic-armv7-a -mtune=generic-armv7-a -funroll-loops \
+  -march=armv7-a -mfpu=neon-vfpv4 -mfloat-abi=softfp -mvectorize-with-neon-quad \
+  -finline-limit=300 -ffast-math \
+  -fstrict-aliasing -Werror=strict-aliasing \
+  -fmodulo-sched -fmodulo-sched-allow-regmoves \
+  -Wno-psabi -Wa,--noexecstack \
+  -DANDROID"
+
+LDFLAGS="-lm -lz -Wl,--no-undefined -Wl,-z,noexecstack \
+  -Wl,--no-warn-mismatch -Wl,--fix-cortex-a8"
+
+FFMPEG_FLAGS="--target-os=linux \
+  --arch=arm \
+  --cross-prefix=arm-linux-androideabi- \
+  --enable-cross-compile \
+  --enable-static \
+  --disable-shared \
+    --disable-doc \
+    --disable-ffmpeg \
+    --disable-ffplay \
+    --disable-ffprobe \
+    --disable-ffserver \
+    --disable-doc \
+    --disable-symver \
+   --disable-armv6t2 \
+--disable-debug \
+ --disable-armv6 \
+--disable-armv5te \
+  --enable-runtime-cpudetect \
+  --enable-protocol=file \
+  --enable-protocol=rtp \
+  --enable-protocol=srtp \
+  --enable-filter=atempo \
+  --enable-filter=volume \
+  --enable-filter=aresample \
+  --enable-filter=aconvert \
+  --enable-filter=aformat \
+  --enable-muxer=rtp \
+  --enable-muxer=rtsp \
+  --enable-muxer=mpegts \
+  --enable-muxer=hls \
+  --enable-muxer=matroska \
+  --enable-muxer=mp4 \
+  --enable-muxer=mov \
+  --enable-muxer=tgp \
+  --enable-muxer=flv \
+  --enable-muxer=image2 \
+  --enable-muxer=tee \
+  --enable-encoder=mpeg4 \
+  --enable-encoder=h263p \
+  --enable-encoder=alac \
+  --enable-encoder=pcm_s16le \
+  --enable-asm \
+  --enable-version3"
+
+
+PREFIX="$DEST/neon" && mkdir -p $PREFIX
+FFMPEG_FLAGS="$FFMPEG_FLAGS --prefix=$PREFIX"
+#FFMPEG_LIB_FLAGS="-L$SSL_BUILD -L$FDK_AAC/lib -L$RTMPDUMP/librtmp -lrtmp"
+#SSL_OBJS=`find $SSL_BUILD/objs/ssl $SSL_BUILD/objs/crypto -type f -name "*.o"`
+
+./configure $FFMPEG_FLAGS --extra-cflags="$CFLAGS" --extra-ldflags="$LDFLAGS $FFMPEG_LIB_FLAGS" | tee $PREFIX/configuration.txt
+cp config.* $PREFIX
+[ $PIPESTATUS == 0 ] || exit 1
+
+make clean
+find . -name "*.o" -type f -delete
+make -j7 install || exit 1
+
