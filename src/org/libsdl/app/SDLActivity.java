@@ -184,12 +184,12 @@ public class SDLActivity extends Activity {
 					case MotionEvent.ACTION_DOWN:
 
 						// PRESSED
-						SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_Y);
+						SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_CAPS_LOCK);
 						return true; // if you want to handle the touch
 										// event
 					case MotionEvent.ACTION_UP:
 						// RELEASED
-						SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_Y);
+						SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_CAPS_LOCK);
 						return true; // if you want to handle the touch
 										// event
 					}
