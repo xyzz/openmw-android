@@ -1,45 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    >
-    
-    <Button
-        android:id="@+id/start"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Start game" />
+    android:layout_height="fill_parent" >
 
-    <CheckBox
-        android:id="@+id/checkBox1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hide onscreen buttons" />
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
 
-    <Button
-        android:id="@+id/buttoncontrols"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Configure on-screen controls" />
+        <Button
+            android:id="@+id/start"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Start game" />
 
-    <Button
-        android:id="@+id/buttonresetcontrols"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Reset on-screen controls" />
+        <CheckBox
+            android:id="@+id/checkBox1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hide onscreen buttons" />
 
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Plugins" />
-    <Button
-        android:id="@+id/buttoncopy"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Copy config files to sdcard" />
+        <Button
+            android:id="@+id/buttoncontrols"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Configure on-screen controls" />
 
-</LinearLayout>
+        <Button
+            android:id="@+id/buttonresetcontrols"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Reset on-screen controls" />
 
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Plugins" />
+
+        <Button
+            android:id="@+id/buttoncopy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Copy config files to sdcard" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linlaHeaderProgress"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center"
+        android:background="@null"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <ProgressBar
+            android:id="@+id/pbHeaderProgress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+        </ProgressBar>
+    </LinearLayout>
+
+</FrameLayout>

@@ -18,12 +18,16 @@ import android.content.res.AssetManager;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
@@ -31,7 +35,10 @@ public class MainActivity extends Activity {
 	public static Context context;
 	public static boolean contols = true;
 
+	public LinearLayout linlaHeaderProgress;
 	public SharedPreferences Settings;
+
+	public Thread th;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -41,6 +48,7 @@ public class MainActivity extends Activity {
 
 		context = this;
 
+		linlaHeaderProgress = (LinearLayout) findViewById(R.id.linlaHeaderProgress);
 		Settings = getSharedPreferences(Constants.APP_PREFERENCES,
 				Context.MODE_MULTI_PROCESS);
 
@@ -137,11 +145,8 @@ public class MainActivity extends Activity {
 		button4.setOnClickListener(new View.OnClickListener() {
 			@SuppressLint("InlinedApi")
 			public void onClick(View v) {
+				linlaHeaderProgress.setVisibility(View.VISIBLE);
 				copyFileOrDir("libopenmw");
-
-				Toast toast = Toast.makeText(getApplicationContext(),
-						"files are copied", Toast.LENGTH_LONG);
-				toast.show();
 
 			}
 
@@ -149,28 +154,78 @@ public class MainActivity extends Activity {
 
 	}
 
-	private void copyFileOrDir(String path) {
-		AssetManager assetManager = this.getAssets();
-		String assets[] = null;
-		try {
-			assets = assetManager.list(path);
-			if (assets.length == 0) {
-				copyFile(path);
-			} else {
-				String fullPath = "/sdcard" + "/" + path;
-				File dir = new File(fullPath);
-				if (!dir.exists())
-					dir.mkdir();
-				for (int i = 0; i < assets.length; ++i) {
-					copyFileOrDir(path + "/" + assets[i]);
+	private void copyFileOrDir(final String path) {
+		th = new Thread(new Runnable() {
+
+		public	Handler UI = new Handler() {
+				@Override
+				public void dispatchMessage(Message msg) {
+					super.dispatchMessage(msg);
+
+					linlaHeaderProgress.setVisibility(View.GONE);
+					Toast toast = Toast.makeText(getApplicationContext(),
+							"files are copied", Toast.LENGTH_LONG);
+					toast.show();
 				}
+			};
+
+			@Override
+			public void run() {
+				
+				
+				AssetManager assetManager = context.getAssets();
+				String assets[] = null;
+				try {
+					assets = assetManager.list(path);
+					if (assets.length == 0) {
+						copyFile(path);
+					} else {
+						String fullPath = "/sdcard" + "/" + path;
+						File dir = new File(fullPath);
+						if (!dir.exists())
+							dir.mkdir();
+						for (int i = 0; i < assets.length; ++i) {
+							copyFile1(path + "/" + assets[i]);
+						}
+					}
+				} catch (IOException ex) {
+					Log.e("tag", "I/O Exception", ex);
+				}
+			
+				UI.sendEmptyMessage(0);
 			}
-		} catch (IOException ex) {
-			Log.e("tag", "I/O Exception", ex);
-		}
+		});
+		th.start();
 	}
 
+	private void copyFile1(final String path) {
+
+				
+				AssetManager assetManager = context.getAssets();
+				String assets[] = null;
+				try {
+					assets = assetManager.list(path);
+					if (assets.length == 0) {
+						copyFile(path);
+					} else {
+						String fullPath = "/sdcard" + "/" + path;
+						File dir = new File(fullPath);
+						if (!dir.exists())
+							dir.mkdir();
+						for (int i = 0; i < assets.length; ++i) {
+							copyFile1(path + "/" + assets[i]);
+						}
+					}
+				} catch (IOException ex) {
+					Log.e("tag", "I/O Exception", ex);
+				}
+			}
+
+	
+
+	
 	private void copyFile(String filename) {
+		
 		AssetManager assetManager = this.getAssets();
 
 		InputStream in = null;
@@ -193,6 +248,9 @@ public class MainActivity extends Activity {
 		} catch (Exception e) {
 			Log.e("tag", e.getMessage());
 		}
+
+		
+		
 
 	}
 

@@ -68,8 +68,8 @@ material openmw_objects_base
             direct_texture $diffuseMap
             create_in_ffp $use_diffuse_map
             tex_coord_set $diffuseMapUVSet
-            filtering linear linear none
-        }
+            filtering linear linear none       
+ }
 
         texture_unit normalMap
         {

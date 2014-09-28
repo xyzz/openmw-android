@@ -73,15 +73,15 @@ public class SDLActivity extends Activity {
 		System.loadLibrary("SDL2");
 		System.loadLibrary("openal");
 
-		System.loadLibrary("avutil-52");
-		System.loadLibrary("avcodec-54");
-		System.loadLibrary("avformat-54");
+	//	System.loadLibrary("avutil-52");
+	//	System.loadLibrary("avcodec-54");
+	//	System.loadLibrary("avformat-54");
 
-		System.loadLibrary("swresample-0");
-		System.loadLibrary("swscale-2");
+	//	System.loadLibrary("swresample-0");
+	//	System.loadLibrary("swscale-2");
 
-		System.loadLibrary("avfilter-3");
-		System.loadLibrary("avdevice-54");
+	//	System.loadLibrary("avfilter-3");
+	//	System.loadLibrary("avdevice-54");
 
 		// System.loadLibrary("bullet");
 		// System.loadLibrary("SDL2");

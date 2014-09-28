@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<MyGUI type="Skin">
+<MyGUI type="Skin" version="3.2.1">
 
     <!-- Horizontal Scrollbar -->
 
     <Skin name="MW_HScroll" size="90 14">
-        <Property key="TrackRangeMargins" value="14 14"/>
+        <Property key="TrackRangeMargins" value="20 19"/>
         <Property key="MinTrackSize" value="14"/>
         <Property key="VerticalAlignment" value="false"/>
         <Property key="MoveToClick" value="true"/>
@@ -35,7 +35,7 @@
     </Skin>
 
     <Skin name="MW_ScrollTrackH" size="16 16" texture="textures\tx_menubook_bookmark.dds">
-        <BasisSkin type="TileRect" offset="6 0 3 16" align="Stretch">
+        <BasisSkin type="TileRect" offset="0 0 16 16" align="Stretch">
             <State name="normal" offset="70 22 16 16">
                 <Property key="TileSize" value="16 16"/>
                 <Property key="TileH" value="true"/>
@@ -47,7 +47,7 @@
     <!-- Vertical Scrollbar -->
 
     <Skin name="MW_VScroll" size="14 90">
-        <Property key="TrackRangeMargins" value="14 14"/>
+        <Property key="TrackRangeMargins" value="20 19"/>
         <Property key="MinTrackSize" value="14"/>
         <Property key="MoveToClick" value="true"/>
 
@@ -79,7 +79,8 @@
     </Skin>
 
     <Skin name="MW_ScrollTrackV" size="16 16" texture="textures\tx_menubook_bookmark.dds">
-        <BasisSkin type="TileRect" offset="0 7 16 3" align="Stretch">
+        <Property key="MinTrackSize" value="14"/>
+        <BasisSkin type="TileRect" offset="0 0 16 16" align="Stretch">
             <State name="normal" offset="68 19 16 16">
                 <Property key="TileSize" value="16 16"/>
                 <Property key="TileH" value="true"/>
@@ -98,26 +99,26 @@
     <Skin name="HeaderText" size="16 16">
         <Property key="FontName" value="Default"/>
         <Property key="TextAlign" value="Center"/>
-        <Property key="TextColour" value="0.82 0.74 0.58"/>
+        <Property key="TextColour" value="#{fontcolour=header}"/>
 
         <BasisSkin type="SimpleText" offset="0 0 16 16" align="Stretch"/>
     </Skin>
 
-    <!-- list and multilist skins -->
+    <!-- list skin -->
 
     <Skin name="MW_ListLine" size="5 5">
         <Property key="FontName" value="Default"/>
         <Property key="TextAlign" value="Left VCenter"/>
 
         <BasisSkin type="SimpleText" offset="2 0 1 5" align="Stretch">
-            <State name="disabled" colour="0.70 0.57 0.33" shift="0"/>
-            <State name="normal" colour="0.70 0.57 0.33" shift="0"/>
-            <State name="highlighted" colour="0.85 0.76 0.60" shift="0"/>
-            <State name="pushed" colour="1 1 1" shift="0"/>
-            <State name="disabled_checked" colour="0.33 0.38 0.67" shift="0"/>
-            <State name="normal_checked" colour="0.33 0.38 0.67" shift="0"/>
-            <State name="highlighted_checked" colour="0.33 0.38 0.67" shift="0"/>
-            <State name="pushed_checked" colour="0.33 0.38 0.67" shift="0"/>
+            <State name="disabled" colour="#{fontcolour=disabled}" shift="0"/>
+            <State name="normal" colour="#{fontcolour=normal}" shift="0"/>
+            <State name="highlighted" colour="#{fontcolour=normal_over}" shift="0"/>
+            <State name="pushed" colour="#{fontcolour=normal_pressed}" shift="0"/>
+            <State name="disabled_checked" colour="#{fontcolour=disabled}" shift="0"/>
+            <State name="normal_checked" colour="#{fontcolour=active}" shift="0"/>
+            <State name="highlighted_checked" colour="#{fontcolour=active_over}" shift="0"/>
+            <State name="pushed_checked" colour="#{fontcolour=active_pressed}" shift="0"/>
         </BasisSkin>
     </Skin>
 
@@ -163,32 +164,6 @@
 
         <Child type="Widget" skin="" offset="3 3 510 510" align="Top Left Stretch" name="Client"/>
 
-    </Skin>
-
-    <Skin name="MW_MultiSubList" size="516 516" align="Left Top">
-        <Property key="NeedKey" value="true"/>
-        <Property key="SkinLine" value="MW_ListLine"/>
-        <Property key="HeightLine" value="20"/>
-
-        <Child type="Widget" skin="MW_Box" offset="0 0 516 516" align="Stretch"/>
-
-        <Child type="MWScrollBar" skin="MW_VScroll" offset="498 3 14 509" align="Right VStretch" name="VScroll"/>
-
-        <Child type="Widget" skin="Default" offset="3 3 493 509" align="Stretch" name="Client"/>
-
-    </Skin>
-
-    <Skin name="MW_MultiList" size="516 516" align="Left Top">
-        <Property key="NeedKey" value="true"/>
-        <Property key="SkinButton" value="ButtonSmall"/>
-        <Property key="_SkinButtonEmpty" value="EditBox"/>
-        <Property key="HeightButton" value="20"/>
-
-        <Property key="SkinList" value="MW_MultiSubList"/>
-
-        <Child type="Widget" skin="MW_Box" offset="0 0 516 516" align="Stretch"/>
-
-        <Child type="Widget" skin="" offset="3 3 516 516" align="Stretch" name="Client"/>
     </Skin>
 
     <!-- Horizontal line -->

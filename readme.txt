@@ -4,8 +4,8 @@ eclipse-project
 ===============
 === Preparation of building environment ===
 Before you start building OpenMW on Android you have to do few steps of preparation:
-# Download Crystax NDK (because it supports wchar and long long types) from [https://www.crystax.net/android/ndk.php] 
-# Or you can try to use gogle ndk r10,
+# Download Crystax NDK from [https://www.crystax.net/android/ndk.php] 
+You can use only crystax ndk for building openmw !
 # Download and install [http://developer.android.com/sdk/index.html Google Android SDK]
 # Download [https://github.com/taka-no-me/android-cmake Cmake for Android] (it will be used for OpenMW and its dependencies compilation)
 # Java
