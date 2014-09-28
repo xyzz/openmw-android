@@ -1,5 +1,6 @@
 package org.libsdl.app;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -50,6 +51,7 @@ public class SDLActivity extends Activity {
 	public static boolean mIsPaused, mIsSurfaceReady, mHasFocus;
 	public static boolean mExitCalledFromJava;
 	public boolean enableTouch = false;
+	public boolean crouchFlag = false;
 	public boolean esc = false;
 
 	// Main components
@@ -122,6 +124,10 @@ public class SDLActivity extends Activity {
 		SDLActivity.initialize();
 		// So we can call stuff from static callbacks
 		mSingleton = this;
+
+		File inputfile = new File("/sdcard/libopenmw/data/Video/bethesda logo.bik");
+		if (inputfile.exists())
+		inputfile.delete();
 
 		// Set up the surface
 		mSurface = new SDLSurface(getApplication());
@@ -388,6 +394,7 @@ public class SDLActivity extends Activity {
 					case MotionEvent.ACTION_DOWN:
 
 						// PRESSED
+						
 						SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_L);
 						return true; // if you want to handle the touch
 										// event
@@ -431,13 +438,18 @@ public class SDLActivity extends Activity {
 					switch (event.getAction()) {
 					case MotionEvent.ACTION_DOWN:
 
+						
 						// PRESSED
 						SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_Z);
+										
+						//(MotionEvent.BUTTON_PRIMARY);
 						return true; // if you want to handle the touch
 										// event
 					case MotionEvent.ACTION_UP:
 						// RELEASED
 						SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_Z);
+							
+						//	SDLActivity.onNativeKeyUp(MotionEvent.BUTTON_PRIMARY);
 						return true; // if you want to handle the touch
 										// event
 					}
@@ -466,6 +478,7 @@ public class SDLActivity extends Activity {
 					return false;
 				}
 			});
+			crouchFlag=false;
 
 			final ImageButton buttonCrouch = (ImageButton) findViewById(R.id.buttoncrouch);
 
@@ -476,12 +489,18 @@ public class SDLActivity extends Activity {
 					case MotionEvent.ACTION_DOWN:
 
 						// PRESSED
+						if (crouchFlag==false){
 						SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_CTRL_LEFT);
+						crouchFlag=true;
+						}
+						else{
+							SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_CTRL_LEFT);
+							crouchFlag=false;
+						}
 						return true; // if you want to handle the touch
 										// event
 					case MotionEvent.ACTION_UP:
 						// RELEASED
-						SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_CTRL_LEFT);
 						return true; // if you want to handle the touch
 										// event
 					}
@@ -489,6 +508,7 @@ public class SDLActivity extends Activity {
 				}
 			});
 
+			
 			final ImageButton buttonDiary = (ImageButton) findViewById(R.id.buttonDiary);
 
 			buttonDiary.setOnTouchListener(new View.OnTouchListener() {
@@ -1650,6 +1670,7 @@ class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
 		final int touchDevId = event.getDeviceId();
 		final int pointerCount = event.getPointerCount();
 		int action = event.getActionMasked();
+		
 		int pointerFingerId;
 		int i = -1;
 		float x, y, p;
