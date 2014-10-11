@@ -188,6 +188,19 @@ RenderSystems/GLES2/src/OgreGLES2RenderSystem.cpp
 If your device based on Tegra gpu you should also use this patch for Ogre
 https://bitbucket.org/sinbad/ogre/pull-request/390/fix-for-nvidia-tegra-3-for-android
 
+And you should modified OgreAndroidEGLWindow.cpp in GLES2RenderSystem to this:
+                   eglContext = eglGetCurrentContext();
+137-               if (eglContext)
+137+               if (!eglContext)
+138                {
+140                    OGRE_EXCEPT(Exception::ERR_RENDERINGAPI_ERROR,
+141                                "currentGLContext was specified with no current GL context",
+142                                "EGLWindow::create");
+143                }
+144                
+145-               eglContext = eglGetCurrentContext();
+146                mEglSurface = eglGetCurrentSurface(EGL_DRAW)
+
 Also in Ogre 1.9 forgot to add this line to  cmake file
 if(ANDROID)
   set(CMAKE_FIND_ROOT_PATH ${OGRE_DEPENDENCIES_DIR} "${CMAKE_FIND_ROOT_PATH}")
