@@ -85,11 +85,6 @@ http://www.ogre3d.org/tikiwiki/tiki-index.php?page=CMake+Quick+Start+Guide&tikiv
 
 Next you must add it
 
-if((opt = miscParams->find("externalSurface")) != end)
-{
-  mSurface = (EGLSurface*)(Ogre::StringConverter::parseInt(opt->second));
-}
-and it
 
 if (!mEglConfig)
 {
@@ -100,7 +95,7 @@ if (!mEglConfig)
 mEglDisplay = mGLSupport->getGLDisplay();
 
 To
-/sinbad-ogre-7c776867621e/RenderSystems/GLES2/src/EGL/Android/OgreAndroidEGLWindow.cpp
+RenderSystems/GLES2/src/EGL/Android/OgreAndroidEGLWindow.cpp
 
 Next you must comment this 
  else if (mSoftwareMipmap)
@@ -146,8 +141,52 @@ Next you must comment this
             }
 */
 in
-/home/sylar/sinbad-ogre-/RenderSystems/GLES2/src/OgreGLES2HardwarePixelBuffer.cpp
+RenderSystems/GLES2/src/OgreGLES2HardwarePixelBuffer.cpp
 If you  not do it, the locations in game will not be loaded .
+
+Next you must change Eglcontext in function 
+::EGLContext EGLSupport::createNewContext(EGLDisplay eglDisplay,
+					      ::EGLConfig glconfig,
+                                              ::EGLContext shareList) const 
+if file
+/RenderSystems/GLES2/src/EGL/OgreEGLSupport.cpp
+from 
+ context = eglCreateContext(mGLDisplay, glconfig, shareList, contextAttrs);
+ context = eglCreateContext(mGLDisplay, glconfig, 0, contextAttrs);
+to
+context = eglGetCurrentContext(); .
+Next you must comment this lines in
+RenderSystems/GLES2/src/OgreGLES2RenderSystem.cpp
+/*
+        if (mGLSupport->checkExtension("GL_IMG_texture_compression_pvrtc") ||
+            mGLSupport->checkExtension("GL_EXT_texture_compression_dxt1") ||
+            mGLSupport->checkExtension("GL_EXT_texture_compression_s3tc") ||
+            mGLSupport->checkExtension("GL_OES_compressed_ETC1_RGB8_texture") ||
+            mGLSupport->checkExtension("GL_AMD_compressed_ATC_texture"))
+        {
+            rsc->setCapability(RSC_TEXTURE_COMPRESSION);
+
+            if(mGLSupport->checkExtension("GL_IMG_texture_compression_pvrtc") ||
+               mGLSupport->checkExtension("GL_IMG_texture_compression_pvrtc2"))
+                rsc->setCapability(RSC_TEXTURE_COMPRESSION_PVRTC);
+				
+            if(mGLSupport->checkExtension("GL_EXT_texture_compression_dxt1") && 
+               mGLSupport->checkExtension("GL_EXT_texture_compression_s3tc"))
+                rsc->setCapability(RSC_TEXTURE_COMPRESSION_DXT);
+
+            if(mGLSupport->checkExtension("GL_OES_compressed_ETC1_RGB8_texture"))
+                rsc->setCapability(RSC_TEXTURE_COMPRESSION_ETC1);
+
+            if(gleswIsSupported(3, 0))
+                rsc->setCapability(RSC_TEXTURE_COMPRESSION_ETC2);
+
+			if(mGLSupport->checkExtension("GL_AMD_compressed_ATC_texture"))
+                rsc->setCapability(RSC_TEXTURE_COMPRESSION_ATC);
+        }
+*/
+
+If your device based on Tegra gpu you should also use this patch for Ogre
+https://bitbucket.org/sinbad/ogre/pull-request/390/fix-for-nvidia-tegra-3-for-android
 
 Also in Ogre 1.9 forgot to add this line to  cmake file
 if(ANDROID)
