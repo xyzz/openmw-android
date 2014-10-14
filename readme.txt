@@ -8,6 +8,10 @@ Before you start building OpenMW on Android you have to do few steps of preparat
 # Or you can try to use gogle ndk r10,
 # Download and install [http://developer.android.com/sdk/index.html Google Android SDK]
 # Download [https://github.com/taka-no-me/android-cmake Cmake for Android] (it will be used for OpenMW and its dependencies compilation)
+# Java
+http://www.oracle.com/technetwork/java/javase/downloads/index-jsp-138363.html
+# Ant
+http://ant.apache.org/
 # Download all OpenMW dependencies, ie:
 #* Ogre 1.9 
 #https://bitbucket.org/sinbad/ogre/src/4578da5bf5b00fdf023b87e98099d647c5cb92ab?at=v1-9-0
@@ -30,6 +34,7 @@ http://www.freetype.org/
 https://github.com/MyGUI/mygui
 #* zzip
 #* zlib
+
 
 === Compilation of OpenMW dependencies ===
 
