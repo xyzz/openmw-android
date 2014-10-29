@@ -89,11 +89,10 @@ public class MainActivity extends Activity {
 			@SuppressLint("InlinedApi")
 			public void onClick(View v) {
 				Intent intent = new Intent(context, SDLActivity.class);
-
-				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				context.startActivity(intent);
 				finish();
 
+				context.startActivity(intent);
+	
 			}
 
 		});
