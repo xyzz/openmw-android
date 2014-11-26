@@ -269,6 +269,9 @@ and change -lpthread on -pthread
 After builing openmw library, you must copy all the libraries to libs folder in the  java project folder
 for example :
  /home/sylar/SDL/android-project/libs/armeabi-v7a
-Then you must import this java project in eclipse , which included with the android sdk
-And last thing . You must add line  filtering linear linear none to texture_unit diffuse_Map in file objects.mat 
-If you not do it you will have a black screen in the game
+Then you must import this java project in eclipse , which included with the android sdk.
+Also you need to import the configuration files openmw.
+If you want mipmapping worked on the textures, then you must rebuild  mipmaps on all textures .
+The easiest way to use this program
+http://www.nexusmods.com/skyrim/mods/12801
+
