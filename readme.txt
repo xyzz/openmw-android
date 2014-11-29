@@ -4,8 +4,8 @@ eclipse-project
 ===============
 === Preparation of building environment ===
 Before you start building OpenMW on Android you have to do few steps of preparation:
-# Download Crystax NDK from [https://www.crystax.net/android/ndk.php] 
-You can use only crystax ndk for building openmw !
+# Download google ndk from https://developer.android.com/tools/sdk/ndk/index.html 
+Openmw build without errors only on gcc 4.6
 # Download and install [http://developer.android.com/sdk/index.html Google Android SDK]
 # Download [https://github.com/taka-no-me/android-cmake Cmake for Android] (it will be used for OpenMW and its dependencies compilation)
 # Java
@@ -38,20 +38,6 @@ https://github.com/MyGUI/mygui
 
 === Compilation of OpenMW dependencies ===
 
-Then you should add PATH for crystax ndk and google sdk.
-you should copy this library 
-
-android-ndk-r8-crystax-1/sources/crystax/libs/armeabi-v7a/libcrystax.so
-
-and
-
-android-ndk-r8-crystax-1/sources/crystax/libs/armeabi-v7a/libcrystax.a
-
-to path 
-android-ndk-r8-crystax-1/sources/cxx-stl/gnu-libstdc++/4.7/libs/armeabi-v7a
-/android-ndk-r8-crystax-1/toolchains/arm-linux-androideabi-4.7/prebuilt/linux-x86/lib/gcc/arm-linux-androideabi/4.7
-/android-ndk-r8-crystax-1/toolchains/arm-linux-androideabi-4.7/prebuilt/linux-x86/lib/gcc/arm-linux-androideabi/4.7/armv7-a
-if you not do it, you will not be able to build anything
 
 ==== Building Boost ====
 For building boost I used it. You must build Ogre with Boost!
