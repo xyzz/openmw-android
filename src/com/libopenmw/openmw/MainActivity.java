@@ -35,6 +35,10 @@ public class MainActivity extends Activity {
 
 	public Thread th;
 
+	private String configsPath = "";
+	private String dataPath = "";
+	public static String JNI_PATH="";
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 
@@ -52,6 +56,26 @@ public class MainActivity extends Activity {
 		int hideControlsFlag = Settings.getInt(
 				Constants.APP_PREFERENCES_CONTROLS_FLAG, -1);
 
+		configsPath = Settings.getString(Constants.CONFIGS_PATH, "");
+
+		if (configsPath.equals("")) {
+			configsPath = "/sdcard";
+			Editor editor = Settings.edit();
+			editor.putString(Constants.CONFIGS_PATH, configsPath);
+			editor.apply();
+		}
+		
+		dataPath = Settings.getString(Constants.DATA_PATH, "");
+
+		if (dataPath.equals("")) {
+			dataPath = "/sdcard/libopenmw/data";
+			Editor editor = Settings.edit();
+			editor.putString(Constants.DATA_PATH, dataPath);
+			editor.apply();
+		}
+	
+		
+	
 		if (hideControlsFlag == -1 || hideControlsFlag == 0) {
 			Box.setChecked(false);
 			contols = true;
@@ -84,15 +108,18 @@ public class MainActivity extends Activity {
 			@SuppressLint("InlinedApi")
 			public void onClick(View v) {
 				try {
+					configsPath = Settings.getString(Constants.CONFIGS_PATH, "");
+					JNI_PATH=configsPath+"/libopenmw";
+
 					Intent intent = new Intent(context, SDLActivity.class);
 					finish();
 
 					context.startActivity(intent);
 
 				} catch (Exception e) {
-					 Toast.makeText(getApplicationContext(),
-								"Game can not be loaded", Toast.LENGTH_LONG).show();
-						
+					Toast.makeText(getApplicationContext(),
+							"Game can not be loaded", Toast.LENGTH_LONG).show();
+
 				}
 
 			}
@@ -108,12 +135,12 @@ public class MainActivity extends Activity {
 					Intent intent = new Intent(context, PluginsView.class);
 					intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 					context.startActivity(intent);
-	
+
 				} catch (Exception e) {
-					 Toast.makeText(getApplicationContext(),
-								"no data files", Toast.LENGTH_LONG).show();
+					Toast.makeText(getApplicationContext(), "no data files",
+							Toast.LENGTH_LONG).show();
 				}
-				
+
 			}
 
 		});
@@ -180,6 +207,19 @@ public class MainActivity extends Activity {
 
 		});
 
+		final Button settingsButton = (Button) findViewById(R.id.settingsbutton);
+		settingsButton.setOnClickListener(new View.OnClickListener() {
+
+			public void onClick(View v) {
+				Intent intent = new Intent(context, SettingsActivity.class);
+
+				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				context.startActivity(intent);
+
+			}
+
+		});
+
 	}
 
 	private void copyFileOrDir(final String path) {
@@ -191,7 +231,7 @@ public class MainActivity extends Activity {
 			if (assets.length == 0) {
 				copyFile(path);
 			} else {
-				String fullPath = "/sdcard" + "/" + path;
+				String fullPath =configsPath + "/" + path;
 				File dir = new File(fullPath);
 				if (!dir.exists())
 					dir.mkdir();
@@ -213,7 +253,7 @@ public class MainActivity extends Activity {
 		OutputStream out = null;
 		try {
 			in = assetManager.open(filename);
-			String newFileName = "/sdcard" + "/" + filename;
+			String newFileName = configsPath + "/" + filename;
 			out = new FileOutputStream(newFileName);
 
 			byte[] buffer = new byte[1024];

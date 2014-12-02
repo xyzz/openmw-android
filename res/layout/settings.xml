@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <Button
+        android:id="@+id/buttonsave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:onClick="savePlugins"
+        android:text="Save"
+        android:textSize="19sp" >
+        />
+    </Button>
+
+    <EditText
+        android:id="@+id/configsPath"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/buttonsave"
+        android:layout_marginLeft="17dp"
+        android:layout_marginTop="17dp"
+        android:ems="10"
+        android:inputType="textMultiLine"
+        android:text="/sdcard"
+        android:textSize="19sp" >
+
+        <requestFocus />
+    </EditText>
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/configsPath"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/buttonsave"
+        android:text="Path to configs files"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/configsPath"
+        android:layout_below="@+id/configsPath"
+        android:text="Path to game files"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/editText1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView2"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/textView2"
+        android:layout_marginTop="18dp"
+        android:ems="10"
+        android:inputType="textMultiLine"
+        android:text="/sdcard/libopenmw/data"
+        android:textSize="19sp" />
+
+</RelativeLayout>
