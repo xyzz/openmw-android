@@ -29,8 +29,6 @@ public class SettingsActivity extends Activity {
 		Settings = getSharedPreferences(Constants.APP_PREFERENCES,
 				Context.MODE_MULTI_PROCESS);
 
-		MainActivity.configsPath = Settings.getString(Constants.CONFIGS_PATH, "");
-		MainActivity.dataPath = Settings.getString(Constants.DATA_PATH, "");
 		configsText.setText(MainActivity.configsPath);
 		dataText.setText(MainActivity.dataPath);
 
@@ -46,6 +44,7 @@ public class SettingsActivity extends Activity {
 			public void onTextChanged(CharSequence s, int start, int before,
 					int count) {
 				saveToSharedPreferences(Constants.CONFIGS_PATH, s.toString());
+				MainActivity.configsPath = s.toString();
 
 			}
 		});
@@ -62,6 +61,8 @@ public class SettingsActivity extends Activity {
 			public void onTextChanged(CharSequence s, int start, int before,
 					int count) {
 				saveToSharedPreferences(Constants.DATA_PATH, s.toString());
+				MainActivity.dataPath = s.toString();
+				
 
 			}
 		});
