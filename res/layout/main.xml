@@ -48,6 +48,14 @@
             android:layout_weight="3"
             android:text="Plugins"
             android:textSize="19sp" />
+        
+        <Button
+            android:id="@+id/settingsbutton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="Settings"
+            android:textSize="19sp" />
 
         <Button
             android:id="@+id/buttoncopy"

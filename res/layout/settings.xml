@@ -16,23 +16,6 @@
         />
     </Button>
 
-    <EditText
-        android:id="@+id/configsPath"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/buttonsave"
-        android:layout_marginLeft="17dp"
-        android:layout_marginTop="17dp"
-        android:ems="10"
-        android:inputType="textMultiLine"
-        android:text="/sdcard"
-        android:textSize="19sp" >
-
-        <requestFocus />
-    </EditText>
-
     <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
@@ -59,10 +42,20 @@
         android:layout_alignLeft="@+id/textView2"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/textView2"
-        android:layout_marginTop="18dp"
-        android:ems="10"
         android:inputType="textMultiLine"
         android:text="/sdcard/libopenmw/data"
+        android:textSize="19sp" />
+
+    <EditText
+        android:id="@+id/configsPath"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/textView1"
+        android:ems="10"
+        android:inputType="textMultiLine"
+        android:text="/sdcard"
         android:textSize="19sp" />
 
 </RelativeLayout>
