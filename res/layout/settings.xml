@@ -3,26 +3,12 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
 
-    <Button
-        android:id="@+id/buttonsave"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:onClick="savePlugins"
-        android:text="Save"
-        android:textSize="19sp" >
-        />
-    </Button>
-
     <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/configsPath"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/buttonsave"
         android:text="Path to configs files"
         android:textSize="16sp" />
 

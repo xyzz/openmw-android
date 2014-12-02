@@ -35,8 +35,8 @@ public class MainActivity extends Activity {
 
 	public Thread th;
 
-	private String configsPath = "";
-	private String dataPath = "";
+	public static String configsPath = "";
+	public static String dataPath = "";
 	public static String JNI_PATH="";
 
 	@Override
