@@ -37,7 +37,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="3"
-            android:text="Reset on-screen controls" />
+            android:text="Reset on-screen controls"
+            android:textSize="19sp"
+             />
 
         <Button
             android:id="@+id/button1"

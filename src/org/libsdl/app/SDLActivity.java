@@ -16,25 +16,19 @@ import com.libopenmw.openmw.ControlsParams;
 import com.libopenmw.openmw.CoordinatesAllScreens;
 import com.libopenmw.openmw.JoystickView;
 import com.libopenmw.openmw.MainActivity;
-import com.libopenmw.openmw.MultiTouchListener;
 import com.libopenmw.openmw.R;
 import com.libopenmw.openmw.TouchCamera;
 
 import android.app.*;
-import android.app.ActionBar.LayoutParams;
 import android.content.*;
-import android.content.SharedPreferences.Editor;
 import android.view.*;
-import android.view.ViewGroup.MarginLayoutParams;
 import android.view.inputmethod.BaseInputConnection;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsoluteLayout;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
-import android.widget.RelativeLayout;
 import android.os.*;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -75,15 +69,9 @@ public class SDLActivity extends Activity {
 	// Load the .so
 	static {
 		System.loadLibrary("SDL2");
-		System.loadLibrary("openal");
+			System.loadLibrary("openal");
 
-		// System.loadLibrary("avutil-52");
-		// System.loadLibrary("avcodec-54");
-		// System.loadLibrary("avformat-54");
-
-		// System.loadLibrary("swresample-0");
-		// System.loadLibrary("swscale-2");
-
+	
 		// System.loadLibrary("avfilter-3");
 		// System.loadLibrary("avdevice-54");
 
@@ -1029,7 +1017,6 @@ public class SDLActivity extends Activity {
 		super.onDestroy();
 		// Reset everything in case the user re opens the app
 		SDLActivity.initialize();
-		finish();
 	}
 
 	@Override
@@ -1081,6 +1068,8 @@ public class SDLActivity extends Activity {
 		}
 	}
 
+	
+	
 	/* The native thread has finished */
 	public static void handleNativeExit() {
 		SDLActivity.mSDLThread = null;

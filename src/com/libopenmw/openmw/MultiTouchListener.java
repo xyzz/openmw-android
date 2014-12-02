@@ -1,7 +1,5 @@
 package com.libopenmw.openmw;
 
-import android.annotation.SuppressLint;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;

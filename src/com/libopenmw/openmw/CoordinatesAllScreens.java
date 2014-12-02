@@ -1,9 +1,5 @@
 package com.libopenmw.openmw;
 
-import android.app.Activity;
-import android.util.DisplayMetrics;
-import android.view.Display;
-
 
 
 

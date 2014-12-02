@@ -34,192 +34,199 @@ public class PluginsView extends Activity {
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.listview);
-
-		loadedFileCheck = null;
 		try {
+
+			loadedFileCheck = null;
 			loadedFileCheck = FileRW.loadFile();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		File sdCardRoot = Environment.getExternalStorageDirectory();
-		File yourDir = new File(sdCardRoot, "/libopenmw/data");
+			File sdCardRoot = Environment.getExternalStorageDirectory();
+			File yourDir = new File(sdCardRoot, "/libopenmw/data");
 
-		for (File f : yourDir.listFiles()) {
+			for (File f : yourDir.listFiles()) {
 
-			if (f.isFile()) {
+				if (f.isFile()) {
 
-				check = false;
-				FilesData data = new FilesData();
-				String[] esp = f.getName().split("\\.");
-				if (f.getName().equals("Morrowind.esm")) {
+					check = false;
+					FilesData data = new FilesData();
+					String[] esp = f.getName().split("\\.");
+					if (f.getName().equals("Morrowind.esm")) {
 
-					try {
-						int i = 0;
-						while (i < loadedFileCheck.size() && check == false) {
-							if (loadedFileCheck.get(i).name.equals(f.getName()))
-								check = true;
-							else
-								check = false;
-							i++;
+						try {
+							int i = 0;
+							while (i < loadedFileCheck.size() && check == false) {
+								if (loadedFileCheck.get(i).name.equals(f
+										.getName()))
+									check = true;
+								else
+									check = false;
+								i++;
+							}
+							if (check == false) {
+								data.name = f.getName();
+								data.nameBsa = esp[0] + ".bsa";
+								FileRW.savetofile(data);
+							}
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
 						}
-						if (check == false) {
-							data.name = f.getName();
-							data.nameBsa = esp[0] + ".bsa";
-							FileRW.savetofile(data);
-						}
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
 					}
 				}
+
 			}
 
-		}
+			for (File f : yourDir.listFiles()) {
 
-		for (File f : yourDir.listFiles()) {
+				if (f.isFile()) {
 
-			if (f.isFile()) {
+					check = false;
+					FilesData data = new FilesData();
+					String[] esp = f.getName().split("\\.");
+					if (f.getName().equals("Bloodmoon.esm")) {
 
-				check = false;
-				FilesData data = new FilesData();
-				String[] esp = f.getName().split("\\.");
-				if (f.getName().equals("Bloodmoon.esm")) {
-
-					try {
-						int i = 0;
-						while (i < loadedFileCheck.size() && check == false) {
-							if (loadedFileCheck.get(i).name.equals(f.getName()))
-								check = true;
-							else
-								check = false;
-							i++;
+						try {
+							int i = 0;
+							while (i < loadedFileCheck.size() && check == false) {
+								if (loadedFileCheck.get(i).name.equals(f
+										.getName()))
+									check = true;
+								else
+									check = false;
+								i++;
+							}
+							if (check == false) {
+								data.name = f.getName();
+								data.nameBsa = esp[0] + ".bsa";
+								FileRW.savetofile(data);
+							}
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
 						}
-						if (check == false) {
-							data.name = f.getName();
-							data.nameBsa = esp[0] + ".bsa";
-							FileRW.savetofile(data);
-						}
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
 					}
 				}
+
 			}
+			for (File f : yourDir.listFiles()) {
 
-		}
-		for (File f : yourDir.listFiles()) {
+				if (f.isFile()) {
 
-			if (f.isFile()) {
+					check = false;
+					FilesData data = new FilesData();
+					String[] esp = f.getName().split("\\.");
+					if (f.getName().equals("Tribunal.esm")) {
 
-				check = false;
-				FilesData data = new FilesData();
-				String[] esp = f.getName().split("\\.");
-				if (f.getName().equals("Tribunal.esm")) {
-
-					try {
-						int i = 0;
-						while (i < loadedFileCheck.size() && check == false) {
-							if (loadedFileCheck.get(i).name.equals(f.getName()))
-								check = true;
-							else
-								check = false;
-							i++;
+						try {
+							int i = 0;
+							while (i < loadedFileCheck.size() && check == false) {
+								if (loadedFileCheck.get(i).name.equals(f
+										.getName()))
+									check = true;
+								else
+									check = false;
+								i++;
+							}
+							if (check == false) {
+								data.name = f.getName();
+								data.nameBsa = esp[0] + ".bsa";
+								FileRW.savetofile(data);
+							}
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
 						}
-						if (check == false) {
-							data.name = f.getName();
-							data.nameBsa = esp[0] + ".bsa";
-							FileRW.savetofile(data);
-						}
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
 					}
 				}
+
 			}
 
-		}
+			for (File f : yourDir.listFiles()) {
 
-		for (File f : yourDir.listFiles()) {
+				if (f.isFile()) {
 
-			if (f.isFile()) {
+					check = false;
+					FilesData data = new FilesData();
+					String[] esp = f.getName().split("\\.");
+					if (esp[1].equals("esm")
+							&& !f.getName().equals("Bloodmoon.esm")
+							&& !f.getName().equals("Morrowind.esm")
+							&& !f.getName().equals("Tribunal.esm")) {
 
-				check = false;
-				FilesData data = new FilesData();
-				String[] esp = f.getName().split("\\.");
-				if (esp[1].equals("esm")
-						&& !f.getName().equals("Bloodmoon.esm")
-						&& !f.getName().equals("Morrowind.esm") && !f.getName().equals("Tribunal.esm")) {
-
-					try {
-						int i = 0;
-						while (i < loadedFileCheck.size() && check == false) {
-							if (loadedFileCheck.get(i).name.equals(f.getName()))
-								check = true;
-							else
-								check = false;
-							i++;
+						try {
+							int i = 0;
+							while (i < loadedFileCheck.size() && check == false) {
+								if (loadedFileCheck.get(i).name.equals(f
+										.getName()))
+									check = true;
+								else
+									check = false;
+								i++;
+							}
+							if (check == false) {
+								data.name = f.getName();
+								data.nameBsa = esp[0] + ".bsa";
+								FileRW.savetofile(data);
+							}
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
 						}
-						if (check == false) {
-							data.name = f.getName();
-							data.nameBsa = esp[0] + ".bsa";
-							FileRW.savetofile(data);
-						}
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
 					}
 				}
+
 			}
 
-		}
+			for (File f : yourDir.listFiles()) {
 
-		for (File f : yourDir.listFiles()) {
+				if (f.isFile()) {
 
-			if (f.isFile()) {
+					check = false;
+					FilesData data = new FilesData();
+					String[] esp = f.getName().split("\\.");
+					if (esp[1].equals("esp")) {
 
-				check = false;
-				FilesData data = new FilesData();
-				String[] esp = f.getName().split("\\.");
-				if (esp[1].equals("esp")) {
-
-					try {
-						int i = 0;
-						while (i < loadedFileCheck.size() && check == false) {
-							if (loadedFileCheck.get(i).name.equals(f.getName()))
-								check = true;
-							else
-								check = false;
-							i++;
+						try {
+							int i = 0;
+							while (i < loadedFileCheck.size() && check == false) {
+								if (loadedFileCheck.get(i).name.equals(f
+										.getName()))
+									check = true;
+								else
+									check = false;
+								i++;
+							}
+							if (check == false) {
+								data.name = f.getName();
+								data.nameBsa = esp[0] + ".bsa";
+								FileRW.savetofile(data);
+							}
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
 						}
-						if (check == false) {
-							data.name = f.getName();
-							data.nameBsa = esp[0] + ".bsa";
-							FileRW.savetofile(data);
-						}
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
 					}
 				}
+
 			}
 
+			loadedFile = null;
+
+			try {
+				loadedFile = FileRW.loadFile();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			context = this;
+
+			ListView listView = (ListView) findViewById(R.id.listView1);
+
+			listView.setAdapter(new Adapter());
+		} catch (Exception e) {
+			Toast.makeText(getApplicationContext(), "no data files found",
+					Toast.LENGTH_LONG).show();
+			finish();
 		}
-
-		loadedFile = null;
-
-		try {
-			loadedFile = FileRW.loadFile();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		context = this;
-
-		ListView listView = (ListView) findViewById(R.id.listView1);
-
-		listView.setAdapter(new Adapter());
 
 	}
 
@@ -240,7 +247,8 @@ public class PluginsView extends Activity {
 
 			if (plugins.get(i).enabled == 1) {
 				writer.write("content= " + plugins.get(i).name + "\n");
-				writer.write("fallback-archive= " + plugins.get(i).nameBsa + "\n");
+				writer.write("fallback-archive= " + plugins.get(i).nameBsa
+						+ "\n");
 
 				writer.flush();
 			}

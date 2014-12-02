@@ -15,8 +15,8 @@ public class TouchCamera extends View {
 
 	private Paint circlePaint;
 
-	public double[] xmas = new double[3];
-	public double[] ymas = new double[3];
+	public double[] xmas = new double[2];
+	public double[] ymas = new double[2];
 
 	public TouchCamera(Context context) {
 		super(context);
