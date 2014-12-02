@@ -14,7 +14,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="3"
             android:text="Start game"
-            android:textSize="19sp" />
+            android:textSize="34sp" />
 
         <CheckBox
             android:id="@+id/checkBox1"
@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="3"
             android:text="Hide onscreen buttons"
-            android:textSize="19sp" />
+            android:textSize="30sp" />
 
         <Button
             android:id="@+id/buttoncontrols"
@@ -30,22 +30,25 @@
             android:layout_height="wrap_content"
             android:layout_weight="3"
             android:text="Configure on-screen controls"
-            android:textSize="19sp" />
+            android:textSize="34sp" />
 
         <Button
             android:id="@+id/buttonresetcontrols"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="3"
-            android:text="Reset on-screen controls" />
+            android:text="Reset on-screen controls"
+            android:textSize="34sp" />
 
         <Button
             android:id="@+id/button1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="3"
-            android:text="Plugins"
-            android:textSize="19sp" />
+            android:text="Plugins" 
+                android:textSize="34sp"
+        
+            />
 
         <Button
             android:id="@+id/buttoncopy"
@@ -53,7 +56,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="3"
             android:text="Copy config files to sdcard"
-            android:textSize="19sp" />
+            android:textSize="34sp" />
     </LinearLayout>
 
     <LinearLayout

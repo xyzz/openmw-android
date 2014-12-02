@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="0.06"
         android:text="TextView"
-        android:textSize="19sp" />
+        android:textSize="34sp" />
 
     <TextView
         android:id="@+id/textViewenabled"
@@ -24,10 +24,11 @@
         android:text="TextView"
         android:visibility="gone" />
 
-      <TextView
+    <TextView
         android:id="@+id/textViewBsa"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
         android:visibility="gone" />
+
 </LinearLayout>
