@@ -124,7 +124,7 @@ public class SDLActivity extends Activity {
 		mSingleton = this;
 
 		File inputfile = new File(
-				"/sdcard/libopenmw/data/Video/bethesda logo.bik");
+				MainActivity.dataPath+"/Video/bethesda logo.bik");
 		if (inputfile.exists())
 			inputfile.delete();
 

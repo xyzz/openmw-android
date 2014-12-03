@@ -9,8 +9,13 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 public class SettingsActivity extends Activity {
@@ -18,6 +23,7 @@ public class SettingsActivity extends Activity {
 	private SharedPreferences Settings;
 	private EditText configsText;
 	private EditText dataText;
+	String[] data = { "win1250", "win1251", "win1252" };
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -70,6 +76,75 @@ public class SettingsActivity extends Activity {
 				MainActivity.dataPath = s.toString();
 
 			}
+		});
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+				android.R.layout.simple_spinner_item, data);
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+		final Spinner spinner = (Spinner) findViewById(R.id.spinner1);
+		spinner.setAdapter(adapter);
+		spinner.setPrompt("Encoding");
+		spinner.setSelection(Settings.getInt(Constants.SPINNER_POS, 0));
+		spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view,
+					int position, long id) {
+
+				Editor editor = Settings.edit();
+				editor.putInt(Constants.SPINNER_POS, position);
+				editor.apply();
+				try {
+					Writer.write(spinner.getSelectedItem().toString(),
+							MainActivity.configsPath
+									+ "/config/openmw/openmw.cfg", "encoding");
+
+				} catch (Exception e) {
+				}
+
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+			}
+		});
+		final CheckBox Box = (CheckBox) findViewById(R.id.checkBox1);
+
+		int hideFlag = Settings.getInt(Constants.SUBTITLES, -1);
+		if (hideFlag == -1 || hideFlag == 0) {
+			Box.setChecked(false);
+		} else if (hideFlag == 1) {
+			Box.setChecked(true);
+		}
+
+		Box.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				if (Box.isChecked()) {
+
+					Editor editor = Settings.edit();
+					editor.putInt(Constants.SUBTITLES, 1);
+					editor.apply();
+					try {
+						Writer.write("true", MainActivity.configsPath
+								+ "/config/openmw/settings.cfg", "subtitles");
+
+					} catch (Exception e) {
+					}
+
+				} else {
+					Editor editor = Settings.edit();
+					editor.putInt(Constants.SUBTITLES, 0);
+					editor.apply();
+					try {
+						Writer.write("false", MainActivity.configsPath
+								+ "/config/openmw/settings.cfg", "subtitles");
+
+					} catch (Exception e) {
+					}
+
+				}
+
+			}
+
 		});
 
 	}

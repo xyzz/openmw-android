@@ -14,14 +14,19 @@ public class Writer {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(file));
 		String line = reader.readLine();
 		StringBuilder builder = new StringBuilder();
+		boolean contains = true;
 		while (line != null) {
-			if (line.contains(value))
+			if (line.contains(value)) {
 				builder.append(value + "=" + data);
-			else
+				contains = false;
+			} else
 				builder.append(line);
 			builder.append("\n");
 			line = reader.readLine();
 		}
+		if (contains)
+			builder.append(value + "=" + data);
+
 		reader.close();
 		FileWriter writer = new FileWriter(path);
 		writer.write(builder.toString());

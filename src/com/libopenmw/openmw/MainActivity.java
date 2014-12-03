@@ -59,23 +59,23 @@ public class MainActivity extends Activity {
 		configsPath = Settings.getString(Constants.CONFIGS_PATH, "");
 
 		if (configsPath.equals("")) {
-			configsPath =Environment.getExternalStorageDirectory()+ "/libopenmw";
+			configsPath = Environment.getExternalStorageDirectory()
+					+ "/libopenmw";
 			Editor editor = Settings.edit();
 			editor.putString(Constants.CONFIGS_PATH, configsPath);
 			editor.apply();
 		}
-		
+
 		dataPath = Settings.getString(Constants.DATA_PATH, "");
 
 		if (dataPath.equals("")) {
-			dataPath =Environment.getExternalStorageDirectory()+ "/libopenmw/data";
+			dataPath = Environment.getExternalStorageDirectory()
+					+ "/libopenmw/data";
 			Editor editor = Settings.edit();
 			editor.putString(Constants.DATA_PATH, dataPath);
 			editor.apply();
 		}
-	
-		
-	
+
 		if (hideControlsFlag == -1 || hideControlsFlag == 0) {
 			Box.setChecked(false);
 			contols = true;
@@ -108,7 +108,6 @@ public class MainActivity extends Activity {
 			@SuppressLint("InlinedApi")
 			public void onClick(View v) {
 				try {
-					
 
 					Intent intent = new Intent(context, SDLActivity.class);
 					finish();
@@ -195,6 +194,9 @@ public class MainActivity extends Activity {
 
 					@Override
 					public void run() {
+						File inputfile = new File(FileRW.jsonFilePath);
+						if (inputfile.exists())
+							inputfile.delete();
 						copyFileOrDir("libopenmw");
 
 						UI.sendEmptyMessage(0);
@@ -230,7 +232,7 @@ public class MainActivity extends Activity {
 			if (assets.length == 0) {
 				copyFile(path);
 			} else {
-				String fullPath =configsPath;
+				String fullPath = configsPath;
 				File dir = new File(fullPath);
 				if (!dir.exists())
 					dir.mkdirs();
@@ -252,10 +254,10 @@ public class MainActivity extends Activity {
 		OutputStream out = null;
 		try {
 			in = assetManager.open(filename);
-			filename= filename.replace("libopenmw","" );
-			String newFileName = configsPath+filename;
+			filename = filename.replace("libopenmw", "");
+			String newFileName = configsPath + filename;
 			File tmp = new File(newFileName);
-			String dirPath=newFileName.replace(tmp.getName(), "");
+			String dirPath = newFileName.replace(tmp.getName(), "");
 			File dir = new File(dirPath);
 			if (!dir.exists())
 				dir.mkdirs();
