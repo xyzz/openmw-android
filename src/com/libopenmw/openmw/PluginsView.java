@@ -38,8 +38,8 @@ public class PluginsView extends Activity {
 
 			loadedFileCheck = null;
 			loadedFileCheck = FileRW.loadFile();
-			File sdCardRoot = Environment.getExternalStorageDirectory();
-			File yourDir = new File(sdCardRoot, "/libopenmw/data");
+//			File sdCardRoot = Environment.getExternalStorageDirectory();
+			File yourDir = new File(MainActivity.dataPath);
 
 			for (File f : yourDir.listFiles()) {
 
@@ -240,7 +240,7 @@ public class PluginsView extends Activity {
 			e.printStackTrace();
 		}
 		FileWriter writer = new FileWriter(
-				"/sdcard/libopenmw/openmw/openmw.cfg");
+				MainActivity.configsPath+"/openmw/openmw.cfg");
 
 		int i = 0;
 		while (i < plugins.size()) {

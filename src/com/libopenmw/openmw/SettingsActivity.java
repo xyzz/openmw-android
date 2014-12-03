@@ -7,6 +7,7 @@ import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -48,10 +49,15 @@ public class SettingsActivity extends Activity {
 
 			}
 		});
-		
+
 		dataText.addTextChangedListener(new TextWatcher() {
 			public void afterTextChanged(Editable s) {
+				try {
+					Writer.write(s.toString(), MainActivity.configsPath
+							+ "/config/openmw/openmw.cfg", "data");
 
+				} catch (Exception e) {
+				}
 			}
 
 			public void beforeTextChanged(CharSequence s, int start, int count,
@@ -62,11 +68,9 @@ public class SettingsActivity extends Activity {
 					int count) {
 				saveToSharedPreferences(Constants.DATA_PATH, s.toString());
 				MainActivity.dataPath = s.toString();
-				
 
 			}
 		});
-		
 
 	}
 

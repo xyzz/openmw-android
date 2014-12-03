@@ -16,7 +16,7 @@ import org.json.JSONObject;
 
 public class FileRW {
 
-	private static final String jsonFilePath = "/sdcard/libopenmw/files.json";
+	private static final String jsonFilePath = MainActivity.configsPath+"/files.json";
 	public static int pos=-1;
 
 	public static FilesData fileName;

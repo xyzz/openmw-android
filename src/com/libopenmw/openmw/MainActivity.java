@@ -16,6 +16,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.res.AssetManager;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -58,7 +59,7 @@ public class MainActivity extends Activity {
 		configsPath = Settings.getString(Constants.CONFIGS_PATH, "");
 
 		if (configsPath.equals("")) {
-			configsPath = "/sdcard/libopenmw";
+			configsPath =Environment.getExternalStorageDirectory()+ "/libopenmw";
 			Editor editor = Settings.edit();
 			editor.putString(Constants.CONFIGS_PATH, configsPath);
 			editor.apply();
@@ -67,7 +68,7 @@ public class MainActivity extends Activity {
 		dataPath = Settings.getString(Constants.DATA_PATH, "");
 
 		if (dataPath.equals("")) {
-			dataPath = "/sdcard/libopenmw/data";
+			dataPath =Environment.getExternalStorageDirectory()+ "/libopenmw/data";
 			Editor editor = Settings.edit();
 			editor.putString(Constants.DATA_PATH, dataPath);
 			editor.apply();
