@@ -3,45 +3,87 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/configsPath"
-        android:layout_alignParentRight="true"
-        android:text="Path to configs files"
-        android:textSize="16sp" />
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/configsPath"
-        android:layout_below="@+id/configsPath"
-        android:text="Path to game files"
-        android:textSize="16sp" />
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/configsPath"
+            android:layout_below="@+id/configsPath"
+            android:layout_weight="3"
+            android:text="Path to game files"
+            android:textSize="16sp" />
 
-    <EditText
-        android:id="@+id/editText1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView2"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/textView2"
-        android:inputType="textMultiLine"
-        android:text="/sdcard/libopenmw/data"
-        android:textSize="19sp" />
+        <EditText
+            android:id="@+id/configsPath"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="3.08"
+            android:inputType="textMultiLine"
+            android:text="/sdcard"
+            android:textSize="19sp" />
 
-    <EditText
-        android:id="@+id/configsPath"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/textView1"
-        android:ems="10"
-        android:inputType="textMultiLine"
-        android:text="/sdcard"
-        android:textSize="19sp" />
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/configsPath"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/buttonsave"
+            android:layout_weight="3"
+            android:text="Path to configs files"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/editText1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/textView2"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/textView2"
+            android:layout_marginTop="18dp"
+            android:layout_weight="5"
+            android:ems="10"
+            android:inputType="textMultiLine"
+            android:text="/sdcard/libopenmw/data"
+            android:textSize="19sp" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/configsPath"
+            android:layout_below="@+id/configsPath"
+            android:layout_weight="10"
+            android:text="Encoding"
+            android:textSize="16sp" />
+
+        <Spinner
+            android:id="@+id/spinner1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/editText1"
+            android:layout_weight="1" />
+
+        <CheckBox
+            android:id="@+id/checkBox1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="Show Subtitles"
+            android:textSize="19sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="80.44"
+            android:orientation="vertical" >
+        </LinearLayout>
+    </LinearLayout>
 
 </RelativeLayout>
