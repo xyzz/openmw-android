@@ -199,6 +199,15 @@ public class MainActivity extends Activity {
 							inputfile.delete();
 						copyFileOrDir("libopenmw");
 
+						try {
+							Writer.write(
+									configsPath + "/resources",
+									configsPath + "/config/openmw/settings.cfg",
+									"resources");
+
+						} catch (Exception e) {
+						}
+
 						UI.sendEmptyMessage(0);
 					}
 				});

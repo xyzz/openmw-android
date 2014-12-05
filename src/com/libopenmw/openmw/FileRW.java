@@ -119,6 +119,41 @@ public class FileRW {
 
 	}
 	
+	public static void DeleteF(List<FilesData> loadedFile,int position)
+			throws JSONException, IOException {
+
+		String file = "";
+
+		JSONArray jsonArray = new JSONArray();
+		for (int i = 0; i < loadedFile.size(); i++) {
+
+			JSONObject c;
+			c = new JSONObject();
+
+			if (i!=position)
+			{
+
+			
+			c.put("name", loadedFile.get(i).name);
+			c.put("nameBsa", loadedFile.get(i).nameBsa);
+			c.put("enabled", loadedFile.get(i).enabled);
+			jsonArray.put(c);
+			
+			}
+
+		}
+		JSONObject array = new JSONObject();
+		array.put("data_array", jsonArray);
+		file = array.toString();
+
+		FileWriter jsonFileWriter = new FileWriter(jsonFilePath);
+
+		jsonFileWriter.write(file);
+
+		jsonFileWriter.flush();
+
+	}
+	
 	public static String convertStreamToString(InputStream is)
 			throws IOException {
 		if (is != null) {

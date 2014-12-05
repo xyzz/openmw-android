@@ -12,6 +12,7 @@ import android.content.Context;
 import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,8 +39,32 @@ public class PluginsView extends Activity {
 
 			loadedFileCheck = null;
 			loadedFileCheck = FileRW.loadFile();
-//			File sdCardRoot = Environment.getExternalStorageDirectory();
+			// File sdCardRoot = Environment.getExternalStorageDirectory();
 			File yourDir = new File(MainActivity.dataPath);
+
+			for (int i = 0; i < loadedFileCheck.size(); i++) {
+				boolean deleteFlag = true;
+
+				for (File f : yourDir.listFiles() ) {
+
+					if (f.isFile()
+							&& f.getName()
+									.contains(loadedFileCheck.get(i).name) ) {
+
+						deleteFlag = false;
+				
+						
+					} else
+						if (deleteFlag!=false)
+						deleteFlag = true;
+
+				}
+				
+				if (deleteFlag){
+						FileRW.DeleteF(loadedFileCheck, i);
+				   
+				}
+			}
 
 			for (File f : yourDir.listFiles()) {
 
@@ -239,8 +264,8 @@ public class PluginsView extends Activity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		FileWriter writer = new FileWriter(
-				MainActivity.configsPath+"/openmw/openmw.cfg");
+		FileWriter writer = new FileWriter(MainActivity.configsPath
+				+ "/openmw/openmw.cfg");
 
 		int i = 0;
 		while (i < plugins.size()) {

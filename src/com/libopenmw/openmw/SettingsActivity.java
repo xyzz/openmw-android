@@ -90,13 +90,14 @@ public class SettingsActivity extends Activity {
 			public void onItemSelected(AdapterView<?> parent, View view,
 					int position, long id) {
 
-				Editor editor = Settings.edit();
-				editor.putInt(Constants.SPINNER_POS, position);
-				editor.apply();
 				try {
 					Writer.write(spinner.getSelectedItem().toString(),
 							MainActivity.configsPath
 									+ "/config/openmw/openmw.cfg", "encoding");
+					Editor editor = Settings.edit();
+					editor.putInt(Constants.SPINNER_POS, position);
+					editor.apply();
+				
 
 				} catch (Exception e) {
 				}
@@ -120,24 +121,25 @@ public class SettingsActivity extends Activity {
 			public void onClick(View v) {
 				if (Box.isChecked()) {
 
-					Editor editor = Settings.edit();
-					editor.putInt(Constants.SUBTITLES, 1);
-					editor.apply();
 					try {
 						Writer.write("true", MainActivity.configsPath
 								+ "/config/openmw/settings.cfg", "subtitles");
 
+						Editor editor = Settings.edit();
+						editor.putInt(Constants.SUBTITLES, 1);
+						editor.apply();
+					
 					} catch (Exception e) {
 					}
 
 				} else {
-					Editor editor = Settings.edit();
-					editor.putInt(Constants.SUBTITLES, 0);
-					editor.apply();
 					try {
 						Writer.write("false", MainActivity.configsPath
 								+ "/config/openmw/settings.cfg", "subtitles");
-
+						Editor editor = Settings.edit();
+						editor.putInt(Constants.SUBTITLES, 0);
+						editor.apply();
+					
 					} catch (Exception e) {
 					}
 
