@@ -15,7 +15,7 @@
             android:layout_alignLeft="@+id/configsPath"
             android:layout_below="@+id/configsPath"
             android:layout_weight="3"
-            android:text="Path to game files"
+            android:text="Path to configs files"
             android:textSize="30sp" />
 
         <EditText
@@ -35,7 +35,7 @@
             android:layout_alignParentRight="true"
             android:layout_below="@+id/buttonsave"
             android:layout_weight="3"
-            android:text="Path to configs files"
+            android:text="Path to game files"
             android:textSize="30sp" />
 
         <EditText
