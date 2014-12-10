@@ -202,7 +202,7 @@ public class MainActivity extends Activity {
 						try {
 							Writer.write(
 									configsPath + "/resources",
-									configsPath + "/config/openmw/settings.cfg",
+									configsPath + "/config/openmw/openmw.cfg",
 									"resources");
 
 						} catch (Exception e) {
