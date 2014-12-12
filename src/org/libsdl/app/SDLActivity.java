@@ -976,7 +976,10 @@ public class SDLActivity extends Activity {
 	protected void onPause() {
 		Log.v("SDL", "onPause()");
 		super.onPause();
+		
 		SDLActivity.handlePause();
+		finish();
+		
 	}
 
 	@Override
@@ -1004,6 +1007,9 @@ public class SDLActivity extends Activity {
 		SDLActivity.nativeLowMemory();
 	}
 
+
+
+
 	@Override
 	protected void onDestroy() {
 		Log.v("SDL", "onDestroy()");
@@ -1026,6 +1032,8 @@ public class SDLActivity extends Activity {
 		super.onDestroy();
 		// Reset everything in case the user re opens the app
 		SDLActivity.initialize();
+		finish();
+		
 	}
 
 	@Override
