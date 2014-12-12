@@ -36,6 +36,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.os.*;
+import android.os.Process;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.graphics.*;
@@ -975,11 +976,13 @@ public class SDLActivity extends Activity {
 	@Override
 	protected void onPause() {
 		Log.v("SDL", "onPause()");
+		finish();
+		Process.killProcess(Process.myPid());
+
 		super.onPause();
 		
 		SDLActivity.handlePause();
-		finish();
-		
+
 	}
 
 	@Override
@@ -1029,10 +1032,13 @@ public class SDLActivity extends Activity {
 			// Log.v("SDL", "Finished waiting for SDL thread");
 		}
 
+		finish();
+		Process.killProcess(Process.myPid());
+		
 		super.onDestroy();
 		// Reset everything in case the user re opens the app
 		SDLActivity.initialize();
-		finish();
+		
 		
 	}
 
