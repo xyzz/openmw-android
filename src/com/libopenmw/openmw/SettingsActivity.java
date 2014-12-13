@@ -122,7 +122,7 @@ public class SettingsActivity extends Activity {
 					int position, long id) {
 
 				try {
-					Writer.write(spinner.getSelectedItem().toString(),
+					Writer.write(spinnerMipmapping.getSelectedItem().toString(),
 							MainActivity.configsPath
 									+ "/config/openmw/settings.cfg", "texture filtering");
 					Editor editor = Settings.edit();
