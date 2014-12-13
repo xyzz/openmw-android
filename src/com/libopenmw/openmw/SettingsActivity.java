@@ -24,6 +24,7 @@ public class SettingsActivity extends Activity {
 	private EditText configsText;
 	private EditText dataText;
 	String[] data = { "win1250", "win1251", "win1252" };
+	String[] dataMipmapping = { "none", "trilinear", "bilinear","anisotropic" };
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -108,6 +109,37 @@ public class SettingsActivity extends Activity {
 			public void onNothingSelected(AdapterView<?> arg0) {
 			}
 		});
+		ArrayAdapter<String> adapterMipmapping = new ArrayAdapter<String>(this,
+				android.R.layout.simple_spinner_item, dataMipmapping);
+		adapterMipmapping.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		final Spinner spinnerMipmapping = (Spinner) findViewById(R.id.mipmappingspinner);
+		spinnerMipmapping.setAdapter(adapterMipmapping);
+		spinnerMipmapping.setPrompt("Mipmapping");
+		spinnerMipmapping.setSelection(Settings.getInt(Constants.MIPMAPPING, 0));
+		spinnerMipmapping.setOnItemSelectedListener(new OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view,
+					int position, long id) {
+
+				try {
+					Writer.write(spinner.getSelectedItem().toString(),
+							MainActivity.configsPath
+									+ "/config/openmw/settings.cfg", "texture filtering");
+					Editor editor = Settings.edit();
+					editor.putInt(Constants.MIPMAPPING, position);
+					editor.apply();
+				
+
+				} catch (Exception e) {
+				}
+
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+			}
+		});
+		
 		final CheckBox Box = (CheckBox) findViewById(R.id.checkBox1);
 
 		int hideFlag = Settings.getInt(Constants.SUBTITLES, -1);

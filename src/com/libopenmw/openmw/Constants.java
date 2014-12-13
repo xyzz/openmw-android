@@ -77,6 +77,7 @@ public class Constants {
 	public static final String DATA_PATH = "data_path";
 	public static final String SPINNER_POS = "spinner";
 	public static final String SUBTITLES = "subtitiles";
+	public static final String MIPMAPPING= "mipmapping";
 
 
 	

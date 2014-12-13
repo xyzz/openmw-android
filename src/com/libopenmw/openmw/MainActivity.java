@@ -19,6 +19,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.os.Process;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -111,7 +112,7 @@ public class MainActivity extends Activity {
 
 					Intent intent = new Intent(context, SDLActivity.class);
 					finish();
-
+				
 					context.startActivity(intent);
 
 				} catch (Exception e) {
