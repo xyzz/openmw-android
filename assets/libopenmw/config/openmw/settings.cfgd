@@ -106,7 +106,7 @@ shaders = true
 
 # Max. number of lights that affect objects. Setting to 1 will only reflect sunlight
 # Note: has no effect when shaders are turned off
-num lights = 4
+num lights = 2
 
 # Use static geometry for static objects. Improves rendering speed.
 use static geometry = true
@@ -144,7 +144,7 @@ distant land = false
 shader = true
 
 [Water]
-shader = false
+shader = true
 
 refraction = false
 
@@ -170,13 +170,12 @@ voice volume = 1.0
 grab cursor = true
 
 invert y axis = false
-camera sensitivity = 0.05
-camera y multiplier = 2
 
+camera sensitivity = 1.0
 
 ui sensitivity = 1.0
 
-
+camera y multiplier = 1.0
 
 always run = false
 

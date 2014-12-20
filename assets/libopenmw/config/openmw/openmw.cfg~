@@ -494,12 +494,12 @@ fallback=Moons_Masser_Fade_In_Start,14
 fallback=Moons_Masser_Fade_In_Finish,15
 fallback=Moons_Masser_Fade_Out_Start,7
 fallback=Moons_Masser_Fade_Out_Finish,10
-data="?global?data"
-data="?mw?Data Files"
-data=./data
-data-local="?userdata?data"
+data="/sdcard/libopenmw/data"
+data=${MORROWIND_DATA_FILES}
+encoding=win1251
 resources=/sdcard/libopenmw/resources
 script-blacklist=Museum
 script-blacklist=MockChangeScript
 script-blacklist=doortestwarp
-data="/sdcard/libopenmw/data"
+
+
