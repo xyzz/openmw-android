@@ -88,11 +88,18 @@ public class MainActivity extends Activity {
 		button.setOnClickListener(new View.OnClickListener() {
 			@SuppressLint("InlinedApi")
 			public void onClick(View v) {
-				Intent intent = new Intent(context, SDLActivity.class);
-				finish();
+				try {
+					Intent intent = new Intent(context, SDLActivity.class);
+					finish();
 
-				context.startActivity(intent);
-	
+					context.startActivity(intent);
+
+				} catch (Exception e) {
+					 Toast.makeText(getApplicationContext(),
+								"Game can not be loaded", Toast.LENGTH_LONG).show();
+						
+				}
+
 			}
 
 		});
@@ -102,11 +109,16 @@ public class MainActivity extends Activity {
 			@SuppressLint("InlinedApi")
 			public void onClick(View v) {
 
-				Intent intent = new Intent(context, PluginsView.class);
-
-				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				context.startActivity(intent);
-
+				try {
+					Intent intent = new Intent(context, PluginsView.class);
+					intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+					context.startActivity(intent);
+	
+				} catch (Exception e) {
+					 Toast.makeText(getApplicationContext(),
+								"no data files", Toast.LENGTH_LONG).show();
+				}
+				
 			}
 
 		});
