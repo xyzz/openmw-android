@@ -4,8 +4,8 @@ eclipse-project
 ===============
 === Preparation of building environment ===
 Before you start building OpenMW on Android you have to do few steps of preparation:
-# Download Crystax NDK from [https://www.crystax.net/android/ndk.php] 
-You can use only crystax ndk for building openmw !
+# Download google ndk from https://developer.android.com/tools/sdk/ndk/index.html 
+Openmw build without errors only on gcc 4.6
 # Download and install [http://developer.android.com/sdk/index.html Google Android SDK]
 # Download [https://github.com/taka-no-me/android-cmake Cmake for Android] (it will be used for OpenMW and its dependencies compilation)
 # Java
@@ -38,20 +38,6 @@ https://github.com/MyGUI/mygui
 
 === Compilation of OpenMW dependencies ===
 
-Then you should add PATH for crystax ndk and google sdk.
-you should copy this library 
-
-android-ndk-r8-crystax-1/sources/crystax/libs/armeabi-v7a/libcrystax.so
-
-and
-
-android-ndk-r8-crystax-1/sources/crystax/libs/armeabi-v7a/libcrystax.a
-
-to path 
-android-ndk-r8-crystax-1/sources/cxx-stl/gnu-libstdc++/4.7/libs/armeabi-v7a
-/android-ndk-r8-crystax-1/toolchains/arm-linux-androideabi-4.7/prebuilt/linux-x86/lib/gcc/arm-linux-androideabi/4.7
-/android-ndk-r8-crystax-1/toolchains/arm-linux-androideabi-4.7/prebuilt/linux-x86/lib/gcc/arm-linux-androideabi/4.7/armv7-a
-if you not do it, you will not be able to build anything
 
 ==== Building Boost ====
 For building boost I used it. You must build Ogre with Boost!
@@ -85,11 +71,6 @@ http://www.ogre3d.org/tikiwiki/tiki-index.php?page=CMake+Quick+Start+Guide&tikiv
 
 Next you must add it
 
-if((opt = miscParams->find("externalSurface")) != end)
-{
-  mSurface = (EGLSurface*)(Ogre::StringConverter::parseInt(opt->second));
-}
-and it
 
 if (!mEglConfig)
 {
@@ -100,7 +81,7 @@ if (!mEglConfig)
 mEglDisplay = mGLSupport->getGLDisplay();
 
 To
-/sinbad-ogre-7c776867621e/RenderSystems/GLES2/src/EGL/Android/OgreAndroidEGLWindow.cpp
+RenderSystems/GLES2/src/EGL/Android/OgreAndroidEGLWindow.cpp
 
 Next you must comment this 
  else if (mSoftwareMipmap)
@@ -146,8 +127,65 @@ Next you must comment this
             }
 */
 in
-/home/sylar/sinbad-ogre-/RenderSystems/GLES2/src/OgreGLES2HardwarePixelBuffer.cpp
+RenderSystems/GLES2/src/OgreGLES2HardwarePixelBuffer.cpp
 If you  not do it, the locations in game will not be loaded .
+
+Next you must change Eglcontext in function 
+::EGLContext EGLSupport::createNewContext(EGLDisplay eglDisplay,
+					      ::EGLConfig glconfig,
+                                              ::EGLContext shareList) const 
+if file
+/RenderSystems/GLES2/src/EGL/OgreEGLSupport.cpp
+from 
+ context = eglCreateContext(mGLDisplay, glconfig, shareList, contextAttrs);
+ context = eglCreateContext(mGLDisplay, glconfig, 0, contextAttrs);
+to
+context = eglGetCurrentContext(); .
+Next you must comment this lines in
+RenderSystems/GLES2/src/OgreGLES2RenderSystem.cpp
+/*
+        if (mGLSupport->checkExtension("GL_IMG_texture_compression_pvrtc") ||
+            mGLSupport->checkExtension("GL_EXT_texture_compression_dxt1") ||
+            mGLSupport->checkExtension("GL_EXT_texture_compression_s3tc") ||
+            mGLSupport->checkExtension("GL_OES_compressed_ETC1_RGB8_texture") ||
+            mGLSupport->checkExtension("GL_AMD_compressed_ATC_texture"))
+        {
+            rsc->setCapability(RSC_TEXTURE_COMPRESSION);
+
+            if(mGLSupport->checkExtension("GL_IMG_texture_compression_pvrtc") ||
+               mGLSupport->checkExtension("GL_IMG_texture_compression_pvrtc2"))
+                rsc->setCapability(RSC_TEXTURE_COMPRESSION_PVRTC);
+				
+            if(mGLSupport->checkExtension("GL_EXT_texture_compression_dxt1") && 
+               mGLSupport->checkExtension("GL_EXT_texture_compression_s3tc"))
+                rsc->setCapability(RSC_TEXTURE_COMPRESSION_DXT);
+
+            if(mGLSupport->checkExtension("GL_OES_compressed_ETC1_RGB8_texture"))
+                rsc->setCapability(RSC_TEXTURE_COMPRESSION_ETC1);
+
+            if(gleswIsSupported(3, 0))
+                rsc->setCapability(RSC_TEXTURE_COMPRESSION_ETC2);
+
+			if(mGLSupport->checkExtension("GL_AMD_compressed_ATC_texture"))
+                rsc->setCapability(RSC_TEXTURE_COMPRESSION_ATC);
+        }
+*/
+
+If your device based on Tegra gpu you should also use this patch for Ogre
+https://bitbucket.org/sinbad/ogre/pull-request/390/fix-for-nvidia-tegra-3-for-android
+
+And you should modified OgreAndroidEGLWindow.cpp in GLES2RenderSystem to this:
+                   eglContext = eglGetCurrentContext();
+137-               if (eglContext)
+137+               if (!eglContext)
+138                {
+140                    OGRE_EXCEPT(Exception::ERR_RENDERINGAPI_ERROR,
+141                                "currentGLContext was specified with no current GL context",
+142                                "EGLWindow::create");
+143                }
+144                
+145-               eglContext = eglGetCurrentContext();
+146                mEglSurface = eglGetCurrentSurface(EGL_DRAW)
 
 Also in Ogre 1.9 forgot to add this line to  cmake file
 if(ANDROID)
