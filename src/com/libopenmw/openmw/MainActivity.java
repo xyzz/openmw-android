@@ -37,7 +37,6 @@ public class MainActivity extends Activity {
 
 	public static String configsPath = "";
 	public static String dataPath = "";
-	public static String JNI_PATH="";
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -59,7 +58,7 @@ public class MainActivity extends Activity {
 		configsPath = Settings.getString(Constants.CONFIGS_PATH, "");
 
 		if (configsPath.equals("")) {
-			configsPath = "/sdcard";
+			configsPath = "/sdcard/libopenmw";
 			Editor editor = Settings.edit();
 			editor.putString(Constants.CONFIGS_PATH, configsPath);
 			editor.apply();
@@ -108,8 +107,7 @@ public class MainActivity extends Activity {
 			@SuppressLint("InlinedApi")
 			public void onClick(View v) {
 				try {
-					configsPath = Settings.getString(Constants.CONFIGS_PATH, "");
-					JNI_PATH=configsPath+"/libopenmw";
+					
 
 					Intent intent = new Intent(context, SDLActivity.class);
 					finish();
@@ -231,10 +229,10 @@ public class MainActivity extends Activity {
 			if (assets.length == 0) {
 				copyFile(path);
 			} else {
-				String fullPath =configsPath + "/" + path;
+				String fullPath =configsPath;
 				File dir = new File(fullPath);
 				if (!dir.exists())
-					dir.mkdir();
+					dir.mkdirs();
 				for (int i = 0; i < assets.length; ++i) {
 					copyFileOrDir(path + "/" + assets[i]);
 				}
@@ -253,7 +251,13 @@ public class MainActivity extends Activity {
 		OutputStream out = null;
 		try {
 			in = assetManager.open(filename);
-			String newFileName = configsPath + "/" + filename;
+			filename= filename.replace("libopenmw","" );
+			String newFileName = configsPath+filename;
+			File tmp = new File(newFileName);
+			String dirPath=newFileName.replace(tmp.getName(), "");
+			File dir = new File(dirPath);
+			if (!dir.exists())
+				dir.mkdirs();
 			out = new FileOutputStream(newFileName);
 
 			byte[] buffer = new byte[1024];

@@ -54,6 +54,7 @@ public class SDLActivity extends Activity {
 	public boolean enableTouch = false;
 	public boolean crouchFlag = false;
 	public boolean esc = false;
+	public static native void getPathToJni(String path);  
 
 	// Main components
 	protected static SDLActivity mSingleton;
@@ -117,6 +118,7 @@ public class SDLActivity extends Activity {
 		Log.v("SDL", "onCreate():" + mSingleton);
 		super.onCreate(savedInstanceState);
 
+		getPathToJni(MainActivity.configsPath);
 		SDLActivity.initialize();
 		// So we can call stuff from static callbacks
 		mSingleton = this;
@@ -968,6 +970,7 @@ public class SDLActivity extends Activity {
 
 	}
 
+	
 	// Events
 	@Override
 	protected void onPause() {
