@@ -976,11 +976,8 @@ public class SDLActivity extends Activity {
 	@Override
 	protected void onPause() {
 		Log.v("SDL", "onPause()");
-		finish();
-		Process.killProcess(Process.myPid());
-
+	
 		super.onPause();
-		
 		SDLActivity.handlePause();
 
 	}
@@ -989,7 +986,7 @@ public class SDLActivity extends Activity {
 	protected void onResume() {
 		Log.v("SDL", "onResume()");
 		super.onResume();
-		SDLActivity.handleResume();
+	SDLActivity.handleResume();
 	}
 
 	@Override
@@ -1008,6 +1005,7 @@ public class SDLActivity extends Activity {
 		Log.v("SDL", "onLowMemory()");
 		super.onLowMemory();
 		SDLActivity.nativeLowMemory();
+		
 	}
 
 
@@ -1575,6 +1573,7 @@ class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
 		super(context);
 		getHolder().addCallback(this);
 
+		
 		setFocusable(true);
 		setFocusableInTouchMode(true);
 		requestFocus();

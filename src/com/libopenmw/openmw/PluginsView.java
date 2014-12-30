@@ -45,24 +45,22 @@ public class PluginsView extends Activity {
 			for (int i = 0; i < loadedFileCheck.size(); i++) {
 				boolean deleteFlag = true;
 
-				for (File f : yourDir.listFiles() ) {
+				for (File f : yourDir.listFiles()) {
 
 					if (f.isFile()
 							&& f.getName()
-									.contains(loadedFileCheck.get(i).name) ) {
+									.contains(loadedFileCheck.get(i).name)) {
 
 						deleteFlag = false;
-				
-						
-					} else
-						if (deleteFlag!=false)
+
+					} else if (deleteFlag != false)
 						deleteFlag = true;
 
 				}
-				
-				if (deleteFlag){
-						FileRW.DeleteF(loadedFileCheck, i);
-				   
+
+				if (deleteFlag) {
+					FileRW.DeleteF(loadedFileCheck, i);
+
 				}
 			}
 
@@ -260,30 +258,34 @@ public class PluginsView extends Activity {
 
 		try {
 			plugins = FileRW.loadFile();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+
+			FileWriter writer = new FileWriter(MainActivity.configsPath
+					+ "/openmw/openmw.cfg");
+
+			int i = 0;
+			while (i < plugins.size()) {
+
+				if (plugins.get(i).enabled == 1) {
+					writer.write("content= " + plugins.get(i).name + "\n");
+					writer.write("fallback-archive= " + plugins.get(i).nameBsa
+							+ "\n");
+
+					writer.flush();
+				}
+				i++;
+
+			}
+			writer.close();
+			Toast toast = Toast.makeText(getApplicationContext(),
+					"Saving done", Toast.LENGTH_LONG);
+			toast.show();
+
+		} catch (Exception e) {
+			Toast toast = Toast.makeText(getApplicationContext(),
+					"config file openmw.cfg not found", Toast.LENGTH_LONG);
+			toast.show();
 			e.printStackTrace();
 		}
-		FileWriter writer = new FileWriter(MainActivity.configsPath
-				+ "/openmw/openmw.cfg");
-
-		int i = 0;
-		while (i < plugins.size()) {
-
-			if (plugins.get(i).enabled == 1) {
-				writer.write("content= " + plugins.get(i).name + "\n");
-				writer.write("fallback-archive= " + plugins.get(i).nameBsa
-						+ "\n");
-
-				writer.flush();
-			}
-			i++;
-
-		}
-		writer.close();
-		Toast toast = Toast.makeText(getApplicationContext(), "Saving done",
-				Toast.LENGTH_LONG);
-		toast.show();
 	}
 
 	public class Adapter implements ListAdapter
