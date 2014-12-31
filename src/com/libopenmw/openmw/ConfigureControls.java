@@ -69,6 +69,7 @@ public class ConfigureControls extends Activity {
 		getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
 		CoordinatesAllScreens.height = displaymetrics.heightPixels;
 		CoordinatesAllScreens.width = displaymetrics.widthPixels;
+		
 		final MultiTouchListener touchListener = new MultiTouchListener(this);
 
 		buttonSize = (Button) findViewById(R.id.buttonsize1);

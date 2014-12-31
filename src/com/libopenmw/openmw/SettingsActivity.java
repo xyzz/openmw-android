@@ -64,6 +64,9 @@ public class SettingsActivity extends Activity {
 							+ "/config/openmw/openmw.cfg", "data");
 
 				} catch (Exception e) {
+					Toast toast = Toast.makeText(getApplicationContext(),
+							"configs files not found", Toast.LENGTH_LONG);
+					toast.show();
 				}
 			}
 
@@ -101,6 +104,9 @@ public class SettingsActivity extends Activity {
 				
 
 				} catch (Exception e) {
+					Toast toast = Toast.makeText(getApplicationContext(),
+							"configs files not found", Toast.LENGTH_LONG);
+					toast.show();
 				}
 
 			}
@@ -131,6 +137,9 @@ public class SettingsActivity extends Activity {
 				
 
 				} catch (Exception e) {
+					Toast toast = Toast.makeText(getApplicationContext(),
+							"configs files not found", Toast.LENGTH_LONG);
+					toast.show();
 				}
 
 			}
@@ -162,6 +171,10 @@ public class SettingsActivity extends Activity {
 						editor.apply();
 					
 					} catch (Exception e) {
+						
+						Toast toast = Toast.makeText(getApplicationContext(),
+								"configs files not found", Toast.LENGTH_LONG);
+						toast.show();
 					}
 
 				} else {
@@ -173,6 +186,9 @@ public class SettingsActivity extends Activity {
 						editor.apply();
 					
 					} catch (Exception e) {
+						Toast toast = Toast.makeText(getApplicationContext(),
+								"configs files not found", Toast.LENGTH_LONG);
+						toast.show();
 					}
 
 				}

@@ -15,6 +15,7 @@ public class TouchCamera extends View {
 
 	private Paint circlePaint;
 
+	public static double costTouch=0;
 	public double[] xmas = new double[2];
 	public double[] ymas = new double[2];
 
@@ -79,7 +80,7 @@ public class TouchCamera extends View {
 			float x = 0, y = 0, p = 0;
 
 			if (xmas[0] == xmas[1] && ymas[0] < ymas[1]
-					&& ymas[1] - ymas[0] > 1.2)
+					&& ymas[1] - ymas[0] > costTouch)
 
 			{
 				i = event.getActionIndex();
@@ -95,7 +96,7 @@ public class TouchCamera extends View {
 				SDLActivity.onNativeTouch(touchDevId, pointerFingerId,
 						MotionEvent.ACTION_MOVE, x, y, p);
 			} else if (xmas[0] == xmas[1] && ymas[0] > ymas[1]
-					&& ymas[0] - ymas[1] > 1.2)
+					&& ymas[0] - ymas[1] > costTouch)
 
 			{
 				i = event.getActionIndex();
@@ -113,7 +114,7 @@ public class TouchCamera extends View {
 			}
 
 			else if (xmas[0] < xmas[1] && ymas[0] == ymas[1]
-					&& xmas[1] - xmas[0] > 1.2)
+					&& xmas[1] - xmas[0] > costTouch)
 
 			{
 				i = event.getActionIndex();
@@ -129,7 +130,7 @@ public class TouchCamera extends View {
 				SDLActivity.onNativeTouch(touchDevId, pointerFingerId,
 						MotionEvent.ACTION_MOVE, x, y, p);
 			} else if (xmas[0] > xmas[1] && ymas[0] == ymas[1]
-					&& xmas[0] - xmas[1] > 1.2)
+					&& xmas[0] - xmas[1] > costTouch)
 
 			{
 				i = event.getActionIndex();
@@ -145,7 +146,7 @@ public class TouchCamera extends View {
 				SDLActivity.onNativeTouch(touchDevId, pointerFingerId,
 						MotionEvent.ACTION_MOVE, x, y, p);
 			} else if (xmas[0] < xmas[1] && ymas[0] < ymas[1]
-					&& ymas[1] - ymas[0] > 1.2 && xmas[1] - xmas[0] > 1.2)
+					&& ymas[1] - ymas[0] > costTouch && xmas[1] - xmas[0] > costTouch)
 
 			{
 				i = event.getActionIndex();
@@ -161,7 +162,7 @@ public class TouchCamera extends View {
 				SDLActivity.onNativeTouch(touchDevId, pointerFingerId,
 						MotionEvent.ACTION_MOVE, x, y, p);
 			} else if (xmas[0] > xmas[1] && ymas[0] > ymas[1]
-					&& ymas[0] - ymas[1] > 1.2 && xmas[0] - xmas[1] > 1.2)
+					&& ymas[0] - ymas[1] > costTouch && xmas[0] - xmas[1] > costTouch)
 
 			{
 				i = event.getActionIndex();
@@ -177,7 +178,7 @@ public class TouchCamera extends View {
 				SDLActivity.onNativeTouch(touchDevId, pointerFingerId,
 						MotionEvent.ACTION_MOVE, x, y, p);
 			} else if (xmas[0] < xmas[1] && ymas[0] > ymas[1]
-					&& ymas[0] - ymas[1] > 1.2 && xmas[1] - xmas[0] > 1.2)
+					&& ymas[0] - ymas[1] > costTouch && xmas[1] - xmas[0] > costTouch)
 
 			{
 				i = event.getActionIndex();
@@ -193,7 +194,7 @@ public class TouchCamera extends View {
 				SDLActivity.onNativeTouch(touchDevId, pointerFingerId,
 						MotionEvent.ACTION_MOVE, x, y, p);
 			} else if (xmas[0] > xmas[1] && ymas[0] < ymas[1]
-					&& ymas[1] - ymas[0] > 1.2 && xmas[0] - xmas[1] > 1.2)
+					&& ymas[1] - ymas[0] > costTouch && xmas[0] - xmas[1] > costTouch)
 
 			{
 				i = event.getActionIndex();

@@ -20,6 +20,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Process;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -47,6 +48,11 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.main);
 
 		context = this;
+
+		if (tabletSize() >= 6.0)
+			TouchCamera.costTouch = 0;
+		else
+			TouchCamera.costTouch = 1.2;
 
 		linlaHeaderProgress = (LinearLayout) findViewById(R.id.linlaHeaderProgress);
 		Settings = getSharedPreferences(Constants.APP_PREFERENCES,
@@ -112,7 +118,7 @@ public class MainActivity extends Activity {
 
 					Intent intent = new Intent(context, SDLActivity.class);
 					finish();
-				
+
 					context.startActivity(intent);
 
 				} catch (Exception e) {
@@ -201,10 +207,39 @@ public class MainActivity extends Activity {
 						copyFileOrDir("libopenmw");
 
 						try {
-							Writer.write(
-									configsPath + "/resources",
+							Writer.write(configsPath + "/resources",
 									configsPath + "/config/openmw/openmw.cfg",
 									"resources");
+							int pos = Settings.getInt(Constants.SPINNER_POS, 0);
+							String data = null;
+							if (pos == 0)
+								data = "win1250";
+							else if (pos == 1)
+								data = "win1251";
+							else if (pos == 2)
+								data = "win1252";
+							pos = Settings.getInt(Constants.MIPMAPPING, 0);
+							if (pos == 0)
+								data = "none";
+							else if (pos == 1)
+								data = "trilinear";
+							else if (pos == 2)
+								data = "bilinear";
+							else if (pos == 3)
+								data = "anisotropic";
+
+							Writer.write(data, MainActivity.configsPath
+									+ "/config/openmw/settings.cfg",
+									"texture filtering");
+							pos = Settings.getInt(Constants.SUBTITLES, -1);
+							if (pos == 1)
+								Writer.write("true", MainActivity.configsPath
+										+ "/config/openmw/settings.cfg",
+										"subtitles");
+							else if (pos == 0)
+								Writer.write("false", MainActivity.configsPath
+										+ "/config/openmw/settings.cfg",
+										"subtitles");
 
 						} catch (Exception e) {
 						}
@@ -286,6 +321,31 @@ public class MainActivity extends Activity {
 		} catch (Exception e) {
 			Log.e("tag", e.getMessage());
 		}
+
+	}
+
+	public double tabletSize() {
+
+		double size = 0;
+		try {
+
+			// Compute screen size
+
+			DisplayMetrics dm = context.getResources().getDisplayMetrics();
+
+			float screenWidth = dm.widthPixels / dm.xdpi;
+
+			float screenHeight = dm.heightPixels / dm.ydpi;
+
+			size = Math.sqrt(Math.pow(screenWidth, 2) +
+
+			Math.pow(screenHeight, 2));
+
+		} catch (Throwable t) {
+
+		}
+
+		return size;
 
 	}
 
