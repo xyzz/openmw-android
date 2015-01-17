@@ -34,7 +34,8 @@ http://www.freetype.org/
 https://github.com/MyGUI/mygui
 #* zzip
 #* zlib
-
+If you do not want build all libraries ,here libraries including prebuilt openmw lib for armv7-a with neon and vfp-v3
+https://drive.google.com/file/d/0B5mOME9qjLFuOXdzbUpoLU1iYjQ/view?usp=sharing
 
 === Compilation of OpenMW dependencies ===
 
