@@ -116,7 +116,7 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 				try {
 
-					Intent intent = new Intent(context, SDLActivity.class);
+					Intent intent = new Intent(context, GameActivity.class);
 					finish();
 
 					context.startActivity(intent);

@@ -2,12 +2,9 @@ package com.libopenmw.openmw;
 
 import org.libsdl.app.SDLActivity;
 
-import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
-import android.view.ViewGroup.MarginLayoutParams;
-import android.widget.RelativeLayout;
 
 public class ButtonTouchListener implements OnTouchListener {
 
