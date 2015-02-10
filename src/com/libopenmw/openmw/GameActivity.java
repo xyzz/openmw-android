@@ -4,6 +4,7 @@ import java.io.File;
 
 import org.libsdl.app.SDLActivity;
 
+import android.R.bool;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -21,13 +22,9 @@ public class GameActivity extends SDLActivity {
 
 	public static native void getPathToJni(String path);
 
-	// Load the .so
-	static {
-
-		System.loadLibrary("openal");
-		System.loadLibrary("openmw");
-
-	}
+	public boolean enableTouch = false;
+	public boolean crouchFlag = false;
+	public boolean hideControls;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -629,6 +626,7 @@ public class GameActivity extends SDLActivity {
 		}
 
 	}
+
 	@Override
 	public void onDestroy() {
 		finish();
@@ -636,6 +634,5 @@ public class GameActivity extends SDLActivity {
 
 		super.onDestroy();
 	}
-	
-	
+
 }
