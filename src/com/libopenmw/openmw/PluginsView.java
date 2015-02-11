@@ -5,14 +5,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
-import com.libopenmw.openmw.FileRW.FilesData;
+import com.libopenmw.openmw.ParseJson.FilesData;
 
 import android.app.Activity;
 import android.content.Context;
 import android.database.DataSetObserver;
 import android.os.Bundle;
-import android.os.Environment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +22,7 @@ import android.widget.Toast;
 
 public class PluginsView extends Activity {
 
-	public Context context;
+	private Context context;
 	public static List<FilesData> loadedFile;
 	public static List<FilesData> loadedFileCheck;
 	public boolean check = false;
@@ -38,12 +36,11 @@ public class PluginsView extends Activity {
 		try {
 
 			loadedFileCheck = null;
-			loadedFileCheck = FileRW.loadFile();
-			// File sdCardRoot = Environment.getExternalStorageDirectory();
+			loadedFileCheck = ParseJson.loadFile();
 			File yourDir = new File(MainActivity.dataPath);
 
 			for (int i = 0; i < loadedFileCheck.size(); i++) {
-				boolean deleteFlag = true;
+				boolean fileDeleted = true;
 
 				for (File f : yourDir.listFiles()) {
 
@@ -51,15 +48,15 @@ public class PluginsView extends Activity {
 							&& f.getName()
 									.contains(loadedFileCheck.get(i).name)) {
 
-						deleteFlag = false;
+						fileDeleted = false;
 
-					} else if (deleteFlag != false)
-						deleteFlag = true;
+					} else if (fileDeleted != false)
+						fileDeleted = true;
 
 				}
 
-				if (deleteFlag) {
-					FileRW.DeleteF(loadedFileCheck, i);
+				if (fileDeleted) {
+					ParseJson.deleteLineFromJson(loadedFileCheck, i);
 
 				}
 			}
@@ -86,7 +83,7 @@ public class PluginsView extends Activity {
 							if (check == false) {
 								data.name = f.getName();
 								data.nameBsa = esp[0] + ".bsa";
-								FileRW.savetofile(data);
+								ParseJson.savetofile(data);
 							}
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
@@ -119,7 +116,7 @@ public class PluginsView extends Activity {
 							if (check == false) {
 								data.name = f.getName();
 								data.nameBsa = esp[0] + ".bsa";
-								FileRW.savetofile(data);
+								ParseJson.savetofile(data);
 							}
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
@@ -151,7 +148,7 @@ public class PluginsView extends Activity {
 							if (check == false) {
 								data.name = f.getName();
 								data.nameBsa = esp[0] + ".bsa";
-								FileRW.savetofile(data);
+								ParseJson.savetofile(data);
 							}
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
@@ -187,7 +184,7 @@ public class PluginsView extends Activity {
 							if (check == false) {
 								data.name = f.getName();
 								data.nameBsa = esp[0] + ".bsa";
-								FileRW.savetofile(data);
+								ParseJson.savetofile(data);
 							}
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
@@ -220,7 +217,7 @@ public class PluginsView extends Activity {
 							if (check == false) {
 								data.name = f.getName();
 								data.nameBsa = esp[0] + ".bsa";
-								FileRW.savetofile(data);
+								ParseJson.savetofile(data);
 							}
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
@@ -234,7 +231,7 @@ public class PluginsView extends Activity {
 			loadedFile = null;
 
 			try {
-				loadedFile = FileRW.loadFile();
+				loadedFile = ParseJson.loadFile();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -257,7 +254,7 @@ public class PluginsView extends Activity {
 		List<FilesData> plugins = null;
 
 		try {
-			plugins = FileRW.loadFile();
+			plugins = ParseJson.loadFile();
 
 			FileWriter writer = new FileWriter(MainActivity.configsPath
 					+ "/openmw/openmw.cfg");
@@ -347,9 +344,9 @@ public class PluginsView extends Activity {
 					if (Box.isChecked()) {
 						FilesData data = new FilesData();
 						data.enabled = 1;
-						FileRW.pos = position;
+						ParseJson.pos = position;
 						try {
-							FileRW.updatetofile(data);
+							ParseJson.updatetofile(data);
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -358,9 +355,9 @@ public class PluginsView extends Activity {
 
 						FilesData data = new FilesData();
 						data.enabled = 0;
-						FileRW.pos = position;
+						ParseJson.pos = position;
 						try {
-							FileRW.updatetofile(data);
+							ParseJson.updatetofile(data);
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -407,7 +404,6 @@ public class PluginsView extends Activity {
 		public int getCount() {
 
 			return loadedFile.size();
-			// return 3;
 
 		}
 

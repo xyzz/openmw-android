@@ -14,20 +14,16 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class FileRW {
+public class ParseJson {
 
-	public static final String jsonFilePath = MainActivity.configsPath+"/files.json";
-	public static int pos=-1;
+	static final String jsonFilePath = MainActivity.configsPath + "/files.json";
 
-	public static FilesData fileName;
-
-	public static FilesData dataUpdate;
 	public static void savetofile(FilesData ti) throws IOException {
 		List<FilesData> loadedFile = loadFile();
 		loadedFile.add(ti);
 
 		try {
-			saveFile(loadedFile);
+			saveFile(loadedFile, -1);
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -35,7 +31,7 @@ public class FileRW {
 
 	}
 
-	private static void saveFile(List<FilesData> loadedFile)
+	private static void saveFile(List<FilesData> loadedFile, int deletePos)
 			throws JSONException, IOException {
 
 		String file = "";
@@ -46,66 +42,13 @@ public class FileRW {
 			JSONObject c;
 			c = new JSONObject();
 
-			c.put("name", loadedFile.get(i).name);
-			c.put("nameBsa", loadedFile.get(i).nameBsa);
-			c.put("enabled", loadedFile.get(i).enabled);
-
-			jsonArray.put(c);
-		}
-		JSONObject array = new JSONObject();
-		array.put("data_array", jsonArray);
-		file = array.toString();
-
-		@SuppressWarnings("resource")
-		FileWriter jsonFileWriter = new FileWriter(jsonFilePath);
-
-		jsonFileWriter.write(file);
-
-		jsonFileWriter.flush();
-
-	}
-
-	public static void updatetofile(FilesData ti) throws IOException {
-		List<FilesData> loadedFile = loadFile();
-		dataUpdate=ti;
-
-		try {
-			updateFile(loadedFile);
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-	}
-
-	private static void updateFile(List<FilesData> loadedFile)
-			throws JSONException, IOException {
-
-		String file = "";
-
-		JSONArray jsonArray = new JSONArray();
-		for (int i = 0; i < loadedFile.size(); i++) {
-
-			JSONObject c;
-			c = new JSONObject();
-
-			if (i==pos)
-			{
-
+			if (i != deletePos) {
 				c.put("name", loadedFile.get(i).name);
 				c.put("nameBsa", loadedFile.get(i).nameBsa);
-				c.put("enabled", dataUpdate.enabled);
+				c.put("enabled", loadedFile.get(i).enabled);
 
-			
+				jsonArray.put(c);
 			}
-			else
-			{
-			c.put("name", loadedFile.get(i).name);
-			c.put("nameBsa", loadedFile.get(i).nameBsa);
-			c.put("enabled", loadedFile.get(i).enabled);
-			}
-
-			jsonArray.put(c);
 		}
 		JSONObject array = new JSONObject();
 		array.put("data_array", jsonArray);
@@ -118,42 +61,7 @@ public class FileRW {
 		jsonFileWriter.flush();
 
 	}
-	
-	public static void DeleteF(List<FilesData> loadedFile,int position)
-			throws JSONException, IOException {
 
-		String file = "";
-
-		JSONArray jsonArray = new JSONArray();
-		for (int i = 0; i < loadedFile.size(); i++) {
-
-			JSONObject c;
-			c = new JSONObject();
-
-			if (i!=position)
-			{
-
-			
-			c.put("name", loadedFile.get(i).name);
-			c.put("nameBsa", loadedFile.get(i).nameBsa);
-			c.put("enabled", loadedFile.get(i).enabled);
-			jsonArray.put(c);
-			
-			}
-
-		}
-		JSONObject array = new JSONObject();
-		array.put("data_array", jsonArray);
-		file = array.toString();
-
-		FileWriter jsonFileWriter = new FileWriter(jsonFilePath);
-
-		jsonFileWriter.write(file);
-
-		jsonFileWriter.flush();
-
-	}
-	
 	public static String convertStreamToString(InputStream is)
 			throws IOException {
 		if (is != null) {
@@ -175,7 +83,7 @@ public class FileRW {
 	}
 
 	public static List<FilesData> loadFile() throws IOException {
-		List<FilesData> ret = new ArrayList<FileRW.FilesData>();
+		List<FilesData> ret = new ArrayList<ParseJson.FilesData>();
 
 		try {
 
@@ -213,7 +121,7 @@ public class FileRW {
 			this.name = "";
 			this.nameBsa = "";
 			this.enabled = 0;
-			
+
 		}
 
 		public String name;

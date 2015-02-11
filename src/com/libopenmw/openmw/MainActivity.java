@@ -190,7 +190,7 @@ public class MainActivity extends Activity {
 
 							@Override
 							public void run() {
-								File inputfile = new File(FileRW.jsonFilePath);
+								File inputfile = new File(ParseJson.jsonFilePath);
 								if (inputfile.exists())
 									inputfile.delete();
 								CopyFilesFromAssets copyFiles = new CopyFilesFromAssets(
