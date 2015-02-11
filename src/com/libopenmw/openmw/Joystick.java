@@ -13,7 +13,7 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 
-public class Controls extends View {
+public class Joystick extends View {
 
 	// =========================================
 	// Private Members
@@ -33,17 +33,17 @@ public class Controls extends View {
 	// Constructors
 	// =========================================
 
-	public Controls(Context context) {
+	public Joystick(Context context) {
 		super(context);
 		initJoystickView();
 	}
 
-	public Controls(Context context, AttributeSet attrs) {
+	public Joystick(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		initJoystickView();
 	}
 
-	public Controls(Context context, AttributeSet attrs, int defStyle) {
+	public Joystick(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		initJoystickView();
 	}

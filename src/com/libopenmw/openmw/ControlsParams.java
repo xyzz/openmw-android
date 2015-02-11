@@ -11,13 +11,13 @@ public static RelativeLayout.LayoutParams coordinates (View v,int x,int y,int wi
 		MarginLayoutParams marginParams = new MarginLayoutParams(
 				v.getLayoutParams());
 		
-		marginParams.height = CoordinatesAllScreens.getInstance()
+		marginParams.height = ScreenScaler.getInstance()
 				.getScaledCoordinateX(height);
-		marginParams.width = CoordinatesAllScreens.getInstance()
+		marginParams.width = ScreenScaler.getInstance()
 				.getScaledCoordinateX(width);
 		marginParams
-				.setMargins((int) (CoordinatesAllScreens.getInstance()
-						.getScaledCoordinateX(x)), (int) (CoordinatesAllScreens
+				.setMargins((int) (ScreenScaler.getInstance()
+						.getScaledCoordinateX(x)), (int) (ScreenScaler
 						.getInstance().getScaledCoordinateY(y)), 0, 0);
 		RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
 				marginParams); 

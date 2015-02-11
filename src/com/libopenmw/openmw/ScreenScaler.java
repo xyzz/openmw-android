@@ -3,11 +3,11 @@ package com.libopenmw.openmw;
 
 
 
-public class CoordinatesAllScreens {
+public class ScreenScaler {
 	
 	public static	int height;
 	public static	int width  ;
-	private static CoordinatesAllScreens _instance = null;
+	private static ScreenScaler _instance = null;
 	private final int STANDARD_WIDTH = 1024;
 	private final int STANDARD_HEIGHT = 768;
 	private float scaleRatio_y = 0;
@@ -15,7 +15,7 @@ public class CoordinatesAllScreens {
 	private int marginX = 0;
 	private int marginY = 0;
 
-	private CoordinatesAllScreens() {
+	private ScreenScaler() {
 	
 		float x = (float) width/STANDARD_WIDTH;
 		float y = (float) height / STANDARD_HEIGHT;
@@ -25,9 +25,9 @@ public class CoordinatesAllScreens {
 		marginY = (height - (int) ((float) STANDARD_HEIGHT * scaleRatio_y)) /2;
 	}
 
-	public static CoordinatesAllScreens getInstance() {
+	public static ScreenScaler getInstance() {
 		if (_instance == null)
-			_instance = new CoordinatesAllScreens();
+			_instance = new ScreenScaler();
 		return _instance;
 	}
 

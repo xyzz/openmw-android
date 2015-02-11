@@ -11,10 +11,9 @@ public class MultiTouchListener implements OnTouchListener {
 	private float mPrevX;
 	private float mPrevY;
 
-	public ConfigureControls Activity;
 
-	public MultiTouchListener(ConfigureControls configureControls) {
-		Activity = configureControls;
+	public MultiTouchListener() {
+		
 	}
 
 	@Override

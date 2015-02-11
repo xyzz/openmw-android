@@ -11,25 +11,25 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
-public class TouchCamera extends View {
+public class TouchCameraSimulation extends View {
 
 	private Paint circlePaint;
 
-	public static double costTouch=0;
-	public double[] xmas = new double[2];
-	public double[] ymas = new double[2];
+	static double costTouch=0;
+	private double[] xmas = new double[2];
+	private double[] ymas = new double[2];
 
-	public TouchCamera(Context context) {
+	public TouchCameraSimulation(Context context) {
 		super(context);
 		initView();
 	}
 
-	public TouchCamera(Context context, AttributeSet attrs) {
+	public TouchCameraSimulation(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		initView();
 	}
 
-	public TouchCamera(Context context, AttributeSet attrs, int defStyle) {
+	public TouchCameraSimulation(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		initView();
 	}
@@ -69,7 +69,7 @@ public class TouchCamera extends View {
 		}
 		if (actionType == MotionEvent.ACTION_MOVE) {
 
-			Log.d("dwda", "X:" +  "|Y:" );
+			
 			xmas[1] = event.getRawX();
 			ymas[1] = event.getRawY();
 			final int touchDevId = event.getDeviceId();

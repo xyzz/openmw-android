@@ -4,7 +4,6 @@ import java.io.File;
 
 import org.libsdl.app.SDLActivity;
 
-import android.R.bool;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -22,9 +21,9 @@ public class GameActivity extends SDLActivity {
 
 	public static native void getPathToJni(String path);
 
-	public boolean enableTouch = false;
-	public boolean crouchFlag = false;
-	public boolean hideControls;
+	private boolean enableTouch = false;
+	private boolean crouchFlag = false;
+	private boolean hideControls;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -52,8 +51,8 @@ public class GameActivity extends SDLActivity {
 			DisplayMetrics displaymetrics;
 			displaymetrics = new DisplayMetrics();
 			getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-			CoordinatesAllScreens.height = displaymetrics.heightPixels;
-			CoordinatesAllScreens.width = displaymetrics.widthPixels;
+			ScreenScaler.height = displaymetrics.heightPixels;
+			ScreenScaler.width = displaymetrics.widthPixels;
 			LayoutInflater inflater = getLayoutInflater();
 			getWindow().addContentView(
 					inflater.inflate(R.layout.screencontrols, null),
@@ -61,7 +60,7 @@ public class GameActivity extends SDLActivity {
 							ViewGroup.LayoutParams.FILL_PARENT,
 							ViewGroup.LayoutParams.FILL_PARENT));
 
-			final Controls joystick = (Controls) findViewById(R.id.joystick);
+			final Joystick joystick = (Joystick) findViewById(R.id.joystick);
 
 			final ImageButton buttonRun = (ImageButton) findViewById(R.id.buttonrun1);
 
@@ -84,7 +83,7 @@ public class GameActivity extends SDLActivity {
 					KeyEvent.KEYCODE_T));
 
 			final Button buttonTouch = (Button) findViewById(R.id.buttontouch);
-			final TouchCamera touch = (TouchCamera) findViewById(R.id.superTouch);
+			final TouchCameraSimulation touch = (TouchCameraSimulation) findViewById(R.id.superTouch);
 
 			buttonTouch.setText("off");
 
@@ -99,11 +98,11 @@ public class GameActivity extends SDLActivity {
 						if (enableTouch == false) {
 							buttonTouch.setText("on");
 							enableTouch = true;
-							touch.setVisibility(TouchCamera.VISIBLE);
+							touch.setVisibility(TouchCameraSimulation.VISIBLE);
 
 						} else {
 							enableTouch = false;
-							touch.setVisibility(TouchCamera.INVISIBLE);
+							touch.setVisibility(TouchCameraSimulation.INVISIBLE);
 							buttonTouch.setText("off");
 						}
 						return true;
@@ -155,7 +154,6 @@ public class GameActivity extends SDLActivity {
 					switch (event.getAction()) {
 					case MotionEvent.ACTION_DOWN:
 
-						// PRESSED
 						if (crouchFlag == false) {
 							SDLActivity
 									.onNativeKeyDown(KeyEvent.KEYCODE_CTRL_LEFT);
@@ -165,12 +163,10 @@ public class GameActivity extends SDLActivity {
 									.onNativeKeyUp(KeyEvent.KEYCODE_CTRL_LEFT);
 							crouchFlag = false;
 						}
-						return true; // if you want to handle the touch
-										// event
+						return true;
 					case MotionEvent.ACTION_UP:
-						// RELEASED
-						return true; // if you want to handle the touch
-										// event
+
+						return true;
 					}
 					return false;
 				}
@@ -197,7 +193,7 @@ public class GameActivity extends SDLActivity {
 						// PRESSED
 						if (hideControls == false) {
 							enableTouch = false;
-							touch.setVisibility(TouchCamera.INVISIBLE);
+							touch.setVisibility(TouchCameraSimulation.INVISIBLE);
 							buttonTouch.setText("off");
 							buttonChangePerson.setVisibility(ImageButton.GONE);
 							joystick.setVisibility(JoystickView.GONE);
@@ -241,14 +237,11 @@ public class GameActivity extends SDLActivity {
 
 							hideControls = false;
 						}
-						// SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_ESCAPE);
-						return true; // if you want to handle the touch
-										// event
+
+						return true;
 					case MotionEvent.ACTION_UP:
-						// RELEASED
-						// SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_ESCAPE);
-						return true; // if you want to handle the touch
-										// event
+
+						return true;
 					}
 					return false;
 				}
