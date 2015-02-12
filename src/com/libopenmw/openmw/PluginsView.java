@@ -5,6 +5,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
+import org.json.JSONException;
+
 import com.libopenmw.openmw.ParseJson.FilesData;
 
 import android.app.Activity;
@@ -23,8 +25,7 @@ import android.widget.Toast;
 public class PluginsView extends Activity {
 
 	private Context context;
-	public static List<FilesData> loadedFile;
-	public static List<FilesData> loadedFileCheck;
+	public static List<FilesData> Plugins;
 	public boolean check = false;
 	String name;
 
@@ -35,203 +36,47 @@ public class PluginsView extends Activity {
 		setContentView(R.layout.listview);
 		try {
 
-			loadedFileCheck = null;
-			loadedFileCheck = ParseJson.loadFile();
+			Plugins = ParseJson.loadFile();
 			File yourDir = new File(MainActivity.dataPath);
 
-			for (int i = 0; i < loadedFileCheck.size(); i++) {
-				boolean fileDeleted = true;
-
-				for (File f : yourDir.listFiles()) {
-
-					if (f.isFile()
-							&& f.getName()
-									.contains(loadedFileCheck.get(i).name)) {
-
-						fileDeleted = false;
-
-					} else if (fileDeleted != false)
-						fileDeleted = true;
-
-				}
-
-				if (fileDeleted) {
-					ParseJson.deleteLineFromJson(loadedFileCheck, i);
-
-				}
-			}
-
+			checkFilesDeleted(yourDir);
+			
 			for (File f : yourDir.listFiles()) {
 
-				if (f.isFile()) {
+				boolean newPlugin = true;
+				for (FilesData data : Plugins) {
+					if (f.isFile() && f.getName().contains(data.name)) {
 
-					check = false;
-					FilesData data = new FilesData();
-					String[] esp = f.getName().split("\\.");
-					if (f.getName().equals("Morrowind.esm")) {
+						newPlugin=false;
+						break;
 
-						try {
-							int i = 0;
-							while (i < loadedFileCheck.size() && check == false) {
-								if (loadedFileCheck.get(i).name.equals(f
-										.getName()))
-									check = true;
-								else
-									check = false;
-								i++;
-							}
-							if (check == false) {
-								data.name = f.getName();
-								data.nameBsa = esp[0] + ".bsa";
-								ParseJson.savetofile(data);
-							}
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
+					} else
+						newPlugin = true;
+				         
 				}
-
+				   if (newPlugin ){
+					   FilesData pluginData = new FilesData();
+					      
+					   pluginData.name = f.getName();
+						pluginData.nameBsa = f.getName().split("\\.")[0] + ".bsa";
+						if (f.getName().contains("Morrowind.esm"))
+								Plugins.add(0, pluginData);
+						else
+						
+						if (f.getName().contains("Bloodmoon.esm"))
+								Plugins.add(1, pluginData);
+						else
+						if (f.getName().contains("Tribunal.esm"))
+							Plugins.add(2, pluginData);
+						
+			       
+			       }
 			}
-
-			for (File f : yourDir.listFiles()) {
-
-				if (f.isFile()) {
-
-					check = false;
-					FilesData data = new FilesData();
-					String[] esp = f.getName().split("\\.");
-					if (f.getName().equals("Bloodmoon.esm")) {
-
-						try {
-							int i = 0;
-							while (i < loadedFileCheck.size() && check == false) {
-								if (loadedFileCheck.get(i).name.equals(f
-										.getName()))
-									check = true;
-								else
-									check = false;
-								i++;
-							}
-							if (check == false) {
-								data.name = f.getName();
-								data.nameBsa = esp[0] + ".bsa";
-								ParseJson.savetofile(data);
-							}
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-				}
-
-			}
-			for (File f : yourDir.listFiles()) {
-
-				if (f.isFile()) {
-
-					check = false;
-					FilesData data = new FilesData();
-					String[] esp = f.getName().split("\\.");
-					if (f.getName().equals("Tribunal.esm")) {
-
-						try {
-							int i = 0;
-							while (i < loadedFileCheck.size() && check == false) {
-								if (loadedFileCheck.get(i).name.equals(f
-										.getName()))
-									check = true;
-								else
-									check = false;
-								i++;
-							}
-							if (check == false) {
-								data.name = f.getName();
-								data.nameBsa = esp[0] + ".bsa";
-								ParseJson.savetofile(data);
-							}
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-				}
-
-			}
-
-			for (File f : yourDir.listFiles()) {
-
-				if (f.isFile()) {
-
-					check = false;
-					FilesData data = new FilesData();
-					String[] esp = f.getName().split("\\.");
-					if (esp[1].equals("esm")
-							&& !f.getName().equals("Bloodmoon.esm")
-							&& !f.getName().equals("Morrowind.esm")
-							&& !f.getName().equals("Tribunal.esm")) {
-
-						try {
-							int i = 0;
-							while (i < loadedFileCheck.size() && check == false) {
-								if (loadedFileCheck.get(i).name.equals(f
-										.getName()))
-									check = true;
-								else
-									check = false;
-								i++;
-							}
-							if (check == false) {
-								data.name = f.getName();
-								data.nameBsa = esp[0] + ".bsa";
-								ParseJson.savetofile(data);
-							}
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-				}
-
-			}
-
-			for (File f : yourDir.listFiles()) {
-
-				if (f.isFile()) {
-
-					check = false;
-					FilesData data = new FilesData();
-					String[] esp = f.getName().split("\\.");
-					if (esp[1].equals("esp")) {
-
-						try {
-							int i = 0;
-							while (i < loadedFileCheck.size() && check == false) {
-								if (loadedFileCheck.get(i).name.equals(f
-										.getName()))
-									check = true;
-								else
-									check = false;
-								i++;
-							}
-							if (check == false) {
-								data.name = f.getName();
-								data.nameBsa = esp[0] + ".bsa";
-								ParseJson.savetofile(data);
-							}
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-				}
-
-			}
-
-			loadedFile = null;
+				
+			Plugins = null;
 
 			try {
-				loadedFile = ParseJson.loadFile();
+				Plugins = ParseJson.loadFile();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -284,6 +129,34 @@ public class PluginsView extends Activity {
 			e.printStackTrace();
 		}
 	}
+	
+	
+	private void checkFilesDeleted (File yourDir) throws JSONException, IOException{
+		int index = 0;
+		for (FilesData data : Plugins) {
+			boolean fileDeleted = true;
+
+			for (File f : yourDir.listFiles()) {
+
+				if (f.isFile() && f.getName().contains(data.name)) {
+
+					fileDeleted = false;
+					break;
+
+				} else
+					fileDeleted = true;
+
+			}
+
+			if (fileDeleted) {
+				Plugins.remove(index);
+			}
+			index++;
+		}
+		if (Plugins.size() < index)
+			ParseJson.saveFile(Plugins);
+
+	}
 
 	public class Adapter implements ListAdapter
 
@@ -334,9 +207,9 @@ public class PluginsView extends Activity {
 
 			final CheckBox Box = (CheckBox) rowView
 					.findViewById(R.id.checkBoxenable);
-			enabled.setText(String.valueOf(loadedFile.get(position).enabled));
+			enabled.setText(String.valueOf(Plugins.get(position).enabled));
 
-			if (loadedFile.get(position).enabled == 1)
+			if (Plugins.get(position).enabled == 1)
 				Box.setChecked(true);
 
 			Box.setOnClickListener(new View.OnClickListener() {
@@ -368,7 +241,7 @@ public class PluginsView extends Activity {
 
 			});
 
-			data.setText(loadedFile.get(position).name);
+			data.setText(Plugins.get(position).name);
 			return rowView;
 
 		}
@@ -403,7 +276,7 @@ public class PluginsView extends Activity {
 		@Override
 		public int getCount() {
 
-			return loadedFile.size();
+			return Plugins.size();
 
 		}
 

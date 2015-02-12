@@ -1,6 +1,7 @@
 package com.libopenmw.openmw;
 
 import java.io.File;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -190,7 +191,8 @@ public class MainActivity extends Activity {
 
 							@Override
 							public void run() {
-								File inputfile = new File(ParseJson.jsonFilePath);
+								File inputfile = new File(
+										ParseJson.jsonFilePath);
 								if (inputfile.exists())
 									inputfile.delete();
 								CopyFilesFromAssets copyFiles = new CopyFilesFromAssets(
@@ -204,27 +206,21 @@ public class MainActivity extends Activity {
 													+ "/config/openmw/openmw.cfg",
 											"resources");
 									int pos = Settings.getInt(
-											Constants.SPINNER_POS, 0);
-									String data = null;
-									if (pos == 0)
-										data = "win1250";
-									else if (pos == 1)
-										data = "win1251";
-									else if (pos == 2)
-										data = "win1252";
+											Constants.LANGUAGE, 0);
+
+									Writer.write(
+											SettingsActivity.data[pos],
+											MainActivity.configsPath
+													+ "/config/openmw/openmw.cfg",
+											"encoding");
+
 									pos = Settings.getInt(Constants.MIPMAPPING,
 											0);
-									if (pos == 0)
-										data = "none";
-									else if (pos == 1)
-										data = "trilinear";
-									else if (pos == 2)
-										data = "bilinear";
-									else if (pos == 3)
-										data = "anisotropic";
 
-									Writer.write(data, MainActivity.configsPath
-											+ "/config/openmw/settings.cfg",
+									Writer.write(
+											SettingsActivity.dataMipmapping[pos],
+											MainActivity.configsPath
+													+ "/config/openmw/settings.cfg",
 											"texture filtering");
 									pos = Settings.getInt(Constants.SUBTITLES,
 											-1);

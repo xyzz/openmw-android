@@ -21,8 +21,8 @@ public class SettingsActivity extends Activity {
 	private SharedPreferences Settings;
 	private EditText configsText;
 	private EditText dataText;
-	String[] data = { "win1250", "win1251", "win1252" };
-	String[] dataMipmapping = { "none", "trilinear", "bilinear","anisotropic" };
+static	String[] data = { "win1250", "win1251", "win1252" };
+static	String[] dataMipmapping = { "none", "trilinear", "bilinear","anisotropic" };
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -86,7 +86,7 @@ public class SettingsActivity extends Activity {
 		final Spinner spinner = (Spinner) findViewById(R.id.spinner1);
 		spinner.setAdapter(adapter);
 		spinner.setPrompt("Encoding");
-		spinner.setSelection(Settings.getInt(Constants.SPINNER_POS, 0));
+		spinner.setSelection(Settings.getInt(Constants.LANGUAGE, 0));
 		spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View view,
@@ -97,7 +97,7 @@ public class SettingsActivity extends Activity {
 							MainActivity.configsPath
 									+ "/config/openmw/openmw.cfg", "encoding");
 					Editor editor = Settings.edit();
-					editor.putInt(Constants.SPINNER_POS, position);
+					editor.putInt(Constants.LANGUAGE, position);
 					editor.apply();
 				
 

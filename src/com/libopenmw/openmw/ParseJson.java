@@ -14,6 +14,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.libopenmw.openmw.ParseJson.FilesData;
+
 public class ParseJson {
 
 	static final String jsonFilePath = MainActivity.configsPath + "/files.json";
@@ -23,7 +25,7 @@ public class ParseJson {
 		loadedFile.add(ti);
 
 		try {
-			saveFile(loadedFile, -1);
+			saveFile(loadedFile);
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -31,7 +33,7 @@ public class ParseJson {
 
 	}
 
-	private static void saveFile(List<FilesData> loadedFile, int deletePos)
+	public static void saveFile(List<FilesData> loadedFile)
 			throws JSONException, IOException {
 
 		String file = "";
@@ -42,13 +44,12 @@ public class ParseJson {
 			JSONObject c;
 			c = new JSONObject();
 
-			if (i != deletePos) {
 				c.put("name", loadedFile.get(i).name);
 				c.put("nameBsa", loadedFile.get(i).nameBsa);
 				c.put("enabled", loadedFile.get(i).enabled);
 
 				jsonArray.put(c);
-			}
+			
 		}
 		JSONObject array = new JSONObject();
 		array.put("data_array", jsonArray);
@@ -129,5 +130,7 @@ public class ParseJson {
 		public long enabled;
 
 	}
+
+	
 
 }
