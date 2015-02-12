@@ -18,7 +18,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" >
 
-        <com.libopenmw.openmw.TouchCamera
+        <com.libopenmw.openmw.TouchCameraSimulation
             android:id="@+id/superTouch"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -44,7 +44,7 @@
             android:scaleType="fitXY"
             android:src="@drawable/inventory" />
 
-        <com.libopenmw.openmw.Controls
+        <com.libopenmw.openmw.Joystick
             android:id="@+id/joystick"
             android:layout_width="50dip"
             android:layout_height="50dip"

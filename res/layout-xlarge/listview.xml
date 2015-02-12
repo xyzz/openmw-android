@@ -3,14 +3,21 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
 
-    <ListView
+    <com.mobeta.android.dslv.DragSortListView
         android:id="@+id/listView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/buttonsave" >
-        
-    </ListView>
-
+          dslv:drag_enabled="true"
+           dslv:collapsed_height="1px"
+    
+    dslv:drag_scroll_start="0.33"
+    dslv:drag_start_mode="onDown"
+    dslv:float_alpha="0.6"
+ 
+    dslv:slide_shuffle_speed="0.3"
+    </com.mobeta.android.dslv.DragSortListView>
+    
     <Button
         android:id="@+id/buttonsave"
         android:layout_width="wrap_content"

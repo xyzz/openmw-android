@@ -9,6 +9,7 @@ import java.util.List;
 import org.json.JSONException;
 
 import com.libopenmw.openmw.ParseJson.FilesData;
+import com.mobeta.android.dslv.DragSortListView;
 
 import android.app.Activity;
 import android.content.Context;
@@ -18,6 +19,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -27,6 +29,7 @@ import android.widget.Toast;
 public class PluginsView extends Activity {
 
 	public List<FilesData> Plugins;
+	Adapter adapter;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -63,9 +66,11 @@ public class PluginsView extends Activity {
 			e.printStackTrace();
 		}
 
-		ListView listView = (ListView) findViewById(R.id.listView1);
+		DragSortListView listView = (DragSortListView) findViewById(R.id.listView1);
 
-		listView.setAdapter(new Adapter());
+		adapter = new Adapter();
+		listView.setAdapter(adapter);
+		listView.setDropListener(onDrop);
 
 	}
 
@@ -107,12 +112,13 @@ public class PluginsView extends Activity {
 	private void checkFilesDeleted(File yourDir) throws JSONException,
 			IOException {
 		int index = 0;
-		for (FilesData data : Plugins) {
+		List<FilesData> tmp = ParseJson.loadFile();
+		for (FilesData data : tmp) {
 			boolean fileDeleted = true;
 
 			for (File f : yourDir.listFiles()) {
 
-				if (f.isFile() && f.getName().contains(data.name)) {
+				if (f.isFile() && f.getName().endsWith(data.name)) {
 
 					fileDeleted = false;
 					break;
@@ -146,7 +152,7 @@ public class PluginsView extends Activity {
 
 			boolean newPlugin = true;
 			for (FilesData data : Plugins) {
-				if (f.isFile() && f.getName().contains(data.name)) {
+				if (f.isFile() && f.getName().endsWith(data.name)) {
 
 					newPlugin = false;
 					break;
@@ -171,31 +177,38 @@ public class PluginsView extends Activity {
 
 		}
 
-		// sort Plugins
-		for (int i = 0; i < Plugins.size(); i++) {
-			if (Plugins.get(i).name.contains("Morrowind.esm") && i != 0) {
-				changeLinesInList(0, i);
-				break;
-			} else
-
-			if (Plugins.get(i).name.contains("Bloodmoon.esm") && i != 1)
-				changeLinesInList(1, i);
-			else if (Plugins.get(i).name.contains("Tribunal.esm") && i != 2)
-				changeLinesInList(2, i);
-
-		}
-
 		ParseJson.saveFile(Plugins);
 	}
+
+	private DragSortListView.DropListener onDrop = new DragSortListView.DropListener() {
+		@Override
+		public void drop(int from, int to) {
+			FilesData item = Plugins.get(from);
+
+			Log.d("DEBUG", "from" + from + "to" + to + "   "
+					+ Plugins.get(0).name);
+			Plugins.remove(from);
+
+			Plugins.add(to, item);
+
+			adapter.notifyDataSetChanged();
+			try {
+				ParseJson.saveFile(Plugins);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	};
 
 	private void changeLinesInList(int line1, int line2) {
 		FilesData value1;
 		value1 = Plugins.get(line1);
 		FilesData value2;
 		value2 = Plugins.get(line2);
-
-		Log.d("DEBUG", value1.name);
-		Log.d("DEBUG", value2.name);
 
 		Plugins.remove(line1);
 		Plugins.add(line1, value2);
@@ -204,7 +217,7 @@ public class PluginsView extends Activity {
 
 	}
 
-	public class Adapter implements ListAdapter
+	public class Adapter extends BaseAdapter
 
 	{
 
@@ -343,18 +356,6 @@ public class PluginsView extends Activity {
 			// TODO Auto-generated method stub
 
 			return false;
-		}
-
-		@Override
-		public void registerDataSetObserver(DataSetObserver arg0) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void unregisterDataSetObserver(DataSetObserver arg0) {
-			// TODO Auto-generated method stub
-
 		}
 
 	}
