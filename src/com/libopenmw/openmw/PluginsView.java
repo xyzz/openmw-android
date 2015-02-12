@@ -3,6 +3,7 @@ package com.libopenmw.openmw;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONException;
@@ -13,6 +14,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.database.DataSetObserver;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,74 +26,46 @@ import android.widget.Toast;
 
 public class PluginsView extends Activity {
 
-	private Context context;
-	public static List<FilesData> Plugins;
-	public boolean check = false;
-	String name;
+	public List<FilesData> Plugins;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.listview);
+
 		try {
-
 			Plugins = ParseJson.loadFile();
-			File yourDir = new File(MainActivity.dataPath);
-
-			checkFilesDeleted(yourDir);
-			
-			for (File f : yourDir.listFiles()) {
-
-				boolean newPlugin = true;
-				for (FilesData data : Plugins) {
-					if (f.isFile() && f.getName().contains(data.name)) {
-
-						newPlugin=false;
-						break;
-
-					} else
-						newPlugin = true;
-				         
-				}
-				   if (newPlugin ){
-					   FilesData pluginData = new FilesData();
-					      
-					   pluginData.name = f.getName();
-						pluginData.nameBsa = f.getName().split("\\.")[0] + ".bsa";
-						if (f.getName().contains("Morrowind.esm"))
-								Plugins.add(0, pluginData);
-						else
-						
-						if (f.getName().contains("Bloodmoon.esm"))
-								Plugins.add(1, pluginData);
-						else
-						if (f.getName().contains("Tribunal.esm"))
-							Plugins.add(2, pluginData);
-						
-			       
-			       }
-			}
-				
-			Plugins = null;
-
-			try {
-				Plugins = ParseJson.loadFile();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-			context = this;
-
-			ListView listView = (ListView) findViewById(R.id.listView1);
-
-			listView.setAdapter(new Adapter());
-		} catch (Exception e) {
-			Toast.makeText(getApplicationContext(), "no data files found",
-					Toast.LENGTH_LONG).show();
-			finish();
+			if (Plugins == null)
+				Plugins = new ArrayList<ParseJson.FilesData>();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		File yourDir = new File(MainActivity.dataPath);
+
+		try {
+			checkFilesDeleted(yourDir);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			addNewFiles(yourDir);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		ListView listView = (ListView) findViewById(R.id.listView1);
+
+		listView.setAdapter(new Adapter());
 
 	}
 
@@ -129,9 +103,9 @@ public class PluginsView extends Activity {
 			e.printStackTrace();
 		}
 	}
-	
-	
-	private void checkFilesDeleted (File yourDir) throws JSONException, IOException{
+
+	private void checkFilesDeleted(File yourDir) throws JSONException,
+			IOException {
 		int index = 0;
 		for (FilesData data : Plugins) {
 			boolean fileDeleted = true;
@@ -155,6 +129,78 @@ public class PluginsView extends Activity {
 		}
 		if (Plugins.size() < index)
 			ParseJson.saveFile(Plugins);
+
+	}
+
+	private void addNewFiles(File yourDir) throws JSONException, IOException {
+		int lastEsmPos = 0;
+
+		for (int i = 0; i < Plugins.size(); i++) {
+			if (Plugins.get(i).name.endsWith("esm"))
+				lastEsmPos = i;
+			else
+				break;
+		}
+
+		for (File f : yourDir.listFiles()) {
+
+			boolean newPlugin = true;
+			for (FilesData data : Plugins) {
+				if (f.isFile() && f.getName().contains(data.name)) {
+
+					newPlugin = false;
+					break;
+
+				} else
+					newPlugin = true;
+
+			}
+			if (newPlugin) {
+				FilesData pluginData = new FilesData();
+
+				pluginData.name = f.getName();
+				pluginData.nameBsa = f.getName().split("\\.")[0] + ".bsa";
+				if (f.getName().endsWith("esm")) {
+					Plugins.add(lastEsmPos, pluginData);
+					lastEsmPos++;
+				} else if (f.getName().endsWith("esp")) {
+					Plugins.add(pluginData);
+				}
+
+			}
+
+		}
+
+		// sort Plugins
+		for (int i = 0; i < Plugins.size(); i++) {
+			if (Plugins.get(i).name.contains("Morrowind.esm") && i != 0) {
+				changeLinesInList(0, i);
+				break;
+			} else
+
+			if (Plugins.get(i).name.contains("Bloodmoon.esm") && i != 1)
+				changeLinesInList(1, i);
+			else if (Plugins.get(i).name.contains("Tribunal.esm") && i != 2)
+				changeLinesInList(2, i);
+
+		}
+
+		ParseJson.saveFile(Plugins);
+	}
+
+	private void changeLinesInList(int line1, int line2) {
+		FilesData value1;
+		value1 = Plugins.get(line1);
+		FilesData value2;
+		value2 = Plugins.get(line2);
+
+		Log.d("DEBUG", value1.name);
+		Log.d("DEBUG", value2.name);
+
+		Plugins.remove(line1);
+		Plugins.add(line1, value2);
+		Plugins.remove(line2);
+		Plugins.add(line2, value1);
 
 	}
 
@@ -195,13 +241,12 @@ public class PluginsView extends Activity {
 		public View getView(final int position, View convertView,
 				ViewGroup parent) {
 
-			LayoutInflater inflater = (LayoutInflater) context
+			LayoutInflater inflater = (LayoutInflater) PluginsView.this
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
 			rowView = inflater.inflate(R.layout.rowlistview, parent, false);
 
 			TextView data = (TextView) rowView.findViewById(R.id.textView1);
-			TextView bsa = (TextView) rowView.findViewById(R.id.textViewBsa);
 			TextView enabled = (TextView) rowView
 					.findViewById(R.id.textViewenabled);
 
@@ -215,23 +260,26 @@ public class PluginsView extends Activity {
 			Box.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
 					if (Box.isChecked()) {
-						FilesData data = new FilesData();
-						data.enabled = 1;
-						ParseJson.pos = position;
+
+						Plugins.get(position).enabled = 1;
 						try {
-							ParseJson.updatetofile(data);
+							ParseJson.saveFile(Plugins);
 						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (JSONException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					} else {
 
-						FilesData data = new FilesData();
-						data.enabled = 0;
-						ParseJson.pos = position;
+						Plugins.get(position).enabled = 0;
 						try {
-							ParseJson.updatetofile(data);
+							ParseJson.saveFile(Plugins);
 						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (JSONException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
