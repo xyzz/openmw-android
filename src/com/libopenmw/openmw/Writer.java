@@ -16,7 +16,7 @@ public class Writer {
 		StringBuilder builder = new StringBuilder();
 		boolean contains = true;
 		while (line != null) {
-			if (line.startsWith(value) && contains) {
+			if (line.contains(value) && contains) {
 				builder.append(value + "=" + data);
 				contains = false;
 			} else
