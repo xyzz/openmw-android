@@ -115,7 +115,9 @@ public class PluginsView extends Activity {
 		if (inputfile.exists())
 			inputfile.delete();
 		Plugins.remove(deletePos);
+		savePluginsData();
 		adapter.notifyDataSetChanged();
+		
 	}
 
 	public void savePlugins(View v) throws IOException {
