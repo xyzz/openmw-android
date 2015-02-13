@@ -187,7 +187,7 @@ public class PluginsView extends Activity {
 		int lastEsmPos = 0;
 
 		for (int i = 0; i < Plugins.size(); i++) {
-			if (Plugins.get(i).name.endsWith("esm"))
+			if (Plugins.get(i).name.endsWith(".esm") || Plugins.get(i).name.endsWith(".ESM"))
 				lastEsmPos = i;
 			else
 				break;
