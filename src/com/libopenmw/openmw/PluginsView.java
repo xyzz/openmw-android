@@ -12,7 +12,9 @@ import com.libopenmw.openmw.ParseJson.FilesData;
 import com.mobeta.android.dslv.DragSortListView;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.util.Log;
@@ -29,7 +31,8 @@ import android.widget.Toast;
 public class PluginsView extends Activity {
 
 	public List<FilesData> Plugins;
-	Adapter adapter;
+	private Adapter adapter;
+	private int deletePos = -1;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -70,8 +73,49 @@ public class PluginsView extends Activity {
 
 		adapter = new Adapter();
 		listView.setAdapter(adapter);
-		listView.setDropListener(onDrop);
 
+		listView.setDropListener(onDrop);
+		listView.setRemoveListener(onRemove);
+
+	}
+
+	private DragSortListView.RemoveListener onRemove = new DragSortListView.RemoveListener() {
+		@Override
+		public void remove(int which) {
+
+			deletePos = which;
+			showDialod();
+		}
+	};
+
+	private void showDialod() {
+		AlertDialog.Builder alert = new AlertDialog.Builder(this);
+		alert.setTitle("Do you want to delete this file?");
+
+		alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int whichButton) {
+				deletePlugin();
+			}
+		});
+
+		alert.setNegativeButton("Cancel",
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {
+						adapter.notifyDataSetChanged();
+						dialog.cancel();
+					}
+				});
+
+		alert.show();
+	}
+
+	private void deletePlugin() {
+		File inputfile = new File(MainActivity.dataPath + "/"
+				+ Plugins.get(deletePos).name);
+		if (inputfile.exists())
+			inputfile.delete();
+		Plugins.remove(deletePos);
+		adapter.notifyDataSetChanged();
 	}
 
 	public void savePlugins(View v) throws IOException {
@@ -134,7 +178,7 @@ public class PluginsView extends Activity {
 			index++;
 		}
 		if (Plugins.size() < index)
-			ParseJson.saveFile(Plugins);
+			savePluginsData();
 
 	}
 
@@ -177,7 +221,7 @@ public class PluginsView extends Activity {
 
 		}
 
-		ParseJson.saveFile(Plugins);
+		savePluginsData();
 	}
 
 	private DragSortListView.DropListener onDrop = new DragSortListView.DropListener() {
@@ -192,29 +236,28 @@ public class PluginsView extends Activity {
 			Plugins.add(to, item);
 
 			adapter.notifyDataSetChanged();
-			try {
-				ParseJson.saveFile(Plugins);
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			savePluginsData();
 		}
 	};
 
-	private void changeLinesInList(int line1, int line2) {
-		FilesData value1;
-		value1 = Plugins.get(line1);
-		FilesData value2;
-		value2 = Plugins.get(line2);
+	private void savePluginsData() {
 
-		Plugins.remove(line1);
-		Plugins.add(line1, value2);
-		Plugins.remove(line2);
-		Plugins.add(line2, value1);
+		new Thread(new Runnable() {
 
+			@Override
+			public void run() {
+				try {
+					ParseJson.saveFile(Plugins);
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			}
+		}).start();
 	}
 
 	public class Adapter extends BaseAdapter
@@ -275,27 +318,11 @@ public class PluginsView extends Activity {
 					if (Box.isChecked()) {
 
 						Plugins.get(position).enabled = 1;
-						try {
-							ParseJson.saveFile(Plugins);
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} catch (JSONException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
+						savePluginsData();
 					} else {
 
 						Plugins.get(position).enabled = 0;
-						try {
-							ParseJson.saveFile(Plugins);
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} catch (JSONException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
+						savePluginsData();
 
 					}
 				}

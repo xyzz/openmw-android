@@ -4,20 +4,22 @@
     android:layout_height="fill_parent" >
 
     <com.mobeta.android.dslv.DragSortListView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res/com.libopenmw.openmw"
         android:id="@+id/listView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/buttonsave" >
-          dslv:drag_enabled="true"
-           dslv:collapsed_height="1px"
-    
-    dslv:drag_scroll_start="0.33"
-    dslv:drag_start_mode="onDown"
-    dslv:float_alpha="0.6"
- 
-    dslv:slide_shuffle_speed="0.3"
-    </com.mobeta.android.dslv.DragSortListView>
-    
+        android:layout_below="@+id/buttonsave"
+        app:collapsed_height="1px"
+        app:drag_enabled="true"
+        app:drag_scroll_start="0.33"
+        app:drag_start_mode="onLongPress"
+        app:float_alpha="0.6"
+        app:remove_enabled="true"
+        app:remove_mode="flingRemove"
+        app:slide_shuffle_speed="0.3"
+        app:track_drag_sort="false" />
+
     <Button
         android:id="@+id/buttonsave"
         android:layout_width="wrap_content"
