@@ -41,41 +41,29 @@ public class PluginsView extends Activity {
 		setContentView(R.layout.listview);
 
 		try {
+
 			Plugins = ParseJson.loadFile();
 			if (Plugins == null)
 				Plugins = new ArrayList<ParseJson.FilesData>();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		File yourDir = new File(MainActivity.dataPath);
 
-		try {
+			File yourDir = new File(MainActivity.dataPath);
+
 			checkFilesDeleted(yourDir);
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
+
 			addNewFiles(yourDir);
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
+			DragSortListView listView = (DragSortListView) findViewById(R.id.listView1);
+
+			adapter = new Adapter();
+			listView.setAdapter(adapter);
+
+			listView.setDropListener(onDrop);
+			listView.setRemoveListener(onRemove);
+		} catch (Exception e) {
+			Toast.makeText(getApplicationContext(), "data files not found",
+					Toast.LENGTH_LONG).show();
+			finish();
 		}
-
-		DragSortListView listView = (DragSortListView) findViewById(R.id.listView1);
-
-		adapter = new Adapter();
-		listView.setAdapter(adapter);
-
-		listView.setDropListener(onDrop);
-		listView.setRemoveListener(onRemove);
 
 	}
 
@@ -90,7 +78,8 @@ public class PluginsView extends Activity {
 
 	private void showDialod() {
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
-		alert.setTitle("Do you want to delete "+Plugins.get(deletePos).name+" ?");
+		alert.setTitle("Do you want to delete " + Plugins.get(deletePos).name
+				+ " ?");
 
 		alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
@@ -117,25 +106,26 @@ public class PluginsView extends Activity {
 		Plugins.remove(deletePos);
 		savePluginsData();
 		adapter.notifyDataSetChanged();
-		
+
 	}
 
 	public void savePlugins(View v) throws IOException {
-		List<FilesData> plugins = null;
 
 		try {
-			plugins = ParseJson.loadFile();
 
 			FileWriter writer = new FileWriter(MainActivity.configsPath
 					+ "/openmw/openmw.cfg");
 
 			int i = 0;
-			while (i < plugins.size()) {
+			while (i < Plugins.size()) {
 
-				if (plugins.get(i).enabled == 1) {
-					writer.write("content= " + plugins.get(i).name + "\n");
-					writer.write("fallback-archive= " + plugins.get(i).nameBsa
-							+ "\n");
+				if (Plugins.get(i).enabled == 1) {
+					writer.write("content= " + Plugins.get(i).name + "\n");
+
+					if (checkBsaExists(MainActivity.dataPath + "/"
+							+ Plugins.get(i).nameBsa))
+						writer.write("fallback-archive= "
+								+ Plugins.get(i).nameBsa + "\n");
 
 					writer.flush();
 				}
@@ -153,6 +143,15 @@ public class PluginsView extends Activity {
 			toast.show();
 			e.printStackTrace();
 		}
+	}
+
+	private boolean checkBsaExists(String path) {
+		File inputfile = new File(path);
+		if (inputfile.exists())
+			return true;
+		else
+			return false;
+
 	}
 
 	private void checkFilesDeleted(File yourDir) throws JSONException,
