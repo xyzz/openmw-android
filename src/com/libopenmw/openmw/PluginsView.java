@@ -90,7 +90,7 @@ public class PluginsView extends Activity {
 
 	private void showDialod() {
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
-		alert.setTitle("Do you want to delete this file?");
+		alert.setTitle("Do you want to delete "+Plugins.get(deletePos).name+" ?");
 
 		alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
