@@ -121,7 +121,7 @@ public class PluginsView extends Activity {
 
 				if (Plugins.get(i).enabled == 1) {
 					writer.write("content= " + Plugins.get(i).name + "\n");
-
+ 
 					if (checkBsaExists(MainActivity.dataPath + "/"
 							+ Plugins.get(i).nameBsa))
 						writer.write("fallback-archive= "
@@ -211,10 +211,10 @@ public class PluginsView extends Activity {
 
 				pluginData.name = f.getName();
 				pluginData.nameBsa = f.getName().split("\\.")[0] + ".bsa";
-				if (f.getName().endsWith("esm")) {
+				if (f.getName().endsWith(".esm") || f.getName().endsWith(".ESM")) {
 					Plugins.add(lastEsmPos, pluginData);
 					lastEsmPos++;
-				} else if (f.getName().endsWith("esp")) {
+				} else if (f.getName().endsWith(".esp") || f.getName().endsWith(".ESP")) {
 					Plugins.add(pluginData);
 				}
 
