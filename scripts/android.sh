@@ -5,8 +5,8 @@ SOURCE=`pwd`
 
 TOOLCHAIN=/tmp/Shou
 SYSROOT=$TOOLCHAIN/sysroot
-$ANDROID_NDK/build/tools/make-standalone-toolchain.sh --toolchain=arm-linux-androideabi-4.7 \
-  --system=linux-x86 --platform=android-14 --install-dir=$TOOLCHAIN
+$ANDROID_NDK/build/tools/make-standalone-toolchain.sh --toolchain=arm-linux-androideabi-4.9 \
+  --system=linux-x86 --platform=android-19 --install-dir=$TOOLCHAIN
 
 
 export PATH=$TOOLCHAIN/bin:$PATH
@@ -15,16 +15,15 @@ export AR=arm-linux-androideabi-ar
 export LD=arm-linux-androideabi-ld
 export STRIP=arm-linux-androideabi-strip
 
-CFLAGS="-std=c99 -O3 -Wall -marm -pipe -fpic -fasm -funsafe-math-optimizations -mcpu=generic-armv7-a -mtune=generic-armv7-a -funroll-loops \
-  -march=armv7-a -mfpu=neon-vfpv4 -mfloat-abi=softfp -mvectorize-with-neon-quad \
+CFLAGS="-std=c99  -Ofast -Os -mtune=cortex-a7 -Wall -marm -pipe -fpic -ftree-vectorize -fasm -funsafe-math-optimizations -funroll-loops \
+  -march=armv7-a -mfpu=neon -D_NDK_MATH_NO_SOFTFP=1 -mfloat-abi=hard -mvectorize-with-neon-quad \
   -finline-limit=300 -ffast-math \
   -fstrict-aliasing -Werror=strict-aliasing \
   -fmodulo-sched -fmodulo-sched-allow-regmoves \
   -Wno-psabi -Wa,--noexecstack \
   -DANDROID"
-
-LDFLAGS="-lm -lz -Wl,--no-undefined -Wl,-z,noexecstack \
-  -Wl,--no-warn-mismatch -Wl,--fix-cortex-a8"
+LDFLAGS="-lz -Wl,--no-undefined -Wl,-z,noexecstack \
+  -Wl,--no-warn-mismatch -lm_hard -Wl,--fix-cortex-a8"
 
 FFMPEG_FLAGS="--target-os=linux \
   --arch=arm \
@@ -43,7 +42,7 @@ FFMPEG_FLAGS="--target-os=linux \
 --disable-debug \
  --disable-armv6 \
 --disable-armv5te \
-  --enable-runtime-cpudetect \
+  --disable-runtime-cpudetect \
   --enable-protocol=file \
   --enable-protocol=rtp \
   --enable-protocol=srtp \
@@ -73,8 +72,6 @@ FFMPEG_FLAGS="--target-os=linux \
 
 PREFIX="$DEST/neon" && mkdir -p $PREFIX
 FFMPEG_FLAGS="$FFMPEG_FLAGS --prefix=$PREFIX"
-#FFMPEG_LIB_FLAGS="-L$SSL_BUILD -L$FDK_AAC/lib -L$RTMPDUMP/librtmp -lrtmp"
-#SSL_OBJS=`find $SSL_BUILD/objs/ssl $SSL_BUILD/objs/crypto -type f -name "*.o"`
 
 ./configure $FFMPEG_FLAGS --extra-cflags="$CFLAGS" --extra-ldflags="$LDFLAGS $FFMPEG_LIB_FLAGS" | tee $PREFIX/configuration.txt
 cp config.* $PREFIX
