@@ -25,6 +25,13 @@ public class GameActivity extends SDLActivity {
 	private boolean crouchFlag = false;
 	private boolean hideControls;
 
+	static {
+
+		System.loadLibrary("SDL2");
+		System.loadLibrary("openal");
+		System.loadLibrary("openmw");
+	}
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
