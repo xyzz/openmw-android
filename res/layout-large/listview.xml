@@ -33,4 +33,13 @@
         />
     </Button>
 
+     <TextView
+        android:id="@+id/pluginsInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:textSize="24sp" />
+    
 </RelativeLayout>

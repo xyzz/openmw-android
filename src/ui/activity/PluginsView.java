@@ -10,6 +10,7 @@ import org.json.JSONException;
 
 import ui.files.ParseJson;
 import ui.files.ParseJson.FilesData;
+import ui.files.PluginReader;
 
 import com.libopenmw.openmw.R;
 import com.libopenmw.openmw.R.id;
@@ -26,6 +27,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.ListAdapter;
@@ -38,6 +41,7 @@ public class PluginsView extends Activity {
 	public List<FilesData> Plugins;
 	private Adapter adapter;
 	private int deletePos = -1;
+	private TextView pluginInfo;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -45,6 +49,7 @@ public class PluginsView extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.listview);
 
+		pluginInfo = (TextView) findViewById(R.id.pluginsInfo);
 		try {
 
 			Plugins = ParseJson.loadFile();
@@ -57,13 +62,15 @@ public class PluginsView extends Activity {
 
 			addNewFiles(yourDir);
 
-			DragSortListView listView = (DragSortListView) findViewById(R.id.listView1);
+			final DragSortListView listView = (DragSortListView) findViewById(R.id.listView1);
 
 			adapter = new Adapter();
 			listView.setAdapter(adapter);
 
 			listView.setDropListener(onDrop);
 			listView.setRemoveListener(onRemove);
+		
+
 		} catch (Exception e) {
 			Toast.makeText(getApplicationContext(), "data files not found",
 					Toast.LENGTH_LONG).show();
@@ -126,7 +133,7 @@ public class PluginsView extends Activity {
 
 				if (Plugins.get(i).enabled == 1) {
 					writer.write("content= " + Plugins.get(i).name + "\n");
- 
+
 					if (checkBsaExists(MainActivity.dataPath + "/"
 							+ Plugins.get(i).nameBsa))
 						writer.write("fallback-archive= "
@@ -192,7 +199,8 @@ public class PluginsView extends Activity {
 		int lastEsmPos = 0;
 
 		for (int i = 0; i < Plugins.size(); i++) {
-			if (Plugins.get(i).name.endsWith(".esm") || Plugins.get(i).name.endsWith(".ESM"))
+			if (Plugins.get(i).name.endsWith(".esm")
+					|| Plugins.get(i).name.endsWith(".ESM"))
 				lastEsmPos = i;
 			else
 				break;
@@ -216,10 +224,12 @@ public class PluginsView extends Activity {
 
 				pluginData.name = f.getName();
 				pluginData.nameBsa = f.getName().split("\\.")[0] + ".bsa";
-				if (f.getName().endsWith(".esm") || f.getName().endsWith(".ESM")) {
+				if (f.getName().endsWith(".esm")
+						|| f.getName().endsWith(".ESM")) {
 					Plugins.add(lastEsmPos, pluginData);
 					lastEsmPos++;
-				} else if (f.getName().endsWith(".esp") || f.getName().endsWith(".ESP")) {
+				} else if (f.getName().endsWith(".esp")
+						|| f.getName().endsWith(".ESP")) {
 					Plugins.add(pluginData);
 				}
 
@@ -241,6 +251,15 @@ public class PluginsView extends Activity {
 
 			Plugins.add(to, item);
 
+			try {
+				pluginInfo.setText(PluginReader
+						.read(MainActivity.dataPath + "/"
+								+ item.name));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	
 			adapter.notifyDataSetChanged();
 			savePluginsData();
 		}
