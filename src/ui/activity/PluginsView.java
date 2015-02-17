@@ -62,14 +62,13 @@ public class PluginsView extends Activity {
 
 			addNewFiles(yourDir);
 
-			final DragSortListView listView = (DragSortListView) findViewById(R.id.listView1);
+			DragSortListView listView = (DragSortListView) findViewById(R.id.listView1);
 
 			adapter = new Adapter();
 			listView.setAdapter(adapter);
 
 			listView.setDropListener(onDrop);
 			listView.setRemoveListener(onRemove);
-		
 
 		} catch (Exception e) {
 			Toast.makeText(getApplicationContext(), "data files not found",
@@ -252,14 +251,13 @@ public class PluginsView extends Activity {
 			Plugins.add(to, item);
 
 			try {
-				pluginInfo.setText(PluginReader
-						.read(MainActivity.dataPath + "/"
-								+ item.name));
+				pluginInfo.setText(PluginReader.read(MainActivity.dataPath
+						+ "/" + item.name));
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-	
+
 			adapter.notifyDataSetChanged();
 			savePluginsData();
 		}

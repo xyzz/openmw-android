@@ -12,9 +12,8 @@ public class MultiTouchListener implements OnTouchListener {
 	private float mPrevX;
 	private float mPrevY;
 
-
 	public MultiTouchListener() {
-		
+
 	}
 
 	@Override
@@ -50,45 +49,66 @@ public class MultiTouchListener implements OnTouchListener {
 
 		case MotionEvent.ACTION_UP:
 			ConfigureControls.buttonFlag = view.getId();
-			if (view.getId() == 1)
+
+			switch (view.getId()) {
+			case 1:
 				ConfigureControls.button.setText("buttonRun");
-			else if (view.getId() == 2)
+				break;
+
+			case 2:
 				ConfigureControls.button.setText("buttonConsole");
-			else if (view.getId() == 3)
+				break;
+			case 3:
 				ConfigureControls.button.setText("buttonPerson");
-			else if (view.getId() == 4)
+				break;
+			case 4:
 				ConfigureControls.button.setText("buttonWait");
-			else if (view.getId() == 5)
+				break;
+			case 5:
 				ConfigureControls.button.setText("buttonTouchon");
-			else if (view.getId() == 6)
+				break;
+			case 6:
 				ConfigureControls.button.setText("buttonDiary");
-			else if (view.getId() == 7)
+				break;
+			case 7:
 				ConfigureControls.button.setText("buttonPause");
-			else if (view.getId() == 8)
+				break;
+			case 8:
 				ConfigureControls.button.setText("buttonLoad");
-			else if (view.getId() == 9)
+				break;
+			case 9:
 				ConfigureControls.button.setText("buttonSave");
-			else if (view.getId() == 10)
+				break;
+			case 10:
 				ConfigureControls.button.setText("buttonWeapon");
-			else if (view.getId() == 11)
+				break;
+			case 11:
 				ConfigureControls.button.setText("buttonInventory");
-			else if (view.getId() == 12)
+				break;
+			case 12:
 				ConfigureControls.button.setText("buttonJump");
-			else if (view.getId() == 13)
+				break;
+			case 13:
 				ConfigureControls.button.setText("buttonFire");
-			else if (view.getId() == 14)
+				break;
+			case 14:
 				ConfigureControls.button.setText("buttonMagic");
-			else if (view.getId() == 15)
+				break;
+			case 15:
 				ConfigureControls.button.setText("buttonUse");
-			if (view.getId() == 16)
+				break;
+			case 16:
 				ConfigureControls.button.setText("buttonCrouch");
-			if (view.getId() == 17)
+				break;
+			case 17:
 				ConfigureControls.button.setText("joystick");
+				break;
+
+			}
 
 			break;
 		}
 
 		return true;
 	}
-
 }
