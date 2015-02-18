@@ -91,6 +91,24 @@
             android:focusableInTouchMode="true"
             android:scaleType="fitXY" />
 
+        <Button
+            android:id="@+id/showQuickPanel"
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:scaleType="fitXY"
+            android:text="QP" />
+
+        <Button
+            android:id="@+id/F1"
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:scaleType="fitXY"
+            android:text="F1" />
+
         <ImageButton
             android:id="@+id/buttonpause"
             android:layout_width="50dip"
@@ -100,6 +118,106 @@
             android:focusableInTouchMode="true"
             android:scaleType="fitXY"
             android:src="@drawable/pause" />
+
+        <ImageButton
+            android:id="@+id/key1"
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:background="@null"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/image1" />
+
+        <ImageButton
+            android:id="@+id/key2"
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:background="@null"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/image2" />
+
+        <ImageButton
+            android:id="@+id/key3"
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:background="@null"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/image3" />
+
+        <ImageButton
+            android:id="@+id/key4"
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:background="@null"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/image4" />
+
+        <ImageButton
+            android:id="@+id/key5"
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:background="@null"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/image5" />
+
+        <ImageButton
+            android:id="@+id/key6"
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:background="@null"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/image6" />
+
+        <ImageButton
+            android:id="@+id/key7"
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:background="@null"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/image7" />
+
+        <ImageButton
+            android:id="@+id/key8"
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:background="@null"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/image8" />
+
+        <ImageButton
+            android:id="@+id/key9"
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:background="@null"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/image9" />
+
+        <ImageButton
+            android:id="@+id/key0"
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:background="@null"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/image0" />
 
         <ImageButton
             android:id="@+id/buttonsuperload"

@@ -24,12 +24,12 @@ public class PluginReader {
 						if (data[i].contains(".esp")
 								|| data[i].contains(".ESP")) {
 
-							builder.append(line.split("MAST")[i].split(".esp")[0]
+							builder.append(data[i].split(".esp")[0]
 									.replaceAll("\\p{Cntrl}", "") + ".esp");
 							builder.append("\n");
 						} else if (data[i].contains(".esm")
 								|| data[i].contains(".ESM")) {
-							builder.append(line.split("MAST")[i].split(".esm")[0]
+							builder.append(data[i].split(".esm")[0]
 									.replaceAll("\\p{Cntrl}", "") + ".esm");
 							builder.append("\n");
 						}
