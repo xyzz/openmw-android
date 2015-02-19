@@ -103,6 +103,42 @@ public class MultiTouchListener implements OnTouchListener {
 			case 17:
 				ConfigureControls.button.setText("joystick");
 				break;
+			case 18:
+				ConfigureControls.button.setText("F1");
+				break;
+			case 19:
+				ConfigureControls.button.setText("showPanel");
+				break;
+			case 20:
+				ConfigureControls.button.setText("key0");
+				break;
+			case 21:
+				ConfigureControls.button.setText("key1");
+				break;
+			case 22:
+				ConfigureControls.button.setText("key2");
+				break;
+			case 23:
+				ConfigureControls.button.setText("key3");
+				break;
+			case 24:
+				ConfigureControls.button.setText("key4");
+				break;
+			case 25:
+				ConfigureControls.button.setText("key5");
+				break;
+			case 26:
+				ConfigureControls.button.setText("key6");
+				break;
+			case 27:
+				ConfigureControls.button.setText("key7");
+				break;
+			case 28:
+				ConfigureControls.button.setText("key8");
+				break;
+			case 29:
+				ConfigureControls.button.setText("key9");
+				break;
 
 			}
 

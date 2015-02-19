@@ -73,13 +73,71 @@ public class Constants {
 	public static final String APP_PREFERENCES_JOYSTICK_SIZE = "buttonjoysticksize";
 	public static final String APP_PREFERENCES_JOYSTICK_OPACITY = "buttonjoystickopacity";
 	public static final String APP_PREFERENCES_JOYSTICK_Y = "buttonjoysticky";
+
+	public static final String APP_PREFERENCES_BUTTON_SHOWPANEL_X = "buttonshowpanelx";
+	public static final String APP_PREFERENCES_BUTTON_SHOWPANEL_Y = "buttonshowpanely";
+	public static final String APP_PREFERENCES_BUTTON_SHOWPANEL_OPASITY = "buttonshowpanelopacity";
+	public static final String APP_PREFERENCES_BUTTON_SHOWPANEL_SIZE = "buttonshowpanelsize";
+
+	public static final String APP_PREFERENCES_KEY_F1_X = "Keyf1x";
+	public static final String APP_PREFERENCES_KEY_F1_Y = "Keyf1y";
+	public static final String APP_PREFERENCES_KEY_F1_OPACITY = "Keyf1opacity";
+	public static final String APP_PREFERENCES_KEY_F1_SIZE = "Keyf1size";
+
+	public static final String APP_PREFERENCES_KEY_0_X = "Key0x";
+	public static final String APP_PREFERENCES_KEY_0_Y = "Key0y";
+	public static final String APP_PREFERENCES_KEY_0_OPACITY = "Key0opacity";
+	public static final String APP_PREFERENCES_KEY_0_SIZE = "Key0size";
+
+	public static final String APP_PREFERENCES_KEY_1_X = "Key1x";
+	public static final String APP_PREFERENCES_KEY_1_Y = "Key1y";
+	public static final String APP_PREFERENCES_KEY_1_OPACITY = "Key1opacity";
+	public static final String APP_PREFERENCES_KEY_1_SIZE = "Key1size";
+
+	public static final String APP_PREFERENCES_KEY_2_X = "Key2x";
+	public static final String APP_PREFERENCES_KEY_2_Y = "Key2y";
+	public static final String APP_PREFERENCES_KEY_2_OPACITY = "Key2opacity";
+	public static final String APP_PREFERENCES_KEY_2_SIZE = "Key2size";
+
+	public static final String APP_PREFERENCES_KEY_3_X = "Key3x";
+	public static final String APP_PREFERENCES_KEY_3_Y = "Key3y";
+	public static final String APP_PREFERENCES_KEY_3_OPACITY = "Key3opacity";
+	public static final String APP_PREFERENCES_KEY_3_SIZE = "Key3size";
+
+	public static final String APP_PREFERENCES_KEY_4_X = "Key4x";
+	public static final String APP_PREFERENCES_KEY_4_Y = "Key4y";
+	public static final String APP_PREFERENCES_KEY_4_OPACITY = "Key4opacity";
+	public static final String APP_PREFERENCES_KEY_4_SIZE = "Key4size";
+
+	public static final String APP_PREFERENCES_KEY_5_X = "Key5x";
+	public static final String APP_PREFERENCES_KEY_5_Y = "Key5y";
+	public static final String APP_PREFERENCES_KEY_5_OPACITY = "Key5opacity";
+	public static final String APP_PREFERENCES_KEY_5_SIZE = "Key5size";
+
+	public static final String APP_PREFERENCES_KEY_6_X = "Key6x";
+	public static final String APP_PREFERENCES_KEY_6_Y = "Key6y";
+	public static final String APP_PREFERENCES_KEY_6_OPACITY = "Key6opacity";
+	public static final String APP_PREFERENCES_KEY_6_SIZE = "Key6size";
+
+	public static final String APP_PREFERENCES_KEY_7_X = "Key7x";
+	public static final String APP_PREFERENCES_KEY_7_Y = "Key7y";
+	public static final String APP_PREFERENCES_KEY_7_OPACITY = "Key7opacity";
+	public static final String APP_PREFERENCES_KEY_7_SIZE = "Key7size";
+
+	public static final String APP_PREFERENCES_KEY_8_X = "Key8x";
+	public static final String APP_PREFERENCES_KEY_8_Y = "Key8y";
+	public static final String APP_PREFERENCES_KEY_8_OPACITY = "Key8opacity";
+	public static final String APP_PREFERENCES_KEY_8_SIZE = "Key8size";
+
+	public static final String APP_PREFERENCES_KEY_9_X = "Key9x";
+	public static final String APP_PREFERENCES_KEY_9_Y = "Key9y";
+	public static final String APP_PREFERENCES_KEY_9_OPACITY = "Key9opacity";
+	public static final String APP_PREFERENCES_KEY_9_SIZE = "Key9size";
+
 	public static final String CONFIGS_PATH = "configs_path";
 	public static final String DATA_PATH = "data_path";
 	public static final String LANGUAGE = "spinner";
 	public static final String SUBTITLES = "subtitiles";
-	public static final String MIPMAPPING= "mipmapping";
-
-
-	
+	public static final String MIPMAPPING = "mipmapping";
 
 }

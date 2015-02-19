@@ -24,12 +24,13 @@ public class ScreenControls {
 	private boolean crouchFlag = false;
 	private boolean hideControls;
 	Activity a;
+
 	public ScreenControls(Activity a) {
-	super();
-	this.a=a;
+		super();
+		this.a = a;
 	}
-	
-	public void showControls(boolean show){
+
+	public void showControls(boolean show) {
 		if (show) {
 
 			int controlsFlag;
@@ -56,28 +57,34 @@ public class ScreenControls {
 
 			final Joystick joystick = (Joystick) a.findViewById(R.id.joystick);
 
-			final ImageButton buttonRun = (ImageButton) a.findViewById(R.id.buttonrun1);
+			final ImageButton buttonRun = (ImageButton) a
+					.findViewById(R.id.buttonrun1);
 
 			buttonRun.setOnTouchListener(new ButtonTouchListener(
 					KeyEvent.KEYCODE_CAPS_LOCK));
 
-			final ImageButton buttonConsole = (ImageButton) a.findViewById(R.id.buttonconsole);
+			final ImageButton buttonConsole = (ImageButton) a
+					.findViewById(R.id.buttonconsole);
 
 			buttonConsole.setOnTouchListener(new ButtonTouchListener(
 					KeyEvent.KEYCODE_F2));
 
-			final ImageButton buttonChangePerson = (ImageButton) a.findViewById(R.id.buttonchangeperson);
+			final ImageButton buttonChangePerson = (ImageButton) a
+					.findViewById(R.id.buttonchangeperson);
 
 			buttonChangePerson.setOnTouchListener(new ButtonTouchListener(
 					KeyEvent.KEYCODE_TAB));
 
-			final ImageButton buttonWait = (ImageButton) a.findViewById(R.id.buttonwait);
+			final ImageButton buttonWait = (ImageButton) a
+					.findViewById(R.id.buttonwait);
 
 			buttonWait.setOnTouchListener(new ButtonTouchListener(
 					KeyEvent.KEYCODE_T));
 
-			final Button buttonTouch = (Button) a.findViewById(R.id.buttontouch);
-			final TouchCameraSimulation touch = (TouchCameraSimulation) a.findViewById(R.id.superTouch);
+			final Button buttonTouch = (Button) a
+					.findViewById(R.id.buttontouch);
+			final TouchCameraSimulation touch = (TouchCameraSimulation) a
+					.findViewById(R.id.superTouch);
 
 			buttonTouch.setText("off");
 
@@ -105,42 +112,50 @@ public class ScreenControls {
 				}
 			});
 
-			final ImageButton buttonLoad = (ImageButton) a.findViewById(R.id.buttonsuperload);
+			final ImageButton buttonLoad = (ImageButton) a
+					.findViewById(R.id.buttonsuperload);
 
 			buttonLoad.setOnTouchListener(new ButtonTouchListener(
 					KeyEvent.KEYCODE_F9));
 
-			final ImageButton buttonSave = (ImageButton) a.findViewById(R.id.buttonsupersave);
+			final ImageButton buttonSave = (ImageButton) a
+					.findViewById(R.id.buttonsupersave);
 
 			buttonSave.setOnTouchListener(new ButtonTouchListener(
 					KeyEvent.KEYCODE_F5));
 
-			final ImageButton buttonWeapon = (ImageButton) a.findViewById(R.id.buttonweapon);
+			final ImageButton buttonWeapon = (ImageButton) a
+					.findViewById(R.id.buttonweapon);
 
 			buttonWeapon.setOnTouchListener(new ButtonTouchListener(
 					KeyEvent.KEYCODE_F));
 
-			final ImageButton buttonInventory = (ImageButton) a.findViewById(R.id.buttoninventory);
+			final ImageButton buttonInventory = (ImageButton) a
+					.findViewById(R.id.buttoninventory);
 
 			buttonInventory.setOnTouchListener(new ButtonTouchListener(
 					KeyEvent.KEYCODE_L));
 
-			final ImageButton buttonJump = (ImageButton) a.findViewById(R.id.buttonsuperjump);
+			final ImageButton buttonJump = (ImageButton) a
+					.findViewById(R.id.buttonsuperjump);
 
 			buttonJump.setOnTouchListener(new ButtonTouchListener(
 					KeyEvent.KEYCODE_E));
 
-			final ImageButton buttonFire = (ImageButton) a.findViewById(R.id.buttonFire);
+			final ImageButton buttonFire = (ImageButton) a
+					.findViewById(R.id.buttonFire);
 
 			buttonFire.setOnTouchListener(new ButtonTouchListener(
 					KeyEvent.KEYCODE_Z));
-			final ImageButton buttonMagic = (ImageButton) a.findViewById(R.id.buttonMagic);
+			final ImageButton buttonMagic = (ImageButton) a
+					.findViewById(R.id.buttonMagic);
 
 			buttonMagic.setOnTouchListener(new ButtonTouchListener(
 					KeyEvent.KEYCODE_R));
 			crouchFlag = false;
 
-			final ImageButton buttonCrouch = (ImageButton) a.findViewById(R.id.buttoncrouch);
+			final ImageButton buttonCrouch = (ImageButton) a
+					.findViewById(R.id.buttoncrouch);
 
 			buttonCrouch.setOnTouchListener(new View.OnTouchListener() {
 				@Override
@@ -166,17 +181,20 @@ public class ScreenControls {
 				}
 			});
 
-			final ImageButton buttonDiary = (ImageButton) a.findViewById(R.id.buttonDiary);
+			final ImageButton buttonDiary = (ImageButton) a
+					.findViewById(R.id.buttonDiary);
 
 			buttonDiary.setOnTouchListener(new ButtonTouchListener(
 					KeyEvent.KEYCODE_J));
 
-			final ImageButton buttonUse = (ImageButton) a.findViewById(R.id.buttonUse);
+			final ImageButton buttonUse = (ImageButton) a
+					.findViewById(R.id.buttonUse);
 
 			buttonUse.setOnTouchListener(new ButtonTouchListener(
 					KeyEvent.KEYCODE_SPACE));
 			hideControls = false;
-			final ImageButton buttonPause = (ImageButton) a.findViewById(R.id.buttonpause);
+			final ImageButton buttonPause = (ImageButton) a
+					.findViewById(R.id.buttonpause);
 
 			buttonPause.setOnTouchListener(new View.OnTouchListener() {
 				@Override
@@ -206,6 +224,29 @@ public class ScreenControls {
 							buttonUse.setVisibility(ImageButton.GONE);
 							buttonWait.setVisibility(ImageButton.GONE);
 							buttonWeapon.setVisibility(ImageButton.GONE);
+							QuickPanel.getInstance().enablePanel = false;
+							QuickPanel.getInstance().f1
+									.setVisibility(Button.GONE);
+							QuickPanel.getInstance().key0
+									.setVisibility(ImageButton.GONE);
+							QuickPanel.getInstance().key1
+									.setVisibility(ImageButton.GONE);
+							QuickPanel.getInstance().key2
+									.setVisibility(ImageButton.GONE);
+							QuickPanel.getInstance().key3
+									.setVisibility(ImageButton.GONE);
+							QuickPanel.getInstance().key4
+									.setVisibility(ImageButton.GONE);
+							QuickPanel.getInstance().key5
+									.setVisibility(ImageButton.GONE);
+							QuickPanel.getInstance().key6
+									.setVisibility(ImageButton.GONE);
+							QuickPanel.getInstance().key7
+									.setVisibility(ImageButton.GONE);
+							QuickPanel.getInstance().key8
+									.setVisibility(ImageButton.GONE);
+							QuickPanel.getInstance().key9
+									.setVisibility(ImageButton.GONE);
 
 							hideControls = true;
 						} else {
@@ -243,10 +284,10 @@ public class ScreenControls {
 
 			if (controlsFlag == -1 || controlsFlag == 1) {
 				joystick.setLayoutParams(ControlsParams.coordinates(joystick,
-						20, 400, 250, 250));
+						75, 400, 250, 250));
 
 				buttonRun.setLayoutParams(ControlsParams.coordinates(buttonRun,
-						10, 330, 70, 70));
+						65, 330, 70, 70));
 
 				buttonRun.setAlpha((float) 0.5);
 				joystick.setAlpha((float) 0.5);

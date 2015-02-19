@@ -52,6 +52,18 @@ public class ConfigureControls extends Activity {
 	private ImageButton buttonMagic;
 	private ImageButton buttonUse;
 	private ImageButton buttonCrouch;
+	Button f1;
+	Button showPanel;
+	ImageButton key0;
+	ImageButton key1;
+	ImageButton key2;
+	ImageButton key3;
+	ImageButton key4;
+	ImageButton key5;
+	ImageButton key6;
+	ImageButton key7;
+	ImageButton key8;
+	ImageButton key9;
 	public static int buttonFlag = 0;
 
 	public static boolean buttonOpacityFlag = false;
@@ -78,8 +90,46 @@ public class ConfigureControls extends Activity {
 		getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
 		ScreenScaler.height = displaymetrics.heightPixels;
 		ScreenScaler.width = displaymetrics.widthPixels;
-		
+
 		final MultiTouchListener touchListener = new MultiTouchListener();
+
+		f1 = (Button) findViewById(R.id.F1);
+		showPanel = (Button) findViewById(R.id.showQuickPanel);
+		key0 = (ImageButton) findViewById(R.id.key0);
+		key1 = (ImageButton) findViewById(R.id.key1);
+		key2 = (ImageButton) findViewById(R.id.key2);
+		key3 = (ImageButton) findViewById(R.id.key3);
+		key4 = (ImageButton) findViewById(R.id.key4);
+		key5 = (ImageButton) findViewById(R.id.key5);
+		key6 = (ImageButton) findViewById(R.id.key6);
+		key7 = (ImageButton) findViewById(R.id.key7);
+		key8 = (ImageButton) findViewById(R.id.key8);
+		key9 = (ImageButton) findViewById(R.id.key9);
+
+		f1.setOnTouchListener(touchListener);
+		f1.setId(18);
+		showPanel.setOnTouchListener(touchListener);
+		showPanel.setId(19);
+		key0.setOnTouchListener(touchListener);
+		key0.setId(20);
+		key1.setOnTouchListener(touchListener);
+		key1.setId(21);
+		key2.setOnTouchListener(touchListener);
+		key2.setId(22);
+		key3.setOnTouchListener(touchListener);
+		key3.setId(23);
+		key4.setOnTouchListener(touchListener);
+		key4.setId(24);
+		key5.setOnTouchListener(touchListener);
+		key5.setId(25);
+		key6.setOnTouchListener(touchListener);
+		key6.setId(26);
+		key7.setOnTouchListener(touchListener);
+		key7.setId(27);
+		key8.setOnTouchListener(touchListener);
+		key8.setId(28);
+		key9.setOnTouchListener(touchListener);
+		key9.setId(29);
 
 		buttonSize = (Button) findViewById(R.id.buttonsize1);
 		buttonSize1 = (Button) findViewById(R.id.buttonsize2);
@@ -250,19 +300,16 @@ public class ConfigureControls extends Activity {
 		buttonCrouch.setOnTouchListener(touchListener);
 
 		if (controlsFlag == -1 || controlsFlag == 1) {
-			joystick.setLayoutParams(ControlsParams.coordinates(joystick, 20,
+			joystick.setLayoutParams(ControlsParams.coordinates(joystick, 75,
 					400, 250, 250));
-			setSizeToSharedPreferences(
-					Constants.APP_PREFERENCES_JOYSTICK_SIZE,
-					ScreenScaler.getInstance().getScaledCoordinateX(
-							250));
+			setSizeToSharedPreferences(Constants.APP_PREFERENCES_JOYSTICK_SIZE,
+					ScreenScaler.getInstance().getScaledCoordinateX(250));
 
-			buttonRun.setLayoutParams(ControlsParams.coordinates(buttonRun, 10,
+			buttonRun.setLayoutParams(ControlsParams.coordinates(buttonRun, 65,
 					330, 70, 70));
 			setSizeToSharedPreferences(
-					Constants.APP_PREFERENCES_BUTTON_RUN_SIZE,
-					ScreenScaler.getInstance()
-							.getScaledCoordinateX(70));
+					Constants.APP_PREFERENCES_BUTTON_RUN_SIZE, ScreenScaler
+							.getInstance().getScaledCoordinateX(70));
 
 			buttonRun.setAlpha((float) 0.5);
 			joystick.setAlpha((float) 0.5);
@@ -283,6 +330,93 @@ public class ConfigureControls extends Activity {
 			buttonWait.setAlpha((float) 0.5);
 			buttonConsole.setAlpha((float) 0.5);
 
+			showPanel.setLayoutParams(ControlsParams.coordinates(showPanel, 68,
+					0, 65, 65));
+			f1.setLayoutParams(ControlsParams.coordinates(f1, 68, 95, 55, 55));
+			key0.setLayoutParams(ControlsParams.coordinates(key0, 0, 0, 55, 55));
+			key1.setLayoutParams(ControlsParams
+					.coordinates(key1, 0, 75, 55, 55));
+			key2.setLayoutParams(ControlsParams.coordinates(key2, 0, 150, 55,
+					55));
+			key3.setLayoutParams(ControlsParams.coordinates(key3, 0, 225, 55,
+					55));
+			key4.setLayoutParams(ControlsParams.coordinates(key4, 0, 300, 55,
+					55));
+			key5.setLayoutParams(ControlsParams.coordinates(key5, 0, 375, 55,
+					55));
+			key6.setLayoutParams(ControlsParams.coordinates(key6, 0, 450, 55,
+					55));
+			key7.setLayoutParams(ControlsParams.coordinates(key7, 0, 525, 55,
+					55));
+			key8.setLayoutParams(ControlsParams.coordinates(key8, 0, 600, 55,
+					55));
+			key9.setLayoutParams(ControlsParams.coordinates(key9, 0, 675, 55,
+					55));
+
+			showPanel.setAlpha(0.5f);
+			f1.setAlpha(0.5f);
+			key0.setAlpha(1.0f);
+			key1.setAlpha(1.0f);
+			key2.setAlpha(1.0f);
+			key3.setAlpha(1.0f);
+			key4.setAlpha(1.0f);
+			key5.setAlpha(1.0f);
+			key6.setAlpha(1.0f);
+			key7.setAlpha(1.0f);
+			key8.setAlpha(1.0f);
+			key9.setAlpha(1.0f);
+			setAlphaToSharedPreferences(
+					Constants.APP_PREFERENCES_BUTTON_SHOWPANEL_OPASITY,
+					(float) 0.5);
+			setAlphaToSharedPreferences(
+					Constants.APP_PREFERENCES_KEY_F1_OPACITY, (float) 0.5);
+			setAlphaToSharedPreferences(
+					Constants.APP_PREFERENCES_KEY_0_OPACITY, (float) 1.0);
+			setAlphaToSharedPreferences(
+					Constants.APP_PREFERENCES_KEY_1_OPACITY, (float) 1.0);
+			setAlphaToSharedPreferences(
+					Constants.APP_PREFERENCES_KEY_2_OPACITY, (float) 1.0);
+			setAlphaToSharedPreferences(
+					Constants.APP_PREFERENCES_KEY_3_OPACITY, (float) 1.0);
+			setAlphaToSharedPreferences(
+					Constants.APP_PREFERENCES_KEY_4_OPACITY, (float) 1.0);
+			setAlphaToSharedPreferences(
+					Constants.APP_PREFERENCES_KEY_5_OPACITY, (float) 1.0);
+			setAlphaToSharedPreferences(
+					Constants.APP_PREFERENCES_KEY_6_OPACITY, (float) 1.0);
+			setAlphaToSharedPreferences(
+					Constants.APP_PREFERENCES_KEY_7_OPACITY, (float) 1.0);
+			setAlphaToSharedPreferences(
+					Constants.APP_PREFERENCES_KEY_8_OPACITY, (float) 1.0);
+			setAlphaToSharedPreferences(
+					Constants.APP_PREFERENCES_KEY_9_OPACITY, (float) 1.0);
+
+			setSizeToSharedPreferences(
+					Constants.APP_PREFERENCES_BUTTON_SHOWPANEL_SIZE,
+					ScreenScaler.getInstance().getScaledCoordinateX(65));
+			setSizeToSharedPreferences(Constants.APP_PREFERENCES_KEY_F1_SIZE,
+					ScreenScaler.getInstance().getScaledCoordinateX(55));
+			setSizeToSharedPreferences(Constants.APP_PREFERENCES_KEY_0_SIZE,
+					ScreenScaler.getInstance().getScaledCoordinateX(55));
+			setSizeToSharedPreferences(Constants.APP_PREFERENCES_KEY_1_SIZE,
+					ScreenScaler.getInstance().getScaledCoordinateX(55));
+			setSizeToSharedPreferences(Constants.APP_PREFERENCES_KEY_2_SIZE,
+					ScreenScaler.getInstance().getScaledCoordinateX(55));
+			setSizeToSharedPreferences(Constants.APP_PREFERENCES_KEY_3_SIZE,
+					ScreenScaler.getInstance().getScaledCoordinateX(55));
+			setSizeToSharedPreferences(Constants.APP_PREFERENCES_KEY_4_SIZE,
+					ScreenScaler.getInstance().getScaledCoordinateX(55));
+			setSizeToSharedPreferences(Constants.APP_PREFERENCES_KEY_5_SIZE,
+					ScreenScaler.getInstance().getScaledCoordinateX(55));
+			setSizeToSharedPreferences(Constants.APP_PREFERENCES_KEY_6_SIZE,
+					ScreenScaler.getInstance().getScaledCoordinateX(55));
+			setSizeToSharedPreferences(Constants.APP_PREFERENCES_KEY_7_SIZE,
+					ScreenScaler.getInstance().getScaledCoordinateX(55));
+			setSizeToSharedPreferences(Constants.APP_PREFERENCES_KEY_8_SIZE,
+					ScreenScaler.getInstance().getScaledCoordinateX(55));
+			setSizeToSharedPreferences(Constants.APP_PREFERENCES_KEY_9_SIZE,
+					ScreenScaler.getInstance().getScaledCoordinateX(55));
+
 			setAlphaToSharedPreferences(
 					Constants.APP_PREFERENCES_BUTTON_RUN_OPACITY, (float) 0.5);
 
@@ -295,7 +429,8 @@ public class ConfigureControls extends Activity {
 			setAlphaToSharedPreferences(
 					Constants.APP_PREFERENCES_BUTTON_WAIT_OPACITY, (float) 0.5);
 			setAlphaToSharedPreferences(
-					Constants.APP_PREFERENCES_BUTTON_CONSOLE_OPACITY, (float) 0.5);
+					Constants.APP_PREFERENCES_BUTTON_CONSOLE_OPACITY,
+					(float) 0.5);
 			setAlphaToSharedPreferences(
 					Constants.APP_PREFERENCES_BUTTON_TOUCH_OPACITY, (float) 0.5);
 			setAlphaToSharedPreferences(
@@ -329,99 +464,84 @@ public class ConfigureControls extends Activity {
 			buttonConsole.setLayoutParams(ControlsParams.coordinates(
 					buttonConsole, 140, 0, 70, 70));
 			setSizeToSharedPreferences(
-					Constants.APP_PREFERENCES_BUTTON_CONSOLE_SIZE,
-					ScreenScaler.getInstance()
-							.getScaledCoordinateX(70));
+					Constants.APP_PREFERENCES_BUTTON_CONSOLE_SIZE, ScreenScaler
+							.getInstance().getScaledCoordinateX(70));
 
 			buttonChangePerson.setLayoutParams(ControlsParams.coordinates(
 					buttonChangePerson, 212, 0, 70, 70));
 			setSizeToSharedPreferences(
 					Constants.APP_PREFERENCES_BUTTON_CHANGEPERSON_SIZE,
-					ScreenScaler.getInstance()
-							.getScaledCoordinateX(70));
+					ScreenScaler.getInstance().getScaledCoordinateX(70));
 			buttonWait.setLayoutParams(ControlsParams.coordinates(buttonWait,
 					274, 0, 70, 70));
 			setSizeToSharedPreferences(
-					Constants.APP_PREFERENCES_BUTTON_WAIT_SIZE,
-					ScreenScaler.getInstance()
-							.getScaledCoordinateX(70));
+					Constants.APP_PREFERENCES_BUTTON_WAIT_SIZE, ScreenScaler
+							.getInstance().getScaledCoordinateX(70));
 			buttonTouch.setLayoutParams(ControlsParams.coordinates(buttonTouch,
 					346, 0, 70, 70));
 			setSizeToSharedPreferences(
-					Constants.APP_PREFERENCES_BUTTON_TOUCH_SIZE,
-					ScreenScaler.getInstance()
-							.getScaledCoordinateX(70));
+					Constants.APP_PREFERENCES_BUTTON_TOUCH_SIZE, ScreenScaler
+							.getInstance().getScaledCoordinateX(70));
 			buttonWeapon.setLayoutParams(ControlsParams.coordinates(
 					buttonWeapon, 880, 95, 70, 70));
 			setSizeToSharedPreferences(
-					Constants.APP_PREFERENCES_BUTTON_WEAPON_SIZE,
-					ScreenScaler.getInstance()
-							.getScaledCoordinateX(70));
+					Constants.APP_PREFERENCES_BUTTON_WEAPON_SIZE, ScreenScaler
+							.getInstance().getScaledCoordinateX(70));
 			buttonDiary.setLayoutParams(ControlsParams.coordinates(buttonDiary,
 					414, 0, 70, 70));
 			setSizeToSharedPreferences(
-					Constants.APP_PREFERENCES_BUTTON_DIARY_SIZE,
-					ScreenScaler.getInstance()
-							.getScaledCoordinateX(70));
+					Constants.APP_PREFERENCES_BUTTON_DIARY_SIZE, ScreenScaler
+							.getInstance().getScaledCoordinateX(70));
 			buttonPause.setLayoutParams(ControlsParams.coordinates(buttonPause,
 					950, 0, 60, 60));
 			setSizeToSharedPreferences(
-					Constants.APP_PREFERENCES_BUTTON_PAUSE_SIZE,
-					ScreenScaler.getInstance()
-							.getScaledCoordinateX(60));
+					Constants.APP_PREFERENCES_BUTTON_PAUSE_SIZE, ScreenScaler
+							.getInstance().getScaledCoordinateX(60));
 			buttonLoad.setLayoutParams(ControlsParams.coordinates(buttonLoad,
 					880, 0, 60, 60));
 			setSizeToSharedPreferences(
-					Constants.APP_PREFERENCES_BUTTON_LOAD_SIZE,
-					ScreenScaler.getInstance()
-							.getScaledCoordinateX(60));
+					Constants.APP_PREFERENCES_BUTTON_LOAD_SIZE, ScreenScaler
+							.getInstance().getScaledCoordinateX(60));
 			buttonSave.setLayoutParams(ControlsParams.coordinates(buttonSave,
 					820, 0, 60, 60));
 			setSizeToSharedPreferences(
-					Constants.APP_PREFERENCES_BUTTON_SAVE_SIZE,
-					ScreenScaler.getInstance()
-							.getScaledCoordinateX(60));
+					Constants.APP_PREFERENCES_BUTTON_SAVE_SIZE, ScreenScaler
+							.getInstance().getScaledCoordinateX(60));
 			buttonInventory.setLayoutParams(ControlsParams.coordinates(
 					buttonInventory, 950, 95, 70, 70));
 			setSizeToSharedPreferences(
 					Constants.APP_PREFERENCES_BUTTON_INVENTORY_SIZE,
-					ScreenScaler.getInstance()
-							.getScaledCoordinateX(70));
+					ScreenScaler.getInstance().getScaledCoordinateX(70));
 
 			buttonJump.setLayoutParams(ControlsParams.coordinates(buttonJump,
 					920, 195, 90, 90));
 			setSizeToSharedPreferences(
-					Constants.APP_PREFERENCES_BUTTON_JUMP_SIZE,
-					ScreenScaler.getInstance()
-							.getScaledCoordinateX(90));
+					Constants.APP_PREFERENCES_BUTTON_JUMP_SIZE, ScreenScaler
+							.getInstance().getScaledCoordinateX(90));
 
 			buttonFire.setLayoutParams(ControlsParams.coordinates(buttonFire,
 					790, 300, 100, 100));
 			setSizeToSharedPreferences(
-					Constants.APP_PREFERENCES_BUTTON_FIRE_SIZE,
-					ScreenScaler.getInstance().getScaledCoordinateX(
-							100));
+					Constants.APP_PREFERENCES_BUTTON_FIRE_SIZE, ScreenScaler
+							.getInstance().getScaledCoordinateX(100));
 
 			buttonMagic.setLayoutParams(ControlsParams.coordinates(buttonMagic,
 					940, 480, 80, 80));
 			setSizeToSharedPreferences(
-					Constants.APP_PREFERENCES_BUTTON_MAGIC_SIZE,
-					ScreenScaler.getInstance()
-							.getScaledCoordinateX(80));
+					Constants.APP_PREFERENCES_BUTTON_MAGIC_SIZE, ScreenScaler
+							.getInstance().getScaledCoordinateX(80));
 
 			buttonUse.setLayoutParams(ControlsParams.coordinates(buttonUse,
 					940, 368, 80, 80));
 			setSizeToSharedPreferences(
-					Constants.APP_PREFERENCES_BUTTON_USE_SIZE,
-					ScreenScaler.getInstance()
-							.getScaledCoordinateX(80));
+					Constants.APP_PREFERENCES_BUTTON_USE_SIZE, ScreenScaler
+							.getInstance().getScaledCoordinateX(80));
 
 			buttonCrouch.setLayoutParams(ControlsParams.coordinates(
 					buttonCrouch, 940, 670, 80, 80));
 			setSizeToSharedPreferences(
-					Constants.APP_PREFERENCES_BUTTON_CROUCH_SIZE,
-					ScreenScaler.getInstance()
-							.getScaledCoordinateX(80));
+					Constants.APP_PREFERENCES_BUTTON_CROUCH_SIZE, ScreenScaler
+							.getInstance().getScaledCoordinateX(80));
 
 			Editor editor = Settings.edit();
 			editor.putInt(Constants.APP_PREFERENCES_RESET_CONTROLS, 0);
@@ -694,6 +814,126 @@ public class ConfigureControls extends Activity {
 											Constants.APP_PREFERENCES_BUTTON_CROUCH_SIZE,
 											-1)));
 
+			f1.setAlpha(Settings.getFloat(
+					(Constants.APP_PREFERENCES_KEY_F1_OPACITY), 0.5f));
+			showPanel
+					.setAlpha(Settings
+							.getFloat(
+									(Constants.APP_PREFERENCES_BUTTON_SHOWPANEL_OPASITY),
+									0.5f));
+			key0.setAlpha(Settings.getFloat(
+					(Constants.APP_PREFERENCES_KEY_0_OPACITY), 1.0f));
+			key1.setAlpha(Settings.getFloat(
+					(Constants.APP_PREFERENCES_KEY_1_OPACITY), 1.0f));
+			key2.setAlpha(Settings.getFloat(
+					(Constants.APP_PREFERENCES_KEY_2_OPACITY), 1.0f));
+			key3.setAlpha(Settings.getFloat(
+					(Constants.APP_PREFERENCES_KEY_3_OPACITY), 1.0f));
+			key4.setAlpha(Settings.getFloat(
+					(Constants.APP_PREFERENCES_KEY_4_OPACITY), 1.0f));
+			key5.setAlpha(Settings.getFloat(
+					(Constants.APP_PREFERENCES_KEY_5_OPACITY), 1.0f));
+			key6.setAlpha(Settings.getFloat(
+					(Constants.APP_PREFERENCES_KEY_6_OPACITY), 1.0f));
+			key7.setAlpha(Settings.getFloat(
+					(Constants.APP_PREFERENCES_KEY_7_OPACITY), 1.0f));
+			key8.setAlpha(Settings.getFloat(
+					(Constants.APP_PREFERENCES_KEY_8_OPACITY), 1.0f));
+			key9.setAlpha(Settings.getFloat(
+					(Constants.APP_PREFERENCES_KEY_9_OPACITY), 1.0f));
+
+			f1.setLayoutParams(ControlsParams.coordinatesConfigureControls(f1,
+					Settings.getInt(Constants.APP_PREFERENCES_KEY_F1_X, -1),
+					Settings.getInt(Constants.APP_PREFERENCES_KEY_F1_Y, -1),
+					Settings.getInt(Constants.APP_PREFERENCES_KEY_F1_SIZE, -1),
+					Settings.getInt(Constants.APP_PREFERENCES_KEY_F1_SIZE, -1)));
+
+			showPanel
+					.setLayoutParams(ControlsParams.coordinatesConfigureControls(
+							showPanel,
+							Settings.getInt(
+									Constants.APP_PREFERENCES_BUTTON_SHOWPANEL_X,
+									-1),
+							Settings.getInt(
+									Constants.APP_PREFERENCES_BUTTON_SHOWPANEL_Y,
+									-1),
+							Settings.getInt(
+									Constants.APP_PREFERENCES_BUTTON_SHOWPANEL_SIZE,
+									-1),
+							Settings.getInt(
+									Constants.APP_PREFERENCES_BUTTON_SHOWPANEL_SIZE,
+									-1)));
+
+			key0.setLayoutParams(ControlsParams.coordinatesConfigureControls(
+					key0,
+					Settings.getInt(Constants.APP_PREFERENCES_KEY_0_X, -1),
+					Settings.getInt(Constants.APP_PREFERENCES_KEY_0_Y, -1),
+					Settings.getInt(Constants.APP_PREFERENCES_KEY_0_SIZE, -1),
+					Settings.getInt(Constants.APP_PREFERENCES_KEY_0_SIZE, -1)));
+
+			key1.setLayoutParams(ControlsParams.coordinatesConfigureControls(
+					key1,
+					Settings.getInt(Constants.APP_PREFERENCES_KEY_1_X, -1),
+					Settings.getInt(Constants.APP_PREFERENCES_KEY_1_Y, -1),
+					Settings.getInt(Constants.APP_PREFERENCES_KEY_1_SIZE, -1),
+					Settings.getInt(Constants.APP_PREFERENCES_KEY_1_SIZE, -1)));
+
+			key2.setLayoutParams(ControlsParams.coordinatesConfigureControls(
+					key2,
+					Settings.getInt(Constants.APP_PREFERENCES_KEY_2_X, -1),
+					Settings.getInt(Constants.APP_PREFERENCES_KEY_2_Y, -1),
+					Settings.getInt(Constants.APP_PREFERENCES_KEY_2_SIZE, -1),
+					Settings.getInt(Constants.APP_PREFERENCES_KEY_2_SIZE, -1)));
+
+			key3.setLayoutParams(ControlsParams.coordinatesConfigureControls(
+					key3,
+					Settings.getInt(Constants.APP_PREFERENCES_KEY_3_X, -1),
+					Settings.getInt(Constants.APP_PREFERENCES_KEY_3_Y, -1),
+					Settings.getInt(Constants.APP_PREFERENCES_KEY_3_SIZE, -1),
+					Settings.getInt(Constants.APP_PREFERENCES_KEY_3_SIZE, -1)));
+
+			key4.setLayoutParams(ControlsParams.coordinatesConfigureControls(
+					key4,
+					Settings.getInt(Constants.APP_PREFERENCES_KEY_4_X, -1),
+					Settings.getInt(Constants.APP_PREFERENCES_KEY_4_Y, -1),
+					Settings.getInt(Constants.APP_PREFERENCES_KEY_4_SIZE, -1),
+					Settings.getInt(Constants.APP_PREFERENCES_KEY_4_SIZE, -1)));
+
+			key5.setLayoutParams(ControlsParams.coordinatesConfigureControls(
+					key5,
+					Settings.getInt(Constants.APP_PREFERENCES_KEY_5_X, -1),
+					Settings.getInt(Constants.APP_PREFERENCES_KEY_5_Y, -1),
+					Settings.getInt(Constants.APP_PREFERENCES_KEY_5_SIZE, -1),
+					Settings.getInt(Constants.APP_PREFERENCES_KEY_5_SIZE, -1)));
+
+			key6.setLayoutParams(ControlsParams.coordinatesConfigureControls(
+					key6,
+					Settings.getInt(Constants.APP_PREFERENCES_KEY_6_X, -1),
+					Settings.getInt(Constants.APP_PREFERENCES_KEY_6_Y, -1),
+					Settings.getInt(Constants.APP_PREFERENCES_KEY_6_SIZE, -1),
+					Settings.getInt(Constants.APP_PREFERENCES_KEY_6_SIZE, -1)));
+
+			key7.setLayoutParams(ControlsParams.coordinatesConfigureControls(
+					key7,
+					Settings.getInt(Constants.APP_PREFERENCES_KEY_7_X, -1),
+					Settings.getInt(Constants.APP_PREFERENCES_KEY_7_Y, -1),
+					Settings.getInt(Constants.APP_PREFERENCES_KEY_7_SIZE, -1),
+					Settings.getInt(Constants.APP_PREFERENCES_KEY_7_SIZE, -1)));
+
+			key8.setLayoutParams(ControlsParams.coordinatesConfigureControls(
+					key8,
+					Settings.getInt(Constants.APP_PREFERENCES_KEY_8_X, -1),
+					Settings.getInt(Constants.APP_PREFERENCES_KEY_8_Y, -1),
+					Settings.getInt(Constants.APP_PREFERENCES_KEY_8_SIZE, -1),
+					Settings.getInt(Constants.APP_PREFERENCES_KEY_8_SIZE, -1)));
+
+			key9.setLayoutParams(ControlsParams.coordinatesConfigureControls(
+					key9,
+					Settings.getInt(Constants.APP_PREFERENCES_KEY_9_X, -1),
+					Settings.getInt(Constants.APP_PREFERENCES_KEY_9_Y, -1),
+					Settings.getInt(Constants.APP_PREFERENCES_KEY_9_SIZE, -1),
+					Settings.getInt(Constants.APP_PREFERENCES_KEY_9_SIZE, -1)));
+
 		}
 
 	}
@@ -785,6 +1025,34 @@ public class ConfigureControls extends Activity {
 				(int) joystick.getX());
 		editor.putInt(Constants.APP_PREFERENCES_JOYSTICK_Y,
 				(int) joystick.getY());
+		editor.putInt(Constants.APP_PREFERENCES_KEY_F1_X, (int) f1.getX());
+		editor.putInt(Constants.APP_PREFERENCES_KEY_F1_Y, (int) f1.getY());
+		editor.putInt(Constants.APP_PREFERENCES_BUTTON_SHOWPANEL_X,
+				(int) showPanel.getX());
+		editor.putInt(Constants.APP_PREFERENCES_BUTTON_SHOWPANEL_Y,
+				(int) showPanel.getY());
+		editor.putInt(Constants.APP_PREFERENCES_KEY_0_X, (int) key0.getX());
+		editor.putInt(Constants.APP_PREFERENCES_KEY_0_Y, (int) key0.getY());
+
+		editor.putInt(Constants.APP_PREFERENCES_KEY_1_X, (int) key1.getX());
+		editor.putInt(Constants.APP_PREFERENCES_KEY_1_Y, (int) key1.getY());
+		editor.putInt(Constants.APP_PREFERENCES_KEY_2_X, (int) key2.getX());
+		editor.putInt(Constants.APP_PREFERENCES_KEY_2_Y, (int) key2.getY());
+		editor.putInt(Constants.APP_PREFERENCES_KEY_3_X, (int) key3.getX());
+		editor.putInt(Constants.APP_PREFERENCES_KEY_3_Y, (int) key3.getY());
+		editor.putInt(Constants.APP_PREFERENCES_KEY_4_X, (int) key4.getX());
+		editor.putInt(Constants.APP_PREFERENCES_KEY_4_Y, (int) key4.getY());
+		editor.putInt(Constants.APP_PREFERENCES_KEY_5_X, (int) key5.getX());
+		editor.putInt(Constants.APP_PREFERENCES_KEY_5_Y, (int) key5.getY());
+		editor.putInt(Constants.APP_PREFERENCES_KEY_6_X, (int) key6.getX());
+		editor.putInt(Constants.APP_PREFERENCES_KEY_6_Y, (int) key6.getY());
+		editor.putInt(Constants.APP_PREFERENCES_KEY_7_X, (int) key7.getX());
+		editor.putInt(Constants.APP_PREFERENCES_KEY_7_Y, (int) key7.getY());
+		editor.putInt(Constants.APP_PREFERENCES_KEY_8_X, (int) key8.getX());
+		editor.putInt(Constants.APP_PREFERENCES_KEY_8_Y, (int) key8.getY());
+		editor.putInt(Constants.APP_PREFERENCES_KEY_9_X, (int) key9.getX());
+		editor.putInt(Constants.APP_PREFERENCES_KEY_9_Y, (int) key9.getY());
+
 		editor.apply();
 	}
 
@@ -879,6 +1147,31 @@ public class ConfigureControls extends Activity {
 					.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_CROUCH_OPACITY));
 		else if (buttonFlag == 17)
 			joystick.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_JOYSTICK_OPACITY));
+		else if (buttonFlag == 18)
+			f1.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_KEY_F1_OPACITY));
+		else if (buttonFlag == 19)
+			showPanel
+					.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_SHOWPANEL_OPASITY));
+		else if (buttonFlag == 20)
+			key0.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_KEY_0_OPACITY));
+		else if (buttonFlag == 21)
+			key1.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_KEY_1_OPACITY));
+		else if (buttonFlag == 22)
+			key2.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_KEY_2_OPACITY));
+		else if (buttonFlag == 23)
+			key3.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_KEY_3_OPACITY));
+		else if (buttonFlag == 24)
+			key4.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_KEY_4_OPACITY));
+		else if (buttonFlag == 25)
+			key5.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_KEY_5_OPACITY));
+		else if (buttonFlag == 26)
+			key6.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_KEY_6_OPACITY));
+		else if (buttonFlag == 27)
+			key7.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_KEY_7_OPACITY));
+		else if (buttonFlag == 28)
+			key8.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_KEY_8_OPACITY));
+		else if (buttonFlag == 29)
+			key9.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_KEY_9_OPACITY));
 
 	}
 
@@ -1032,6 +1325,92 @@ public class ConfigureControls extends Activity {
 					(int) joystick.getY(),
 					setSizeFromButtonToSharedPreferences(Constants.APP_PREFERENCES_JOYSTICK_SIZE),
 					setSizeFromButtonToSharedPreferences(Constants.APP_PREFERENCES_JOYSTICK_SIZE)));
+		else if (buttonFlag == 18)
+			f1.setLayoutParams(ControlsParams.coordinatesConfigureControls(
+					f1,
+					(int) f1.getX(),
+					(int) f1.getY(),
+					setSizeFromButtonToSharedPreferences(Constants.APP_PREFERENCES_KEY_F1_SIZE),
+					setSizeFromButtonToSharedPreferences(Constants.APP_PREFERENCES_KEY_F1_SIZE)));
+		else if (buttonFlag == 19)
+			showPanel
+					.setLayoutParams(ControlsParams.coordinatesConfigureControls(
+							showPanel,
+							(int) showPanel.getX(),
+							(int) showPanel.getY(),
+							setSizeFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_SHOWPANEL_SIZE),
+							setSizeFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_SHOWPANEL_SIZE)));
+		else if (buttonFlag == 20)
+			key0.setLayoutParams(ControlsParams.coordinatesConfigureControls(
+					key0,
+					(int) key0.getX(),
+					(int) key0.getY(),
+					setSizeFromButtonToSharedPreferences(Constants.APP_PREFERENCES_KEY_0_SIZE),
+					setSizeFromButtonToSharedPreferences(Constants.APP_PREFERENCES_KEY_0_SIZE)));
+		else if (buttonFlag == 21)
+			key1.setLayoutParams(ControlsParams.coordinatesConfigureControls(
+					key1,
+					(int) key1.getX(),
+					(int) key1.getY(),
+					setSizeFromButtonToSharedPreferences(Constants.APP_PREFERENCES_KEY_1_SIZE),
+					setSizeFromButtonToSharedPreferences(Constants.APP_PREFERENCES_KEY_1_SIZE)));
+		else if (buttonFlag == 22)
+			key2.setLayoutParams(ControlsParams.coordinatesConfigureControls(
+					key2,
+					(int) key2.getX(),
+					(int) key2.getY(),
+					setSizeFromButtonToSharedPreferences(Constants.APP_PREFERENCES_KEY_2_SIZE),
+					setSizeFromButtonToSharedPreferences(Constants.APP_PREFERENCES_KEY_2_SIZE)));
+		else if (buttonFlag == 23)
+			key3.setLayoutParams(ControlsParams.coordinatesConfigureControls(
+					key3,
+					(int) key3.getX(),
+					(int) key3.getY(),
+					setSizeFromButtonToSharedPreferences(Constants.APP_PREFERENCES_KEY_3_SIZE),
+					setSizeFromButtonToSharedPreferences(Constants.APP_PREFERENCES_KEY_3_SIZE)));
+		else if (buttonFlag == 24)
+			key4.setLayoutParams(ControlsParams.coordinatesConfigureControls(
+					key4,
+					(int) key4.getX(),
+					(int) key4.getY(),
+					setSizeFromButtonToSharedPreferences(Constants.APP_PREFERENCES_KEY_4_SIZE),
+					setSizeFromButtonToSharedPreferences(Constants.APP_PREFERENCES_KEY_4_SIZE)));
+		else if (buttonFlag == 25)
+			key5.setLayoutParams(ControlsParams.coordinatesConfigureControls(
+					key5,
+					(int) key5.getX(),
+					(int) key5.getY(),
+					setSizeFromButtonToSharedPreferences(Constants.APP_PREFERENCES_KEY_5_SIZE),
+					setSizeFromButtonToSharedPreferences(Constants.APP_PREFERENCES_KEY_5_SIZE)));
+		else if (buttonFlag == 26)
+			key6.setLayoutParams(ControlsParams.coordinatesConfigureControls(
+					key6,
+					(int) key6.getX(),
+					(int) key6.getY(),
+					setSizeFromButtonToSharedPreferences(Constants.APP_PREFERENCES_KEY_6_SIZE),
+					setSizeFromButtonToSharedPreferences(Constants.APP_PREFERENCES_KEY_6_SIZE)));
+		else if (buttonFlag == 27)
+			key7.setLayoutParams(ControlsParams.coordinatesConfigureControls(
+					key7,
+					(int) key7.getX(),
+					(int) key7.getY(),
+					setSizeFromButtonToSharedPreferences(Constants.APP_PREFERENCES_KEY_7_SIZE),
+					setSizeFromButtonToSharedPreferences(Constants.APP_PREFERENCES_KEY_7_SIZE)));
+
+		else if (buttonFlag == 28)
+			key8.setLayoutParams(ControlsParams.coordinatesConfigureControls(
+					key8,
+					(int) key8.getX(),
+					(int) key8.getY(),
+					setSizeFromButtonToSharedPreferences(Constants.APP_PREFERENCES_KEY_8_SIZE),
+					setSizeFromButtonToSharedPreferences(Constants.APP_PREFERENCES_KEY_8_SIZE)));
+		else if (buttonFlag == 29)
+			key9.setLayoutParams(ControlsParams.coordinatesConfigureControls(
+					key9,
+					(int) key9.getX(),
+					(int) key9.getY(),
+					setSizeFromButtonToSharedPreferences(Constants.APP_PREFERENCES_KEY_9_SIZE),
+					setSizeFromButtonToSharedPreferences(Constants.APP_PREFERENCES_KEY_9_SIZE)));
 
 	}
 }

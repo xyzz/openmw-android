@@ -4,6 +4,7 @@ import java.io.File;
 
 import org.libsdl.app.SDLActivity;
 
+import ui.controls.QuickPanel;
 import ui.controls.ScreenControls;
 import android.os.Bundle;
 import android.os.Process;
@@ -27,6 +28,8 @@ public class GameActivity extends SDLActivity {
 		deleteVideoFile();
 		ScreenControls controls = new ScreenControls(this);
 		controls.showControls(MainActivity.contols);
+		QuickPanel panel = new QuickPanel(this);
+		panel.showQuickPanel(MainActivity.contols);
 
 	}
 
@@ -42,7 +45,6 @@ public class GameActivity extends SDLActivity {
 	public void onDestroy() {
 		finish();
 		Process.killProcess(Process.myPid());
-
 		super.onDestroy();
 	}
 
