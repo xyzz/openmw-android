@@ -227,6 +227,8 @@ public class ScreenControls {
 							QuickPanel.getInstance().enablePanel = false;
 							QuickPanel.getInstance().f1
 									.setVisibility(Button.GONE);
+							QuickPanel.getInstance().showPanel
+									.setVisibility(Button.GONE);
 							QuickPanel.getInstance().key0
 									.setVisibility(ImageButton.GONE);
 							QuickPanel.getInstance().key1
@@ -251,6 +253,8 @@ public class ScreenControls {
 							hideControls = true;
 						} else {
 
+							QuickPanel.getInstance().showPanel
+									.setVisibility(Button.VISIBLE);
 							buttonChangePerson
 									.setVisibility(ImageButton.VISIBLE);
 							joystick.setVisibility(JoystickView.VISIBLE);
