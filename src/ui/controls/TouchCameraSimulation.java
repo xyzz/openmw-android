@@ -3,18 +3,13 @@ package ui.controls;
 import org.libsdl.app.SDLActivity;
 
 import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
 public class TouchCameraSimulation extends View {
 
-	private Paint circlePaint;
-
-	public static double costTouch=0;
+	public static double costTouch = 0;
 	private double[] xmas = new double[2];
 	private double[] ymas = new double[2];
 
@@ -28,7 +23,8 @@ public class TouchCameraSimulation extends View {
 		initView();
 	}
 
-	public TouchCameraSimulation(Context context, AttributeSet attrs, int defStyle) {
+	public TouchCameraSimulation(Context context, AttributeSet attrs,
+			int defStyle) {
 		super(context, attrs, defStyle);
 		initView();
 	}
@@ -37,28 +33,14 @@ public class TouchCameraSimulation extends View {
 
 		setFocusable(true);
 
-		circlePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-		circlePaint.setColor(Color.TRANSPARENT);
-		circlePaint.setStrokeWidth(1);
-		circlePaint.setStyle(Paint.Style.FILL_AND_STROKE);
-
-	}
-
-	@Override
-	protected void onDraw(Canvas canvas) {
-		int px = getMeasuredWidth();
-		int py = getMeasuredHeight();
-
-		canvas.drawPoint(px, py, circlePaint);
-		canvas.save();
 	}
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		int actionType = event.getAction();
 		if (actionType == MotionEvent.ACTION_DOWN) {
-			xmas[0] =   event.getX();
-			ymas[0] =  event.getY();
+			xmas[0] = event.getX();
+			ymas[0] = event.getY();
 			final int touchDevId = event.getDeviceId();
 			event.getPointerCount();
 			event.getActionMasked();
@@ -68,7 +50,6 @@ public class TouchCameraSimulation extends View {
 		}
 		if (actionType == MotionEvent.ACTION_MOVE) {
 
-			
 			xmas[1] = event.getRawX();
 			ymas[1] = event.getRawY();
 			final int touchDevId = event.getDeviceId();
@@ -145,7 +126,8 @@ public class TouchCameraSimulation extends View {
 				SDLActivity.onNativeTouch(touchDevId, pointerFingerId,
 						MotionEvent.ACTION_MOVE, x, y, p);
 			} else if (xmas[0] < xmas[1] && ymas[0] < ymas[1]
-					&& ymas[1] - ymas[0] > costTouch && xmas[1] - xmas[0] > costTouch)
+					&& ymas[1] - ymas[0] > costTouch
+					&& xmas[1] - xmas[0] > costTouch)
 
 			{
 				i = event.getActionIndex();
@@ -161,7 +143,8 @@ public class TouchCameraSimulation extends View {
 				SDLActivity.onNativeTouch(touchDevId, pointerFingerId,
 						MotionEvent.ACTION_MOVE, x, y, p);
 			} else if (xmas[0] > xmas[1] && ymas[0] > ymas[1]
-					&& ymas[0] - ymas[1] > costTouch && xmas[0] - xmas[1] > costTouch)
+					&& ymas[0] - ymas[1] > costTouch
+					&& xmas[0] - xmas[1] > costTouch)
 
 			{
 				i = event.getActionIndex();
@@ -177,7 +160,8 @@ public class TouchCameraSimulation extends View {
 				SDLActivity.onNativeTouch(touchDevId, pointerFingerId,
 						MotionEvent.ACTION_MOVE, x, y, p);
 			} else if (xmas[0] < xmas[1] && ymas[0] > ymas[1]
-					&& ymas[0] - ymas[1] > costTouch && xmas[1] - xmas[0] > costTouch)
+					&& ymas[0] - ymas[1] > costTouch
+					&& xmas[1] - xmas[0] > costTouch)
 
 			{
 				i = event.getActionIndex();
@@ -193,7 +177,8 @@ public class TouchCameraSimulation extends View {
 				SDLActivity.onNativeTouch(touchDevId, pointerFingerId,
 						MotionEvent.ACTION_MOVE, x, y, p);
 			} else if (xmas[0] > xmas[1] && ymas[0] < ymas[1]
-					&& ymas[1] - ymas[0] > costTouch && xmas[0] - xmas[1] > costTouch)
+					&& ymas[1] - ymas[0] > costTouch
+					&& xmas[0] - xmas[1] > costTouch)
 
 			{
 				i = event.getActionIndex();
