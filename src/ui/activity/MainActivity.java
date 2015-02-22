@@ -2,6 +2,7 @@ package ui.activity;
 
 import java.io.File;
 
+import screen.ScreenScaler;
 import ui.controls.TouchCameraSimulation;
 import ui.files.CopyFilesFromAssets;
 import ui.files.ParseJson;
@@ -47,11 +48,7 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 
-		if (tabletSize() >= 6.0)
-			TouchCameraSimulation.costTouch = 0;
-		else
-			TouchCameraSimulation.costTouch = 1.2;
-
+		
 		linlaHeaderProgress = (LinearLayout) findViewById(R.id.linlaHeaderProgress);
 		Settings = getSharedPreferences(Constants.APP_PREFERENCES,
 				Context.MODE_MULTI_PROCESS);
