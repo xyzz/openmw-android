@@ -8,6 +8,7 @@ import ui.controls.QuickPanel;
 import ui.controls.ScreenControls;
 import android.os.Bundle;
 import android.os.Process;
+import android.view.WindowManager;
 
 public class GameActivity extends SDLActivity {
 
@@ -25,6 +26,7 @@ public class GameActivity extends SDLActivity {
 		super.onCreate(savedInstanceState);
 
 		getPathToJni(MainActivity.configsPath);
+		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		deleteVideoFile();
 		ScreenControls controls = new ScreenControls(this);
 		controls.showControls(MainActivity.contols);
