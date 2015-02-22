@@ -271,30 +271,6 @@ public class MainActivity extends Activity {
 
 	}
 
-	public double tabletSize() {
-
-		double size = 0;
-		try {
-
-			// Compute screen size
-
-			DisplayMetrics dm = MainActivity.this.getResources()
-					.getDisplayMetrics();
-
-			float screenWidth = dm.widthPixels / dm.xdpi;
-
-			float screenHeight = dm.heightPixels / dm.ydpi;
-
-			size = Math.sqrt(Math.pow(screenWidth, 2) +
-
-			Math.pow(screenHeight, 2));
-
-		} catch (Throwable t) {
-
-		}
-
-		return size;
-
-	}
+	
 
 }

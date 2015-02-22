@@ -2,8 +2,10 @@ package ui.controls;
 
 import org.libsdl.app.SDLActivity;
 
+import ui.activity.MainActivity;
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
@@ -42,12 +44,40 @@ public class TouchCameraSimulation extends View {
 
 	}
 
+	private double tabletSize(Context context) {
+
+		double size = 0;
+		try {
+
+			// Compute screen size
+
+			DisplayMetrics dm = context.getResources().getDisplayMetrics();
+
+			float screenWidth = dm.widthPixels / dm.xdpi;
+
+			float screenHeight = dm.heightPixels / dm.ydpi;
+
+			size = Math.sqrt(Math.pow(screenWidth, 2) +
+
+			Math.pow(screenHeight, 2));
+
+		} catch (Throwable t) {
+
+		}
+
+		return size;
+
+	}
+
 	private void cameraTouchConst(Context context) {
 		WindowManager wm = (WindowManager) context
 				.getSystemService(Context.WINDOW_SERVICE);
 		Display display = wm.getDefaultDisplay();
 
-		constTouch = (float) display.getHeight() / display.getWidth();
+		if (tabletSize(context) >= 7.0)
+			constTouch = 0;
+		else
+			constTouch = (float) display.getHeight() / display.getWidth();
 
 	}
 
