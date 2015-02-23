@@ -167,15 +167,15 @@ public class PluginsView extends Activity {
 
 	private void checkFilesDeleted(File yourDir) throws JSONException,
 			IOException {
-		int index = 0;
 		int deletedFilesCount = 0;
+		int i = 0;
 		List<FilesData> tmp = ParseJson.loadFile();
-		for (FilesData data : tmp) {
+		for (i = 0; i < tmp.size(); i++) {
 			boolean fileDeleted = true;
 
 			for (File f : yourDir.listFiles()) {
 
-				if (f.isFile() && f.getName().endsWith(data.name)) {
+				if (f.isFile() && f.getName().endsWith(tmp.get(i).name)) {
 
 					fileDeleted = false;
 					break;
@@ -186,12 +186,12 @@ public class PluginsView extends Activity {
 			}
 
 			if (fileDeleted) {
-				Plugins.remove(index - deletedFilesCount);
+				Plugins.remove(i - deletedFilesCount);
 				deletedFilesCount++;
 			}
-			index++;
+
 		}
-		if (Plugins.size() < index)
+		if (Plugins.size() < i)
 			savePluginsData();
 
 	}
