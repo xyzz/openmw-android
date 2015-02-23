@@ -168,6 +168,7 @@ public class PluginsView extends Activity {
 	private void checkFilesDeleted(File yourDir) throws JSONException,
 			IOException {
 		int index = 0;
+		int deletedFilesCount = 0;
 		List<FilesData> tmp = ParseJson.loadFile();
 		for (FilesData data : tmp) {
 			boolean fileDeleted = true;
@@ -185,7 +186,8 @@ public class PluginsView extends Activity {
 			}
 
 			if (fileDeleted) {
-				Plugins.remove(index);
+				Plugins.remove(index - deletedFilesCount);
+				deletedFilesCount++;
 			}
 			index++;
 		}
