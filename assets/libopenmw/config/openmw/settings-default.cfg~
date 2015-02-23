@@ -6,6 +6,7 @@ resolution x = 800
 resolution y = 600
 
 fullscreen = false
+window border = true
 screen = 0
 
 # Minimize the window if it loses key focus?
@@ -16,7 +17,7 @@ minimize on focus loss = true
 # Valid values:
 # OpenGL Rendering Subsystem
 # Direct3D9 Rendering Subsystem
-render system =
+render system = OpenGL ES 2.x Rendering Subsystem
 
 # Valid values:
 # none
@@ -44,9 +45,13 @@ subtitles = false
 hit fader = true
 werewolf overlay = true
 
+stretch menu background = false
+
 [General]
 # Camera field of view
 field of view = 55
+gamma = 1.00
+contrast = 1.00
 
 # Texture filtering mode. valid values:
 # none
@@ -61,7 +66,7 @@ anisotropy = 4
 # Number of texture mipmaps to generate
 num mipmaps = 8
 
-shader mode =
+shader mode = glsles
 
 screenshot format = png
 
@@ -106,7 +111,7 @@ shaders = true
 
 # Max. number of lights that affect objects. Setting to 1 will only reflect sunlight
 # Note: has no effect when shaders are turned off
-num lights = 8
+num lights = 4
 
 # Use static geometry for static objects. Improves rendering speed.
 use static geometry = true
@@ -114,6 +119,14 @@ use static geometry = true
 [Map]
 # Adjusts the scale of the global map
 global map cell size = 18
+
+local map resolution = 256
+
+local map widget size = 512
+local map hud widget size = 256
+
+[Cells]
+exterior grid size = 3
 
 [Viewing distance]
 # Limit the rendering distance of small objects
@@ -144,7 +157,7 @@ distant land = false
 shader = true
 
 [Water]
-shader = false
+shader = true
 
 refraction = false
 
@@ -160,9 +173,9 @@ device =
 # Volumes. master volume affects all other volumes.
 master volume = 1.0
 sfx volume = 1.0
-music volume = 0.4
-footsteps volume = 0.15
-voice volume = 1.0
+music volume = 0.5
+footsteps volume = 0.2
+voice volume = 0.8
 
 
 [Input]
@@ -243,10 +256,10 @@ stats y = 0
 stats w = 0.375
 stats h = 0.4275
 
-spells x = 0.3775
-spells y = 0.4275
+spells x = 0.625
+spells y = 0.5725
 spells w = 0.375
-spells h = 0.5725
+spells h = 0.4275
 
 console x = 0
 console y = 0
