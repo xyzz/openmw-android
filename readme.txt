@@ -4,8 +4,7 @@ eclipse-project
 ===============
 === Preparation of building environment ===
 Before you start building OpenMW on Android you have to do few steps of preparation:
-# Download google ndk from https://developer.android.com/tools/sdk/ndk/index.html 
-Openmw build without errors only on gcc 4.6
+# Download crystax ndk from https://www.crystax.net
 # Download and install [http://developer.android.com/sdk/index.html Google Android SDK]
 # Download [https://github.com/taka-no-me/android-cmake Cmake for Android] (it will be used for OpenMW and its dependencies compilation)
 # Java
@@ -18,7 +17,7 @@ http://ant.apache.org/
 #* Openal
 #http://repo.or.cz/w/openal-soft/android.git
 #* boost
-#https://github.com/MysticTreeGames/Boost-for-Android
+You can use boost 1.57 from crystax ndk
 #* bullet
 #https://github.com/bulletphysics/bullet3
 #* Sdl2
@@ -39,15 +38,14 @@ It is build using crystax ndk r10 and gcc 4.9 , with this flags
 -marm -march=armv7-a  -mfpu=neon -mfloat-abi=hard  -D_NDK_MATH_NO_SOFTFP=1 -Ofast
 https://drive.google.com/file/d/0B5mOME9qjLFucmgxWlJ6cGhWb2s/view?usp=sharing
 
+example about how to build cmake projects for android with IDE eclipse
+http://dev.opencascade.org/doc/overview/html/occt_dev_guides__building_android.html
+also here
+http://www.cmake.org/Wiki/Eclipse_CDT4_Generator
+
 
 === Compilation of OpenMW dependencies ===
 
-
-==== Building Boost ====
-For building boost I used it. You must build Ogre with Boost!
-https://github.com/MysticTreeGames/Boost-for-Android
-Build boost with crystax ndk had problems, so here modified scripts
-https://github.com/OpenMW/eclipse-project/tree/master/jni/Boost-for-Android-master
 
 ==== Building Freetype ====
 Then you must build freetype
