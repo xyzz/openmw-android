@@ -2,16 +2,11 @@ package ui.activity;
 
 import java.io.File;
 
-import screen.ScreenScaler;
-import ui.controls.TouchCameraSimulation;
 import ui.files.CopyFilesFromAssets;
 import ui.files.ParseJson;
 import ui.files.Writer;
 
 import com.libopenmw.openmw.R;
-import com.libopenmw.openmw.R.id;
-import com.libopenmw.openmw.R.layout;
-
 import constants.Constants;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -23,7 +18,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
-import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;

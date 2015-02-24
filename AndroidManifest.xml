@@ -2,17 +2,14 @@
     package="com.libopenmw.openmw"
     android:installLocation="auto"
     android:versionCode="1"
-    android:versionName="0.34" 
-        >
+    android:versionName="0.34" >
 
     <application
         android:allowBackup="true"
         android:hardwareAccelerated="true"
         android:icon="@drawable/openmw"
         android:label="@string/app_name"
-        android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
-    
-       >
+        android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
         <activity
             android:name="ui.activity.MainActivity"
             android:configChanges="keyboardHidden|orientation"
@@ -20,6 +17,7 @@
             android:screenOrientation="sensorLandscape" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -27,11 +25,9 @@
             android:name="org.libsdl.app.SDLActivity"
             android:configChanges="keyboardHidden|orientation"
             android:label="@string/app_name"
-            android:screenOrientation="sensorLandscape" 
-            >
+            android:screenOrientation="sensorLandscape" >
         </activity>
-        
-          <activity
+        <activity
             android:name="ui.activity.SettingsActivity"
             android:configChanges="keyboardHidden|orientation"
             android:label="@string/app_name"
@@ -43,7 +39,6 @@
             android:label="@string/app_name"
             android:screenOrientation="sensorLandscape" >
         </activity>
-          
         <activity
             android:name="ui.activity.PluginsView"
             android:configChanges="keyboardHidden|orientation"
@@ -58,9 +53,10 @@
         </activity>
     </application>
 
-    <!-- Android 2.3.3 -->
+    <!-- min Android 3.0 -->
+    <!-- target Android 4.4 -->
     <uses-sdk
-        android:minSdkVersion="10"
+        android:minSdkVersion="11"
         android:targetSdkVersion="19" />
 
     <!-- OpenGL ES 2.0 -->

@@ -2,7 +2,6 @@ package ui.controls;
 
 import org.libsdl.app.SDLActivity;
 
-import ui.activity.MainActivity;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;

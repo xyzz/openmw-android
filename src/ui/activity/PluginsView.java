@@ -13,26 +13,19 @@ import ui.files.ParseJson.FilesData;
 import ui.files.PluginReader;
 
 import com.libopenmw.openmw.R;
-import com.libopenmw.openmw.R.id;
-import com.libopenmw.openmw.R.layout;
 import com.mobeta.android.dslv.DragSortListView;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 

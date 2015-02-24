@@ -1,9 +1,6 @@
 package ui.activity;
 
 import com.libopenmw.openmw.R;
-import com.libopenmw.openmw.R.id;
-import com.libopenmw.openmw.R.layout;
-
 import screen.ScreenScaler;
 import ui.controls.ControlsParams;
 import ui.controls.Joystick;

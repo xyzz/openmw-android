@@ -15,11 +15,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import ui.activity.MainActivity;
-import ui.files.ParseJson.FilesData;
 
 public class ParseJson {
 
-	public static final String jsonFilePath = MainActivity.configsPath + "/files.json";
+	public static final String jsonFilePath = MainActivity.configsPath
+			+ "/files.json";
 
 	public static void savetofile(FilesData ti) throws IOException {
 		List<FilesData> loadedFile = loadFile();
@@ -45,12 +45,12 @@ public class ParseJson {
 			JSONObject c;
 			c = new JSONObject();
 
-				c.put("name", loadedFile.get(i).name);
-				c.put("nameBsa", loadedFile.get(i).nameBsa);
-				c.put("enabled", loadedFile.get(i).enabled);
+			c.put("name", loadedFile.get(i).name);
+			c.put("nameBsa", loadedFile.get(i).nameBsa);
+			c.put("enabled", loadedFile.get(i).enabled);
 
-				jsonArray.put(c);
-			
+			jsonArray.put(c);
+
 		}
 		JSONObject array = new JSONObject();
 		array.put("data_array", jsonArray);
@@ -61,6 +61,7 @@ public class ParseJson {
 		jsonFileWriter.write(file);
 
 		jsonFileWriter.flush();
+		jsonFileWriter.close();
 
 	}
 
@@ -131,7 +132,5 @@ public class ParseJson {
 		public long enabled;
 
 	}
-
-	
 
 }
