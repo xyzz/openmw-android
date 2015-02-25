@@ -24,13 +24,23 @@ public class PluginReader {
 						if (data[i].contains(".esp")
 								|| data[i].contains(".ESP")) {
 
-							builder.append(data[i].split(".esp")[0]
-									.replaceAll("\\p{Cntrl}", "") + ".esp");
+							builder.append(data[i].split(".esp")[0].replaceAll(
+									"\\p{Cntrl}", "") + ".esp");
 							builder.append("\n");
 						} else if (data[i].contains(".esm")
 								|| data[i].contains(".ESM")) {
-							builder.append(data[i].split(".esm")[0]
-									.replaceAll("\\p{Cntrl}", "") + ".esm");
+							builder.append(data[i].split(".esm")[0].replaceAll(
+									"\\p{Cntrl}", "") + ".esm");
+							builder.append("\n");
+						}
+
+						else if (data[i].contains(".omwaddon")) {
+							builder.append(data[i].split(".omwaddon")[0]
+									.replaceAll("\\p{Cntrl}", "") + ".omwaddon");
+							builder.append("\n");
+						} else if (data[i].contains(".omwgame")) {
+							builder.append(data[i].split(".omwgame")[0]
+									.replaceAll("\\p{Cntrl}", "") + ".omwgame");
 							builder.append("\n");
 						}
 

@@ -3,9 +3,6 @@ package ui.activity;
 import ui.files.Writer;
 
 import com.libopenmw.openmw.R;
-import com.libopenmw.openmw.R.id;
-import com.libopenmw.openmw.R.layout;
-
 import constants.Constants;
 import android.app.Activity;
 import android.content.Context;

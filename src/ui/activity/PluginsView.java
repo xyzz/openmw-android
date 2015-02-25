@@ -223,7 +223,9 @@ public class PluginsView extends Activity {
 					Plugins.add(lastEsmPos, pluginData);
 					lastEsmPos++;
 				} else if (f.getName().endsWith(".esp")
-						|| f.getName().endsWith(".ESP")) {
+						|| f.getName().endsWith(".ESP")
+						|| f.getName().endsWith(".omwgame")
+						|| f.getName().endsWith(".omwaddon")) {
 					Plugins.add(pluginData);
 				}
 
