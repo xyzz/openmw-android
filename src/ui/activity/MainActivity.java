@@ -7,6 +7,7 @@ import ui.files.ParseJson;
 import ui.files.Writer;
 
 import com.libopenmw.openmw.R;
+
 import constants.Constants;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -206,6 +207,8 @@ public class MainActivity extends Activity {
 											configsPath
 													+ "/config/openmw/openmw.cfg",
 											"resources");
+									Writer.write(MainActivity.dataPath, MainActivity.configsPath
+											+ "/config/openmw/openmw.cfg", "data");
 									int pos = Settings.getInt(
 											Constants.LANGUAGE, 0);
 
