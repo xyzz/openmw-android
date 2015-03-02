@@ -3,6 +3,7 @@ package ui.activity;
 import ui.files.Writer;
 
 import com.libopenmw.openmw.R;
+
 import constants.Constants;
 import android.app.Activity;
 import android.content.Context;
@@ -25,8 +26,9 @@ public class SettingsActivity extends Activity {
 	private SharedPreferences Settings;
 	private EditText configsText;
 	private EditText dataText;
-static	String[] data = { "win1250", "win1251", "win1252" };
-static	String[] dataMipmapping = { "none", "trilinear", "bilinear","anisotropic" };
+	static String[] data = { "win1250", "win1251", "win1252" };
+	static String[] dataMipmapping = { "none", "trilinear", "bilinear",
+			"anisotropic" };
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -43,8 +45,20 @@ static	String[] dataMipmapping = { "none", "trilinear", "bilinear","anisotropic"
 		dataText.setText(MainActivity.dataPath);
 
 		configsText.addTextChangedListener(new TextWatcher() {
-			public void afterTextChanged(Editable s) {
+			public void afterTextChanged(final Editable s) {
+				new Thread(new Runnable() {
+					public void run() {
+						try {
+							Writer.write(s.toString() + "/resources",
+									s.toString() + "/config/openmw/openmw.cfg",
+									"resources");
 
+						} catch (Exception e) {
+
+						}
+
+					}
+				}).start();
 			}
 
 			public void beforeTextChanged(CharSequence s, int start, int count,
@@ -66,9 +80,7 @@ static	String[] dataMipmapping = { "none", "trilinear", "bilinear","anisotropic"
 							+ "/config/openmw/openmw.cfg", "data");
 
 				} catch (Exception e) {
-					Toast toast = Toast.makeText(getApplicationContext(),
-							"configs files not found", Toast.LENGTH_LONG);
-					toast.show();
+
 				}
 			}
 
@@ -103,7 +115,6 @@ static	String[] dataMipmapping = { "none", "trilinear", "bilinear","anisotropic"
 					Editor editor = Settings.edit();
 					editor.putInt(Constants.LANGUAGE, position);
 					editor.apply();
-				
 
 				} catch (Exception e) {
 					Toast toast = Toast.makeText(getApplicationContext(),
@@ -119,38 +130,43 @@ static	String[] dataMipmapping = { "none", "trilinear", "bilinear","anisotropic"
 		});
 		ArrayAdapter<String> adapterMipmapping = new ArrayAdapter<String>(this,
 				android.R.layout.simple_spinner_item, dataMipmapping);
-		adapterMipmapping.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		adapterMipmapping
+				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		final Spinner spinnerMipmapping = (Spinner) findViewById(R.id.mipmappingspinner);
 		spinnerMipmapping.setAdapter(adapterMipmapping);
 		spinnerMipmapping.setPrompt("Mipmapping");
-		spinnerMipmapping.setSelection(Settings.getInt(Constants.MIPMAPPING, 0));
-		spinnerMipmapping.setOnItemSelectedListener(new OnItemSelectedListener() {
-			@Override
-			public void onItemSelected(AdapterView<?> parent, View view,
-					int position, long id) {
+		spinnerMipmapping
+				.setSelection(Settings.getInt(Constants.MIPMAPPING, 0));
+		spinnerMipmapping
+				.setOnItemSelectedListener(new OnItemSelectedListener() {
+					@Override
+					public void onItemSelected(AdapterView<?> parent,
+							View view, int position, long id) {
 
-				try {
-					Writer.write(spinnerMipmapping.getSelectedItem().toString(),
-							MainActivity.configsPath
-									+ "/config/openmw/settings.cfg", "texture filtering");
-					Editor editor = Settings.edit();
-					editor.putInt(Constants.MIPMAPPING, position);
-					editor.apply();
-				
+						try {
+							Writer.write(spinnerMipmapping.getSelectedItem()
+									.toString(), MainActivity.configsPath
+									+ "/config/openmw/settings.cfg",
+									"texture filtering");
+							Editor editor = Settings.edit();
+							editor.putInt(Constants.MIPMAPPING, position);
+							editor.apply();
 
-				} catch (Exception e) {
-					Toast toast = Toast.makeText(getApplicationContext(),
-							"configs files not found", Toast.LENGTH_LONG);
-					toast.show();
-				}
+						} catch (Exception e) {
+							Toast toast = Toast.makeText(
+									getApplicationContext(),
+									"configs files not found",
+									Toast.LENGTH_LONG);
+							toast.show();
+						}
 
-			}
+					}
 
-			@Override
-			public void onNothingSelected(AdapterView<?> arg0) {
-			}
-		});
-		
+					@Override
+					public void onNothingSelected(AdapterView<?> arg0) {
+					}
+				});
+
 		final CheckBox Box = (CheckBox) findViewById(R.id.checkBox1);
 
 		int hideFlag = Settings.getInt(Constants.SUBTITLES, -1);
@@ -171,9 +187,9 @@ static	String[] dataMipmapping = { "none", "trilinear", "bilinear","anisotropic"
 						Editor editor = Settings.edit();
 						editor.putInt(Constants.SUBTITLES, 1);
 						editor.apply();
-					
+
 					} catch (Exception e) {
-						
+
 						Toast toast = Toast.makeText(getApplicationContext(),
 								"configs files not found", Toast.LENGTH_LONG);
 						toast.show();
@@ -186,7 +202,7 @@ static	String[] dataMipmapping = { "none", "trilinear", "bilinear","anisotropic"
 						Editor editor = Settings.edit();
 						editor.putInt(Constants.SUBTITLES, 0);
 						editor.apply();
-					
+
 					} catch (Exception e) {
 						Toast toast = Toast.makeText(getApplicationContext(),
 								"configs files not found", Toast.LENGTH_LONG);
