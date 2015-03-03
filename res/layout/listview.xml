@@ -1,13 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
+
+    <Button
+        android:id="@+id/buttonsave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:onClick="savePlugins"
+        android:text="Save"
+        android:textSize="19sp" >
+    </Button>
 
     <com.mobeta.android.dslv.DragSortListView
         android:id="@+id/listView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/pluginsInfo"
+        android:layout_alignParentLeft="true"
         android:layout_below="@+id/buttonsave"
         app:collapsed_height="1px"
         app:drag_enabled="true"
@@ -18,18 +31,6 @@
         app:remove_mode="flingRemove"
         app:slide_shuffle_speed="0.3"
         app:track_drag_sort="false" />
-
-    <Button
-        android:id="@+id/buttonsave"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:onClick="savePlugins"
-        android:text="Save"
-        android:textSize="19sp" >
-    </Button>
 
     <TextView
         android:id="@+id/pluginsInfo"
