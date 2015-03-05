@@ -24,7 +24,8 @@
         android:layout_height="wrap_content"
         android:layout_weight="9"
         android:text="X"
-        android:textSize="40dp" />
+        android:textSize="40dp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/textViewenabled"
