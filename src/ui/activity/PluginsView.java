@@ -342,14 +342,14 @@ public class PluginsView extends Activity {
 					.findViewById(R.id.checkBoxenable);
 			final TextView loadingPlace = (TextView) rowView
 					.findViewById(R.id.loadingPlace);
-			if (Plugins.get(position).enabled == 1)
-				loadingPlace.setText("" + loadingPos(position));
-
+		
 			enabled.setText(String.valueOf(Plugins.get(position).enabled));
 
-			if (Plugins.get(position).enabled == 1)
+			if (Plugins.get(position).enabled == 1){
 				Box.setChecked(true);
+				loadingPlace.setText("" + loadingPos(position));
 
+			}
 			Box.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
 					if (Box.isChecked()) {
