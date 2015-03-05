@@ -43,7 +43,6 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 
-		
 		linlaHeaderProgress = (LinearLayout) findViewById(R.id.linlaHeaderProgress);
 		Settings = getSharedPreferences(Constants.APP_PREFERENCES,
 				Context.MODE_MULTI_PROCESS);
@@ -207,8 +206,11 @@ public class MainActivity extends Activity {
 											configsPath
 													+ "/config/openmw/openmw.cfg",
 											"resources");
-									Writer.write(MainActivity.dataPath, MainActivity.configsPath
-											+ "/config/openmw/openmw.cfg", "data");
+									Writer.write(
+											MainActivity.dataPath,
+											MainActivity.configsPath
+													+ "/config/openmw/openmw.cfg",
+											"data");
 									int pos = Settings.getInt(
 											Constants.LANGUAGE, 0);
 
@@ -267,7 +269,5 @@ public class MainActivity extends Activity {
 		});
 
 	}
-
-	
 
 }

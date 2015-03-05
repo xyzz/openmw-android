@@ -19,12 +19,19 @@
         android:textSize="24sp" />
 
     <TextView
+        android:id="@+id/loadingPlace"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="9"
+        android:textSize="24sp" />
+
+    <TextView
         android:id="@+id/delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="9"
         android:text="X"
-        android:textSize="40dp"
+        android:textSize="40sp"
         android:textStyle="bold" />
 
     <TextView
