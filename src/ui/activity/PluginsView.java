@@ -335,16 +335,13 @@ public class PluginsView extends Activity {
 			rowView = inflater.inflate(R.layout.rowlistview, parent, false);
 
 			TextView data = (TextView) rowView.findViewById(R.id.textView1);
-			TextView enabled = (TextView) rowView
-					.findViewById(R.id.textViewenabled);
-
+		
 			final CheckBox Box = (CheckBox) rowView
 					.findViewById(R.id.checkBoxenable);
 			final TextView loadingPlace = (TextView) rowView
 					.findViewById(R.id.loadingPlace);
 		
-			enabled.setText(String.valueOf(Plugins.get(position).enabled));
-
+		
 			if (Plugins.get(position).enabled == 1){
 				Box.setChecked(true);
 				loadingPlace.setText("" + loadingPos(position));
