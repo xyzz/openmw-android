@@ -7,15 +7,24 @@
     <CheckBox
         android:id="@+id/checkBoxenable"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_weight="4" />
 
     <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="0.06"
+        android:layout_weight="120"
         android:text="TextView"
         android:textSize="19sp" />
+
+    <TextView
+        android:id="@+id/delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="9"
+        android:text="X"
+        android:textSize="30dp" />
 
     <TextView
         android:id="@+id/textViewenabled"
@@ -24,10 +33,11 @@
         android:text="TextView"
         android:visibility="gone" />
 
-      <TextView
+    <TextView
         android:id="@+id/textViewBsa"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
         android:visibility="gone" />
+
 </LinearLayout>
