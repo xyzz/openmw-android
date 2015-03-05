@@ -356,12 +356,15 @@ public class PluginsView extends Activity {
 
 						Plugins.get(position).enabled = 1;
 						loadingPlace.setText("" + loadingPos(position));
+						adapter.notifyDataSetChanged();
+
 
 						savePluginsData();
 					} else {
 
 						Plugins.get(position).enabled = 0;
 						loadingPlace.setText("");
+						adapter.notifyDataSetChanged();
 
 						savePluginsData();
 
