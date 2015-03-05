@@ -34,18 +34,6 @@
         android:textSize="40sp"
         android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/textViewenabled"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        android:visibility="gone" />
 
-    <TextView
-        android:id="@+id/textViewBsa"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        android:visibility="gone" />
 
 </LinearLayout>
