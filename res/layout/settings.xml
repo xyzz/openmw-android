@@ -8,15 +8,15 @@
         android:id="@+id/textView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="3"
+        android:layout_weight="2"
         android:text="Path to configs files"
-        android:textSize="16sp" />
+        android:textSize="15sp" />
 
     <EditText
         android:id="@+id/configsPath"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="3.08"
+        android:layout_weight="5"
         android:inputType="textMultiLine"
         android:textSize="19sp" />
 
@@ -26,16 +26,30 @@
         android:layout_height="wrap_content"
         android:layout_weight="3"
         android:text="Path to game files"
-        android:textSize="16sp" />
+        android:textSize="15sp" />
 
     <EditText
         android:id="@+id/editText1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/textView2"
-        android:layout_marginTop="18dp"
         android:layout_weight="5"
-        android:ems="10"
+        android:inputType="textMultiLine"
+        android:textSize="19sp" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:text="Command Line"
+        android:textSize="15sp" />
+
+    <EditText
+        android:id="@+id/commandLine"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="5"
         android:inputType="textMultiLine"
         android:textSize="19sp" />
 
@@ -43,9 +57,9 @@
         android:id="@+id/textView3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="10"
+        android:layout_weight="2"
         android:text="Encoding"
-        android:textSize="16sp" />
+        android:textSize="15sp" />
 
     <Spinner
         android:id="@+id/spinner1"
@@ -57,9 +71,10 @@
         android:id="@+id/textView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="3"
+        android:layout_weight="2"
         android:text="Mipmapping  \n If the game is loaded with a black screen, set mipmapping none"
-        android:textSize="16sp" />
+        android:textSize="15sp" />
+
     <Spinner
         android:id="@+id/mipmappingspinner"
         android:layout_width="match_parent"
@@ -73,12 +88,5 @@
         android:layout_weight="3"
         android:text="Show Subtitles"
         android:textSize="19sp" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="80.44"
-        android:orientation="vertical" >
-    </LinearLayout>
 
 </LinearLayout>

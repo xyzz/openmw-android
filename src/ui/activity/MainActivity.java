@@ -36,6 +36,7 @@ public class MainActivity extends Activity {
 
 	public static String configsPath = "";
 	public static String dataPath = "";
+	public static String commandLineData="";
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -53,6 +54,7 @@ public class MainActivity extends Activity {
 				Constants.APP_PREFERENCES_CONTROLS_FLAG, -1);
 
 		configsPath = Settings.getString(Constants.CONFIGS_PATH, "");
+		commandLineData = Settings.getString(Constants.COMMAND_LINE, "");
 
 		if (configsPath.equals("")) {
 			configsPath = Environment.getExternalStorageDirectory()

@@ -139,5 +139,5 @@ public class Constants {
 	public static final String LANGUAGE = "spinner";
 	public static final String SUBTITLES = "subtitiles";
 	public static final String MIPMAPPING = "mipmapping";
-
+	public static final String COMMAND_LINE = "commandline";
 }

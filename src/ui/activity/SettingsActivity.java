@@ -26,6 +26,7 @@ public class SettingsActivity extends Activity {
 	private SharedPreferences Settings;
 	private EditText configsText;
 	private EditText dataText;
+	private EditText commandLineText;
 	static String[] data = { "win1250", "win1251", "win1252" };
 	static String[] dataMipmapping = { "none", "trilinear", "bilinear",
 			"anisotropic" };
@@ -38,11 +39,14 @@ public class SettingsActivity extends Activity {
 
 		configsText = (EditText) findViewById(R.id.configsPath);
 		dataText = (EditText) findViewById(R.id.editText1);
+		commandLineText=(EditText) findViewById(R.id.commandLine);
+
 		Settings = getSharedPreferences(Constants.APP_PREFERENCES,
 				Context.MODE_MULTI_PROCESS);
 
 		configsText.setText(MainActivity.configsPath);
 		dataText.setText(MainActivity.dataPath);
+		commandLineText.setText(MainActivity.commandLineData);
 
 		configsText.addTextChangedListener(new TextWatcher() {
 			public void afterTextChanged(final Editable s) {
@@ -95,6 +99,24 @@ public class SettingsActivity extends Activity {
 
 			}
 		});
+		
+		commandLineText.addTextChangedListener(new TextWatcher() {
+			public void afterTextChanged(Editable s) {
+				
+			}
+
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+			}
+
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
+				saveToSharedPreferences(Constants.COMMAND_LINE, s.toString());
+				MainActivity.commandLineData = s.toString();
+
+			}
+		});
+		
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_spinner_item, data);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
