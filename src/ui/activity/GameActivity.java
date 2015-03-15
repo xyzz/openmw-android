@@ -51,7 +51,8 @@ public class GameActivity extends SDLActivity {
 	}
 
 	private void parseCommandLine() {
-		argv= MainActivity.commandLineData.split("+");
+		MainActivity.commandLineData=MainActivity.commandLineData.replace(" ","");
+		argv= MainActivity.commandLineData.split("/");
 		argc = argv.length;
 	}
 
