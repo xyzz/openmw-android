@@ -14,8 +14,10 @@ public class GameActivity extends SDLActivity {
 
 	public static native void getPathToJni(String path);
 
+	public static native void commandLine(int argc, String[] argv);
+
 	private int argc = 0;
-	private char[] argv;
+	private String[] argv;
 	static {
 
 		System.loadLibrary("SDL2");
@@ -28,6 +30,7 @@ public class GameActivity extends SDLActivity {
 		super.onCreate(savedInstanceState);
 
 		parseCommandLine();
+		commandLine(argc, argv);
 		getPathToJni(MainActivity.configsPath);
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		deleteVideoFile();
@@ -47,11 +50,9 @@ public class GameActivity extends SDLActivity {
 	}
 
 	private void parseCommandLine() {
-		String[] argvData = MainActivity.commandLineData.split(" --");
-		argc = argvData.length;
-		argv = new char[argc];
-		for (int i = 0; i < argc; i++)
-			argv[i] = argvData[i].charAt(0);
+		argv = MainActivity.commandLineData.split(" --");
+		argc = argv.length;
+
 	}
 
 	@Override
