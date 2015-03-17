@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.libopenmw.openmw"
-    android:installLocation="preferExternal"
+    android:installLocation="auto"
     android:versionCode="1"
     android:versionName="0.35.1" >
 
