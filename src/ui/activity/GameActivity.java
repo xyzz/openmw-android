@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Process;
 import android.util.Log;
 import android.view.WindowManager;
+import android.widget.Button;
 
 public class GameActivity extends SDLActivity {
 
@@ -40,6 +41,8 @@ public class GameActivity extends SDLActivity {
 		controls.showControls(MainActivity.contols);
 		QuickPanel panel = new QuickPanel(this);
 		panel.showQuickPanel(MainActivity.contols);
+		if (MainActivity.contols)
+			QuickPanel.getInstance().f1.setVisibility(Button.VISIBLE);
 
 	}
 
@@ -70,6 +73,7 @@ public class GameActivity extends SDLActivity {
 
 		ScreenScaler.buttonTextScaler(QuickPanel.getInstance().showPanel, 4);
 		ScreenScaler.buttonTextScaler(QuickPanel.getInstance().f1, 4);
+		QuickPanel.getInstance().f1.setVisibility(Button.GONE);
 		ScreenScaler.buttonTextScaler(ScreenControls.getInstance().buttonTouch, 4);
 
 	}
