@@ -3,6 +3,7 @@ package ui.controls;
 import org.libsdl.app.SDLActivity;
 
 import screen.ScreenScaler;
+
 import com.libopenmw.openmw.R;
 
 import constants.Constants;
@@ -23,13 +24,19 @@ public class ScreenControls {
 	private boolean enableTouch = false;
 	private boolean crouchFlag = false;
 	private boolean hideControls;
+	public Button buttonTouch;
 	Activity a;
+	private static ScreenControls instance = null;
 
 	public ScreenControls(Activity a) {
 		super();
 		this.a = a;
+		instance=this;
 	}
 
+	public static ScreenControls getInstance() {
+		return instance;
+	}
 	public void showControls(boolean show) {
 		if (show) {
 
@@ -81,7 +88,7 @@ public class ScreenControls {
 			buttonWait.setOnTouchListener(new ButtonTouchListener(
 					KeyEvent.KEYCODE_T));
 
-			final Button buttonTouch = (Button) a
+			buttonTouch = (Button) a
 					.findViewById(R.id.buttontouch);
 			final TouchCameraSimulation touch = (TouchCameraSimulation) a
 					.findViewById(R.id.superTouch);

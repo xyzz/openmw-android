@@ -4,6 +4,7 @@ import java.io.File;
 
 import org.libsdl.app.SDLActivity;
 
+import screen.ScreenScaler;
 import ui.controls.QuickPanel;
 import ui.controls.ScreenControls;
 import android.os.Bundle;
@@ -51,8 +52,9 @@ public class GameActivity extends SDLActivity {
 	}
 
 	private void parseCommandLine() {
-		MainActivity.commandLineData=MainActivity.commandLineData.replace(" ","");
-		argv= MainActivity.commandLineData.split("/");
+		MainActivity.commandLineData = MainActivity.commandLineData.replace(
+				" ", "");
+		argv = MainActivity.commandLineData.split("/");
 		argc = argv.length;
 	}
 
@@ -61,6 +63,15 @@ public class GameActivity extends SDLActivity {
 		finish();
 		Process.killProcess(Process.myPid());
 		super.onDestroy();
+	}
+
+	@Override
+	public void onWindowFocusChanged(boolean hasFocus) {
+
+		ScreenScaler.buttonTextScaler(QuickPanel.getInstance().showPanel, 4);
+		ScreenScaler.buttonTextScaler(QuickPanel.getInstance().f1, 4);
+		ScreenScaler.buttonTextScaler(ScreenControls.getInstance().buttonTouch, 4);
+
 	}
 
 }

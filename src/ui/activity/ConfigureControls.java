@@ -1,6 +1,7 @@
 package ui.activity;
 
 import com.libopenmw.openmw.R;
+
 import screen.ScreenScaler;
 import ui.controls.ControlsParams;
 import ui.controls.Joystick;
@@ -14,6 +15,7 @@ import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -1410,4 +1412,17 @@ public class ConfigureControls extends Activity {
 					setSizeFromButtonToSharedPreferences(Constants.APP_PREFERENCES_KEY_9_SIZE)));
 
 	}
+
+	@Override
+	public void onWindowFocusChanged(boolean hasFocus) {
+		ScreenScaler.buttonTextScaler(buttonOpacity, 4);
+		ScreenScaler.buttonTextScaler(buttonOpacity1, 4);
+		ScreenScaler.buttonTextScaler(buttonSize, 4);
+		ScreenScaler.buttonTextScaler(buttonSize1, 4);
+		ScreenScaler.buttonTextScaler(showPanel,4 );
+		ScreenScaler.buttonTextScaler(f1,4 );
+
+
+	}
+
 }
