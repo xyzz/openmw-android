@@ -1,7 +1,8 @@
 package screen;
 
 import android.util.TypedValue;
-import android.widget.Button;
+import android.view.View;
+import android.widget.TextView;
 
 public class ScreenScaler {
 
@@ -25,9 +26,9 @@ public class ScreenScaler {
 		marginY = (height - (int) ((float) STANDARD_HEIGHT * scaleRatio_y)) / 2;
 	}
 
-	public static void buttonTextScaler(Button button, int size) {
-		int text_height = button.getHeight() / size;
-		button.setTextSize(TypedValue.COMPLEX_UNIT_PX, text_height);
+	public static void buttonTextScaler(View v, int size) {
+		int text_height = v.getHeight() / size;
+		((TextView) v).setTextSize(TypedValue.COMPLEX_UNIT_PX, text_height);
 	}
 
 	public static ScreenScaler getInstance() {

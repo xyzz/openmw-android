@@ -70,12 +70,12 @@ public class GameActivity extends SDLActivity {
 
 	@Override
 	public void onWindowFocusChanged(boolean hasFocus) {
-
+if (MainActivity.contols){
 		ScreenScaler.buttonTextScaler(QuickPanel.getInstance().showPanel, 4);
 		ScreenScaler.buttonTextScaler(QuickPanel.getInstance().f1, 4);
 		QuickPanel.getInstance().f1.setVisibility(Button.GONE);
 		ScreenScaler.buttonTextScaler(ScreenControls.getInstance().buttonTouch, 4);
-
+}
 	}
 
 }
