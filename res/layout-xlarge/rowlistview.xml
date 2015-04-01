@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="fill_parent"
     android:orientation="horizontal" >
 
     <CheckBox
@@ -17,7 +17,7 @@
         android:layout_weight="120"
         android:gravity="left|center_horizontal"
         android:textAlignment="gravity"
-        android:textSize="19sp" />
+        android:textSize="34sp" />
 
     <TextView
         android:id="@+id/loadingPlace"
@@ -26,7 +26,7 @@
         android:layout_weight="9"
         android:gravity="center_horizontal"
         android:textAlignment="gravity"
-        android:textSize="19sp" />
+        android:textSize="34sp" />
 
     <TextView
         android:id="@+id/delete"
@@ -36,7 +36,7 @@
         android:gravity="center_horizontal"
         android:text="X"
         android:textAlignment="gravity"
-        android:textSize="30sp"
+        android:textSize="50sp"
         android:textStyle="bold" />
 
 </LinearLayout>

@@ -363,10 +363,6 @@ public class FragmentPlugins extends Fragment {
 
 			TextView data = (TextView) rowView.findViewById(R.id.textView1);
 
-			ScreenScaler.changeTextSize(data, 1f);
-			ScreenScaler
-					.changeTextSize(rowView.findViewById(R.id.delete), 0.6f);
-
 			final CheckBox Box = (CheckBox) rowView
 					.findViewById(R.id.checkBoxenable);
 
