@@ -368,7 +368,6 @@ public class FragmentPlugins extends Fragment {
 
 			final TextView loadingPlace = (TextView) rowView
 					.findViewById(R.id.loadingPlace);
-			ScreenScaler.changeTextSize(loadingPlace, 1f);
 
 			if (Plugins.get(position).enabled == 1) {
 				Box.setChecked(true);
