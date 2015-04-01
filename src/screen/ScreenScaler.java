@@ -26,9 +26,20 @@ public class ScreenScaler {
 		marginY = (height - (int) ((float) STANDARD_HEIGHT * scaleRatio_y)) / 2;
 	}
 
-	public static void buttonTextScaler(View v, int size) {
-		int text_height = v.getHeight() / size;
+	public static void textScaler(View v, float size) {
+		float text_height =(float) v.getHeight() / size;
 		((TextView) v).setTextSize(TypedValue.COMPLEX_UNIT_PX, text_height);
+	}
+
+	public static void changeTextSize(final View v, final float size) {
+		v.post(new Runnable() {
+			@Override
+			public void run() {
+				textScaler(v, size); 
+
+			}
+
+		});
 	}
 
 	public static ScreenScaler getInstance() {

@@ -1415,12 +1415,12 @@ public class ConfigureControls extends Activity {
 
 	@Override
 	public void onWindowFocusChanged(boolean hasFocus) {
-		ScreenScaler.buttonTextScaler(buttonOpacity, 4);
-		ScreenScaler.buttonTextScaler(buttonOpacity1, 4);
-		ScreenScaler.buttonTextScaler(buttonSize, 4);
-		ScreenScaler.buttonTextScaler(buttonSize1, 4);
-		ScreenScaler.buttonTextScaler(showPanel,4 );
-		ScreenScaler.buttonTextScaler(f1,4 );
+		ScreenScaler.textScaler(buttonOpacity, 4);
+		ScreenScaler.textScaler(buttonOpacity1, 4);
+		ScreenScaler.textScaler(buttonSize, 4);
+		ScreenScaler.textScaler(buttonSize1, 4);
+		ScreenScaler.textScaler(showPanel,4 );
+		ScreenScaler.textScaler(f1,4 );
 
 
 	}

@@ -2,8 +2,12 @@ package ui.activity;
 
 import java.io.File;
 
+import screen.ScreenScaler;
+import tabs.MyTabFactory;
+import tabs.TabsPagerAdapter;
 import ui.files.CopyFilesFromAssets;
 import ui.files.ParseJson;
+import ui.files.PreferencesHelper;
 import ui.files.Writer;
 
 import com.libopenmw.openmw.R;
@@ -19,91 +23,55 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
+import android.widget.TabHost;
+import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.TabHost.OnTabChangeListener;
 
-public class MainActivity extends Activity {
+public class MainActivity extends FragmentActivity implements
+		OnTabChangeListener, OnPageChangeListener {
 
-	public static boolean contols = true;
 
-	private LinearLayout linlaHeaderProgress;
-	private SharedPreferences Settings;
+	private TabsPagerAdapter mAdapter;
 
-	private Thread th;
+	private ViewPager mViewPager;
 
-	public static String configsPath = "";
-	public static String dataPath = "";
-	public static String commandLineData="";
+	private TabHost mTabHost;
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
+
 		setContentView(R.layout.main);
 
-		linlaHeaderProgress = (LinearLayout) findViewById(R.id.linlaHeaderProgress);
-		Settings = getSharedPreferences(Constants.APP_PREFERENCES,
-				Context.MODE_MULTI_PROCESS);
-
-		final CheckBox Box = (CheckBox) findViewById(R.id.checkBox1);
-
-		int hideControlsFlag = Settings.getInt(
-				Constants.APP_PREFERENCES_CONTROLS_FLAG, -1);
-
-		configsPath = Settings.getString(Constants.CONFIGS_PATH, "");
-		commandLineData = Settings.getString(Constants.COMMAND_LINE, "");
-
-		if (configsPath.equals("")) {
-			configsPath = Environment.getExternalStorageDirectory()
-					+ "/libopenmw";
-			Editor editor = Settings.edit();
-			editor.putString(Constants.CONFIGS_PATH, configsPath);
-			editor.apply();
+		PreferencesHelper.getPrefValues(this);
+		if (Constants.hideControls == -1 || Constants.hideControls == 0) {
+			Constants.contols = true;
+		} else if (Constants.hideControls == 1) {
+			Constants.contols = false;
 		}
+		mViewPager = (ViewPager) findViewById(R.id.viewpager);
 
-		dataPath = Settings.getString(Constants.DATA_PATH, "");
+		initialiseTabHost();
 
-		if (dataPath.equals("")) {
-			dataPath = Environment.getExternalStorageDirectory()
-					+ "/libopenmw/data";
-			Editor editor = Settings.edit();
-			editor.putString(Constants.DATA_PATH, dataPath);
-			editor.apply();
-		}
+		mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
 
-		if (hideControlsFlag == -1 || hideControlsFlag == 0) {
-			Box.setChecked(false);
-			contols = true;
-		} else if (hideControlsFlag == 1) {
-			Box.setChecked(true);
-			contols = false;
-		}
+		mViewPager.setAdapter(mAdapter);
 
-		Box.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				if (Box.isChecked()) {
-					contols = false;
-
-					Editor editor = Settings.edit();
-					editor.putInt(Constants.APP_PREFERENCES_CONTROLS_FLAG, 1);
-					editor.apply();
-				} else {
-					contols = true;
-					Editor editor = Settings.edit();
-					editor.putInt(Constants.APP_PREFERENCES_CONTROLS_FLAG, 0);
-					editor.apply();
-				}
-
-			}
-
-		});
-
+		mViewPager.setOnPageChangeListener(MainActivity.this);
 		Button startGame = (Button) findViewById(R.id.start);
+		ScreenScaler.changeTextSize(startGame, 2.3f);
 		startGame.setOnClickListener(new View.OnClickListener() {
-			@SuppressLint("InlinedApi")
 			public void onClick(View v) {
 				try {
 
@@ -123,152 +91,60 @@ public class MainActivity extends Activity {
 
 		});
 
-		Button pluginsViewButton = (Button) findViewById(R.id.button1);
-		pluginsViewButton.setOnClickListener(new View.OnClickListener() {
-			@SuppressLint("InlinedApi")
-			public void onClick(View v) {
+	}
 
-				try {
-					Intent intent = new Intent(MainActivity.this,
-							PluginsView.class);
-					MainActivity.this.startActivity(intent);
+	private static void AddTab(MainActivity activity, TabHost tabHost,
+			TabHost.TabSpec tabSpec) {
 
-				} catch (Exception e) {
-					Toast.makeText(getApplicationContext(), "no data files",
-							Toast.LENGTH_LONG).show();
-				}
+		tabSpec.setContent(new MyTabFactory(activity));
 
-			}
+		tabHost.addTab(tabSpec);
 
-		});
+	}
 
-		findViewById(R.id.buttoncontrols).setOnClickListener(
-				new View.OnClickListener() {
-					@SuppressLint("InlinedApi")
-					public void onClick(View v) {
+	public void onTabChanged(String tag) {
 
-						Intent intent = new Intent(MainActivity.this,
-								ConfigureControls.class);
-						MainActivity.this.startActivity(intent);
+		int pos = this.mTabHost.getCurrentTab();
 
-					}
+		this.mViewPager.setCurrentItem(pos);
 
-				});
+	}
 
-		findViewById(R.id.buttonresetcontrols).setOnClickListener(
-				new View.OnClickListener() {
-					@SuppressLint("InlinedApi")
-					public void onClick(View v) {
-						Editor editor = Settings.edit();
-						editor.putInt(Constants.APP_PREFERENCES_RESET_CONTROLS,
-								1);
-						editor.apply();
-						Toast toast = Toast.makeText(getApplicationContext(),
-								"Reset on-screen controls", Toast.LENGTH_LONG);
-						toast.show();
+	@Override
+	public void onPageScrollStateChanged(int arg0) {
 
-					}
+	}
 
-				});
+	@Override
+	public void onPageScrolled(int arg0, float arg1, int arg2) {
 
-		findViewById(R.id.buttoncopy).setOnClickListener(
-				new View.OnClickListener() {
-					@SuppressLint("InlinedApi")
-					public void onClick(View v) {
-						linlaHeaderProgress.setVisibility(View.VISIBLE);
-						th = new Thread(new Runnable() {
+		int pos = this.mViewPager.getCurrentItem();
 
-							public Handler UI = new Handler() {
-								@Override
-								public void dispatchMessage(Message msg) {
-									super.dispatchMessage(msg);
+		this.mTabHost.setCurrentTab(pos);
 
-									linlaHeaderProgress
-											.setVisibility(View.GONE);
-									Toast toast = Toast.makeText(
-											getApplicationContext(),
-											"files copied", Toast.LENGTH_LONG);
-									toast.show();
-								}
-							};
+	}
 
-							@Override
-							public void run() {
-								File inputfile = new File(
-										ParseJson.jsonFilePath);
-								if (inputfile.exists())
-									inputfile.delete();
-								CopyFilesFromAssets copyFiles = new CopyFilesFromAssets(
-										MainActivity.this, configsPath);
-								copyFiles.copyFileOrDir("libopenmw");
+	@Override
+	public void onPageSelected(int arg0) {
 
-								try {
-									Writer.write(
-											configsPath + "/resources",
-											configsPath
-													+ "/config/openmw/openmw.cfg",
-											"resources");
-									Writer.write(
-											MainActivity.dataPath,
-											MainActivity.configsPath
-													+ "/config/openmw/openmw.cfg",
-											"data");
-									int pos = Settings.getInt(
-											Constants.LANGUAGE, 0);
+	}
 
-									Writer.write(
-											SettingsActivity.data[pos],
-											MainActivity.configsPath
-													+ "/config/openmw/openmw.cfg",
-											"encoding");
+	private void initialiseTabHost() {
 
-									pos = Settings.getInt(Constants.MIPMAPPING,
-											0);
+		mTabHost = (TabHost) findViewById(android.R.id.tabhost);
 
-									Writer.write(
-											SettingsActivity.dataMipmapping[pos],
-											MainActivity.configsPath
-													+ "/config/openmw/settings.cfg",
-											"texture filtering");
-									pos = Settings.getInt(Constants.SUBTITLES,
-											-1);
-									if (pos == 1)
-										Writer.write(
-												"true",
-												MainActivity.configsPath
-														+ "/config/openmw/settings.cfg",
-												"subtitles");
-									else if (pos == 0)
-										Writer.write(
-												"false",
-												MainActivity.configsPath
-														+ "/config/openmw/settings.cfg",
-												"subtitles");
+		mTabHost.setup();
 
-								} catch (Exception e) {
-								}
+		MainActivity.AddTab(this, this.mTabHost,
+				this.mTabHost.newTabSpec("General").setIndicator("General"));
+		MainActivity.AddTab(this, this.mTabHost,
+				this.mTabHost.newTabSpec("Controls").setIndicator("Controls"));
+		MainActivity.AddTab(this, this.mTabHost,
+				this.mTabHost.newTabSpec("Settings").setIndicator("Settings"));
+		MainActivity.AddTab(this, this.mTabHost,
+				this.mTabHost.newTabSpec("Plugins").setIndicator("Plugins"));
 
-								UI.sendEmptyMessage(0);
-							}
-						});
-						th.start();
-
-					}
-
-				});
-
-		final Button settingsButton = (Button) findViewById(R.id.settingsbutton);
-		settingsButton.setOnClickListener(new View.OnClickListener() {
-
-			public void onClick(View v) {
-				Intent intent = new Intent(MainActivity.this,
-						SettingsActivity.class);
-
-				MainActivity.this.startActivity(intent);
-
-			}
-
-		});
+		mTabHost.setOnTabChangedListener(this);
 
 	}
 

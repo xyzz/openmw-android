@@ -140,4 +140,10 @@ public class Constants {
 	public static final String SUBTITLES = "subtitiles";
 	public static final String MIPMAPPING = "mipmapping";
 	public static final String COMMAND_LINE = "commandline";
+	public static String configsPath = "";
+	public static String dataPath = "";
+	public static String commandLineData = "";
+	public static boolean contols = true;
+	public static int hideControls =-1;
+
 }

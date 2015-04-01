@@ -14,11 +14,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import constants.Constants;
 import ui.activity.MainActivity;
 
 public class ParseJson {
 
-	public static final String jsonFilePath = MainActivity.configsPath
+	public static final String jsonFilePath = Constants.configsPath
 			+ "/files.json";
 
 	public static void savetofile(FilesData ti) throws IOException {

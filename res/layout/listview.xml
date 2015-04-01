@@ -10,9 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:onClick="savePlugins"
-        android:text="Save"
-        android:textSize="19sp" >
+        android:text="Save" >
     </Button>
 
     <com.mobeta.android.dslv.DragSortListView
@@ -39,7 +37,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:textSize="14sp" />
+        android:layout_alignParentRight="true" />
 
 </RelativeLayout>

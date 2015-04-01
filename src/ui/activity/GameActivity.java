@@ -4,6 +4,7 @@ import java.io.File;
 
 import org.libsdl.app.SDLActivity;
 
+import constants.Constants;
 import screen.ScreenScaler;
 import ui.controls.QuickPanel;
 import ui.controls.ScreenControls;
@@ -34,20 +35,20 @@ public class GameActivity extends SDLActivity {
 
 		parseCommandLine();
 		commandLine(argc, argv);
-		getPathToJni(MainActivity.configsPath);
+		getPathToJni(Constants.configsPath);
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		deleteVideoFile();
 		ScreenControls controls = new ScreenControls(this);
-		controls.showControls(MainActivity.contols);
+		controls.showControls(Constants.contols);
 		QuickPanel panel = new QuickPanel(this);
-		panel.showQuickPanel(MainActivity.contols);
-		if (MainActivity.contols)
+		panel.showQuickPanel(Constants.contols);
+		if (Constants.contols)
 			QuickPanel.getInstance().f1.setVisibility(Button.VISIBLE);
 
 	}
 
 	private void deleteVideoFile() {
-		File inputfile = new File(MainActivity.dataPath
+		File inputfile = new File(Constants.dataPath
 				+ "/Video/bethesda logo.bik");
 		if (inputfile.exists())
 			inputfile.delete();
@@ -55,9 +56,9 @@ public class GameActivity extends SDLActivity {
 	}
 
 	private void parseCommandLine() {
-		MainActivity.commandLineData = MainActivity.commandLineData.replace(
+		Constants.commandLineData = Constants.commandLineData.replace(
 				" ", "");
-		argv = MainActivity.commandLineData.split("/");
+		argv = Constants.commandLineData.split("/");
 		argc = argv.length;
 	}
 
@@ -70,11 +71,11 @@ public class GameActivity extends SDLActivity {
 
 	@Override
 	public void onWindowFocusChanged(boolean hasFocus) {
-if (MainActivity.contols){
-		ScreenScaler.buttonTextScaler(QuickPanel.getInstance().showPanel, 4);
-		ScreenScaler.buttonTextScaler(QuickPanel.getInstance().f1, 4);
+if (Constants.contols){
+		ScreenScaler.textScaler(QuickPanel.getInstance().showPanel, 4);
+		ScreenScaler.textScaler(QuickPanel.getInstance().f1, 4);
 		QuickPanel.getInstance().f1.setVisibility(Button.GONE);
-		ScreenScaler.buttonTextScaler(ScreenControls.getInstance().buttonTouch, 4);
+		ScreenScaler.textScaler(ScreenControls.getInstance().buttonTouch, 4);
 }
 	}
 

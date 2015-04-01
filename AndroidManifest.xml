@@ -22,25 +22,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="org.libsdl.app.SDLActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:label="@string/app_name"
-            android:screenOrientation="sensorLandscape" >
-        </activity>
-        <activity
-            android:name="ui.activity.SettingsActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:label="@string/app_name"
-            android:screenOrientation="sensorLandscape" >
-        </activity>
-        <activity
             android:name="ui.activity.GameActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:label="@string/app_name"
-            android:screenOrientation="sensorLandscape" >
-        </activity>
-        <activity
-            android:name="ui.activity.PluginsView"
             android:configChanges="keyboardHidden|orientation"
             android:label="@string/app_name"
             android:screenOrientation="sensorLandscape" >

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="4.8"
+            android:gravity="left|center"
+            android:text="Path to configs files"
+            android:textAlignment="gravity" />
+
+        <EditText
+            android:id="@+id/configsPath"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="5"
+            android:gravity="left|center"
+            android:inputType="text"
+            android:textAlignment="gravity" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="4.8"
+            android:gravity="left|center"
+            android:text="Path to game files"
+            android:textAlignment="gravity" />
+
+        <EditText
+            android:id="@+id/editText1"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:layout_alignLeft="@+id/textView2"
+            android:layout_weight="5"
+            android:gravity="left|center"
+            android:inputType="text"
+            android:textAlignment="gravity" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="4.8"
+            android:gravity="left|center"
+            android:text="Command Line"
+            android:textAlignment="gravity"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/commandLine"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="5"
+            android:gravity="left|center"
+            android:inputType="text"
+            android:textAlignment="gravity" />
+
+        <Button
+            android:id="@+id/buttoncopy"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="4.7"
+            android:text="Copy config files to sdcard" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linlaHeaderProgress"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center"
+        android:background="@null"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <ProgressBar
+            android:id="@+id/pbHeaderProgress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+        </ProgressBar>
+    </LinearLayout>
+
+</FrameLayout>

@@ -5,88 +5,47 @@
     android:orientation="vertical" >
 
     <TextView
-        android:id="@+id/textView2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="2"
-        android:text="Path to configs files"
-        android:textSize="15sp" />
-
-    <EditText
-        android:id="@+id/configsPath"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="5"
-        android:inputType="textMultiLine"
-        android:textSize="19sp" />
-
-    <TextView
         android:id="@+id/textView1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="3"
-        android:text="Path to game files"
-        android:textSize="15sp" />
-
-    <EditText
-        android:id="@+id/editText1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView2"
-        android:layout_weight="5"
-        android:inputType="textMultiLine"
-        android:textSize="19sp" />
-
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="2"
-        android:text="Command Line"
-        android:textSize="15sp" />
-
-    <EditText
-        android:id="@+id/commandLine"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="5"
-        android:inputType="textMultiLine"
-        android:textSize="19sp" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="2"
-        android:text="Encoding"
-        android:textSize="15sp" />
-
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="7"
+        android:gravity="bottom"
+        android:textAlignment="gravity"
+        android:text="Encoding" />
+    
     <Spinner
         android:id="@+id/spinner1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1" />
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="7" />
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="2"
-        android:text="Mipmapping  \n If the game is loaded with a black screen, set mipmapping none"
-        android:textSize="15sp" />
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="6.4"
+        android:gravity="bottom"
+        android:textAlignment="gravity"
+        android:text="Mipmapping  \n If the game is loaded with a black screen, set mipmapping none" />
 
     <Spinner
         android:id="@+id/mipmappingspinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1" />
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="7" />
 
     <CheckBox
         android:id="@+id/checkBox1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="3"
-        android:text="Show Subtitles"
-        android:textSize="19sp" />
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="7"
+        android:text="Show Subtitles" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="6"
+        android:orientation="vertical" >
+    </LinearLayout>
 
 </LinearLayout>

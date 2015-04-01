@@ -1,4 +1,4 @@
-package ui.activity;
+package fragments;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -8,54 +8,66 @@ import java.util.List;
 
 import org.json.JSONException;
 
+import screen.ScreenScaler;
 import ui.files.ParseJson;
+import ui.files.PreferencesHelper;
 import ui.files.ParseJson.FilesData;
 import ui.files.PluginReader;
 
 import com.libopenmw.openmw.R;
 import com.mobeta.android.dslv.DragSortListView;
 
-import android.app.Activity;
+import constants.Constants;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class PluginsView extends Activity {
+public class FragmentPlugins extends Fragment {
 
-	public List<FilesData> Plugins;
+	private List<FilesData> Plugins;
 	private Adapter adapter;
 	private int deletePos = -1;
 	private TextView pluginInfo;
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.listview);
 
-		pluginInfo = (TextView) findViewById(R.id.pluginsInfo);
+		View rootView = inflater.inflate(R.layout.listview, container, false);
+
+		PreferencesHelper.getPrefValues(this.getActivity());
+
+		pluginInfo = (TextView) rootView.findViewById(R.id.pluginsInfo);
+		Button buttonSavePlutins = (Button) rootView
+				.findViewById(R.id.buttonsave);
+		ScreenScaler.changeTextSize(buttonSavePlutins, 2.2f);
 		try {
 
 			Plugins = ParseJson.loadFile();
 			if (Plugins == null)
 				Plugins = new ArrayList<ParseJson.FilesData>();
 
-			File yourDir = new File(MainActivity.dataPath);
+			File yourDir = new File(Constants.dataPath);
 
 			checkFilesDeleted(yourDir);
 
 			addNewFiles(yourDir);
 
-			DragSortListView listView = (DragSortListView) findViewById(R.id.listView1);
+			DragSortListView listView = (DragSortListView) rootView
+					.findViewById(R.id.listView1);
 
 			adapter = new Adapter();
 			listView.setAdapter(adapter);
@@ -63,12 +75,24 @@ public class PluginsView extends Activity {
 			listView.setDropListener(onDrop);
 			listView.setRemoveListener(onRemove);
 
+			buttonSavePlutins.setOnClickListener(new View.OnClickListener() {
+				public void onClick(View v) {
+					try {
+						savePlugins();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+
+			});
+
 		} catch (Exception e) {
-			Toast.makeText(getApplicationContext(), "data files not found",
-					Toast.LENGTH_LONG).show();
-			finish();
+			Toast.makeText(
+					FragmentPlugins.this.getActivity().getApplicationContext(),
+					"data files not found", Toast.LENGTH_LONG).show();
 		}
 
+		return rootView;
 	}
 
 	private DragSortListView.RemoveListener onRemove = new DragSortListView.RemoveListener() {
@@ -81,7 +105,8 @@ public class PluginsView extends Activity {
 	};
 
 	private void showDialod() {
-		AlertDialog.Builder alert = new AlertDialog.Builder(this);
+		AlertDialog.Builder alert = new AlertDialog.Builder(
+				FragmentPlugins.this.getActivity());
 		alert.setTitle("Do you want to delete " + Plugins.get(deletePos).name
 				+ " ?");
 
@@ -103,7 +128,7 @@ public class PluginsView extends Activity {
 	}
 
 	private void deletePlugin() {
-		File inputfile = new File(MainActivity.dataPath + "/"
+		File inputfile = new File(Constants.dataPath + "/"
 				+ Plugins.get(deletePos).name);
 		if (inputfile.exists())
 			inputfile.delete();
@@ -113,11 +138,11 @@ public class PluginsView extends Activity {
 
 	}
 
-	public void savePlugins(View v) throws IOException {
+	private void savePlugins() throws IOException {
 
 		try {
 
-			FileWriter writer = new FileWriter(MainActivity.configsPath
+			FileWriter writer = new FileWriter(Constants.configsPath
 					+ "/openmw/openmw.cfg");
 
 			int i = 0;
@@ -126,7 +151,7 @@ public class PluginsView extends Activity {
 				if (Plugins.get(i).enabled == 1) {
 					writer.write("content= " + Plugins.get(i).name + "\n");
 
-					if (checkBsaExists(MainActivity.dataPath + "/"
+					if (checkBsaExists(Constants.dataPath + "/"
 							+ Plugins.get(i).nameBsa))
 						writer.write("fallback-archive= "
 								+ Plugins.get(i).nameBsa + "\n");
@@ -137,12 +162,13 @@ public class PluginsView extends Activity {
 
 			}
 			writer.close();
-			Toast toast = Toast.makeText(getApplicationContext(),
-					"Saving done", Toast.LENGTH_LONG);
+			Toast toast = Toast.makeText(FragmentPlugins.this.getActivity()
+					.getApplicationContext(), "Saving done", Toast.LENGTH_LONG);
 			toast.show();
 
 		} catch (Exception e) {
-			Toast toast = Toast.makeText(getApplicationContext(),
+			Toast toast = Toast.makeText(FragmentPlugins.this.getActivity()
+					.getApplicationContext(),
 					"config file openmw.cfg not found", Toast.LENGTH_LONG);
 			toast.show();
 			e.printStackTrace();
@@ -260,8 +286,8 @@ public class PluginsView extends Activity {
 			Plugins.add(to, item);
 
 			try {
-				pluginInfo.setText(PluginReader.read(MainActivity.dataPath
-						+ "/" + item.name));
+				pluginInfo.setText(PluginReader.read(Constants.dataPath + "/"
+						+ item.name));
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -329,20 +355,26 @@ public class PluginsView extends Activity {
 		public View getView(final int position, View convertView,
 				ViewGroup parent) {
 
-			LayoutInflater inflater = (LayoutInflater) PluginsView.this
-					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			LayoutInflater inflater = (LayoutInflater) FragmentPlugins.this
+					.getActivity().getSystemService(
+							Context.LAYOUT_INFLATER_SERVICE);
 
 			rowView = inflater.inflate(R.layout.rowlistview, parent, false);
 
 			TextView data = (TextView) rowView.findViewById(R.id.textView1);
-		
+
+			ScreenScaler.changeTextSize(data, 1f);
+			ScreenScaler
+					.changeTextSize(rowView.findViewById(R.id.delete), 0.6f);
+
 			final CheckBox Box = (CheckBox) rowView
 					.findViewById(R.id.checkBoxenable);
+
 			final TextView loadingPlace = (TextView) rowView
 					.findViewById(R.id.loadingPlace);
-		
-		
-			if (Plugins.get(position).enabled == 1){
+			ScreenScaler.changeTextSize(loadingPlace, 1f);
+
+			if (Plugins.get(position).enabled == 1) {
 				Box.setChecked(true);
 				loadingPlace.setText("" + loadingPos(position));
 
@@ -354,7 +386,6 @@ public class PluginsView extends Activity {
 						Plugins.get(position).enabled = 1;
 						loadingPlace.setText("" + loadingPos(position));
 						adapter.notifyDataSetChanged();
-
 
 						savePluginsData();
 					} else {
