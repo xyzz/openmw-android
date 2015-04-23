@@ -149,15 +149,15 @@ public class FragmentGeneral extends Fragment {
 	private void addTexWatchers() {
 		configsText.addTextChangedListener(new TextListener(this.getActivity(),
 				"/resources", "/config/openmw/openmw.cfg", "resources",
-				Constants.CONFIGS_PATH, Constants.configsPath, Settings));
+				Constants.CONFIGS_PATH, Constants.configsPath, Settings,"configs"));
 
 		dataText.addTextChangedListener(new TextListener(this.getActivity(),
 				"", Constants.configsPath + "/config/openmw/openmw.cfg",
-				"data", Constants.DATA_PATH, Constants.dataPath, Settings));
+				"data", Constants.DATA_PATH, Constants.dataPath, Settings,"data"));
 
 		commandLineText.addTextChangedListener(new TextListener(this
 				.getActivity(), "", "", "", Constants.COMMAND_LINE,
-				Constants.commandLineData, Settings));
+				Constants.commandLineData, Settings,"commandLine"));
 
 	}
 

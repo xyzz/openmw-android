@@ -17,9 +17,11 @@ public class TextListener implements TextWatcher {
 	private String sharedprefValue;
 	private String gameValue;
 	private Activity a;
+	private String mode = "";
 
 	public TextListener(Activity a, String data, String path, String value,
-			String sharedprefValue, String gameValue, SharedPreferences Settings) {
+			String sharedprefValue, String gameValue,
+			SharedPreferences Settings, String mode) {
 		this.data = data;
 		this.path = path;
 		this.value = value;
@@ -27,6 +29,7 @@ public class TextListener implements TextWatcher {
 		this.gameValue = gameValue;
 		this.Settings = Settings;
 		this.a = a;
+		this.mode = mode;
 	}
 
 	@Override
@@ -49,17 +52,39 @@ public class TextListener implements TextWatcher {
 	}
 
 	private void saveData(final String s) {
-		new Thread(new Runnable() {
-			public void run() {
-				try {
-					Writer.write(s + data, s.toString() + path, value);
+		switch (mode) {
+		case "configs":
+			new Thread(new Runnable() {
+				public void run() {
+					try {
+						Writer.write(s + data, s + path, value);
 
-				} catch (Exception e) {
+					} catch (Exception e) {
+
+					}
 
 				}
+			}).start();
+			break;
 
-			}
-		}).start();
+		case "data":
+			new Thread(new Runnable() {
+				public void run() {
+					try {
+						Writer.write(s + data, path, value);
+
+					} catch (Exception e) {
+
+					}
+
+				}
+			}).start();
+			break;
+
+		default:
+			break;
+		}
+
 	}
 
 	private void saveToSharedPreferences(String value, String buffer) {
