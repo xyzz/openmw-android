@@ -1,5 +1,6 @@
 package fragments;
 
+import constants.Constants;
 import ui.files.PreferencesHelper;
 import ui.files.Writer;
 import android.app.Activity;
@@ -12,18 +13,18 @@ public class TextListener implements TextWatcher {
 
 	private SharedPreferences Settings;
 	private String data;
-	private String path;
+
 	private String value;
 	private String sharedprefValue;
 	private String gameValue;
 	private Activity a;
 	private String mode = "";
 
-	public TextListener(Activity a, String data, String path, String value,
+	public TextListener(Activity a, String data, String value,
 			String sharedprefValue, String gameValue,
 			SharedPreferences Settings, String mode) {
 		this.data = data;
-		this.path = path;
+
 		this.value = value;
 		this.sharedprefValue = sharedprefValue;
 		this.gameValue = gameValue;
@@ -57,7 +58,7 @@ public class TextListener implements TextWatcher {
 			new Thread(new Runnable() {
 				public void run() {
 					try {
-						Writer.write(s + data, s + path, value);
+						Writer.write(s + data, s + "/config/openmw/openmw.cfg", value);
 
 					} catch (Exception e) {
 
@@ -71,7 +72,7 @@ public class TextListener implements TextWatcher {
 			new Thread(new Runnable() {
 				public void run() {
 					try {
-						Writer.write(s + data, path, value);
+						Writer.write(s + data,  Constants.configsPath + "/config/openmw/openmw.cfg", value);
 
 					} catch (Exception e) {
 
