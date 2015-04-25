@@ -35,6 +35,7 @@ public class TextListener implements TextWatcher {
 
 	@Override
 	public void afterTextChanged(final Editable s) {
+		saveData(s.toString());
 
 	}
 
@@ -49,42 +50,34 @@ public class TextListener implements TextWatcher {
 		saveToSharedPreferences(sharedprefValue, s.toString());
 		gameValue = s.toString();
 		PreferencesHelper.getPrefValues(a);
-		saveData(s.toString());
 	}
 
 	private void saveData(final String s) {
-		switch (mode) {
-		case "configs":
-			new Thread(new Runnable() {
-				public void run() {
-					try {
-						Writer.write(s + data, s + "/config/openmw/openmw.cfg", value);
+		new Thread(new Runnable() {
+			public void run() {
+				try {
+					switch (mode) {
+					case "configs":
+						Writer.write(s + data, s + "/config/openmw/openmw.cfg",
+								value);
 
-					} catch (Exception e) {
+						break;
+					case "data":
+						Writer.write(s + data, Constants.configsPath
+								+ "/config/openmw/openmw.cfg", value);
 
+						break;
+
+					default:
+						break;
 					}
 
-				}
-			}).start();
-			break;
-
-		case "data":
-			new Thread(new Runnable() {
-				public void run() {
-					try {
-						Writer.write(s + data,  Constants.configsPath + "/config/openmw/openmw.cfg", value);
-
-					} catch (Exception e) {
-
-					}
+				} catch (Exception e) {
 
 				}
-			}).start();
-			break;
 
-		default:
-			break;
-		}
+			}
+		}).start();
 
 	}
 
