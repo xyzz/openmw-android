@@ -36,7 +36,7 @@ public class CopyFilesFromAssets {
 				}
 			}
 		} catch (IOException ex) {
-			Log.e("tag", "I/O Exception", ex);
+
 		}
 
 	}
@@ -69,7 +69,7 @@ public class CopyFilesFromAssets {
 			out.close();
 			out = null;
 		} catch (Exception e) {
-			Log.e("tag", e.getMessage());
+
 		}
 
 	}

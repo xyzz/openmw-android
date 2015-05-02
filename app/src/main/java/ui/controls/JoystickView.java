@@ -366,7 +366,7 @@ public class JoystickView extends View {
            //     SDLActivity.onNativeKeyDown(87);
            //     SDLActivity.onNativeKeyDown(getPointerId());
                       
-                Log.d(TAG, "ACTION_DOWN: " + getPointerId());
+
               return true;
             }
           }

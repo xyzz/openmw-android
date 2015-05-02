@@ -164,9 +164,6 @@ public class Joystick extends View {
 			else
 				SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_D);
 
-		
-			// Coordinates
-			Log.d(TAG, "X:" + touchX + "|Y:" + touchY);
 
 			// Pressure
 			if (listener != null) {
@@ -177,7 +174,7 @@ public class Joystick extends View {
 			invalidate();
 		} else if (actionType == MotionEvent.ACTION_UP) {
 			returnHandleToCenter();
-			Log.d(TAG, "X:" + touchX + "|Y:" + touchY);
+
 			SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_W);
 			SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_S);
 			SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_A);

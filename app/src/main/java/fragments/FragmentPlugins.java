@@ -279,8 +279,7 @@ public class FragmentPlugins extends Fragment {
 		public void drop(int from, int to) {
 			FilesData item = Plugins.get(from);
 
-			Log.d("DEBUG", "from" + from + "to" + to + "   "
-					+ Plugins.get(0).name);
+
 			Plugins.remove(from);
 
 			Plugins.add(to, item);
