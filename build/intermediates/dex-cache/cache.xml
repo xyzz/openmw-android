@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/home/sylar/java/eclipse-project/app/libs/libsdl2.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="e91fefd273c63739705910fe5e7f277cdcb57b0a">
+        <dex dex="/home/sylar/java/eclipse-project/app/build/intermediates/pre-dexed/debug/libsdl2-59dd400644c7dcc228a88c937f98d7c97cb14d7a.jar" />
+    </item>
+    <item
+        jar="/home/sylar/java/eclipse-project/app/libs/libdradroplistview.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="155a82bb4631991a2db5dcb75da5b531dcef2b61">
+        <dex dex="/home/sylar/java/eclipse-project/app/build/intermediates/pre-dexed/debug/libdradroplistview-5ee82950218db4eef1ec11e1252b67d809c9a880.jar" />
+    </item>
+    <item
+        jar="/home/sylar/java/eclipse-project/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.1.1/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="c95ba8152923e4872e86a82cfcba9a51c0214328">
+        <dex dex="/home/sylar/java/eclipse-project/app/build/intermediates/pre-dexed/debug/classes-4993ed16edaf2f3964e47a160a63dfeb4afd6cd7.jar" />
+    </item>
+    <item
+        jar="/home/sylar/StudioProjects/eclipse-project/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.1.1/jars/libs/internal_impl-22.1.1.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="9e070ad32b2700b0343e8e0cccc437733d91ba3a">
+        <dex dex="/home/sylar/StudioProjects/eclipse-project/app/build/intermediates/pre-dexed/debug/internal_impl-22.1.1-2e56328bc88f62166df1b227d838fc33b5062f2c.jar" />
+    </item>
+    <item
+        jar="/home/sylar/StudioProjects/eclipse-project/app/libs/libdradroplistview.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="155a82bb4631991a2db5dcb75da5b531dcef2b61">
+        <dex dex="/home/sylar/StudioProjects/eclipse-project/app/build/intermediates/pre-dexed/debug/libdradroplistview-b805a9f9e1d59caaa7d47363a5cebe7b64591a19.jar" />
+    </item>
+    <item
+        jar="/home/sylar/StudioProjects/eclipse-project/app/libs/libsdl2.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="e91fefd273c63739705910fe5e7f277cdcb57b0a">
+        <dex dex="/home/sylar/StudioProjects/eclipse-project/app/build/intermediates/pre-dexed/debug/libsdl2-2f7daa68063c7595d41b4bfa250e112998c9bb91.jar" />
+    </item>
+    <item
+        jar="/home/sylar/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/22.1.1/support-annotations-22.1.1.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="01d051a6bfb1218b1db2d3a5af0480ac2c25c42a">
+        <dex dex="/home/sylar/StudioProjects/eclipse-project/app/build/intermediates/pre-dexed/debug/support-annotations-22.1.1-18bf017965324b7d89413e1eb0309144c8af51cb.jar" />
+    </item>
+    <item
+        jar="/home/sylar/StudioProjects/eclipse-project/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.1.1/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="c95ba8152923e4872e86a82cfcba9a51c0214328">
+        <dex dex="/home/sylar/StudioProjects/eclipse-project/app/build/intermediates/pre-dexed/debug/classes-253f9b899bd438d7de39c803f497d3ff991b9faa.jar" />
+    </item>
+    <item
+        jar="/home/sylar/java/eclipse-project/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.1.1/jars/libs/internal_impl-22.1.1.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="9e070ad32b2700b0343e8e0cccc437733d91ba3a">
+        <dex dex="/home/sylar/java/eclipse-project/app/build/intermediates/pre-dexed/debug/internal_impl-22.1.1-6de516806e15adf6b1f7817bf4fe032b45a28793.jar" />
+    </item>
+
+</items>
