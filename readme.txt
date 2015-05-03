@@ -33,12 +33,6 @@ http://www.freetype.org/
 https://github.com/MyGUI/mygui
 #* zzip
 #* zlib
-If you do not want build all libraries ,here libraries for armv7-a with neon
-It is build using crystax ndk r10 and gcc 4.9 , with this flags
--marm -march=armv7-a  -mfpu=neon -mfloat-abi=hard  -D_NDK_MATH_NO_SOFTFP=1 -Ofast
-https://drive.google.com/file/d/0B5mOME9qjLFucmgxWlJ6cGhWb2s/view?usp=sharing
-
-
 
 === Compilation of OpenMW dependencies ===
 
