@@ -38,10 +38,6 @@ It is build using crystax ndk r10 and gcc 4.9 , with this flags
 -marm -march=armv7-a  -mfpu=neon -mfloat-abi=hard  -D_NDK_MATH_NO_SOFTFP=1 -Ofast
 https://drive.google.com/file/d/0B5mOME9qjLFucmgxWlJ6cGhWb2s/view?usp=sharing
 
-example about how to build cmake projects for android with IDE eclipse
-http://dev.opencascade.org/doc/overview/html/occt_dev_guides__building_android.html
-also here
-http://www.cmake.org/Wiki/Eclipse_CDT4_Generator
 
 
 === Compilation of OpenMW dependencies ===
@@ -60,9 +56,7 @@ http://freeimage.sourceforge.net/
 
 http://recursify.com/blog/2013/05/25/building-freeimage-for-android
 
-But as it turned out it is difficult to get to work freeimage.
-So I put the source code with the modified code here.
-https://github.com/OpenMW/eclipse-project/tree/master/jni/Freeimage/jni
+
 
 Since my phone supports architecture armeabi-v7a I used this architecture for building. For example.
 ndk-build APP_PLATFORM=android-14 APP_ABI=armeabi-v7a
@@ -218,27 +212,7 @@ http://necessitas.kde.org/ I used this tutorial for building: https://community.
 Then you must build ffmpeg . Important! You must use ffmpeg 1.26: 
 tutorial how to build ffmpeg for android
 http://www.roman10.net/how-to-build-ffmpeg-with-ndk-r9/
-my script for build
-./configure \
-    --prefix=$(pwd)/android/$CPU  \
-    --enable-shared \
-    --disable-static \
-    --disable-doc \
-    --disable-ffmpeg \
-    --disable-ffplay \
-    --disable-ffprobe \
-    --disable-ffserver \
-    --disable-doc \
-    --disable-symver \
-    --cross-prefix=/home/sylar/android-ndk-r8-crystax-1/toolchains/arm-linux-androideabi-4.7/prebuilt/linux-x86/bin/arm-linux-androideabi- \
-    --target-os=linux \
-    --arch=arm \
-    --enable-asm \
-    --enable-cross-compile \
-    --sysroot=/home/sylar/android-ndk-r8-crystax-1/platforms/android-14/arch-arm \
-    --extra-cflags="-Os -fpic $ADDI_CFLAGS" \
-    --extra-ldflags="$ADDI_LDFLAGS"
-    
+
 ==== Building SDL2 ====
 Then you must build SDL2: https://www.libsdl.org/hg.php
 I used SDL2 mercurial latest source.
@@ -257,8 +231,6 @@ http://repo.or.cz/w/openal-soft/android.git
 Then I started to build OpenMW. 
 I copied all  libraries  in one folder . For example AndroidDependencies
 Also you must copy tis library to the same folder
-https://github.com/OpenMW/eclipse-project/tree/master/libs
-it is used by ogre to determine the parameters  processor
 and build openmw like this
 
 cmake /home/sylar/openmw -DCMAKE_TOOLCHAIN_FILE=/home/sylar/android-cmake-master/android.toolchain.cmake 
@@ -270,8 +242,8 @@ I solved this problem as follows . I found this file
 and change -lpthread on -pthread
 After builing openmw library, you must copy all the libraries to libs folder in the  java project folder
 for example :
- /home/sylar/SDL/android-project/libs/armeabi-v7a
-Then you must import this java project in eclipse , which included with the android sdk.
+ /eclipse-project/app/src/main/jniLibs/armeabi-v7a
+Then you must import this java project in android-studio , which included with the android sdk.
 Also you need to import the configuration files openmw.
 If you want mipmapping worked on the textures, then you must rebuild  mipmaps on all textures .
 The easiest way to use this program
