@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="120"
         android:gravity="left|center_horizontal"
-        android:textAlignment="gravity"
+
         android:textSize="34sp" />
 
     <TextView
@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="9"
         android:gravity="center_horizontal"
-        android:textAlignment="gravity"
+
         android:textSize="34sp" />
 
     <TextView
@@ -35,7 +35,7 @@
         android:layout_weight="9"
         android:gravity="center_horizontal"
         android:text="X"
-        android:textAlignment="gravity"
+
         android:textSize="50sp"
         android:textStyle="bold" />
 

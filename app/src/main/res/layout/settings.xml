@@ -10,7 +10,7 @@
         android:layout_height="fill_parent"
         android:layout_weight="7"
         android:gravity="bottom"
-        android:textAlignment="gravity"
+
         android:text="Encoding" />
     
     <Spinner
@@ -25,7 +25,7 @@
         android:layout_height="fill_parent"
         android:layout_weight="6.4"
         android:gravity="bottom"
-        android:textAlignment="gravity"
+
         android:text="Mipmapping  \n If the game is loaded with a black screen, set mipmapping none" />
 
     <Spinner
