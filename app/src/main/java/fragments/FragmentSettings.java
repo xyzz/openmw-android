@@ -234,7 +234,7 @@ public class FragmentSettings extends Fragment {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 setPreferences(prefKey, finalProgress[0]);
-                saveSeekBarProgress(prefKey,String.valueOf(finalProgress[0]));
+                saveSeekBarProgress(String.valueOf(finalProgress[0]),prefKey);
 
             }
         });
@@ -245,8 +245,8 @@ public class FragmentSettings extends Fragment {
             public void run() {
 
                 try {
-                    Writer.write(key, Constants.configsPath
-                            + "/config/openmw/settings.cfg", progress);
+                    Writer.write(progress, Constants.configsPath
+                            + "/config/openmw/settings.cfg", key);
 
                 } catch (Exception e)
 

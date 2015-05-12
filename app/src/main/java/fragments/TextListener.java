@@ -53,8 +53,7 @@ public class TextListener implements TextWatcher {
 	}
 
 	private void saveData(final String s) {
-		new Thread(new Runnable() {
-			public void run() {
+
 				try {
 					switch (mode) {
 					case "configs":
@@ -76,8 +75,7 @@ public class TextListener implements TextWatcher {
 
 				}
 
-			}
-		}).start();
+
 
 	}
 

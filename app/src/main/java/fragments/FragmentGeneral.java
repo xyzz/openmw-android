@@ -136,10 +136,10 @@ public class FragmentGeneral extends Fragment {
 					else if (pos == 0)
 						Writer.write("false", Constants.configsPath
 								+ "/config/openmw/settings.cfg", "subtitles");
-					Writer.write(Constants.CAMERA_MULTIPLISER, Constants.configsPath
-							+ "/config/openmw/settings.cfg",""+ Settings.getFloat(Constants.CAMERA_MULTIPLISER, 0.2f));
-					Writer.write(Constants.TOUCH_SENSITIVITY, Constants.configsPath
-							+ "/config/openmw/settings.cfg",""+ Settings.getFloat(Constants.TOUCH_SENSITIVITY, 0.01f));
+					Writer.write(""+ Settings.getFloat(Constants.CAMERA_MULTIPLISER, 0.2f), Constants.configsPath
+							+ "/config/openmw/settings.cfg",Constants.CAMERA_MULTIPLISER);
+					Writer.write(""+ Settings.getFloat(Constants.TOUCH_SENSITIVITY, 0.01f), Constants.configsPath
+							+ "/config/openmw/settings.cfg",Constants.TOUCH_SENSITIVITY);
 
 				} catch (Exception e) {
 				}
