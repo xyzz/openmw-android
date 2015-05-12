@@ -69,7 +69,6 @@ public class ConfigureControls extends Activity {
 	public static boolean buttonSizeFlag = false;
 	private SharedPreferences Settings;
 
-	@SuppressLint("NewApi")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 

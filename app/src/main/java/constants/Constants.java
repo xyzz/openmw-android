@@ -140,6 +140,8 @@ public class Constants {
 	public static final String SUBTITLES = "subtitiles";
 	public static final String MIPMAPPING = "mipmapping";
 	public static final String COMMAND_LINE = "commandline";
+	public static final String TOUCH_SENSITIVITY= "camera sensitivity";
+	public static final String CAMERA_MULTIPLISER = "camera y multiplier";
 	public static String configsPath = "";
 	public static String dataPath = "";
 	public static String commandLineData = "";

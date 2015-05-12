@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/textView1"
@@ -12,7 +12,7 @@
         android:gravity="bottom"
 
         android:text="Encoding" />
-    
+
     <Spinner
         android:id="@+id/spinner1"
         android:layout_width="fill_parent"
@@ -25,7 +25,6 @@
         android:layout_height="fill_parent"
         android:layout_weight="6.4"
         android:gravity="bottom"
-
         android:text="Mipmapping  \n If the game is loaded with a black screen, set mipmapping none" />
 
     <Spinner
@@ -44,8 +43,63 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_weight="6"
-        android:orientation="vertical" >
+        android:layout_weight="7.2"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/touchLabel"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="6"
+            android:gravity="center|left"
+            android:text="Touch Sensitivity" />
+
+        <TextView
+            android:id="@+id/touchValue"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="7"
+            android:gravity="center|left"
+            android:text="" />
+
+        <SeekBar
+            android:id="@+id/touchBar"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="3"
+            android:indeterminate="false" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="7.2"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/cameraLabel"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="6"
+            android:gravity="center|left"
+            android:text="Camera y multiplier" />
+
+        <TextView
+            android:id="@+id/cameraValue"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="7"
+            android:gravity="center|left"
+            android:text="" />
+
+        <SeekBar
+            android:id="@+id/cameraBar"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="3"
+            android:indeterminate="false" />
+
     </LinearLayout>
 
 </LinearLayout>
