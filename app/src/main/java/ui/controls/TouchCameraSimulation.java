@@ -81,7 +81,18 @@ public class TouchCameraSimulation extends View {
 	}
 
 	@Override
-	public boolean onTouchEvent(MotionEvent event) {
+	public boolean onTouchEvent(final MotionEvent event) {
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				simulateCameraMovement(event);
+			}
+		}).start();
+		return true;
+	}
+
+
+	private void simulateCameraMovement(MotionEvent event){
 		int actionType = event.getAction();
 		if (actionType == MotionEvent.ACTION_DOWN) {
 			xmas[0] = event.getX();
@@ -245,8 +256,6 @@ public class TouchCameraSimulation extends View {
 
 			xmas[0] = xmas[1];
 			ymas[0] = ymas[1];
-
-			invalidate();
 		} else if (actionType == MotionEvent.ACTION_UP) {
 			xmas[0] = xmas[1] = ymas[0] = ymas[1] = 0;
 
@@ -259,6 +268,7 @@ public class TouchCameraSimulation extends View {
 					MotionEvent.ACTION_UP, x, y, p);
 
 		}
-		return true;
+
 	}
+
 }

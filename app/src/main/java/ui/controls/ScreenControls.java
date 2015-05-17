@@ -215,7 +215,7 @@ public class ScreenControls {
 							touch.setVisibility(TouchCameraSimulation.INVISIBLE);
 							buttonTouch.setText("off");
 							buttonChangePerson.setVisibility(ImageButton.GONE);
-							joystick.setVisibility(JoystickView.GONE);
+							joystick.setVisibility(Joystick.GONE);
 							buttonConsole.setVisibility(ImageButton.GONE);
 							buttonTouch.setVisibility(Button.GONE);
 							buttonConsole.setVisibility(ImageButton.GONE);
@@ -264,7 +264,7 @@ public class ScreenControls {
 									.setVisibility(Button.VISIBLE);
 							buttonChangePerson
 									.setVisibility(ImageButton.VISIBLE);
-							joystick.setVisibility(JoystickView.VISIBLE);
+							joystick.setVisibility(Joystick.VISIBLE);
 							buttonConsole.setVisibility(ImageButton.VISIBLE);
 							buttonTouch.setVisibility(Button.VISIBLE);
 							buttonConsole.setVisibility(ImageButton.VISIBLE);
