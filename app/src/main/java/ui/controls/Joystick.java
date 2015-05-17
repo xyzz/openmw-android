@@ -144,70 +144,74 @@ public class Joystick extends View {
 
     private void playerMovement(MotionEvent event) {
         int actionType = event.getAction();
-        if (actionType == MotionEvent.ACTION_MOVE) {
+        switch (actionType) {
+            case  MotionEvent.ACTION_MOVE:{
+                int px = getMeasuredWidth() / 2;
+                int py = getMeasuredHeight() / 2;
+                final int radius = Math.min(px, py) - handleInnerBoundaries;
 
-            int px = getMeasuredWidth() / 2;
-            int py = getMeasuredHeight() / 2;
-            final int radius = Math.min(px, py) - handleInnerBoundaries;
+                touchX = (event.getX() - px);
+                touchX = Math.max(Math.min(touchX, radius), -radius);
 
-            touchX = (event.getX() - px);
-            touchX = Math.max(Math.min(touchX, radius), -radius);
+                touchY = (event.getY() - py);
 
-            touchY = (event.getY() - py);
+                touchY = Math.max(Math.min(touchY, radius), -radius);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (touchY < -radius / 3 && (touchX > 0 || touchX < 0))
+                            SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_W);
+                        else
+                            SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_W);
 
-            touchY = Math.max(Math.min(touchY, radius), -radius);
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    if (touchY < -radius / 3 && (touchX > 0 || touchX < 0))
-                        SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_W);
-                    else
+                        if (touchY > radius / 3 && (touchX > 0 || touchX < 0))
+                            SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_S);
+                        else
+                            SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_S);
+
+                        if ((touchX < -radius / 3) && (touchY > 0 || touchY < 0))
+                            SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_A);
+                        else
+                            SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_A);
+
+                        if ((touchX > radius / 3) && (touchY > 0 || touchY < 0))
+                            SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_D);
+                        else
+                            SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_D);
+
+                    }
+                }).start();
+
+                // Pressure
+                if (listener != null) {
+                    listener.OnMoved((int) (touchX / radius * sensitivity),
+                            (int) (touchY / radius * sensitivity));
+                }
+
+
+                invalidate();
+
+                break;
+            }
+            case MotionEvent.ACTION_UP:{
+                returnHandleToCenter();
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
                         SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_W);
-
-                    if (touchY > radius / 3 && (touchX > 0 || touchX < 0))
-                        SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_S);
-                    else
                         SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_S);
-
-                    if ((touchX < -radius / 3) && (touchY > 0 || touchY < 0))
-                        SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_A);
-                    else
                         SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_A);
-
-                    if ((touchX > radius / 3) && (touchY > 0 || touchY < 0))
-                        SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_D);
-                    else
                         SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_D);
 
-                }
-            }).start();
+                    }
+                }).start();
 
-            // Pressure
-            if (listener != null) {
-                listener.OnMoved((int) (touchX / radius * sensitivity),
-                        (int) (touchY / radius * sensitivity));
+                break;
             }
-
-
-            invalidate();
-
-
-        } else if (actionType == MotionEvent.ACTION_UP) {
-            returnHandleToCenter();
-
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_W);
-                    SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_S);
-                    SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_A);
-                    SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_D);
-
-                }
-            }).start();
-
+            default:
+            break;
         }
-
     }
 
     private void returnHandleToCenter() {

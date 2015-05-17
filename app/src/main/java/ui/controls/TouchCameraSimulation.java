@@ -90,9 +90,8 @@ public class TouchCameraSimulation extends View {
     private void simulateCameraMovement(MotionEvent event) {
         int actionType = event.getAction();
         final int touchDevId = event.getDeviceId();
-        event.getPointerCount();
-        event.getActionMasked();
-        int i = -1;
+        int i = event.getActionIndex();
+        int pointerID=event.getPointerId(i);
 
         switch (actionType) {
             case MotionEvent.ACTION_DOWN: {
@@ -107,56 +106,48 @@ public class TouchCameraSimulation extends View {
                 ymas[1] = event.getRawY();
                 if (xmas[0] == xmas[1] && ymas[0] < ymas[1]
                         && ymas[1] - ymas[0] > constTouch) {
-                    i = event.getActionIndex();
-                    moveCamera(touchDevId, event.getPointerId(i), 0.5f, 0.9f, event.getPressure(i), MotionEvent.ACTION_MOVE);
+                    moveCamera(touchDevId,pointerID, 0.5f, 0.9f, event.getPressure(i), MotionEvent.ACTION_MOVE);
                 } else if (xmas[0] == xmas[1] && ymas[0] > ymas[1]
                         && ymas[0] - ymas[1] > constTouch)
 
                 {
-                    i = event.getActionIndex();
-                    moveCamera(touchDevId, event.getPointerId(i), 0.5f, 0.3f, event.getPressure(i), MotionEvent.ACTION_MOVE);
+                    moveCamera(touchDevId, pointerID, 0.5f, 0.3f, event.getPressure(i), MotionEvent.ACTION_MOVE);
 
                 } else if (xmas[0] < xmas[1] && ymas[0] == ymas[1]
                         && xmas[1] - xmas[0] > constTouch)
 
                 {
-                    i = event.getActionIndex();
-                    moveCamera(touchDevId, event.getPointerId(i), 0.9f, 0.5f, event.getPressure(i), MotionEvent.ACTION_MOVE);
+                    moveCamera(touchDevId, pointerID, 0.9f, 0.5f, event.getPressure(i), MotionEvent.ACTION_MOVE);
                 } else if (xmas[0] > xmas[1] && ymas[0] == ymas[1]
                         && xmas[0] - xmas[1] > constTouch)
 
                 {
-                    i = event.getActionIndex();
-                    moveCamera(touchDevId, event.getPointerId(i), 0.3f, 0.5f, event.getPressure(i), MotionEvent.ACTION_MOVE);
+                    moveCamera(touchDevId, pointerID, 0.3f, 0.5f, event.getPressure(i), MotionEvent.ACTION_MOVE);
 
                 } else if (xmas[0] < xmas[1] && ymas[0] < ymas[1]
                         && ymas[1] - ymas[0] > constTouch
                         && xmas[1] - xmas[0] > constTouch)
 
                 {
-                    i = event.getActionIndex();
-                    moveCamera(touchDevId, event.getPointerId(i), 0.9f, 0.9f, event.getPressure(i), MotionEvent.ACTION_MOVE);
+                    moveCamera(touchDevId, pointerID, 0.9f, 0.9f, event.getPressure(i), MotionEvent.ACTION_MOVE);
                 } else if (xmas[0] > xmas[1] && ymas[0] > ymas[1]
                         && ymas[0] - ymas[1] > constTouch
                         && xmas[0] - xmas[1] > constTouch)
 
                 {
-                    i = event.getActionIndex();
-                    moveCamera(touchDevId, event.getPointerId(i), 0.3f, 0.3f, event.getPressure(i), MotionEvent.ACTION_MOVE);
+                    moveCamera(touchDevId, pointerID, 0.3f, 0.3f, event.getPressure(i), MotionEvent.ACTION_MOVE);
                 } else if (xmas[0] < xmas[1] && ymas[0] > ymas[1]
                         && ymas[0] - ymas[1] > constTouch
                         && xmas[1] - xmas[0] > constTouch)
 
                 {
-                    i = event.getActionIndex();
-                    moveCamera(touchDevId, event.getPointerId(i), 0.9f, 0.3f, event.getPressure(i), MotionEvent.ACTION_MOVE);
+                    moveCamera(touchDevId, pointerID, 0.9f, 0.3f, event.getPressure(i), MotionEvent.ACTION_MOVE);
                 } else if (xmas[0] > xmas[1] && ymas[0] < ymas[1]
                         && ymas[1] - ymas[0] > constTouch
                         && xmas[0] - xmas[1] > constTouch)
 
                 {
-                    i = event.getActionIndex();
-                    moveCamera(touchDevId, event.getPointerId(i), 0.3f, 0.9f, event.getPressure(i), MotionEvent.ACTION_MOVE);
+                    moveCamera(touchDevId, pointerID, 0.3f, 0.9f, event.getPressure(i), MotionEvent.ACTION_MOVE);
                 } else
                     moveCamera(touchDevId, 0, 0f, 0f, 0f, MotionEvent.ACTION_UP);
 
