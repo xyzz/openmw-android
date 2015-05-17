@@ -89,15 +89,12 @@ public class TouchCameraSimulation extends View {
 
     private void simulateCameraMovement(MotionEvent event) {
         int actionType = event.getAction();
-        final int touchDevId = event.getDeviceId();
-        int i = event.getActionIndex();
-        int pointerID=event.getPointerId(i);
 
         switch (actionType) {
             case MotionEvent.ACTION_DOWN: {
                 xmas[0] = event.getX();
                 ymas[0] = event.getY();
-                moveCamera(touchDevId, 0, 0, 0, 0, MotionEvent.ACTION_DOWN);
+                moveCamera(event,0f,0f ,MotionEvent.ACTION_DOWN);
 
                 break;
             }
@@ -106,50 +103,50 @@ public class TouchCameraSimulation extends View {
                 ymas[1] = event.getRawY();
                 if (xmas[0] == xmas[1] && ymas[0] < ymas[1]
                         && ymas[1] - ymas[0] > constTouch) {
-                    moveCamera(touchDevId,pointerID, 0.5f, 0.9f, event.getPressure(i), MotionEvent.ACTION_MOVE);
+                    moveCamera(event, 0.5f, 0.9f, MotionEvent.ACTION_MOVE);
                 } else if (xmas[0] == xmas[1] && ymas[0] > ymas[1]
                         && ymas[0] - ymas[1] > constTouch)
 
                 {
-                    moveCamera(touchDevId, pointerID, 0.5f, 0.3f, event.getPressure(i), MotionEvent.ACTION_MOVE);
+                    moveCamera(event, 0.5f, 0.3f,  MotionEvent.ACTION_MOVE);
 
                 } else if (xmas[0] < xmas[1] && ymas[0] == ymas[1]
                         && xmas[1] - xmas[0] > constTouch)
 
                 {
-                    moveCamera(touchDevId, pointerID, 0.9f, 0.5f, event.getPressure(i), MotionEvent.ACTION_MOVE);
+                    moveCamera(event, 0.9f, 0.5f, MotionEvent.ACTION_MOVE);
                 } else if (xmas[0] > xmas[1] && ymas[0] == ymas[1]
                         && xmas[0] - xmas[1] > constTouch)
 
                 {
-                    moveCamera(touchDevId, pointerID, 0.3f, 0.5f, event.getPressure(i), MotionEvent.ACTION_MOVE);
+                    moveCamera(event, 0.3f, 0.5f, MotionEvent.ACTION_MOVE);
 
                 } else if (xmas[0] < xmas[1] && ymas[0] < ymas[1]
                         && ymas[1] - ymas[0] > constTouch
                         && xmas[1] - xmas[0] > constTouch)
 
                 {
-                    moveCamera(touchDevId, pointerID, 0.9f, 0.9f, event.getPressure(i), MotionEvent.ACTION_MOVE);
+                    moveCamera(event, 0.9f, 0.9f, MotionEvent.ACTION_MOVE);
                 } else if (xmas[0] > xmas[1] && ymas[0] > ymas[1]
                         && ymas[0] - ymas[1] > constTouch
                         && xmas[0] - xmas[1] > constTouch)
 
                 {
-                    moveCamera(touchDevId, pointerID, 0.3f, 0.3f, event.getPressure(i), MotionEvent.ACTION_MOVE);
+                    moveCamera(event, 0.3f, 0.3f,  MotionEvent.ACTION_MOVE);
                 } else if (xmas[0] < xmas[1] && ymas[0] > ymas[1]
                         && ymas[0] - ymas[1] > constTouch
                         && xmas[1] - xmas[0] > constTouch)
 
                 {
-                    moveCamera(touchDevId, pointerID, 0.9f, 0.3f, event.getPressure(i), MotionEvent.ACTION_MOVE);
+                    moveCamera(event,  0.9f, 0.3f, MotionEvent.ACTION_MOVE);
                 } else if (xmas[0] > xmas[1] && ymas[0] < ymas[1]
                         && ymas[1] - ymas[0] > constTouch
                         && xmas[0] - xmas[1] > constTouch)
 
                 {
-                    moveCamera(touchDevId, pointerID, 0.3f, 0.9f, event.getPressure(i), MotionEvent.ACTION_MOVE);
+                    moveCamera(event, 0.3f, 0.9f, MotionEvent.ACTION_MOVE);
                 } else
-                    moveCamera(touchDevId, 0, 0f, 0f, 0f, MotionEvent.ACTION_UP);
+                    moveCamera(event,  0f, 0f, MotionEvent.ACTION_UP);
 
                 xmas[0] = xmas[1];
                 ymas[0] = ymas[1];
@@ -158,7 +155,7 @@ public class TouchCameraSimulation extends View {
             }
             case MotionEvent.ACTION_UP: {
                 xmas[0] = xmas[1] = ymas[0] = ymas[1] = 0;
-                moveCamera(touchDevId, 0, 0f, 0f, 0f, MotionEvent.ACTION_UP);
+                moveCamera(event,  0f, 0f,  MotionEvent.ACTION_UP);
 
                 break;
             }
@@ -170,12 +167,17 @@ public class TouchCameraSimulation extends View {
     }
 
 
-    private void moveCamera(final int touchDevId, final int pointerFingerId, final float x, final float y, final float p, final int eventAction) {
+    private void moveCamera(final MotionEvent event, final float x, final float y, final int eventAction) {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                SDLActivity.onNativeTouch(touchDevId, pointerFingerId,
-                        eventAction, x, y, p);
+                int touchDevId = event.getDeviceId();
+                int i = event.getActionIndex();
+                int pointerID=event.getPointerId(i);
+                float pointerCount =event.getPressure(i);
+
+                SDLActivity.onNativeTouch(touchDevId, pointerID,
+                        eventAction, x, y, pointerCount);
 
             }
         }).start();
