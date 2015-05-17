@@ -170,13 +170,14 @@ public class TouchCameraSimulation extends View {
 
 
     private void moveCamera(final float x, final float y, final int eventAction) {
+        final int touchDevId = event.getDeviceId();
+        int i = event.getActionIndex();
+        final int pointerID=event.getPointerId(i);
+        final float pointerCount =event.getPressure(i);
+
         new Thread(new Runnable() {
             @Override
             public void run() {
-                int touchDevId = event.getDeviceId();
-                int i = event.getActionIndex();
-                int pointerID=event.getPointerId(i);
-                float pointerCount =event.getPressure(i);
 
                 SDLActivity.onNativeTouch(touchDevId, pointerID,
                         eventAction, x, y, pointerCount);
