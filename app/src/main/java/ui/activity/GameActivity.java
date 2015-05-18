@@ -20,6 +20,7 @@ public class GameActivity extends SDLActivity {
 
 	public static native void commandLine(int argc, String[] argv);
 
+
 	private int argc = 0;
 	private String[] argv;
 	static {
@@ -32,8 +33,8 @@ public class GameActivity extends SDLActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 		parseCommandLine();
+
 		commandLine(argc, argv);
 		getPathToJni(Constants.configsPath);
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);

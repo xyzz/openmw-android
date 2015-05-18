@@ -242,7 +242,6 @@ public class Joystick extends View {
 
         public void OnReleased();
 
-        public void OnReturnedToCenter();
     }
 
 }

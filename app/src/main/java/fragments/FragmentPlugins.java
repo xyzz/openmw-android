@@ -14,13 +14,17 @@ import ui.files.PreferencesHelper;
 import ui.files.ParseJson.FilesData;
 import ui.files.PluginReader;
 
+import com.libopenmw.openmw.FileChooser;
 import com.libopenmw.openmw.R;
 import com.mobeta.android.dslv.DragSortListView;
 
 import constants.Constants;
+
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -39,6 +43,8 @@ public class FragmentPlugins extends Fragment {
 	private Adapter adapter;
 	private int deletePos = -1;
 	private TextView pluginInfo;
+	private static final int REQUEST_PATH = 1;
+
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,13 +56,70 @@ public class FragmentPlugins extends Fragment {
 
 		PreferencesHelper.getPrefValues(this.getActivity());
 
+		loadPlugins(Constants.configsPath+"/files.json");
+		setupViews(rootView);
+
+		return rootView;
+	}
+
+
+	private void setupViews(View rootView){
 		pluginInfo = (TextView) rootView.findViewById(R.id.pluginsInfo);
+
 		Button buttonSavePlutins = (Button) rootView
 				.findViewById(R.id.buttonsave);
 		ScreenScaler.changeTextSize(buttonSavePlutins, 2.2f);
-		try {
 
-			Plugins = ParseJson.loadFile();
+		Button buttonExportMods = (Button) rootView
+				.findViewById(R.id.buttonExportMods);
+		ScreenScaler.changeTextSize(buttonExportMods, 2.2f);
+
+		Button buttonImportMods = (Button) rootView
+				.findViewById(R.id.buttonImportMods);
+
+		ScreenScaler.changeTextSize(buttonImportMods, 2.2f);
+
+		buttonSavePlutins.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				try {
+					savePlugins();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+
+		});
+
+		buttonImportMods.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				try {
+					getFile();
+
+				} catch (Exception e) {
+
+				}
+
+			}
+
+		});
+
+		DragSortListView listView = (DragSortListView) rootView
+				.findViewById(R.id.listView1);
+		adapter = new Adapter();
+		listView.setAdapter(adapter);
+
+		listView.setDropListener(onDrop);
+		listView.setRemoveListener(onRemove);
+
+
+	}
+
+	private void loadPlugins(String path){
+
+		Log.d("ExceptionDAta",""+ path);
+
+		try {
+			Plugins = ParseJson.loadFile(path);
 			if (Plugins == null)
 				Plugins = new ArrayList<ParseJson.FilesData>();
 
@@ -66,25 +129,7 @@ public class FragmentPlugins extends Fragment {
 
 			addNewFiles(yourDir);
 
-			DragSortListView listView = (DragSortListView) rootView
-					.findViewById(R.id.listView1);
 
-			adapter = new Adapter();
-			listView.setAdapter(adapter);
-
-			listView.setDropListener(onDrop);
-			listView.setRemoveListener(onRemove);
-
-			buttonSavePlutins.setOnClickListener(new View.OnClickListener() {
-				public void onClick(View v) {
-					try {
-						savePlugins();
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				}
-
-			});
 
 		} catch (Exception e) {
 			Toast.makeText(
@@ -92,8 +137,32 @@ public class FragmentPlugins extends Fragment {
 					"data files not found", Toast.LENGTH_LONG).show();
 		}
 
-		return rootView;
 	}
+
+	public void getFile(){
+		Intent intent = new Intent(FragmentPlugins.this.getActivity(), FileChooser.class);
+		startActivityForResult(intent, REQUEST_PATH);
+	}
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data){
+		if (requestCode == REQUEST_PATH){
+			if (resultCode == Activity.RESULT_OK) {
+				String curFilePath = data.getStringExtra("GetFileName");
+				if (curFilePath.endsWith(".json"))
+					try {
+						loadPlugins(curFilePath);
+						adapter.notifyDataSetChanged();
+
+					}
+					catch (Exception e){
+
+					}
+			}
+		}
+	}
+
+
 
 	private DragSortListView.RemoveListener onRemove = new DragSortListView.RemoveListener() {
 		@Override
@@ -113,6 +182,7 @@ public class FragmentPlugins extends Fragment {
 		alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
 				deletePlugin();
+				dialog.dismiss();
 			}
 		});
 
@@ -120,7 +190,7 @@ public class FragmentPlugins extends Fragment {
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int whichButton) {
 						adapter.notifyDataSetChanged();
-						dialog.cancel();
+						dialog.dismiss();
 					}
 				});
 
@@ -188,7 +258,7 @@ public class FragmentPlugins extends Fragment {
 			IOException {
 		int deletedFilesCount = 0;
 		int i = 0;
-		List<FilesData> tmp = ParseJson.loadFile();
+		List<FilesData> tmp = ParseJson.loadFile(Constants.configsPath+"/files.json");
 		for (i = 0; i < tmp.size(); i++) {
 			boolean fileDeleted = true;
 

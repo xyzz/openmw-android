@@ -19,11 +19,9 @@ import ui.activity.MainActivity;
 
 public class ParseJson {
 
-	public static final String jsonFilePath = Constants.configsPath
-			+ "/files.json";
 
 	public static void savetofile(FilesData ti) throws IOException {
-		List<FilesData> loadedFile = loadFile();
+		List<FilesData> loadedFile = loadFile(Constants.configsPath+"/files.json");
 		loadedFile.add(ti);
 
 		try {
@@ -57,7 +55,7 @@ public class ParseJson {
 		array.put("data_array", jsonArray);
 		file = array.toString();
 
-		FileWriter jsonFileWriter = new FileWriter(jsonFilePath);
+		FileWriter jsonFileWriter = new FileWriter(Constants.configsPath+"/files.json");
 
 		jsonFileWriter.write(file);
 
@@ -86,7 +84,7 @@ public class ParseJson {
 		}
 	}
 
-	public static List<FilesData> loadFile() throws IOException {
+	public static List<FilesData> loadFile(String jsonFilePath) throws IOException {
 		List<FilesData> ret = new ArrayList<ParseJson.FilesData>();
 
 		try {

@@ -101,7 +101,7 @@ public class FragmentGeneral extends Fragment {
 
 			@Override
 			public void run() {
-				File inputfile = new File(ParseJson.jsonFilePath);
+				File inputfile = new File(Constants.configsPath+"/files.json");
 				if (inputfile.exists())
 					inputfile.delete();
 				CopyFilesFromAssets copyFiles = new CopyFilesFromAssets(
