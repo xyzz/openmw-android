@@ -1,0 +1,21 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+         >
+    </ListView>
+
+    <Button
+        android:id="@+id/buttonFolder"
+        android:layout_width="match_parent"
+        android:layout_weight="6"
+        android:layout_height="match_parent"
+        android:text="Use this Folder" />
+
+</LinearLayout>

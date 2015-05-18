@@ -36,7 +36,7 @@
         <activity
             android:name="com.libopenmw.openmw.FileChooser"
             android:label="Choose File"
-            android:theme="@android:style/Theme.Holo">
+            android:theme="@android:style/Theme.DeviceDefault">
             <action android:name="com.libopenmw.openmw.FileChooser" />
 
             <category android:name="android.intent.category.DEFAULT" />

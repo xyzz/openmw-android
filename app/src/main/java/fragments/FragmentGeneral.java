@@ -8,10 +8,14 @@ import ui.files.ParseJson;
 import ui.files.PreferencesHelper;
 import ui.files.Writer;
 
+import com.libopenmw.openmw.FileChooser;
 import com.libopenmw.openmw.R;
 
 import constants.Constants;
+
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -32,6 +36,9 @@ public class FragmentGeneral extends Fragment {
 	private EditText commandLineText;
 	private SharedPreferences Settings;
 	private LinearLayout linlaHeaderProgress;
+	private static final int REQUEST_PATH = 1;
+	private static boolean isConfigsPath=false;
+
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,12 +49,25 @@ public class FragmentGeneral extends Fragment {
 		View rootView = inflater.inflate(R.layout.general, container, false);
 
 		PreferencesHelper.getPrefValues(this.getActivity());
+
+		setupViews(rootView);
+		return rootView;
+	}
+
+
+	private void setupViews(View rootView){
 		Button buttonCopyFIles;
 		buttonCopyFIles = (Button) rootView.findViewById(R.id.buttoncopy);
+		Button browseConfigsPath = (Button) rootView.findViewById(R.id.buttonBrowseConfigsPath);
+		Button browseDataPath = (Button) rootView.findViewById(R.id.buttonBrowseDataPath);
 
 		configsText = (EditText) rootView.findViewById(R.id.configsPath);
 		dataText = (EditText) rootView.findViewById(R.id.editText1);
 		commandLineText = (EditText) rootView.findViewById(R.id.commandLine);
+
+		ScreenScaler.changeTextSize(browseConfigsPath, 2.5f);
+		ScreenScaler.changeTextSize(browseDataPath, 2.5f);
+
 
 		ScreenScaler.changeTextSize(configsText, 2f);
 		ScreenScaler.changeTextSize(dataText, 2f);
@@ -79,7 +99,28 @@ public class FragmentGeneral extends Fragment {
 
 		});
 
-		return rootView;
+		browseConfigsPath.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				FileChooser.isDirMode=true;
+				isConfigsPath=true;
+				getFolder();
+
+			}
+
+		});
+
+
+		browseDataPath.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				FileChooser.isDirMode=true;
+				isConfigsPath=false;
+				getFolder();
+
+			}
+
+		});
+
+
 	}
 
 	private void copyFiles() {
@@ -101,9 +142,7 @@ public class FragmentGeneral extends Fragment {
 
 			@Override
 			public void run() {
-				File inputfile = new File(Constants.configsPath+"/files.json");
-				if (inputfile.exists())
-					inputfile.delete();
+
 				CopyFilesFromAssets copyFiles = new CopyFilesFromAssets(
 						FragmentGeneral.this.getActivity(),
 						Constants.configsPath);
@@ -149,6 +188,32 @@ public class FragmentGeneral extends Fragment {
 		});
 		th.start();
 	}
+
+	public void getFolder() {
+		Intent intent = new Intent(FragmentGeneral.this.getActivity(), FileChooser.class);
+		startActivityForResult(intent, REQUEST_PATH);
+	}
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == REQUEST_PATH) {
+			if (resultCode == Activity.RESULT_OK) {
+				String curDir= data.getStringExtra("GetDir");
+				if (isConfigsPath)
+				{
+					configsText.setText(curDir);
+					Constants.configsPath=curDir;
+				}
+				else{
+					dataText.setText(curDir);
+					Constants.dataPath=curDir;
+				}
+
+
+			}
+		}
+	}
+
 
 	private void addTexWatchers() {
 		configsText.addTextChangedListener(new TextListener(this.getActivity(),

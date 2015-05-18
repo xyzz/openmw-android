@@ -25,7 +25,7 @@ public class ParseJson {
 		loadedFile.add(ti);
 
 		try {
-			saveFile(loadedFile);
+			saveFile(loadedFile,Constants.configsPath+"/files.json");
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -33,7 +33,7 @@ public class ParseJson {
 
 	}
 
-	public static void saveFile(List<FilesData> loadedFile)
+	public static void saveFile(List<FilesData> loadedFile,String path)
 			throws JSONException, IOException {
 
 		String file = "";
@@ -55,7 +55,7 @@ public class ParseJson {
 		array.put("data_array", jsonArray);
 		file = array.toString();
 
-		FileWriter jsonFileWriter = new FileWriter(Constants.configsPath+"/files.json");
+		FileWriter jsonFileWriter = new FileWriter(path);
 
 		jsonFileWriter.write(file);
 
