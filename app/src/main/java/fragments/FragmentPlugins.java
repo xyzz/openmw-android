@@ -56,8 +56,8 @@ public class FragmentPlugins extends Fragment {
         View rootView = inflater.inflate(R.layout.listview, container, false);
 
         PreferencesHelper.getPrefValues(this.getActivity());
-        totalModsCount= (TextView) rootView.findViewById(R.id.totalModsCount);
-        enabledModsCount= (TextView) rootView.findViewById(R.id.enabledModsCount);
+        totalModsCount = (TextView) rootView.findViewById(R.id.totalModsCount);
+        enabledModsCount = (TextView) rootView.findViewById(R.id.enabledModsCount);
 
         loadPlugins(Constants.configsPath + "/files.json");
         setupViews(rootView);
@@ -75,7 +75,17 @@ public class FragmentPlugins extends Fragment {
 
         Button buttonSavePlutins = (Button) rootView
                 .findViewById(R.id.buttonsave);
+        Button buttonDisableMods = (Button) rootView
+                .findViewById(R.id.buttonDisableAllMods);
+
+        Button buttonEnableMods = (Button) rootView
+                .findViewById(R.id.buttonEnableAllMods);
+
         ScreenScaler.changeTextSize(buttonSavePlutins, 2.2f);
+
+        ScreenScaler.changeTextSize(buttonDisableMods, 2.2f);
+        ScreenScaler.changeTextSize(buttonEnableMods, 2.2f);
+
 
         Button buttonExportMods = (Button) rootView
                 .findViewById(R.id.buttonExportMods);
@@ -97,10 +107,28 @@ public class FragmentPlugins extends Fragment {
 
         });
 
+        buttonEnableMods.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                showModDialog(true,"Do you want to enable all mods ?");
+
+            }
+
+
+        });
+
+        buttonDisableMods.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                showModDialog(false,"Do you want to disable all mods ?");
+
+            }
+
+        });
+
+
         buttonImportMods.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 try {
-                    FileChooser.isDirMode=false;
+                    FileChooser.isDirMode = false;
                     getFileOrFolder();
 
                 } catch (Exception e) {
@@ -136,20 +164,55 @@ public class FragmentPlugins extends Fragment {
 
     }
 
-    private void reloadAdapter(){
+    private void showModDialog(final boolean isModEnable,String message) {
+        AlertDialog.Builder alert = new AlertDialog.Builder(
+                FragmentPlugins.this.getActivity());
+        alert.setTitle(message);
+
+        alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                changeModsStatus(isModEnable);
+                dialog.dismiss();
+            }
+        });
+
+        alert.setNegativeButton("Cancel",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        reloadAdapter();
+                        dialog.dismiss();
+                    }
+                });
+
+        alert.show();
+    }
+
+
+
+    private void changeModsStatus(boolean isModEnable) {
+        for (int i = 0; i < Plugins.size(); i++)
+            if (isModEnable)
+                Plugins.get(i).enabled = 1;
+            else
+                Plugins.get(i).enabled = 0;
+        reloadAdapter();
+    }
+
+    private void reloadAdapter() {
         adapter.notifyDataSetChanged();
         totalModsCount.setText("Total mods = " + Plugins.size());
         enabledModsCount.setText("Active mods = " + getEnabledModsCount());
 
     }
 
-    private int getEnabledModsCount(){
-        int modsCount=0;
-        for (int i=0; i<Plugins.size(); i++)
-            if (Plugins.get(i).enabled==1)
+    private int getEnabledModsCount() {
+        int modsCount = 0;
+        for (int i = 0; i < Plugins.size(); i++)
+            if (Plugins.get(i).enabled == 1)
                 modsCount++;
         return modsCount;
     }
+
     private void loadPlugins(String path) {
         try {
             Plugins = ParseJson.loadFile(path);
@@ -164,8 +227,7 @@ public class FragmentPlugins extends Fragment {
 
 
             totalModsCount.setText("Total mods = " + Plugins.size());
-            enabledModsCount.setText("Active mods = "+ getEnabledModsCount());
-
+            enabledModsCount.setText("Active mods = " + getEnabledModsCount());
 
 
         } catch (Exception e) {
@@ -192,7 +254,7 @@ public class FragmentPlugins extends Fragment {
     }
 
 
-    private void exportImportMods(Intent data){
+    private void exportImportMods(Intent data) {
         String curPath = "";
 
         if (!FileChooser.isDirMode) {
@@ -200,26 +262,25 @@ public class FragmentPlugins extends Fragment {
             if (curPath.endsWith(".json"))
                 try {
                     loadPlugins(curPath);
-                   reloadAdapter();
+                    reloadAdapter();
 
                 } catch (Exception e) {
 
                 }
-        }
-        else {
+        } else {
             curPath = data.getStringExtra("GetDir");
             try {
                 savePluginsData(curPath + "/files.json");
                 Toast.makeText(
                         FragmentPlugins.this.getActivity().getApplicationContext(),
-                        "file exported to " +curPath + "/files.json", Toast.LENGTH_LONG).show();
-            }
-            catch (Exception e){
+                        "file exported to " + curPath + "/files.json", Toast.LENGTH_LONG).show();
+            } catch (Exception e) {
 
             }
 
         }
     }
+
     private DragSortListView.RemoveListener onRemove = new DragSortListView.RemoveListener() {
         @Override
         public void remove(int which) {
@@ -245,7 +306,7 @@ public class FragmentPlugins extends Fragment {
         alert.setNegativeButton("Cancel",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
-                       reloadAdapter();
+                        reloadAdapter();
                         dialog.dismiss();
                     }
                 });
@@ -260,7 +321,7 @@ public class FragmentPlugins extends Fragment {
             inputfile.delete();
         Plugins.remove(deletePos);
         savePluginsData(Constants.configsPath + "/files.json");
-       reloadAdapter();
+        reloadAdapter();
 
     }
 
@@ -337,7 +398,7 @@ public class FragmentPlugins extends Fragment {
 
         }
         if (Plugins.size() < i)
-            savePluginsData(Constants.configsPath+"/files.json");
+            savePluginsData(Constants.configsPath + "/files.json");
 
     }
 
@@ -397,7 +458,7 @@ public class FragmentPlugins extends Fragment {
 
         }
 
-        savePluginsData(Constants.configsPath+"/files.json");
+        savePluginsData(Constants.configsPath + "/files.json");
     }
 
     private DragSortListView.DropListener onDrop = new DragSortListView.DropListener() {
@@ -418,8 +479,8 @@ public class FragmentPlugins extends Fragment {
                 e.printStackTrace();
             }
 
-           reloadAdapter();
-            savePluginsData(Constants.configsPath+"/files.json");
+            reloadAdapter();
+            savePluginsData(Constants.configsPath + "/files.json");
         }
     };
 
@@ -430,7 +491,7 @@ public class FragmentPlugins extends Fragment {
             @Override
             public void run() {
                 try {
-                    ParseJson.saveFile(Plugins,path);
+                    ParseJson.saveFile(Plugins, path);
                 } catch (JSONException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
@@ -505,14 +566,14 @@ public class FragmentPlugins extends Fragment {
 
                         Plugins.get(position).enabled = 1;
                         loadingPlace.setText("" + loadingPos(position));
-                       reloadAdapter();
+                        reloadAdapter();
 
                         savePluginsData(Constants.configsPath + "/files.json");
                     } else {
 
                         Plugins.get(position).enabled = 0;
                         loadingPlace.setText("");
-                       reloadAdapter();
+                        reloadAdapter();
 
                         savePluginsData(Constants.configsPath + "/files.json");
 
