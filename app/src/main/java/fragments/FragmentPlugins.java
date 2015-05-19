@@ -68,9 +68,9 @@ public class FragmentPlugins extends Fragment {
 
     private void setupViews(View rootView) {
         pluginInfo = (TextView) rootView.findViewById(R.id.pluginsInfo);
-        ScreenScaler.changeTextSize(pluginInfo, 3.5f);
-        ScreenScaler.changeTextSize(totalModsCount, 3.5f);
-        ScreenScaler.changeTextSize(enabledModsCount, 3.5f);
+        ScreenScaler.changeTextSize(pluginInfo, 4.8f);
+        ScreenScaler.changeTextSize(totalModsCount, 2f);
+        ScreenScaler.changeTextSize(enabledModsCount, 2f);
 
 
         Button buttonSavePlutins = (Button) rootView
