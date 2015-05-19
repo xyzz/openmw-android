@@ -196,6 +196,7 @@ public class FragmentPlugins extends Fragment {
             else
                 Plugins.get(i).enabled = 0;
         reloadAdapter();
+        savePluginsData(Constants.configsPath+"/files.json");
     }
 
     private void reloadAdapter() {
