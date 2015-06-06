@@ -175,7 +175,7 @@ public class FragmentGeneral extends Fragment {
 					else if (pos == 0)
 						Writer.write("false", Constants.configsPath
 								+ "/config/openmw/settings.cfg", "subtitles");
-					Writer.write(""+ Settings.getFloat(Constants.CAMERA_MULTIPLISER, 0.2f), Constants.configsPath
+					Writer.write(""+ Settings.getFloat(Constants.CAMERA_MULTIPLISER, 2.0f), Constants.configsPath
 							+ "/config/openmw/settings.cfg",Constants.CAMERA_MULTIPLISER);
 					Writer.write(""+ Settings.getFloat(Constants.TOUCH_SENSITIVITY, 0.01f), Constants.configsPath
 							+ "/config/openmw/settings.cfg",Constants.TOUCH_SENSITIVITY);
