@@ -15,7 +15,7 @@ public class TouchCameraSimulation extends View {
     private float constTouch = 0;
     private float[] xmas = new float[2];
     private float[] ymas = new float[2];
-    private  MotionEvent event;
+    private MotionEvent event;
 
     public TouchCameraSimulation(Context context) {
         super(context);
@@ -83,7 +83,7 @@ public class TouchCameraSimulation extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        this.event=event;
+        this.event = event;
         simulateCameraMovement();
         return true;
     }
@@ -96,7 +96,7 @@ public class TouchCameraSimulation extends View {
             case MotionEvent.ACTION_DOWN: {
                 xmas[0] = event.getX();
                 ymas[0] = event.getY();
-                moveCamera(0f,0f ,MotionEvent.ACTION_DOWN);
+                moveCamera(0f, 0f, MotionEvent.ACTION_DOWN);
 
                 break;
             }
@@ -105,23 +105,23 @@ public class TouchCameraSimulation extends View {
                 ymas[1] = event.getRawY();
                 if (xmas[0] == xmas[1] && ymas[0] < ymas[1]
                         && ymas[1] - ymas[0] > constTouch) {
-                    moveCamera( 0.5f, 0.9f, MotionEvent.ACTION_MOVE);
+                    moveCamera(0.5f, 0.9f, MotionEvent.ACTION_MOVE);
                 } else if (xmas[0] == xmas[1] && ymas[0] > ymas[1]
                         && ymas[0] - ymas[1] > constTouch)
 
                 {
-                    moveCamera( 0.5f, 0.3f,  MotionEvent.ACTION_MOVE);
+                    moveCamera(0.5f, 0.3f, MotionEvent.ACTION_MOVE);
 
                 } else if (xmas[0] < xmas[1] && ymas[0] == ymas[1]
                         && xmas[1] - xmas[0] > constTouch)
 
                 {
-                    moveCamera( 0.9f, 0.5f, MotionEvent.ACTION_MOVE);
+                    moveCamera(0.9f, 0.5f, MotionEvent.ACTION_MOVE);
                 } else if (xmas[0] > xmas[1] && ymas[0] == ymas[1]
                         && xmas[0] - xmas[1] > constTouch)
 
                 {
-                    moveCamera( 0.3f, 0.5f, MotionEvent.ACTION_MOVE);
+                    moveCamera(0.3f, 0.5f, MotionEvent.ACTION_MOVE);
 
                 } else if (xmas[0] < xmas[1] && ymas[0] < ymas[1]
                         && ymas[1] - ymas[0] > constTouch
@@ -134,7 +134,7 @@ public class TouchCameraSimulation extends View {
                         && xmas[0] - xmas[1] > constTouch)
 
                 {
-                    moveCamera(0.3f, 0.3f,  MotionEvent.ACTION_MOVE);
+                    moveCamera(0.3f, 0.3f, MotionEvent.ACTION_MOVE);
                 } else if (xmas[0] < xmas[1] && ymas[0] > ymas[1]
                         && ymas[0] - ymas[1] > constTouch
                         && xmas[1] - xmas[0] > constTouch)
@@ -172,17 +172,10 @@ public class TouchCameraSimulation extends View {
     private void moveCamera(final float x, final float y, final int eventAction) {
         final int touchDevId = event.getDeviceId();
         int i = event.getActionIndex();
-        final int pointerID=event.getPointerId(i);
-        final float pointerCount =event.getPressure(i);
+        final int pointerID = event.getPointerId(i);
+        final float pointerCount = event.getPressure(i);
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-
-                SDLActivity.onNativeTouch(touchDevId, pointerID,
-                        eventAction, x, y, pointerCount);
-
-            }
-        }).start();
+        SDLActivity.onNativeTouch(touchDevId, pointerID,
+                eventAction, x, y, pointerCount);
     }
 }

@@ -19,22 +19,12 @@ public class ButtonTouchListener implements OnTouchListener {
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        SDLActivity.onNativeKeyDown(keyCode);
+                SDLActivity.onNativeKeyDown(keyCode);
 
-                    }
-                }).start();
                 return true;
             case MotionEvent.ACTION_UP:
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        SDLActivity.onNativeKeyUp(keyCode);
+                SDLActivity.onNativeKeyUp(keyCode);
 
-                    }
-                }).start();
                 return true;
         }
         return false;
