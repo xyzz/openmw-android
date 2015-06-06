@@ -145,7 +145,7 @@ public class Joystick extends View {
     private void playerMovement(MotionEvent event) {
         int actionType = event.getAction();
         switch (actionType) {
-            case  MotionEvent.ACTION_MOVE:{
+            case MotionEvent.ACTION_MOVE: {
                 int px = getMeasuredWidth() / 2;
                 int py = getMeasuredHeight() / 2;
                 final int radius = Math.min(px, py) - handleInnerBoundaries;
@@ -156,31 +156,26 @@ public class Joystick extends View {
                 touchY = (event.getY() - py);
 
                 touchY = Math.max(Math.min(touchY, radius), -radius);
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (touchY < -radius / 3 && (touchX > 0 || touchX < 0))
-                            SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_W);
-                        else
-                            SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_W);
+                if (touchY < -radius / 3 && (touchX > 0 || touchX < 0))
+                    SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_W);
+                else
+                    SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_W);
 
-                        if (touchY > radius / 3 && (touchX > 0 || touchX < 0))
-                            SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_S);
-                        else
-                            SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_S);
+                if (touchY > radius / 3 && (touchX > 0 || touchX < 0))
+                    SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_S);
+                else
+                    SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_S);
 
-                        if ((touchX < -radius / 3) && (touchY > 0 || touchY < 0))
-                            SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_A);
-                        else
-                            SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_A);
+                if ((touchX < -radius / 3) && (touchY > 0 || touchY < 0))
+                    SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_A);
+                else
+                    SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_A);
 
-                        if ((touchX > radius / 3) && (touchY > 0 || touchY < 0))
-                            SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_D);
-                        else
-                            SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_D);
+                if ((touchX > radius / 3) && (touchY > 0 || touchY < 0))
+                    SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_D);
+                else
+                    SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_D);
 
-                    }
-                }).start();
 
                 // Pressure
                 if (listener != null) {
@@ -193,24 +188,19 @@ public class Joystick extends View {
 
                 break;
             }
-            case MotionEvent.ACTION_UP:{
+            case MotionEvent.ACTION_UP: {
                 returnHandleToCenter();
 
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_W);
-                        SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_S);
-                        SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_A);
-                        SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_D);
+                SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_W);
+                SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_S);
+                SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_A);
+                SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_D);
 
-                    }
-                }).start();
 
                 break;
             }
             default:
-            break;
+                break;
         }
     }
 
