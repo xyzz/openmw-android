@@ -175,7 +175,13 @@ public class TouchCameraSimulation extends View {
         final int pointerID = event.getPointerId(i);
         final float pointerCount = event.getPressure(i);
 
-        SDLActivity.onNativeTouch(touchDevId, pointerID,
-                eventAction, x, y, pointerCount);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SDLActivity.onNativeTouch(touchDevId, pointerID,
+                        eventAction, x, y, pointerCount);
+
+            }
+        }).start();
     }
 }

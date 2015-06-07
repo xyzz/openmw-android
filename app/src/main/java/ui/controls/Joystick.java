@@ -157,25 +157,26 @@ public class Joystick extends View {
 
                 touchY = Math.max(Math.min(touchY, radius), -radius);
                 if (touchY < -radius / 3 && (touchX > 0 || touchX < 0))
-                    SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_W);
+                    keyDown(KeyEvent.KEYCODE_W);
                 else
-                    SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_W);
+                    keyUp(KeyEvent.KEYCODE_W);
 
                 if (touchY > radius / 3 && (touchX > 0 || touchX < 0))
-                    SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_S);
+                    keyDown(KeyEvent.KEYCODE_S);
+
                 else
-                    SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_S);
+                    keyUp(KeyEvent.KEYCODE_S);
 
                 if ((touchX < -radius / 3) && (touchY > 0 || touchY < 0))
-                    SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_A);
+                    keyDown(KeyEvent.KEYCODE_A);
+
                 else
-                    SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_A);
+                    keyUp(KeyEvent.KEYCODE_A);
 
                 if ((touchX > radius / 3) && (touchY > 0 || touchY < 0))
-                    SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_D);
+                    keyDown(KeyEvent.KEYCODE_D);
                 else
-                    SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_D);
-
+                    keyUp(KeyEvent.KEYCODE_D);
 
                 // Pressure
                 if (listener != null) {
@@ -190,19 +191,40 @@ public class Joystick extends View {
             }
             case MotionEvent.ACTION_UP: {
                 returnHandleToCenter();
-
-                SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_W);
-                SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_S);
-                SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_A);
-                SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_D);
-
-
+                keyUp(KeyEvent.KEYCODE_W);
+                keyUp(KeyEvent.KEYCODE_S);
+                keyUp(KeyEvent.KEYCODE_A);
+                keyUp(KeyEvent.KEYCODE_D);
                 break;
             }
             default:
                 break;
         }
     }
+
+    private void keyDown(final int keyCode) {
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SDLActivity.onNativeKeyDown(keyCode);
+
+            }
+        }).start();
+    }
+
+
+    private void keyUp(final int keyCode) {
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SDLActivity.onNativeKeyUp(keyCode);
+
+            }
+        }).start();
+    }
+
 
     private void returnHandleToCenter() {
 
