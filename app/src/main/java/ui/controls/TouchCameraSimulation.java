@@ -96,7 +96,7 @@ public class TouchCameraSimulation extends View {
             case MotionEvent.ACTION_DOWN: {
                 xmas[0] = event.getX();
                 ymas[0] = event.getY();
-                moveCamera(0f, 0f, MotionEvent.ACTION_DOWN);
+                SdlNativeKeys.touchDown(0f, 0f, MotionEvent.ACTION_DOWN,event);
 
                 break;
             }
@@ -105,50 +105,50 @@ public class TouchCameraSimulation extends View {
                 ymas[1] = event.getRawY();
                 if (xmas[0] == xmas[1] && ymas[0] < ymas[1]
                         && ymas[1] - ymas[0] > constTouch) {
-                    moveCamera(0.5f, 0.9f, MotionEvent.ACTION_MOVE);
+                    SdlNativeKeys.touchDown(0.5f, 0.9f, MotionEvent.ACTION_MOVE,event);
                 } else if (xmas[0] == xmas[1] && ymas[0] > ymas[1]
                         && ymas[0] - ymas[1] > constTouch)
 
                 {
-                    moveCamera(0.5f, 0.3f, MotionEvent.ACTION_MOVE);
+                   SdlNativeKeys.touchDown(0.5f, 0.3f, MotionEvent.ACTION_MOVE, event);
 
                 } else if (xmas[0] < xmas[1] && ymas[0] == ymas[1]
                         && xmas[1] - xmas[0] > constTouch)
 
                 {
-                    moveCamera(0.9f, 0.5f, MotionEvent.ACTION_MOVE);
+                    SdlNativeKeys.touchDown(0.9f, 0.5f, MotionEvent.ACTION_MOVE,event);
                 } else if (xmas[0] > xmas[1] && ymas[0] == ymas[1]
                         && xmas[0] - xmas[1] > constTouch)
 
                 {
-                    moveCamera(0.3f, 0.5f, MotionEvent.ACTION_MOVE);
+                    SdlNativeKeys.touchDown(0.3f, 0.5f, MotionEvent.ACTION_MOVE,event);
 
                 } else if (xmas[0] < xmas[1] && ymas[0] < ymas[1]
                         && ymas[1] - ymas[0] > constTouch
                         && xmas[1] - xmas[0] > constTouch)
 
                 {
-                    moveCamera(0.9f, 0.9f, MotionEvent.ACTION_MOVE);
+                    SdlNativeKeys.touchDown(0.9f, 0.9f, MotionEvent.ACTION_MOVE,event);
                 } else if (xmas[0] > xmas[1] && ymas[0] > ymas[1]
                         && ymas[0] - ymas[1] > constTouch
                         && xmas[0] - xmas[1] > constTouch)
 
                 {
-                    moveCamera(0.3f, 0.3f, MotionEvent.ACTION_MOVE);
+                    SdlNativeKeys.touchDown(0.3f, 0.3f, MotionEvent.ACTION_MOVE,event);
                 } else if (xmas[0] < xmas[1] && ymas[0] > ymas[1]
                         && ymas[0] - ymas[1] > constTouch
                         && xmas[1] - xmas[0] > constTouch)
 
                 {
-                    moveCamera(0.9f, 0.3f, MotionEvent.ACTION_MOVE);
+                    SdlNativeKeys.touchDown(0.9f, 0.3f, MotionEvent.ACTION_MOVE, event);
                 } else if (xmas[0] > xmas[1] && ymas[0] < ymas[1]
                         && ymas[1] - ymas[0] > constTouch
                         && xmas[0] - xmas[1] > constTouch)
 
                 {
-                    moveCamera(0.3f, 0.9f, MotionEvent.ACTION_MOVE);
+                    SdlNativeKeys.touchDown(0.3f, 0.9f, MotionEvent.ACTION_MOVE,event);
                 } else
-                    moveCamera(0f, 0f, MotionEvent.ACTION_UP);
+                    SdlNativeKeys.touchDown(0f, 0f, MotionEvent.ACTION_UP,event);
 
                 xmas[0] = xmas[1];
                 ymas[0] = ymas[1];
@@ -157,7 +157,7 @@ public class TouchCameraSimulation extends View {
             }
             case MotionEvent.ACTION_UP: {
                 xmas[0] = xmas[1] = ymas[0] = ymas[1] = 0;
-                moveCamera(0f, 0f, MotionEvent.ACTION_UP);
+                SdlNativeKeys.touchDown(0f, 0f, MotionEvent.ACTION_UP,event);
 
                 break;
             }
@@ -169,19 +169,4 @@ public class TouchCameraSimulation extends View {
     }
 
 
-    private void moveCamera(final float x, final float y, final int eventAction) {
-        final int touchDevId = event.getDeviceId();
-        int i = event.getActionIndex();
-        final int pointerID = event.getPointerId(i);
-        final float pointerCount = event.getPressure(i);
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                SDLActivity.onNativeTouch(touchDevId, pointerID,
-                        eventAction, x, y, pointerCount);
-
-            }
-        }).start();
-    }
 }

@@ -157,26 +157,26 @@ public class Joystick extends View {
 
                 touchY = Math.max(Math.min(touchY, radius), -radius);
                 if (touchY < -radius / 3 && (touchX > 0 || touchX < 0))
-                    keyDown(KeyEvent.KEYCODE_W);
+                    SdlNativeKeys.keyDown(KeyEvent.KEYCODE_W);
                 else
-                    keyUp(KeyEvent.KEYCODE_W);
+                    SdlNativeKeys.keyUp(KeyEvent.KEYCODE_W);
 
                 if (touchY > radius / 3 && (touchX > 0 || touchX < 0))
-                    keyDown(KeyEvent.KEYCODE_S);
+                    SdlNativeKeys.keyDown(KeyEvent.KEYCODE_S);
 
                 else
-                    keyUp(KeyEvent.KEYCODE_S);
+                    SdlNativeKeys.keyUp(KeyEvent.KEYCODE_S);
 
                 if ((touchX < -radius / 3) && (touchY > 0 || touchY < 0))
-                    keyDown(KeyEvent.KEYCODE_A);
+                    SdlNativeKeys.keyDown(KeyEvent.KEYCODE_A);
 
                 else
-                    keyUp(KeyEvent.KEYCODE_A);
+                    SdlNativeKeys.keyUp(KeyEvent.KEYCODE_A);
 
                 if ((touchX > radius / 3) && (touchY > 0 || touchY < 0))
-                    keyDown(KeyEvent.KEYCODE_D);
+                    SdlNativeKeys.keyDown(KeyEvent.KEYCODE_D);
                 else
-                    keyUp(KeyEvent.KEYCODE_D);
+                    SdlNativeKeys.keyUp(KeyEvent.KEYCODE_D);
 
                 // Pressure
                 if (listener != null) {
@@ -191,10 +191,10 @@ public class Joystick extends View {
             }
             case MotionEvent.ACTION_UP: {
                 returnHandleToCenter();
-                keyUp(KeyEvent.KEYCODE_W);
-                keyUp(KeyEvent.KEYCODE_S);
-                keyUp(KeyEvent.KEYCODE_A);
-                keyUp(KeyEvent.KEYCODE_D);
+                SdlNativeKeys.keyUp(KeyEvent.KEYCODE_W);
+                SdlNativeKeys.keyUp(KeyEvent.KEYCODE_S);
+                SdlNativeKeys.keyUp(KeyEvent.KEYCODE_A);
+                SdlNativeKeys.keyUp(KeyEvent.KEYCODE_D);
                 break;
             }
             default:
@@ -202,28 +202,6 @@ public class Joystick extends View {
         }
     }
 
-    private void keyDown(final int keyCode) {
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                SDLActivity.onNativeKeyDown(keyCode);
-
-            }
-        }).start();
-    }
-
-
-    private void keyUp(final int keyCode) {
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                SDLActivity.onNativeKeyUp(keyCode);
-
-            }
-        }).start();
-    }
 
 
     private void returnHandleToCenter() {
