@@ -159,24 +159,24 @@ public class Joystick extends View {
                 if (touchY < -radius / 3 && (touchX > 0 || touchX < 0))
                    SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_W);
                 else
-                    SdlNativeKeys.keyUp(KeyEvent.KEYCODE_W);
+                    SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_W);
 
                 if (touchY > radius / 3 && (touchX > 0 || touchX < 0))
-                    SdlNativeKeys.keyDown(KeyEvent.KEYCODE_S);
+                    SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_S);
 
                 else
-                    SdlNativeKeys.keyUp(KeyEvent.KEYCODE_S);
+                    SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_S);
 
                 if ((touchX < -radius / 3) && (touchY > 0 || touchY < 0))
-                    SdlNativeKeys.keyDown(KeyEvent.KEYCODE_A);
+                    SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_A);
 
                 else
-                    SdlNativeKeys.keyUp(KeyEvent.KEYCODE_A);
+                    SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_A);
 
                 if ((touchX > radius / 3) && (touchY > 0 || touchY < 0))
-                    SdlNativeKeys.keyDown(KeyEvent.KEYCODE_D);
+                    SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_D);
                 else
-                    SdlNativeKeys.keyUp(KeyEvent.KEYCODE_D);
+                    SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_D);
 
                 // Pressure
                 if (listener != null) {
@@ -203,10 +203,10 @@ public class Joystick extends View {
     }
 
     private void releaseKeys(){
-        SdlNativeKeys.keyUp(KeyEvent.KEYCODE_W);
-        SdlNativeKeys.keyUp(KeyEvent.KEYCODE_S);
-        SdlNativeKeys.keyUp(KeyEvent.KEYCODE_A);
-        SdlNativeKeys.keyUp(KeyEvent.KEYCODE_D);
+        SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_W);
+        SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_S);
+        SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_A);
+        SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_D);
 
     }
 
