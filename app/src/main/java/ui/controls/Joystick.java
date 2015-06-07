@@ -157,7 +157,7 @@ public class Joystick extends View {
 
                 touchY = Math.max(Math.min(touchY, radius), -radius);
                 if (touchY < -radius / 3 && (touchX > 0 || touchX < 0))
-                    SdlNativeKeys.keyDown(KeyEvent.KEYCODE_W);
+                   SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_W);
                 else
                     SdlNativeKeys.keyUp(KeyEvent.KEYCODE_W);
 
@@ -190,18 +190,25 @@ public class Joystick extends View {
                 break;
             }
             case MotionEvent.ACTION_UP: {
+                releaseKeys();
+
                 returnHandleToCenter();
-                SdlNativeKeys.keyUp(KeyEvent.KEYCODE_W);
-                SdlNativeKeys.keyUp(KeyEvent.KEYCODE_S);
-                SdlNativeKeys.keyUp(KeyEvent.KEYCODE_A);
-                SdlNativeKeys.keyUp(KeyEvent.KEYCODE_D);
                 break;
             }
-            default:
+            default: {
+                releaseKeys();
                 break;
+            }
         }
     }
 
+    private void releaseKeys(){
+        SdlNativeKeys.keyUp(KeyEvent.KEYCODE_W);
+        SdlNativeKeys.keyUp(KeyEvent.KEYCODE_S);
+        SdlNativeKeys.keyUp(KeyEvent.KEYCODE_A);
+        SdlNativeKeys.keyUp(KeyEvent.KEYCODE_D);
+
+    }
 
 
     private void returnHandleToCenter() {
