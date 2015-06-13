@@ -1,8 +1,12 @@
 package fragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.LayoutInflater;
@@ -21,9 +25,6 @@ import screen.ScreenScaler;
 import ui.files.PreferencesHelper;
 import ui.files.Writer;
 
-/**
- * Created by sylar on 13.06.15.
- */
 public class FragmentGraphics extends Fragment {
 
     private int screenWidth = 0;
@@ -34,7 +35,6 @@ public class FragmentGraphics extends Fragment {
                              Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-
         View rootView = inflater.inflate(R.layout.graphics_layout, container, false);
         PreferencesHelper.getPrefValues(this.getActivity());
         getScreenWidthAndHeight();
@@ -67,8 +67,9 @@ public class FragmentGraphics extends Fragment {
 
         final EditText witdhEditText = (EditText) rootView.findViewById(R.id.width);
         final EditText heightEditText = (EditText) rootView.findViewById(R.id.height);
-        witdhEditText.setText("" + screenWidth);
-        heightEditText.setText("" + screenHeight);
+        witdhEditText.setText(PreferencesHelper.getPreferences(Constants.SCREEN_WIDTH, FragmentGraphics.this.getActivity(), "" + screenWidth));
+        heightEditText.setText(PreferencesHelper.getPreferences(Constants.SCREEN_HEIGHT, FragmentGraphics.this.getActivity(), "" + screenHeight));
+
         witdhEditText.setEnabled(false);
         heightEditText.setEnabled(false);
 
@@ -77,32 +78,47 @@ public class FragmentGraphics extends Fragment {
 
         RadioGroup radiogroup = (RadioGroup) rootView.findViewById(R.id.radioGroup);
 
+
+
+
         radiogroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+
 
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
                     case R.id.radioButtonNormalResolution: {
-
-                        writeScreenDataToFile(screenWidth, screenHeight);
+                        witdhEditText.setEnabled(false);
+                        heightEditText.setEnabled(false);
+                        writeScreenDataToFile("" + screenWidth, "" + screenHeight);
+                        PreferencesHelper.setPreferences(Constants.RADIO_BUTTON_MODE, "normalResolution", FragmentGraphics.this.getActivity());
 
                         break;
                     }
                     case R.id.radioButtonHalfResolution: {
-                        writeScreenDataToFile(screenWidth / 2, screenHeight / 2);
+                        witdhEditText.setEnabled(false);
+                        heightEditText.setEnabled(false);
+                        writeScreenDataToFile("" + screenWidth / 2, "" + screenHeight / 2);
+                        PreferencesHelper.setPreferences(Constants.RADIO_BUTTON_MODE, "halfResolution", FragmentGraphics.this.getActivity());
 
                         break;
                     }
 
                     case R.id.radioButtonDoubleResolution: {
-                        writeScreenDataToFile(screenWidth * 2, screenHeight * 2);
+                        witdhEditText.setEnabled(false);
+                        heightEditText.setEnabled(false);
+                        writeScreenDataToFile("" + screenWidth * 2, "" + screenHeight * 2);
+                        PreferencesHelper.setPreferences(Constants.RADIO_BUTTON_MODE, "doubleResolution", FragmentGraphics.this.getActivity());
 
                         break;
                     }
                     case R.id.radioButtonCustomResolution: {
 
+                        writeScreenDataToFile(witdhEditText.getText().toString(), heightEditText.getText().toString());
                         witdhEditText.setEnabled(true);
                         heightEditText.setEnabled(true);
+                        PreferencesHelper.setPreferences(Constants.RADIO_BUTTON_MODE, "customResolution", FragmentGraphics.this.getActivity());
+
                         break;
                     }
 
@@ -112,16 +128,96 @@ public class FragmentGraphics extends Fragment {
                 }
             }
         });
+        addTextWacthers(witdhEditText, heightEditText);
+
+        String radioButtonMode = PreferencesHelper.getPreferences(Constants.RADIO_BUTTON_MODE, FragmentGraphics.this.getActivity(), "normalResolution");
+        switch (radioButtonMode) {
+
+            case "normalResolution":
+                radiogroup.check(R.id.radioButtonNormalResolution);
+                break;
+
+            case "halfResolution":
+                radiogroup.check(R.id.radioButtonHalfResolution);
+                break;
+
+            case "customResolution":
+                radiogroup.check(R.id.radioButtonCustomResolution);
+                break;
+
+            case "doubleResolution":
+                radiogroup.check(R.id.radioButtonDoubleResolution);
+                break;
+
+            default:
+                break;
+
+        }
 
 
     }
 
 
-    private void writeScreenDataToFile(int screenWidth, int screenHeight) {
+    private void addTextWacthers(EditText witdhEditText, EditText heightEditText) {
+        witdhEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                try {
+                    Writer.write(s.toString(), Constants.configsPath
+                            + "/config/openmw/settings.cfg", "resolution x");
+
+                } catch (Exception e) {
+
+                }
+
+            }
+        });
+
+
+        heightEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                try {
+                    Writer.write(s.toString(), Constants.configsPath
+                            + "/config/openmw/settings.cfg", "resolution y");
+
+                } catch (Exception e) {
+
+                }
+
+            }
+        });
+
+    }
+
+
+    private void writeScreenDataToFile(String screenWidth, String screenHeight) {
         try {
-            Writer.write("" + screenWidth, Constants.configsPath
+            Writer.write(screenWidth, Constants.configsPath
                     + "/config/openmw/settings.cfg", "resolution x");
-            Writer.write("" + screenHeight, Constants.configsPath
+            Writer.write(screenHeight, Constants.configsPath
                     + "/config/openmw/settings.cfg", "resolution y");
         } catch (Exception e) {
 
