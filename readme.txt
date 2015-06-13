@@ -12,10 +12,11 @@ http://www.oracle.com/technetwork/java/javase/downloads/index-jsp-138363.html
 # Ant
 http://ant.apache.org/
 # Download all OpenMW dependencies, ie:
-# Ogre 1.9 
-#https://bitbucket.org/sinbad/ogre/src/4578da5bf5b00fdf023b87e98099d647c5cb92ab?at=v1-9-0
+# OSG 
+https://github.com/openscenegraph/osg
+src/4578da5bf5b00fdf023b87e98099d647c5cb92ab?at=v1-9-0
 #* Openal
-#http://repo.or.cz/w/openal-soft/android.git
+http://repo.or.cz/w/openal-soft/android.git
 #* boost
 You can use boost 1.57 from crystax ndk
 #* bullet
@@ -26,9 +27,6 @@ You can use boost 1.57 from crystax ndk
 http://necessitas.kde.org/necessitas/qt4_framework.php
 #* ffmpeg
 https://www.ffmpeg.org/download.html
-#* freeimage
-#* freetype
-http://www.freetype.org/
 #* mygui 3.2.1
 https://github.com/MyGUI/mygui
 #* zzip
@@ -36,155 +34,16 @@ https://github.com/MyGUI/mygui
 
 === Compilation of OpenMW dependencies ===
 
-
-==== Building Freetype ====
-Then you must build freetype
-http://www.freetype.org/
-For example like this
-cmake /home/sylar/freetype -DCMAKE_TOOLCHAIN_FILE=/home/sylar/android-cmake-master/android.toolchain.cmake -DANDROID_NATIVE_API_LEVEL=14
-
-==== Building Freeimage ====
-Then you must build freeimage. I used this tutorial for building.
-
-http://freeimage.sourceforge.net/
-
-http://recursify.com/blog/2013/05/25/building-freeimage-for-android
-
-
-
 Since my phone supports architecture armeabi-v7a I used this architecture for building. For example.
 ndk-build APP_PLATFORM=android-14 APP_ABI=armeabi-v7a
-==== Building Ogre3D ====
-Next you must build ogre from source. I build ogre 1.9 with this tutorial.
+==== Building OSG ====
 
-http://www.ogre3d.org/tikiwiki/tiki-index.php?page=CMake+Quick+Start+Guide&tikiversion=Android
+http://www.openscenegraph.org/index.php/documentation/platform-specifics/android/43-building-openscenegraph-for-android-3-0-2
 
-Next you must add it
-
-
-if (!mEglConfig)
-{
-  _createInternalResources(mWindow, config);
-  mHwGamma = false;
-}
-        
-mEglDisplay = mGLSupport->getGLDisplay();
-
-To
-RenderSystems/GLES2/src/EGL/Android/OgreAndroidEGLWindow.cpp
-
-Next you must comment this 
- else if (mSoftwareMipmap)
-        {
-/*
-            if (data.getWidth() != data.rowPitch)
-            {
-                OGRE_EXCEPT(Exception::ERR_INVALIDPARAMS,
-                            "Unsupported texture format",
-                            "GLES2TextureBuffer::upload");
-            }
-
-            if (data.getHeight() * data.getWidth() != data.slicePitch)
-            {
-                OGRE_EXCEPT(Exception::ERR_INVALIDPARAMS,
-                            "Unsupported texture format",
-                            "GLES2TextureBuffer::upload");
-            }
-*/
-            if ((data.getWidth() * PixelUtil::getNumElemBytes(data.format)) & 3)
-            {
-                // Standard alignment of 4 is not right
-                OGRE_CHECK_GL_ERROR(glPixelStorei(GL_UNPACK_ALIGNMENT, 1));
-            }
-
-            buildMipmaps(data);
-        }
-        else
-        {
-/*
-            if (data.getWidth() != data.rowPitch)
-            {
-                OGRE_EXCEPT(Exception::ERR_INVALIDPARAMS,
-                            "Unsupported texture format",
-                            "GLES2TextureBuffer::upload");
-            }
-
-            if (data.getHeight() * data.getWidth() != data.slicePitch)
-            {
-                OGRE_EXCEPT(Exception::ERR_INVALIDPARAMS,
-                            "Unsupported texture format",
-                            "GLES2TextureBuffer::upload");
-            }
-*/
-in
-RenderSystems/GLES2/src/OgreGLES2HardwarePixelBuffer.cpp
-If you  not do it, the locations in game will not be loaded .
-
-Next you must change Eglcontext in function 
-::EGLContext EGLSupport::createNewContext(EGLDisplay eglDisplay,
-					      ::EGLConfig glconfig,
-                                              ::EGLContext shareList) const 
-if file
-/RenderSystems/GLES2/src/EGL/OgreEGLSupport.cpp
-from 
- context = eglCreateContext(mGLDisplay, glconfig, shareList, contextAttrs);
- context = eglCreateContext(mGLDisplay, glconfig, 0, contextAttrs);
-to
-context = eglGetCurrentContext(); .
-Next you must comment this lines in
-RenderSystems/GLES2/src/OgreGLES2RenderSystem.cpp
-/*
-        if (mGLSupport->checkExtension("GL_IMG_texture_compression_pvrtc") ||
-            mGLSupport->checkExtension("GL_EXT_texture_compression_dxt1") ||
-            mGLSupport->checkExtension("GL_EXT_texture_compression_s3tc") ||
-            mGLSupport->checkExtension("GL_OES_compressed_ETC1_RGB8_texture") ||
-            mGLSupport->checkExtension("GL_AMD_compressed_ATC_texture"))
-        {
-            rsc->setCapability(RSC_TEXTURE_COMPRESSION);
-
-            if(mGLSupport->checkExtension("GL_IMG_texture_compression_pvrtc") ||
-               mGLSupport->checkExtension("GL_IMG_texture_compression_pvrtc2"))
-                rsc->setCapability(RSC_TEXTURE_COMPRESSION_PVRTC);
-				
-            if(mGLSupport->checkExtension("GL_EXT_texture_compression_dxt1") && 
-               mGLSupport->checkExtension("GL_EXT_texture_compression_s3tc"))
-                rsc->setCapability(RSC_TEXTURE_COMPRESSION_DXT);
-
-            if(mGLSupport->checkExtension("GL_OES_compressed_ETC1_RGB8_texture"))
-                rsc->setCapability(RSC_TEXTURE_COMPRESSION_ETC1);
-
-            if(gleswIsSupported(3, 0))
-                rsc->setCapability(RSC_TEXTURE_COMPRESSION_ETC2);
-
-			if(mGLSupport->checkExtension("GL_AMD_compressed_ATC_texture"))
-                rsc->setCapability(RSC_TEXTURE_COMPRESSION_ATC);
-        }
-*/
-
-If your device based on Tegra gpu you should also use this patch for Ogre
-https://bitbucket.org/sinbad/ogre/pull-request/390/fix-for-nvidia-tegra-3-for-android
-
-And you should modified OgreAndroidEGLWindow.cpp in GLES2RenderSystem to this:
-                   eglContext = eglGetCurrentContext();
-137-               if (eglContext)
-137+               if (!eglContext)
-138                {
-140                    OGRE_EXCEPT(Exception::ERR_RENDERINGAPI_ERROR,
-141                                "currentGLContext was specified with no current GL context",
-142                                "EGLWindow::create");
-143                }
-144                
-145-               eglContext = eglGetCurrentContext();
-146                mEglSurface = eglGetCurrentSurface(EGL_DRAW)
-
-Also in Ogre 1.9 forgot to add this line to  cmake file
-if(ANDROID)
-  set(CMAKE_FIND_ROOT_PATH ${OGRE_DEPENDENCIES_DIR} "${CMAKE_FIND_ROOT_PATH}")
-endif()
-
+http://www.openscenegraph.org/index.php/documentation/platform-specifics/android/178-building-openscenegraph-for-android-3-4
 
 ==== Building MyGUI ====
-Then you must build mygui for ogre
+Then you must build mygui with 1 render system
 
 https://github.com/MyGUI/mygui
 
@@ -239,7 +98,4 @@ for example :
  /eclipse-project/app/src/main/jniLibs/armeabi-v7a
 Then you must import this java project in android-studio , which included with the android sdk.
 Also you need to import the configuration files openmw.
-If you want mipmapping worked on the textures, then you must rebuild  mipmaps on all textures .
-The easiest way to use this program
-http://www.nexusmods.com/skyrim/mods/12801
 
