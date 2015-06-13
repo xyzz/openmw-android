@@ -188,6 +188,7 @@ public class ScreenResolutionHelper {
             @Override
             public void afterTextChanged(Editable s) {
 
+                PreferencesHelper.setPreferences(Constants.SCREEN_WIDTH, s.toString(), activity);
                 try {
                     Writer.write(s.toString(), Constants.configsPath
                             + "/config/openmw/settings.cfg", "resolution x");
@@ -213,6 +214,7 @@ public class ScreenResolutionHelper {
 
             @Override
             public void afterTextChanged(Editable s) {
+                PreferencesHelper.setPreferences(Constants.SCREEN_HEIGHT, s.toString(), activity);
 
                 try {
                     Writer.write(s.toString(), Constants.configsPath
