@@ -147,5 +147,9 @@ public class Constants {
 	public static String commandLineData = "";
 	public static boolean contols = true;
 	public static int hideControls =-1;
+	public static final String SCREEN_WIDTH = "screen_width";
+	public static final String SCREEN_HEIGHT = "screen_height";
+	public static final String RADIO_BUTTON_MODE = "radio_button_mode";
+
 
 }

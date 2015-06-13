@@ -13,6 +13,7 @@ import ui.files.Writer;
 import com.libopenmw.openmw.R;
 
 import constants.Constants;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -38,117 +39,117 @@ import android.widget.Toast;
 import android.widget.TabHost.OnTabChangeListener;
 
 public class MainActivity extends FragmentActivity implements
-		OnTabChangeListener, OnPageChangeListener {
+        OnTabChangeListener, OnPageChangeListener {
 
 
-	private TabsPagerAdapter mAdapter;
+    private TabsPagerAdapter mAdapter;
 
-	private ViewPager mViewPager;
+    private ViewPager mViewPager;
 
-	private TabHost mTabHost;
+    private TabHost mTabHost;
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
 
-		super.onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.main);
+        setContentView(R.layout.main);
 
-		PreferencesHelper.getPrefValues(this);
-		if (Constants.hideControls == -1 || Constants.hideControls == 0) {
-			Constants.contols = true;
-		} else if (Constants.hideControls == 1) {
-			Constants.contols = false;
-		}
-		mViewPager = (ViewPager) findViewById(R.id.viewpager);
+        PreferencesHelper.getPrefValues(this);
+        if (Constants.hideControls == -1 || Constants.hideControls == 0) {
+            Constants.contols = true;
+        } else if (Constants.hideControls == 1) {
+            Constants.contols = false;
+        }
+        mViewPager = (ViewPager) findViewById(R.id.viewpager);
 
-		initialiseTabHost();
+        initialiseTabHost();
 
-		mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
+        mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
 
-		mViewPager.setAdapter(mAdapter);
+        mViewPager.setAdapter(mAdapter);
 
-		mViewPager.setOnPageChangeListener(MainActivity.this);
-		Button startGame = (Button) findViewById(R.id.start);
-		ScreenScaler.changeTextSize(startGame, 2.3f);
-		startGame.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				try {
+        mViewPager.setOnPageChangeListener(MainActivity.this);
+        Button startGame = (Button) findViewById(R.id.start);
+        ScreenScaler.changeTextSize(startGame, 2.3f);
+        startGame.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                try {
 
-					Intent intent = new Intent(MainActivity.this,
-							GameActivity.class);
-					finish();
+                    Intent intent = new Intent(MainActivity.this,
+                            GameActivity.class);
+                    finish();
 
-					MainActivity.this.startActivity(intent);
+                    MainActivity.this.startActivity(intent);
 
-				} catch (Exception e) {
-					Toast.makeText(getApplicationContext(),
-							"Game can not be loaded", Toast.LENGTH_LONG).show();
+                } catch (Exception e) {
+                    Toast.makeText(getApplicationContext(),
+                            "Game can not be loaded", Toast.LENGTH_LONG).show();
 
-				}
+                }
 
-			}
+            }
 
-		});
+        });
 
-	}
+    }
 
-	private static void AddTab(MainActivity activity, TabHost tabHost,
-			TabHost.TabSpec tabSpec) {
+    private static void AddTab(MainActivity activity, TabHost tabHost,
+                               TabHost.TabSpec tabSpec) {
 
-		tabSpec.setContent(new MyTabFactory(activity));
+        tabSpec.setContent(new MyTabFactory(activity));
 
-		tabHost.addTab(tabSpec);
+        tabHost.addTab(tabSpec);
 
-	}
+    }
 
-	public void onTabChanged(String tag) {
+    public void onTabChanged(String tag) {
 
-		int pos = this.mTabHost.getCurrentTab();
+        int pos = this.mTabHost.getCurrentTab();
 
-		this.mViewPager.setCurrentItem(pos);
+        this.mViewPager.setCurrentItem(pos);
 
-	}
+    }
 
-	@Override
-	public void onPageScrollStateChanged(int arg0) {
+    @Override
+    public void onPageScrollStateChanged(int arg0) {
 
-	}
+    }
 
-	@Override
-	public void onPageScrolled(int arg0, float arg1, int arg2) {
+    @Override
+    public void onPageScrolled(int arg0, float arg1, int arg2) {
 
-		int pos = this.mViewPager.getCurrentItem();
+        int pos = this.mViewPager.getCurrentItem();
 
-		this.mTabHost.setCurrentTab(pos);
+        this.mTabHost.setCurrentTab(pos);
 
-	}
+    }
 
-	@Override
-	public void onPageSelected(int arg0) {
+    @Override
+    public void onPageSelected(int arg0) {
 
-	}
+    }
 
-	private void initialiseTabHost() {
+    private void initialiseTabHost() {
 
-		mTabHost = (TabHost) findViewById(android.R.id.tabhost);
+        mTabHost = (TabHost) findViewById(android.R.id.tabhost);
 
-		mTabHost.setup();
+        mTabHost.setup();
 
-		MainActivity.AddTab(this, this.mTabHost,
-				this.mTabHost.newTabSpec("General").setIndicator("General"));
-		MainActivity.AddTab(this, this.mTabHost,
-				this.mTabHost.newTabSpec("Controls").setIndicator("Controls"));
-		MainActivity.AddTab(this, this.mTabHost,
-				this.mTabHost.newTabSpec("Settings").setIndicator("Settings"));
-		MainActivity.AddTab(this, this.mTabHost,
-				this.mTabHost.newTabSpec("Plugins").setIndicator("Plugins"));
-		MainActivity.AddTab(this, this.mTabHost,
-				this.mTabHost.newTabSpec("Graphics").setIndicator("Graphics"));
+        MainActivity.AddTab(this, this.mTabHost,
+                this.mTabHost.newTabSpec("General").setIndicator("General"));
+        MainActivity.AddTab(this, this.mTabHost,
+                this.mTabHost.newTabSpec("Controls").setIndicator("Controls"));
+        MainActivity.AddTab(this, this.mTabHost,
+                this.mTabHost.newTabSpec("Settings").setIndicator("Settings"));
+        MainActivity.AddTab(this, this.mTabHost,
+                this.mTabHost.newTabSpec("Plugins").setIndicator("Plugins"));
+        MainActivity.AddTab(this, this.mTabHost,
+                this.mTabHost.newTabSpec("Graphics").setIndicator("Graphics"));
 
 
-		mTabHost.setOnTabChangedListener(this);
+        mTabHost.setOnTabChangedListener(this);
 
-	}
+    }
 
 }

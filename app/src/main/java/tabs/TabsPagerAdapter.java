@@ -26,7 +26,6 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
                 return new FragmentControls();
             case 2:
                 return new FragmentSettings();
-
             case 3:
                 return new FragmentPlugins();
             case 4:

@@ -12,37 +12,45 @@
         android:gravity="left|center"
         android:text="Screen resolution:" />
 
-    <RadioButton
-        android:id="@+id/radioButton"
+    <RadioGroup
+        android:id="@+id/radioGroup"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="4"
-        android:checked="false"
-        android:text="Normal (1x)" />
+        android:layout_weight="1.2"
+        android:orientation="vertical">
 
-    <RadioButton
-        android:id="@+id/radioButton2"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="4"
-        android:checked="false"
-        android:text="Half (0.5x)" />
+        <RadioButton
+            android:id="@+id/radioButtonNormalResolution"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:checked="false"
+            android:text="Normal (1x)" />
 
-    <RadioButton
-        android:id="@+id/radioButton3"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="4"
-        android:checked="false"
-        android:text="Double (2x)" />
+        <RadioButton
+            android:id="@+id/radioButtonHalfResolution"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:checked="false"
+            android:text="Half (0.5x)" />
 
-    <RadioButton
-        android:id="@+id/radioButton4"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="4"
-        android:checked="false"
-        android:text="Custom" />
+        <RadioButton
+            android:id="@+id/radioButtonDoubleResolution"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:checked="false"
+            android:text="Double (2x)" />
+
+        <RadioButton
+            android:id="@+id/radioButtonCustomResolution"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:checked="false"
+            android:text="Custom" />
+    </RadioGroup>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -62,10 +70,9 @@
             android:id="@+id/X"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="4"
+            android:layout_weight="4.5"
             android:gravity="center"
             android:text="X"
-            android:textSize="35sp"
             android:textStyle="bold" />
 
         <EditText
