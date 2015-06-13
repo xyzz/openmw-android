@@ -40,8 +40,6 @@ public class FragmentGeneral extends Fragment {
     private LinearLayout linlaHeaderProgress;
     private static final int REQUEST_PATH = 1;
     private static boolean isConfigsPath = false;
-    private int screenWidth = 0;
-    private int screenHeight = 0;
 
 
     @Override
@@ -53,7 +51,6 @@ public class FragmentGeneral extends Fragment {
         View rootView = inflater.inflate(R.layout.general, container, false);
 
         PreferencesHelper.getPrefValues(this.getActivity());
-        getScreenWidthAndHeight();
 
         setupViews(rootView);
         return rootView;
@@ -128,18 +125,6 @@ public class FragmentGeneral extends Fragment {
 
     }
 
-    private void writeScreenDataToFile(String screenWidth, String screenHeight) {
-        try {
-            Writer.write(screenWidth, Constants.configsPath
-                    + "/config/openmw/settings.cfg", "resolution x");
-            Writer.write(screenHeight, Constants.configsPath
-                    + "/config/openmw/settings.cfg", "resolution y");
-        } catch (Exception e) {
-
-        }
-
-    }
-
 
     private void copyFiles() {
         linlaHeaderProgress.setVisibility(View.VISIBLE);
@@ -198,31 +183,9 @@ public class FragmentGeneral extends Fragment {
                     Writer.write("" + Settings.getFloat(Constants.TOUCH_SENSITIVITY, 0.01f), Constants.configsPath
                             + "/config/openmw/settings.cfg", Constants.TOUCH_SENSITIVITY);
 
+                    ScreenResolutionHelper screenHelper = new ScreenResolutionHelper(FragmentGeneral.this.getActivity());
+                    screenHelper.writeScreenResolution();
 
-                    String radioButtonMode = PreferencesHelper.getPreferences(Constants.RADIO_BUTTON_MODE, FragmentGeneral.this.getActivity(), "normalResolution");
-                    switch (radioButtonMode) {
-
-                        case "normalResolution":
-                            writeScreenDataToFile("" + screenWidth, "" + screenHeight);
-                            break;
-
-                        case "halfResolution":
-                            writeScreenDataToFile("" + screenWidth / 2, "" + screenHeight / 2);
-                            break;
-
-                        case "customResolution":
-                            writeScreenDataToFile(PreferencesHelper.getPreferences(Constants.SCREEN_WIDTH, FragmentGeneral.this.getActivity(), "" + screenWidth),
-                                    PreferencesHelper.getPreferences(Constants.SCREEN_HEIGHT, FragmentGeneral.this.getActivity(), "" + screenHeight));
-                            break;
-
-                        case "doubleResolution":
-                            writeScreenDataToFile("" + screenWidth * 2, "" + screenHeight * 2);
-                            break;
-
-                        default:
-                            break;
-
-                    }
 
                 } catch (Exception e) {
                 }
@@ -231,15 +194,6 @@ public class FragmentGeneral extends Fragment {
             }
         });
         th.start();
-    }
-
-
-    private void getScreenWidthAndHeight() {
-        Display display = FragmentGeneral.this.getActivity().getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        screenWidth = size.x;
-        screenHeight = size.y;
     }
 
 
