@@ -143,6 +143,9 @@ public class MainActivity extends FragmentActivity implements
 				this.mTabHost.newTabSpec("Settings").setIndicator("Settings"));
 		MainActivity.AddTab(this, this.mTabHost,
 				this.mTabHost.newTabSpec("Plugins").setIndicator("Plugins"));
+		MainActivity.AddTab(this, this.mTabHost,
+				this.mTabHost.newTabSpec("Graphics").setIndicator("Graphics"));
+
 
 		mTabHost.setOnTabChangedListener(this);
 

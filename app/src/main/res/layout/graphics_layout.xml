@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="4.4"
+        android:gravity="left|center"
+        android:text="Screen resolution:" />
+
+    <RadioButton
+        android:id="@+id/radioButton"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="4"
+        android:checked="false"
+        android:text="Normal (1x)" />
+
+    <RadioButton
+        android:id="@+id/radioButton2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="4"
+        android:checked="false"
+        android:text="Half (0.5x)" />
+
+    <RadioButton
+        android:id="@+id/radioButton3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="4"
+        android:checked="false"
+        android:text="Double (2x)" />
+
+    <RadioButton
+        android:id="@+id/radioButton4"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="4"
+        android:checked="false"
+        android:text="Custom" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="4"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/width"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:gravity="center"
+            android:inputType="number" />
+
+        <TextView
+            android:id="@+id/X"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:gravity="center"
+            android:text="X"
+            android:textSize="35sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/height"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:gravity="center"
+            android:inputType="number" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="2" />
+
+    </LinearLayout>
+</LinearLayout>
