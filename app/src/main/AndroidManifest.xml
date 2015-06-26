@@ -24,13 +24,13 @@
         <activity
             android:name="ui.activity.GameActivity"
             android:configChanges="keyboardHidden|orientation"
-            android:theme="@android:style/Theme.DeviceDefault.NoActionBar.Fullscreen">
+            android:theme="@style/Theme.AppCompat.FullScreen">
         android:screenOrientation="sensorLandscape"></activity>
         <activity
             android:name="ui.activity.ConfigureControls"
             android:configChanges="keyboardHidden|orientation"
-            android:label="@string/app_name"
-            android:screenOrientation="sensorLandscape"></activity>
+            android:theme="@style/Theme.AppCompat.FullScreen">
+        android:screenOrientation="sensorLandscape"></activity>
         <activity
             android:name="com.libopenmw.openmw.FileChooser"
             android:label="Choose File"
