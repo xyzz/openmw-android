@@ -24,12 +24,12 @@
         <activity
             android:name="ui.activity.GameActivity"
             android:configChanges="keyboardHidden|orientation"
-            android:theme="@style/Theme.AppCompat.FullScreen">
+            android:theme="@style/Theme.AppCompat.FullScreen"
         android:screenOrientation="sensorLandscape"></activity>
         <activity
             android:name="ui.activity.ConfigureControls"
             android:configChanges="keyboardHidden|orientation"
-            android:theme="@style/Theme.AppCompat.FullScreen">
+            android:theme="@style/Theme.AppCompat.FullScreen"
         android:screenOrientation="sensorLandscape"></activity>
         <activity
             android:name="com.libopenmw.openmw.FileChooser"
