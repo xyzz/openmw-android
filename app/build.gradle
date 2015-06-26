@@ -27,4 +27,5 @@ dependencies {
     compile files('libs/libsdl2.jar')
     compile 'com.android.support:support-v4:22.1.1'
     compile files('libs/fileexplorer.jar')
+    compile 'com.android.support:appcompat-v7:22.1.1'
 }

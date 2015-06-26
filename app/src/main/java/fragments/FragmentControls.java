@@ -57,7 +57,7 @@ public class FragmentControls extends Fragment {
 
 		Button buttonControls = (Button) rootView
 				.findViewById(R.id.buttoncontrols);
-		ScreenScaler.changeTextSize(buttonControls, 2.2f);
+		ScreenScaler.changeTextSize(buttonControls, 2.5f);
 		buttonControls.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 
@@ -71,7 +71,7 @@ public class FragmentControls extends Fragment {
 
 		Button buttonResetControls = (Button) rootView
 				.findViewById(R.id.buttonresetcontrols);
-		ScreenScaler.changeTextSize(buttonResetControls, 2.2f);
+		ScreenScaler.changeTextSize(buttonResetControls, 2.5f);
 
 		buttonResetControls.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {

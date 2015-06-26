@@ -71,7 +71,7 @@ public class MainActivity extends FragmentActivity implements
 
         mViewPager.setOnPageChangeListener(MainActivity.this);
         Button startGame = (Button) findViewById(R.id.start);
-        ScreenScaler.changeTextSize(startGame, 2.3f);
+        ScreenScaler.changeTextSize(startGame, 2.5f);
         startGame.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 try {

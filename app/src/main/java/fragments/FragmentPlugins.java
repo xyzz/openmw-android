@@ -69,8 +69,8 @@ public class FragmentPlugins extends Fragment {
     private void setupViews(View rootView) {
         pluginInfo = (TextView) rootView.findViewById(R.id.pluginsInfo);
         ScreenScaler.changeTextSize(pluginInfo, 4.8f);
-        ScreenScaler.changeTextSize(totalModsCount, 2f);
-        ScreenScaler.changeTextSize(enabledModsCount, 2f);
+        ScreenScaler.changeTextSize(totalModsCount, 1.5f);
+        ScreenScaler.changeTextSize(enabledModsCount, 1.5f);
 
 
         Button buttonSavePlutins = (Button) rootView
@@ -81,20 +81,20 @@ public class FragmentPlugins extends Fragment {
         Button buttonEnableMods = (Button) rootView
                 .findViewById(R.id.buttonEnableAllMods);
 
-        ScreenScaler.changeTextSize(buttonSavePlutins, 2.2f);
+        ScreenScaler.changeTextSize(buttonSavePlutins, 3f);
 
-        ScreenScaler.changeTextSize(buttonDisableMods, 2.2f);
-        ScreenScaler.changeTextSize(buttonEnableMods, 2.2f);
+        ScreenScaler.changeTextSize(buttonDisableMods, 3f);
+        ScreenScaler.changeTextSize(buttonEnableMods, 3f);
 
 
         Button buttonExportMods = (Button) rootView
                 .findViewById(R.id.buttonExportMods);
-        ScreenScaler.changeTextSize(buttonExportMods, 2.2f);
+        ScreenScaler.changeTextSize(buttonExportMods, 3f);
 
         Button buttonImportMods = (Button) rootView
                 .findViewById(R.id.buttonImportMods);
 
-        ScreenScaler.changeTextSize(buttonImportMods, 2.2f);
+        ScreenScaler.changeTextSize(buttonImportMods, 3f);
 
         buttonSavePlutins.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

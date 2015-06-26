@@ -41,7 +41,7 @@ public class ScreenResolutionHelper {
     }
 
     public void setupViews(View rootView) {
-        ScreenScaler.changeTextSize(rootView.findViewById(R.id.textView), 1.8f);
+        ScreenScaler.changeTextSize(rootView.findViewById(R.id.textView), 1.4f);
         ScreenScaler.changeTextSize(rootView.findViewById(R.id.X), 2.5f);
         RadioButton normalResolution = (RadioButton) rootView.findViewById(R.id.radioButtonNormalResolution);
         ScreenScaler.changeTextSize(normalResolution, 3f);

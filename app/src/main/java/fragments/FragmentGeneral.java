@@ -71,16 +71,16 @@ public class FragmentGeneral extends Fragment {
         ScreenScaler.changeTextSize(browseDataPath, 2.5f);
 
 
-        ScreenScaler.changeTextSize(configsText, 2f);
-        ScreenScaler.changeTextSize(dataText, 2f);
-        ScreenScaler.changeTextSize(commandLineText, 2f);
-        ScreenScaler.changeTextSize(buttonCopyFIles, 2.3f);
+        ScreenScaler.changeTextSize(configsText, 2.3f);
+        ScreenScaler.changeTextSize(dataText, 2.3f);
+        ScreenScaler.changeTextSize(commandLineText, 2.3f);
+        ScreenScaler.changeTextSize(buttonCopyFIles, 2.5f);
         ScreenScaler
-                .changeTextSize(rootView.findViewById(R.id.textView5), 2.5f);
+                .changeTextSize(rootView.findViewById(R.id.textView5), 2f);
         ScreenScaler
-                .changeTextSize(rootView.findViewById(R.id.textView2), 2.5f);
+                .changeTextSize(rootView.findViewById(R.id.textView2), 2f);
         ScreenScaler
-                .changeTextSize(rootView.findViewById(R.id.textView1), 2.5f);
+                .changeTextSize(rootView.findViewById(R.id.textView1), 2f);
 
         linlaHeaderProgress = (LinearLayout) rootView
                 .findViewById(R.id.linlaHeaderProgress);

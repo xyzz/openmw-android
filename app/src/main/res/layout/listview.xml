@@ -9,7 +9,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="17.5"
+        android:layout_weight="17"
         android:orientation="horizontal">
 
         <Button
@@ -17,6 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="5"
+            android:gravity="center"
             android:text="Save"></Button>
 
         <Button
@@ -24,6 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="5"
+            android:gravity="center"
             android:text="Export"></Button>
 
         <Button
@@ -31,6 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="5"
+            android:gravity="center"
             android:text="Import"></Button>
 
     </LinearLayout>
@@ -73,7 +76,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="11"
+                android:layout_weight="9"
                 android:orientation="horizontal">
 
 

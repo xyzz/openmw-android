@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/textView2"
             android:layout_width="match_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="match_parent"
             android:layout_weight="4.8"
             android:gravity="left|center"
             android:text="Path to configs files" />
@@ -19,7 +19,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="5"
+            android:layout_weight="4.6"
             android:orientation="horizontal">
 
             <EditText
@@ -34,6 +34,7 @@
                 android:id="@+id/buttonBrowseConfigsPath"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:gravity="center"
                 android:layout_weight="15"
                 android:text="Browse" />
         </LinearLayout>
@@ -41,7 +42,7 @@
         <TextView
             android:id="@+id/textView1"
             android:layout_width="match_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="match_parent"
             android:layout_weight="4.8"
             android:gravity="left|center"
             android:text="Path to game files" />
@@ -49,13 +50,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="5"
+            android:layout_weight="4.6"
             android:orientation="horizontal">
 
             <EditText
                 android:id="@+id/editText1"
                 android:layout_width="match_parent"
-                android:layout_height="fill_parent"
+                android:layout_height="match_parent"
                 android:layout_alignLeft="@+id/textView2"
                 android:layout_weight="5"
                 android:gravity="left|center"
@@ -64,6 +65,7 @@
             <Button
                 android:id="@+id/buttonBrowseDataPath"
                 android:layout_width="match_parent"
+                android:gravity="center"
                 android:layout_height="match_parent"
                 android:layout_weight="15"
                 android:text="Browse" />
@@ -73,7 +75,7 @@
         <TextView
             android:id="@+id/textView5"
             android:layout_width="match_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="match_parent"
             android:layout_weight="4.8"
             android:gravity="left|center"
             android:text="Command Line"
@@ -83,16 +85,17 @@
         <EditText
             android:id="@+id/commandLine"
             android:layout_width="match_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight="5"
+            android:layout_height="match_parent"
+            android:layout_weight="4.6"
             android:gravity="left|center"
             android:inputType="text" />
 
         <Button
             android:id="@+id/buttoncopy"
             android:layout_width="match_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight="4.7"
+            android:layout_height="match_parent"
+            android:layout_weight="4.6"
+            android:gravity="center"
             android:text="Copy config files to sdcard" />
     </LinearLayout>
 
