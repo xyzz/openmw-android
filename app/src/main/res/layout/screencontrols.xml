@@ -88,6 +88,7 @@
             android:layout_width="50dip"
             android:layout_height="50dip"
             android:focusable="true"
+            android:gravity="center"
             android:focusableInTouchMode="true"
             android:scaleType="fitXY" />
 
@@ -96,6 +97,7 @@
             android:layout_width="50dip"
             android:layout_height="50dip"
             android:focusable="true"
+            android:gravity="center"
             android:focusableInTouchMode="true"
             android:scaleType="fitXY"
             android:text="QP" />
@@ -105,6 +107,7 @@
             android:layout_width="50dip"
             android:layout_height="50dip"
             android:focusable="true"
+            android:gravity="center"
             android:focusableInTouchMode="true"
             android:scaleType="fitXY"
             android:text="F1" />

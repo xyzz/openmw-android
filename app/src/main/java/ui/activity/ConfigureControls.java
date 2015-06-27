@@ -1420,6 +1420,7 @@ public class ConfigureControls extends Activity {
 		ScreenScaler.textScaler(buttonSize1, 4);
 		ScreenScaler.textScaler(showPanel,4 );
 		ScreenScaler.textScaler(f1,4 );
+		ScreenScaler.textScaler(button,2 );
 
 
 	}
