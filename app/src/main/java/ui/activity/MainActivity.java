@@ -1,52 +1,36 @@
 package ui.activity;
 
-import java.io.File;
-
-import screen.ScreenScaler;
-import tabs.MyTabFactory;
-import tabs.TabsPagerAdapter;
-import ui.files.CopyFilesFromAssets;
-import ui.files.ParseJson;
-import ui.files.PreferencesHelper;
-import ui.files.Writer;
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.Button;
 
 import com.libopenmw.openmw.R;
+import com.mikepenz.iconics.typeface.FontAwesome;
+import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.model.DividerDrawerItem;
+import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
+import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
+import com.mikepenz.materialdrawer.model.SectionDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 import constants.Constants;
+import fragments.FragmentControls;
+import fragments.FragmentGeneral;
+import fragments.FragmentGraphics;
+import fragments.FragmentPlugins;
+import fragments.FragmentSettings;
+import screen.ScreenScaler;
+import ui.files.PreferencesHelper;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
-import android.os.Bundle;
-import android.os.Environment;
-import android.os.Handler;
-import android.os.Message;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.LinearLayout;
-import android.widget.TabHost;
-import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.TabHost.OnTabChangeListener;
+public class MainActivity extends ActionBarActivity {
 
-public class MainActivity extends FragmentActivity implements
-        OnTabChangeListener, OnPageChangeListener {
-
-
-    private TabsPagerAdapter mAdapter;
-
-    private ViewPager mViewPager;
-
-    private TabHost mTabHost;
+    private Drawer.Result drawerResult = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,102 +38,123 @@ public class MainActivity extends FragmentActivity implements
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.main);
-
         PreferencesHelper.getPrefValues(this);
         if (Constants.hideControls == -1 || Constants.hideControls == 0) {
             Constants.contols = true;
         } else if (Constants.hideControls == 1) {
             Constants.contols = false;
         }
-        mViewPager = (ViewPager) findViewById(R.id.viewpager);
 
-        initialiseTabHost();
-
-        mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
-
-        mViewPager.setAdapter(mAdapter);
-
-        mViewPager.setOnPageChangeListener(MainActivity.this);
-        Button startGame = (Button) findViewById(R.id.start);
-        ScreenScaler.changeTextSize(startGame, 2.5f);
-        startGame.setOnClickListener(new View.OnClickListener() {
+        Button buttonStartGame;
+        buttonStartGame = (Button) findViewById(R.id.button_start_game);
+        ScreenScaler.changeTextSize(buttonStartGame,2f);
+        buttonStartGame.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                try {
-
-                    Intent intent = new Intent(MainActivity.this,
-                            GameActivity.class);
-                    finish();
-
-                    MainActivity.this.startActivity(intent);
-
-                } catch (Exception e) {
-                    Toast.makeText(getApplicationContext(),
-                            "Game can not be loaded", Toast.LENGTH_LONG).show();
-
-                }
-
+                startGame();
             }
-
         });
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("General");
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        initializeDrawer(toolbar);
+        getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, new FragmentGeneral()).commit();
+
 
     }
 
-    private static void AddTab(MainActivity activity, TabHost tabHost,
-                               TabHost.TabSpec tabSpec) {
 
-        tabSpec.setContent(new MyTabFactory(activity));
+    private void initializeDrawer(final Toolbar toolbar) {
+        drawerResult = new Drawer()
+                .withActivity(this)
+                .withToolbar(toolbar)
+                .withActionBarDrawerToggle(true)
+                .withHeader(R.layout.drawer_header)
+                .addDrawerItems(
+                        new PrimaryDrawerItem().withName("Start game").withIcon(FontAwesome.Icon.faw_play).withIdentifier(1),
+                        new PrimaryDrawerItem().withName("General").withIcon(FontAwesome.Icon.faw_home).withIdentifier(2),
+                        new PrimaryDrawerItem().withName("Screen Controls").withIcon(FontAwesome.Icon.faw_gamepad).withIdentifier(3),
+                        new SectionDrawerItem().withName("Settings"),
+                        new SecondaryDrawerItem().withName("Settings").withIcon(FontAwesome.Icon.faw_anchor).withIdentifier(4),
+                        new SecondaryDrawerItem().withName("Graphics").withIcon(FontAwesome.Icon.faw_desktop).withIdentifier(5),
+                        new DividerDrawerItem(),
+                        new SecondaryDrawerItem().withName("Plugins").withIcon(FontAwesome.Icon.faw_file_archive_o).withIdentifier(6)
+                )
+                .withOnDrawerListener(new Drawer.OnDrawerListener() {
+                    @Override
+                    public void onDrawerOpened(View drawerView) {
+                        InputMethodManager inputMethodManager = (InputMethodManager) MainActivity.this.getSystemService(Activity.INPUT_METHOD_SERVICE);
+                        inputMethodManager.hideSoftInputFromWindow(MainActivity.this.getCurrentFocus().getWindowToken(), 0);
+                    }
 
-        tabHost.addTab(tabSpec);
+                    @Override
+                    public void onDrawerClosed(View drawerView) {
+                    }
+                })
+                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id, IDrawerItem drawerItem) {
+                        if (drawerItem != null) {
+                            switch (drawerItem.getIdentifier()) {
+                                case 1:
+                                    startGame();
+                                    break;
+                                case 2:
+                                    toolbar.setTitle("General");
+                                    MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, new FragmentGeneral()).commit();
+                                    break;
+                                case 3:
+                                    toolbar.setTitle("Screen Controls");
+                                    MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, new FragmentControls()).commit();
+                                    break;
+
+                                case 4:
+                                    toolbar.setTitle("Settings");
+                                    MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, new FragmentSettings()).commit();
+                                    break;
+                                case 5:
+                                    toolbar.setTitle("Graphics");
+                                    MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, new FragmentGraphics()).commit();
+                                    break;
+                                case 6:
+                                    toolbar.setTitle("Plugins");
+                                    MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, new FragmentPlugins()).commit();
+                                    break;
+                                default:
+                                    break;
+
+
+                            }
+                        }
+
+                    }
+                })
+                .build();
 
     }
 
-    public void onTabChanged(String tag) {
+    private void startGame() {
 
-        int pos = this.mTabHost.getCurrentTab();
+        Intent intent = new Intent(MainActivity.this,
+                GameActivity.class);
+        finish();
 
-        this.mViewPager.setCurrentItem(pos);
-
+        MainActivity.this.startActivity(intent);
     }
+
 
     @Override
-    public void onPageScrollStateChanged(int arg0) {
-
+    public void onBackPressed() {
+        if (drawerResult.isDrawerOpen()) {
+            drawerResult.closeDrawer();
+        } else {
+            super.onBackPressed();
+        }
     }
 
-    @Override
-    public void onPageScrolled(int arg0, float arg1, int arg2) {
-
-        int pos = this.mViewPager.getCurrentItem();
-
-        this.mTabHost.setCurrentTab(pos);
-
-    }
-
-    @Override
-    public void onPageSelected(int arg0) {
-
-    }
-
-    private void initialiseTabHost() {
-
-        mTabHost = (TabHost) findViewById(android.R.id.tabhost);
-
-        mTabHost.setup();
-
-        MainActivity.AddTab(this, this.mTabHost,
-                this.mTabHost.newTabSpec("General").setIndicator("General"));
-        MainActivity.AddTab(this, this.mTabHost,
-                this.mTabHost.newTabSpec("Controls").setIndicator("Controls"));
-        MainActivity.AddTab(this, this.mTabHost,
-                this.mTabHost.newTabSpec("Settings").setIndicator("Settings"));
-        MainActivity.AddTab(this, this.mTabHost,
-                this.mTabHost.newTabSpec("Plugins").setIndicator("Plugins"));
-        MainActivity.AddTab(this, this.mTabHost,
-                this.mTabHost.newTabSpec("Graphics").setIndicator("Graphics"));
-
-
-        mTabHost.setOnTabChangedListener(this);
-
-    }
 
 }
+
+
+
