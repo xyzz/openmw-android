@@ -47,7 +47,7 @@ public class MainActivity extends ActionBarActivity {
 
         Button buttonStartGame;
         buttonStartGame = (Button) findViewById(R.id.button_start_game);
-        ScreenScaler.changeTextSize(buttonStartGame,2f);
+        ScreenScaler.changeTextSize(buttonStartGame,2.5f);
         buttonStartGame.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 startGame();
