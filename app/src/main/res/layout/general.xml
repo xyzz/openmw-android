@@ -7,6 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
         <TextView
             android:id="@+id/textView2"
             android:layout_width="match_parent"
@@ -33,10 +34,15 @@
                 android:id="@+id/buttonBrowseConfigsPath"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center"
                 android:layout_weight="15"
+                android:gravity="center"
                 android:text="Browse" />
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/black" />
 
         <TextView
             android:id="@+id/textView1"
@@ -64,12 +70,16 @@
             <Button
                 android:id="@+id/buttonBrowseDataPath"
                 android:layout_width="match_parent"
-                android:gravity="center"
                 android:layout_height="match_parent"
                 android:layout_weight="15"
+                android:gravity="center"
                 android:text="Browse" />
         </LinearLayout>
 
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/black" />
 
         <TextView
             android:id="@+id/textView5"
@@ -88,6 +98,11 @@
             android:layout_weight="4.6"
             android:gravity="left|center"
             android:inputType="text" />
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/black" />
 
         <Button
             android:id="@+id/buttoncopy"

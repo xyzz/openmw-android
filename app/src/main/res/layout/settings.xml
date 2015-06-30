@@ -1,106 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:fillViewport="true"
+    android:scrollbarStyle="insideInset"
+    android:scrollbars="vertical">
 
-    <TextView
-        android:id="@+id/textView1"
+    <TableLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="7.5"
-        android:gravity="left|center"
-        android:text="Encoding" />
+        android:stretchColumns="1">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    <Spinner
-        android:id="@+id/spinner1"
-        android:layout_width="match_parent"
-        android:gravity="left|center"
-        android:layout_height="match_parent"
-        android:layout_weight="7" />
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="7.5"
+                android:gravity="left|center"
+                android:text="Encoding" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_weight="6.8"
-        android:gravity="left|center"
-        android:text="Mipmapping  \n If the game is loaded with a black screen, set mipmapping none" />
+            <Spinner
+                android:id="@+id/spinner1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="7"
+                android:gravity="left|center" />
 
-    <Spinner
-        android:id="@+id/mipmappingspinner"
-        android:layout_width="fill_parent"
-        android:gravity="left|center"
-        android:layout_height="fill_parent"
-        android:layout_weight="7" />
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/black" />
 
-    <CheckBox
-        android:id="@+id/checkBox1"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_weight="7"
-        android:text="Show Subtitles" />
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="6.8"
+                android:gravity="left|center"
+                android:text="Mipmapping  \n If the game is loaded with a black screen, set mipmapping none" />
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_weight="7.2"
-        android:orientation="horizontal">
+            <Spinner
+                android:id="@+id/mipmappingspinner"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="7"
+                android:gravity="left|center" />
 
-        <TextView
-            android:id="@+id/touchLabel"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight="6"
-            android:gravity="center|left"
-            android:text="Touch Sensitivity" />
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/black" />
 
-        <TextView
-            android:id="@+id/touchValue"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight="7"
-            android:gravity="center|left"
-            android:text="" />
+            <CheckBox
+                android:id="@+id/checkBox1"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="7"
+                android:text="Show Subtitles" />
 
-        <SeekBar
-            android:id="@+id/touchBar"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight="3"
-            android:indeterminate="false" />
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/black" />
 
-    </LinearLayout>
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="7.2"
+                android:orientation="horizontal">
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_weight="7.2"
-        android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/touchLabel"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="6"
+                    android:gravity="center|left"
+                    android:text="Touch Sensitivity" />
 
-        <TextView
-            android:id="@+id/cameraLabel"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight="6"
-            android:gravity="center|left"
-            android:text="Camera y multiplier" />
+                <TextView
+                    android:id="@+id/touchValue"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="7"
+                    android:gravity="center|left"
+                    android:text="" />
 
-        <TextView
-            android:id="@+id/cameraValue"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight="7"
-            android:gravity="center|left"
-            android:text="" />
+                <SeekBar
+                    android:id="@+id/touchBar"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="3"
+                    android:indeterminate="false" />
 
-        <SeekBar
-            android:id="@+id/cameraBar"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight="3"
-            android:indeterminate="false" />
+            </LinearLayout>
 
-    </LinearLayout>
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="7.2"
+                android:orientation="horizontal">
 
-</LinearLayout>
+                <TextView
+                    android:id="@+id/cameraLabel"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="6"
+                    android:gravity="center|left"
+                    android:text="Camera y multiplier" />
+
+                <TextView
+                    android:id="@+id/cameraValue"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="7"
+                    android:gravity="center|left"
+                    android:text="" />
+
+                <SeekBar
+                    android:id="@+id/cameraBar"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="3"
+                    android:indeterminate="false" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </TableLayout>
+
+</ScrollView>

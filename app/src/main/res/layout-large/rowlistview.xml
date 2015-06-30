@@ -7,35 +7,35 @@
     <CheckBox
         android:id="@+id/checkBoxenable"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
         android:layout_weight="4" />
 
     <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="120"
-        android:gravity="left|center_horizontal"
-
+        android:gravity="left|center"
+        android:textColor="#2196F3"
+        android:textStyle="bold"
         android:textSize="24sp" />
 
     <TextView
         android:id="@+id/loadingPlace"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="9"
-        android:gravity="center_horizontal"
-
+        android:gravity="center"
         android:textSize="24sp" />
 
     <TextView
         android:id="@+id/delete"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="9"
-        android:gravity="center_horizontal"
+        android:gravity="center"
         android:text="X"
-
         android:textSize="45sp"
         android:textStyle="bold" />
 

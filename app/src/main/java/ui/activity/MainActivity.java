@@ -55,7 +55,6 @@ public class MainActivity extends ActionBarActivity {
         });
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("General");
-
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         initializeDrawer(toolbar);
@@ -70,7 +69,6 @@ public class MainActivity extends ActionBarActivity {
                 .withActivity(this)
                 .withToolbar(toolbar)
                 .withActionBarDrawerToggle(true)
-                .withHeader(R.layout.drawer_header)
                 .addDrawerItems(
                         new PrimaryDrawerItem().withName("Start game").withIcon(FontAwesome.Icon.faw_play).withIdentifier(1),
                         new PrimaryDrawerItem().withName("General").withIcon(FontAwesome.Icon.faw_home).withIdentifier(2),
