@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -31,6 +33,7 @@ import ui.files.PreferencesHelper;
 public class MainActivity extends ActionBarActivity {
 
     private Drawer.Result drawerResult = null;
+    private Menu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +50,7 @@ public class MainActivity extends ActionBarActivity {
 
         Button buttonStartGame;
         buttonStartGame = (Button) findViewById(R.id.button_start_game);
-        ScreenScaler.changeTextSize(buttonStartGame,2.5f);
+        ScreenScaler.changeTextSize(buttonStartGame, 2.5f);
         buttonStartGame.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 startGame();
@@ -100,23 +103,28 @@ public class MainActivity extends ActionBarActivity {
                                     break;
                                 case 2:
                                     toolbar.setTitle("General");
+                                    showOverflowMenu(false);
                                     MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, new FragmentGeneral()).commit();
                                     break;
                                 case 3:
                                     toolbar.setTitle("Screen Controls");
+                                    showOverflowMenu(false);
                                     MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, new FragmentControls()).commit();
                                     break;
 
                                 case 4:
                                     toolbar.setTitle("Settings");
+                                    showOverflowMenu(false);
                                     MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, new FragmentSettings()).commit();
                                     break;
                                 case 5:
                                     toolbar.setTitle("Graphics");
+                                    showOverflowMenu(false);
                                     MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, new FragmentGraphics()).commit();
                                     break;
                                 case 6:
                                     toolbar.setTitle("Plugins");
+                                    showOverflowMenu(true);
                                     MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, new FragmentPlugins()).commit();
                                     break;
                                 default:
@@ -149,6 +157,43 @@ public class MainActivity extends ActionBarActivity {
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        this.menu = menu;
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        showOverflowMenu(false);
+        return true;
+    }
+
+    public void showOverflowMenu(boolean showMenu) {
+        if (menu == null)
+            return;
+        menu.setGroupVisible(R.id.main_menu_group, showMenu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.action_enable:
+                FragmentPlugins.instance.enableMods();
+                break;
+            case R.id.action_disable:
+                FragmentPlugins.instance.disableMods();
+                break;
+            case R.id.action_importMods:
+                FragmentPlugins.instance.importMods();
+                break;
+            case R.id.action_export:
+                FragmentPlugins.instance.exportMods();
+                break;
+            default:
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 

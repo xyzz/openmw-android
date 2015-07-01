@@ -8,108 +8,137 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textView2"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="4.8"
-            android:gravity="left|center"
-            android:text="Path to configs files" />
+            android:layout_weight="3.7"
+            android:background="@drawable/card_background"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textStyle="bold"
+                android:layout_weight="4.8"
+                android:gravity="center"
+                android:text="Path to configs files"
+                android:textColor="@android:color/black" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="2.5"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/configsPath"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    android:gravity="left|center"
+                    android:inputType="text" />
+
+                <Button
+                    android:id="@+id/buttonBrowseConfigsPath"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="end"
+                    android:layout_weight="15"
+                    android:gravity="center"
+                    android:text="Browse" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="4.8" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="4.6"
-            android:orientation="horizontal">
+            android:layout_weight="3.7"
+            android:background="@drawable/card_background"
+            android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/configsPath"
+            <TextView
+                android:id="@+id/textView1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="5"
-                android:gravity="left|center"
-                android:inputType="text" />
-
-            <Button
-                android:id="@+id/buttonBrowseConfigsPath"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="15"
+                android:layout_weight="4.8"
+                android:textStyle="bold"
                 android:gravity="center"
-                android:text="Browse" />
+                android:text="Path to game files"
+                android:textColor="@android:color/black"
+
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="2.5"
+                android:orientation="horizontal">
+
+
+                <EditText
+                    android:id="@+id/editText1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    android:gravity="left|center"
+                    android:inputType="text" />
+
+                <Button
+                    android:id="@+id/buttonBrowseDataPath"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="15"
+                    android:gravity="center"
+                    android:text="Browse" />
+            </LinearLayout>
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/black" />
-
-        <TextView
-            android:id="@+id/textView1"
+        <Space
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="4.8"
-            android:gravity="left|center"
-            android:text="Path to game files" />
+            android:layout_weight="4.8" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="4.6"
-            android:orientation="horizontal">
+            android:layout_weight="3.7"
+            android:background="@drawable/card_background"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textStyle="bold"
+                android:layout_weight="4.8"
+                android:gravity="center"
+                android:text="Command Line"
+                android:textColor="@android:color/black"
+                android:textSize="15sp" />
 
             <EditText
-                android:id="@+id/editText1"
+                android:id="@+id/commandLine"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_alignLeft="@+id/textView2"
-                android:layout_weight="5"
+                android:layout_weight="2.5"
                 android:gravity="left|center"
                 android:inputType="text" />
-
-            <Button
-                android:id="@+id/buttonBrowseDataPath"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="15"
-                android:gravity="center"
-                android:text="Browse" />
         </LinearLayout>
 
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/black" />
-
-        <TextView
-            android:id="@+id/textView5"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="4.8"
-            android:gravity="left|center"
-            android:text="Command Line"
-
-            android:textSize="15sp" />
-
-        <EditText
-            android:id="@+id/commandLine"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="4.6"
-            android:gravity="left|center"
-            android:inputType="text" />
-
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/black" />
 
         <Button
             android:id="@+id/buttoncopy"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="4.6"
+            android:layout_weight="4.1"
             android:gravity="center"
+            android:background="@android:drawable/dialog_holo_light_frame"
             android:text="Copy config files to sdcard" />
     </LinearLayout>
 

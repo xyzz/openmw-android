@@ -45,6 +45,7 @@ public class FragmentPlugins extends Fragment {
     private static final int REQUEST_PATH = 1;
     private TextView totalModsCount;
     private TextView enabledModsCount;
+    public static FragmentPlugins instance = null;
 
 
     @Override
@@ -53,6 +54,7 @@ public class FragmentPlugins extends Fragment {
 
         super.onCreate(savedInstanceState);
 
+        instance = this;
         View rootView = inflater.inflate(R.layout.listview, container, false);
 
         PreferencesHelper.getPrefValues(this.getActivity());
@@ -68,33 +70,17 @@ public class FragmentPlugins extends Fragment {
 
     private void setupViews(View rootView) {
         pluginInfo = (TextView) rootView.findViewById(R.id.pluginsInfo);
-        ScreenScaler.changeTextSize(pluginInfo, 4.8f);
-        ScreenScaler.changeTextSize(totalModsCount, 1.5f);
-        ScreenScaler.changeTextSize(enabledModsCount, 1.5f);
+        ScreenScaler.changeTextSize(pluginInfo, 3f);
+        ScreenScaler.changeTextSize(totalModsCount, 2f);
+        ScreenScaler.changeTextSize(enabledModsCount, 2f);
 
 
         Button buttonSavePlutins = (Button) rootView
                 .findViewById(R.id.buttonsave);
-        Button buttonDisableMods = (Button) rootView
-                .findViewById(R.id.buttonDisableAllMods);
-
-        Button buttonEnableMods = (Button) rootView
-                .findViewById(R.id.buttonEnableAllMods);
-
-        ScreenScaler.changeTextSize(buttonSavePlutins, 3f);
-
-        ScreenScaler.changeTextSize(buttonDisableMods, 3f);
-        ScreenScaler.changeTextSize(buttonEnableMods, 3f);
 
 
-        Button buttonExportMods = (Button) rootView
-                .findViewById(R.id.buttonExportMods);
-        ScreenScaler.changeTextSize(buttonExportMods, 3f);
+        ScreenScaler.changeTextSize(buttonSavePlutins, 2.5f);
 
-        Button buttonImportMods = (Button) rootView
-                .findViewById(R.id.buttonImportMods);
-
-        ScreenScaler.changeTextSize(buttonImportMods, 3f);
 
         buttonSavePlutins.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -107,52 +93,6 @@ public class FragmentPlugins extends Fragment {
 
         });
 
-        buttonEnableMods.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                showModDialog(true,"Do you want to enable all mods ?");
-
-            }
-
-
-        });
-
-        buttonDisableMods.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                showModDialog(false,"Do you want to disable all mods ?");
-
-            }
-
-        });
-
-
-        buttonImportMods.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                try {
-                    FileChooser.isDirMode = false;
-                    getFileOrFolder();
-
-                } catch (Exception e) {
-
-                }
-
-            }
-
-        });
-        buttonExportMods.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                try {
-                    FileChooser.isDirMode = true;
-                    getFileOrFolder();
-
-                } catch (Exception e) {
-
-                }
-
-            }
-
-        });
-
-
         DragSortListView listView = (DragSortListView) rootView
                 .findViewById(R.id.listView1);
         adapter = new Adapter();
@@ -164,7 +104,39 @@ public class FragmentPlugins extends Fragment {
 
     }
 
-    private void showModDialog(final boolean isModEnable,String message) {
+
+    public void disableMods() {
+        showModDialog(true, "Do you want to enable all mods ?");
+    }
+
+    public void enableMods() {
+        showModDialog(false, "Do you want to disable all mods ?");
+    }
+
+    public void importMods() {
+        try {
+            FileChooser.isDirMode = false;
+            getFileOrFolder();
+
+        } catch (Exception e) {
+
+        }
+
+    }
+
+    public void exportMods() {
+        try {
+            FileChooser.isDirMode = true;
+            getFileOrFolder();
+
+        } catch (Exception e) {
+
+        }
+
+    }
+
+
+    private void showModDialog(final boolean isModEnable, String message) {
         AlertDialog.Builder alert = new AlertDialog.Builder(
                 FragmentPlugins.this.getActivity());
         alert.setTitle(message);
@@ -188,7 +160,6 @@ public class FragmentPlugins extends Fragment {
     }
 
 
-
     private void changeModsStatus(boolean isModEnable) {
         for (int i = 0; i < Plugins.size(); i++)
             if (isModEnable)
@@ -196,7 +167,7 @@ public class FragmentPlugins extends Fragment {
             else
                 Plugins.get(i).enabled = 0;
         reloadAdapter();
-        savePluginsData(Constants.configsPath+"/files.json");
+        savePluginsData(Constants.configsPath + "/files.json");
     }
 
     private void reloadAdapter() {

@@ -2,40 +2,43 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <CheckBox
         android:id="@+id/checkBox1"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_weight="7"
+        android:gravity="left|center"
         android:scaleX="1"
         android:scaleY="1"
-        android:gravity="left|center"
         android:text="Hide onscreen buttons"
-         />
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/buttoncontrols"
         android:layout_width="match_parent"
-        android:gravity="center"
         android:layout_height="match_parent"
         android:layout_weight="7"
-        android:text="Configure on-screen controls" />
+        android:background="@android:drawable/dialog_holo_light_frame"
+        android:gravity="center"
+        android:text="Configure on-screen controls"
+        android:textColor="@android:color/black" />
 
     <Button
         android:id="@+id/buttonresetcontrols"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
         android:layout_weight="7"
-        android:text="Reset on-screen controls" />
+        android:background="@android:drawable/dialog_holo_light_frame"
+        android:gravity="center"
+        android:text="Reset on-screen controls"
+        android:textColor="@android:color/black" />
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_weight="4.2"
-        android:orientation="vertical" >
-    </LinearLayout>
+        android:orientation="vertical"></LinearLayout>
 
 </LinearLayout>

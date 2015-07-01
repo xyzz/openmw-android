@@ -10,17 +10,26 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:stretchColumns="1">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="7"
+            android:background="@drawable/card_background"
+            android:orientation="vertical">
             <TextView
                 android:id="@+id/textView1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="7.5"
-                android:gravity="left|center"
+                android:textColor="@android:color/black"
+                android:gravity="center"
+
                 android:text="Encoding" />
 
             <Spinner
@@ -29,19 +38,26 @@
                 android:layout_height="match_parent"
                 android:layout_weight="7"
                 android:gravity="left|center" />
-
-            <View
-                android:layout_width="fill_parent"
-                android:layout_height="1dp"
-                android:background="@android:color/black" />
+        </LinearLayout>
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="8.8" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="7"
+            android:background="@drawable/card_background"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/textView2"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_weight="6.8"
-                android:gravity="left|center"
-                android:text="Mipmapping  \n If the game is loaded with a black screen, set mipmapping none" />
+                android:gravity="center"
+
+                android:text="Mipmapping" />
 
             <Spinner
                 android:id="@+id/mipmappingspinner"
@@ -49,24 +65,24 @@
                 android:layout_height="fill_parent"
                 android:layout_weight="7"
                 android:gravity="left|center" />
+        </LinearLayout>
 
-            <View
-                android:layout_width="fill_parent"
-                android:layout_height="1dp"
-                android:background="@android:color/black" />
+
 
             <CheckBox
                 android:id="@+id/checkBox1"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:layout_weight="7"
+                android:layout_weight="8"
+                android:textStyle="bold"
                 android:text="Show Subtitles" />
 
-            <View
-                android:layout_width="fill_parent"
-                android:layout_height="1dp"
-                android:background="@android:color/black" />
-
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="7"
+            android:background="@drawable/card_background"
+            android:orientation="vertical">
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
@@ -78,7 +94,8 @@
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     android:layout_weight="6"
-                    android:gravity="center|left"
+
+                    android:gravity="center"
                     android:text="Touch Sensitivity" />
 
                 <TextView
@@ -109,7 +126,8 @@
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     android:layout_weight="6"
-                    android:gravity="center|left"
+                    android:gravity="center"
+
                     android:text="Camera y multiplier" />
 
                 <TextView
@@ -128,6 +146,12 @@
                     android:indeterminate="false" />
 
             </LinearLayout>
+        </LinearLayout>
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="8.8" />
+
 
         </LinearLayout>
     </TableLayout>

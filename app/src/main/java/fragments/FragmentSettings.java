@@ -195,7 +195,7 @@ public class FragmentSettings extends Fragment {
 
 
         ScreenScaler
-                .changeTextSize(rootView.findViewById(R.id.textView2), 3.8f);
+                .changeTextSize(rootView.findViewById(R.id.textView2), 2f);
         ScreenScaler
                 .changeTextSize(rootView.findViewById(R.id.textView1), 2f);
 

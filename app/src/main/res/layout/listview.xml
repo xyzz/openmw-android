@@ -6,37 +6,14 @@
     android:orientation="vertical">
 
 
-    <LinearLayout
+    <Button
+        android:id="@+id/buttonsave"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="17"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/buttonsave"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="5"
-            android:gravity="center"
-            android:text="Save"></Button>
-
-        <Button
-            android:id="@+id/buttonExportMods"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="5"
-            android:gravity="center"
-            android:text="Export"></Button>
-
-        <Button
-            android:id="@+id/buttonImportMods"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="5"
-            android:gravity="center"
-            android:text="Import"></Button>
-
-    </LinearLayout>
+        android:layout_weight="16"
+        android:background="@android:drawable/dialog_holo_light_frame"
+        android:gravity="center"
+        android:text="Save"></Button>
 
 
     <com.mobeta.android.dslv.DragSortListView
@@ -44,6 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="7"
+        android:background="@drawable/card_background"
         app:click_remove_id="@id/delete"
         app:collapsed_height="1px"
         app:drag_enabled="true"
@@ -56,73 +34,39 @@
         app:track_drag_sort="false" />
 
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="15"
+        android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/pluginsInfo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="8" />
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="16"
-            android:orientation="vertical">
+            android:layout_weight="10"
+            android:orientation="horizontal">
 
-            <LinearLayout
+
+            <TextView
+                android:id="@+id/totalModsCount"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="9"
-                android:orientation="horizontal">
-                <TextView
-                    android:id="@+id/pluginsInfo"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="5" />
+                android:layout_weight="5"
+                android:gravity="center_horizontal" />
 
-                <Button
-                    android:id="@+id/buttonDisableAllMods"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="5"
-                    android:gravity="center"
-                    android:text="X"
-                    android:textStyle="bold"></Button>
-
-                <Button
-                    android:id="@+id/buttonEnableAllMods"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="5"
-                    android:gravity="center"
-                    android:text="V"
-                    android:textStyle="bold"></Button>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="5"
-                    android:orientation="horizontal"></LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
+            <TextView
+                android:id="@+id/enabledModsCount"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="16"
-                android:orientation="horizontal">
-
-
-                <TextView
-                    android:id="@+id/totalModsCount"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="5"
-                    android:gravity="center_horizontal" />
-
-                <TextView
-                    android:id="@+id/enabledModsCount"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="5"
-                    android:gravity="center_horizontal" />
-
+                android:layout_weight="5"
+                android:gravity="center_horizontal" />
 
 
         </LinearLayout>
