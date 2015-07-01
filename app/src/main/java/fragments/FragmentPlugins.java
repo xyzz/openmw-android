@@ -106,11 +106,11 @@ public class FragmentPlugins extends Fragment {
 
 
     public void disableMods() {
-        showModDialog(true, "Do you want to enable all mods ?");
+        showModDialog(false, "Do you want to disable all mods ?");
     }
 
     public void enableMods() {
-        showModDialog(false, "Do you want to disable all mods ?");
+        showModDialog(true, "Do you want to enable all mods ?");
     }
 
     public void importMods() {

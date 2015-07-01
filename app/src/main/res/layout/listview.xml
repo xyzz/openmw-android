@@ -10,9 +10,9 @@
         android:id="@+id/buttonsave"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="16"
+        android:layout_weight="15.5"
         android:background="@android:drawable/dialog_holo_light_frame"
-        android:gravity="center"
+        android:gravity="center_horizontal"
         android:text="Save"></Button>
 
 

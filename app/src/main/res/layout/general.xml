@@ -45,7 +45,7 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="end"
                     android:layout_weight="15"
-                    android:gravity="center"
+                    android:gravity="center_horizontal"
                     android:text="Browse" />
             </LinearLayout>
         </LinearLayout>
@@ -94,7 +94,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="15"
-                    android:gravity="center"
+                    android:gravity="center_horizontal"
                     android:text="Browse" />
             </LinearLayout>
         </LinearLayout>
@@ -137,7 +137,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="4.1"
-            android:gravity="center"
+            android:gravity="center_horizontal"
             android:background="@android:drawable/dialog_holo_light_frame"
             android:text="Copy config files to sdcard" />
     </LinearLayout>
