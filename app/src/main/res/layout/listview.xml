@@ -1,83 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <LinearLayout
+
+    <com.mobeta.android.dslv.DragSortListView
+        android:id="@+id/listView1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_weight="7"
+        app:collapsed_height="1px"
+        app:drag_enabled="true"
+        app:drag_scroll_start="0.33"
+        app:drag_start_mode="onLongPress"
+        app:float_alpha="0.6"
+        app:remove_enabled="false"
+        app:remove_mode="clickRemove"
+        app:slide_shuffle_speed="0.3"
+        app:track_drag_sort="false" />
+
+</LinearLayout>
 
 
-        <com.mobeta.android.dslv.DragSortListView
-            android:id="@+id/listView1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="7"
-            app:click_remove_id="@id/delete"
-            app:collapsed_height="1px"
-            app:drag_enabled="true"
-            app:drag_scroll_start="0.33"
-            app:drag_start_mode="onLongPress"
-            app:float_alpha="0.6"
-            app:remove_enabled="true"
-            app:remove_mode="clickRemove"
-            app:slide_shuffle_speed="0.3"
-            app:track_drag_sort="false" />
 
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="15"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/pluginsInfo"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="8" />
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="10"
-                android:orientation="horizontal">
-
-
-                <TextView
-                    android:id="@+id/totalModsCount"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="5"
-                    android:gravity="center_horizontal" />
-
-                <TextView
-                    android:id="@+id/enabledModsCount"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="5"
-                    android:gravity="center_horizontal" />
-
-
-            </LinearLayout>
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <com.melnykov.fab.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
-        android:layout_margin="16dp"
-        android:scaleType="fitCenter"
-        android:src="@android:drawable/ic_menu_save"
-        fab:fab_colorNormal="@color/material_drawer_primary"
-        fab:fab_colorPressed="@color/material_drawer_primary_dark"
-        fab:fab_colorRipple="@color/switch_thumb_normal_material_dark" />
-
-</FrameLayout>

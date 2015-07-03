@@ -44,8 +44,6 @@ public class FragmentPlugins extends Fragment {
     private int deletePos = -1;
     private TextView pluginInfo;
     private static final int REQUEST_PATH = 1;
-    private TextView totalModsCount;
-    private TextView enabledModsCount;
     public static FragmentPlugins instance = null;
 
 
@@ -59,9 +57,6 @@ public class FragmentPlugins extends Fragment {
         View rootView = inflater.inflate(R.layout.listview, container, false);
 
         PreferencesHelper.getPrefValues(this.getActivity());
-        totalModsCount = (TextView) rootView.findViewById(R.id.totalModsCount);
-        enabledModsCount = (TextView) rootView.findViewById(R.id.enabledModsCount);
-
         loadPlugins(Constants.configsPath + "/files.json");
         setupViews(rootView);
 
@@ -70,11 +65,6 @@ public class FragmentPlugins extends Fragment {
 
 
     private void setupViews(View rootView) {
-        pluginInfo = (TextView) rootView.findViewById(R.id.pluginsInfo);
-        ScreenScaler.changeTextSize(pluginInfo, 3f);
-        ScreenScaler.changeTextSize(totalModsCount, 2f);
-        ScreenScaler.changeTextSize(enabledModsCount, 2f);
-
 
         DragSortListView listView = (DragSortListView) rootView
                 .findViewById(R.id.listView1);
@@ -82,22 +72,6 @@ public class FragmentPlugins extends Fragment {
         listView.setAdapter(adapter);
 
         listView.setDropListener(onDrop);
-        listView.setRemoveListener(onRemove);
-
-        FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
-        fab.attachToListView(listView);
-
-
-        fab.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                try {
-                    savePlugins();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-
-        });
 
 
     }
@@ -157,6 +131,30 @@ public class FragmentPlugins extends Fragment {
         alert.show();
     }
 
+    private void showDependenciesDialog(final int pos) {
+        final AlertDialog.Builder alert = new AlertDialog.Builder(
+                FragmentPlugins.this.getActivity());
+        alert.setTitle("Dependencies");
+        pluginInfo = new TextView(FragmentPlugins.this.getActivity());
+
+        try {
+            pluginInfo.setText(PluginReader.read(Constants.dataPath + "/"
+                    + Plugins.get(pos).name));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        alert.setView(pluginInfo);
+        alert.setNegativeButton("Close",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+
+                        dialog.dismiss();
+                    }
+                });
+
+        alert.show();
+    }
+
 
     private void changeModsStatus(boolean isModEnable) {
         for (int i = 0; i < Plugins.size(); i++)
@@ -170,18 +168,15 @@ public class FragmentPlugins extends Fragment {
 
     private void reloadAdapter() {
         adapter.notifyDataSetChanged();
-        totalModsCount.setText("Total mods = " + Plugins.size());
-        enabledModsCount.setText("Active mods = " + getEnabledModsCount());
+        try {
+            savePlugins();
+
+        } catch (Exception e) {
+
+        }
 
     }
 
-    private int getEnabledModsCount() {
-        int modsCount = 0;
-        for (int i = 0; i < Plugins.size(); i++)
-            if (Plugins.get(i).enabled == 1)
-                modsCount++;
-        return modsCount;
-    }
 
     private void loadPlugins(String path) {
         try {
@@ -194,10 +189,6 @@ public class FragmentPlugins extends Fragment {
             checkFilesDeleted(yourDir);
 
             addNewFiles(yourDir);
-
-
-            totalModsCount.setText("Total mods = " + Plugins.size());
-            enabledModsCount.setText("Active mods = " + getEnabledModsCount());
 
 
         } catch (Exception e) {
@@ -251,14 +242,6 @@ public class FragmentPlugins extends Fragment {
         }
     }
 
-    private DragSortListView.RemoveListener onRemove = new DragSortListView.RemoveListener() {
-        @Override
-        public void remove(int which) {
-
-            deletePos = which;
-            showDialod();
-        }
-    };
 
     private void showDialod() {
         AlertDialog.Builder alert = new AlertDialog.Builder(
@@ -319,15 +302,10 @@ public class FragmentPlugins extends Fragment {
 
             }
             writer.close();
-            Toast toast = Toast.makeText(FragmentPlugins.this.getActivity()
-                    .getApplicationContext(), "Saving done", Toast.LENGTH_LONG);
-            toast.show();
+
 
         } catch (Exception e) {
-            Toast toast = Toast.makeText(FragmentPlugins.this.getActivity()
-                            .getApplicationContext(),
-                    "config file openmw.cfg not found", Toast.LENGTH_LONG);
-            toast.show();
+
             e.printStackTrace();
         }
     }
@@ -440,15 +418,6 @@ public class FragmentPlugins extends Fragment {
             Plugins.remove(from);
 
             Plugins.add(to, item);
-
-            try {
-                pluginInfo.setText(PluginReader.read(Constants.dataPath + "/"
-                        + item.name));
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-
             reloadAdapter();
             savePluginsData(Constants.configsPath + "/files.json");
         }
@@ -527,15 +496,36 @@ public class FragmentPlugins extends Fragment {
 
             if (Plugins.get(position).enabled == 1) {
                 Box.setChecked(true);
-                loadingPlace.setText("" + loadingPos(position));
+                loadingPlace.setText("Loading Pos = " + loadingPos(position));
 
             }
+
+            Button deleteButton = (Button) rowView.findViewById(R.id.delete);
+            deleteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    deletePos = position;
+                    showDialod();
+
+                }
+            });
+
+            Button dependButton = (Button) rowView.findViewById(R.id.Dependencies);
+            dependButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showDependenciesDialog(position);
+
+                }
+            });
+
+
             Box.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     if (Box.isChecked()) {
 
                         Plugins.get(position).enabled = 1;
-                        loadingPlace.setText("" + loadingPos(position));
+                        loadingPlace.setText("Loading Pos = " + loadingPos(position));
                         reloadAdapter();
 
                         savePluginsData(Constants.configsPath + "/files.json");

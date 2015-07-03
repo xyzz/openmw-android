@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 
 import com.libopenmw.openmw.R;
+import com.melnykov.fab.FloatingActionButton;
 import com.mikepenz.iconics.typeface.FontAwesome;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
@@ -63,23 +64,13 @@ public class MainActivity extends ActionBarActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         initializeDrawer(toolbar);
         getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, new FragmentGeneral()).commit();
-        final Animation animScale = AnimationUtils.loadAnimation(this, R.anim.scaler_animator);
 
-        ImageButton btnStartGame = (ImageButton)findViewById(R.id.action1);
-        btnStartGame.setOnTouchListener(new ImageButton.OnTouchListener() {
-            public boolean onTouch(View v, MotionEvent event) {
-
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        v.startAnimation(animScale);
-
-                        return true;
-                    case MotionEvent.ACTION_UP:
-                        startGame();
-                        return true;
-                }
-                return false;
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                startGame();
             }
+
         });
 
 

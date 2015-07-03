@@ -36,19 +36,33 @@
             android:layout_height="match_parent"
             android:layout_weight="9"
             android:gravity="center"
-
+            android:textColor="#2196F3"
+            android:textStyle="bold"
             android:textSize="24sp" />
-
-        <TextView
-            android:id="@+id/delete"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="9"
-            android:gravity="center"
-            android:text="X"
+            android:orientation="vertical">
 
-            android:textSize="45sp"
-            android:textStyle="bold" />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Delete"
+                android:gravity="center"
+                android:textSize="15sp"
+                android:id="@+id/delete"
+                android:layout_weight="4" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Dependencies"
+                android:gravity="center"
+                android:textSize="15sp"
+                android:id="@+id/Dependencies"
+                android:layout_weight="4" />
+        </LinearLayout>
+
 
 
     </LinearLayout>
