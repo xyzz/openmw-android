@@ -23,6 +23,7 @@ android {
 }
 
 dependencies {
+    compile 'com.melnykov:floatingactionbutton:1.3.0'
     compile files('libs/libdradroplistview.jar')
     compile files('libs/libsdl2.jar')
     compile 'com.android.support:support-v4:22.1.1'

@@ -3,14 +3,19 @@ package ui.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.libopenmw.openmw.R;
 import com.mikepenz.iconics.typeface.FontAwesome;
@@ -28,6 +33,7 @@ import fragments.FragmentGraphics;
 import fragments.FragmentPlugins;
 import fragments.FragmentSettings;
 import screen.ScreenScaler;
+import ui.controls.SdlNativeKeys;
 import ui.files.PreferencesHelper;
 
 public class MainActivity extends ActionBarActivity {
@@ -48,20 +54,33 @@ public class MainActivity extends ActionBarActivity {
             Constants.contols = false;
         }
 
-        Button buttonStartGame;
-        buttonStartGame = (Button) findViewById(R.id.button_start_game);
-        ScreenScaler.changeTextSize(buttonStartGame, 2.5f);
-        buttonStartGame.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                startGame();
-            }
-        });
+
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("General");
-        setSupportActionBar(toolbar);
+
+            setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         initializeDrawer(toolbar);
         getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, new FragmentGeneral()).commit();
+        final Animation animScale = AnimationUtils.loadAnimation(this, R.anim.scaler_animator);
+
+        ImageButton btnStartGame = (ImageButton)findViewById(R.id.action1);
+        btnStartGame.setOnTouchListener(new ImageButton.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
+
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        v.startAnimation(animScale);
+
+                        return true;
+                    case MotionEvent.ACTION_UP:
+                        startGame();
+                        return true;
+                }
+                return false;
+            }
+        });
 
 
     }

@@ -16,6 +16,7 @@ import ui.files.PluginReader;
 
 import com.libopenmw.openmw.FileChooser;
 import com.libopenmw.openmw.R;
+import com.melnykov.fab.FloatingActionButton;
 import com.mobeta.android.dslv.DragSortListView;
 
 import constants.Constants;
@@ -75,14 +76,19 @@ public class FragmentPlugins extends Fragment {
         ScreenScaler.changeTextSize(enabledModsCount, 2f);
 
 
-        Button buttonSavePlutins = (Button) rootView
-                .findViewById(R.id.buttonsave);
+        DragSortListView listView = (DragSortListView) rootView
+                .findViewById(R.id.listView1);
+        adapter = new Adapter();
+        listView.setAdapter(adapter);
+
+        listView.setDropListener(onDrop);
+        listView.setRemoveListener(onRemove);
+
+        FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
+        fab.attachToListView(listView);
 
 
-        ScreenScaler.changeTextSize(buttonSavePlutins, 2.5f);
-
-
-        buttonSavePlutins.setOnClickListener(new View.OnClickListener() {
+        fab.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 try {
                     savePlugins();
@@ -92,14 +98,6 @@ public class FragmentPlugins extends Fragment {
             }
 
         });
-
-        DragSortListView listView = (DragSortListView) rootView
-                .findViewById(R.id.listView1);
-        adapter = new Adapter();
-        listView.setAdapter(adapter);
-
-        listView.setDropListener(onDrop);
-        listView.setRemoveListener(onRemove);
 
 
     }
