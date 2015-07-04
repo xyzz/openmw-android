@@ -43,10 +43,10 @@ public class QuickPanel {
 		return instance;
 	}
 
-	public void showQuickPanel(boolean show) {
+	public void showQuickPanel(boolean hide) {
 
 		enablePanel = false;
-		if (show) {
+		if (!hide) {
 			f1 = (Button) a.findViewById(R.id.F1);
 			showPanel = (Button) a.findViewById(R.id.showQuickPanel);
 			key0 = (ImageButton) a.findViewById(R.id.key0);

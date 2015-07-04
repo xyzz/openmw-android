@@ -5,7 +5,7 @@
         android:key="genereal_settings"
         android:title="General settings">
         <com.lb.material_preferences_library.custom_preferences.CheckBoxPreference
-            android:key="hidecontrolscheckBox"
+            android:key="hidecontrols"
             android:title="Hide onscreen buttons" />
         <PreferenceScreen
             android:key="Language"

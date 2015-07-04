@@ -37,8 +37,8 @@ public class ScreenControls {
 	public static ScreenControls getInstance() {
 		return instance;
 	}
-	public void showControls(boolean show) {
-		if (show) {
+	public void showControls(boolean hide) {
+		if (!hide) {
 
 			int controlsFlag;
 

@@ -20,25 +20,7 @@ public class FragmentSettings extends PreferenceFragment {
         super.onCreate(savedInstanceState);
 
         addPreferencesFromResource(R.xml.settings);
-
-        CheckBoxPreference controlscheckBoxPreference = (CheckBoxPreference) findPreference("hidecontrolscheckBox");
-        controlscheckBoxPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(final Preference preference, final Object newValue) {
-                boolean hideControls = (boolean) newValue;
-                if (hideControls)
-                    PreferencesHelper.setPreferences(
-                            Constants.APP_PREFERENCES_CONTROLS_FLAG, 0,
-                            FragmentSettings.this.getActivity());
-                else
-                    PreferencesHelper.setPreferences(
-                            Constants.APP_PREFERENCES_CONTROLS_FLAG, 1,
-                            FragmentSettings.this.getActivity());
-
-                return true;
-            }
-        });
-
+        
         CheckBoxPreference subtitlescheckBoxPreference = (CheckBoxPreference) findPreference(Constants.SUBTITLES);
         subtitlescheckBoxPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override

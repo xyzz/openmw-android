@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -53,9 +54,7 @@ public class MainActivity extends ActionBarActivity {
     private SharedPreferences Settings;
     private TextListener listener;
 
-    private enum TEXT_MODE {DATA_PATH, COMMAND_LINE, CONGIGS_PATH}
-
-    ;
+    private enum TEXT_MODE {DATA_PATH, COMMAND_LINE, CONGIGS_PATH};
     private LinearLayout linlaHeaderProgress;
     private static TEXT_MODE editTextMode;
 
@@ -69,11 +68,6 @@ public class MainActivity extends ActionBarActivity {
         PreferencesHelper.getPrefValues(this);
         Settings = this.getSharedPreferences(
                 Constants.APP_PREFERENCES, Context.MODE_MULTI_PROCESS);
-        if (Constants.hideControls == -1 || Constants.hideControls == 0) {
-            Constants.contols = true;
-        } else if (Constants.hideControls == 1) {
-            Constants.contols = false;
-        }
 
         LinearLayout layout = (LinearLayout) findViewById(R.id.toolbarLayout);
         linlaHeaderProgress = (LinearLayout)

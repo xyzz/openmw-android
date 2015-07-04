@@ -3,7 +3,7 @@ package constants;
 public class Constants {
 
 	public static final String APP_PREFERENCES = "settings";
-	public static final String APP_PREFERENCES_CONTROLS_FLAG = "hidecontrols";
+	public static final String HIDE_CONTROLS = "hidecontrols";
 	public static final String APP_PREFERENCES_RESET_CONTROLS = "resetcontrols";
 	public static final String APP_PREFERENCES_BUTTON_RUN_X = "buttonrunx";
 	public static final String APP_PREFERENCES_BUTTON_RUN_SIZE = "buttonrunsize";
@@ -145,8 +145,6 @@ public class Constants {
 	public static String configsPath = "";
 	public static String dataPath = "";
 	public static String commandLineData = "";
-	public static boolean contols = true;
-	public static int hideControls =-1;
 	public static final String SCREEN_WIDTH = "screen_width";
 	public static final String SCREEN_HEIGHT = "screen_height";
 	public static final String RESOLUTION = "resolution";
