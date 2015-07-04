@@ -382,7 +382,7 @@ public class MainActivity extends ActionBarActivity {
                 copyFiles.copyFileOrDir("libopenmw");
 
                 try {
-                    SharedPreferences preferenceManager = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+
                     Writer.write(
                             Constants.configsPath + "/resources",
                             Constants.configsPath + "/config/openmw/openmw.cfg",
@@ -391,17 +391,17 @@ public class MainActivity extends ActionBarActivity {
                             + "/config/openmw/openmw.cfg", "data");
 
                     Writer.write(
-                            preferenceManager.getString(Constants.LANGUAGE, "win1250"),
+                            PreferenceManager.getDefaultSharedPreferences(MainActivity.this).getString(Constants.LANGUAGE, "win1250"),
                             Constants.configsPath + "/config/openmw/openmw.cfg",
                             "encoding");
 
 
-                    Writer.write(preferenceManager.getString(Constants.MIPMAPPING, "none"),
+                    Writer.write(PreferenceManager.getDefaultSharedPreferences(MainActivity.this).getString(Constants.MIPMAPPING, "none"),
                             Constants.configsPath
                                     + "/config/openmw/settings.cfg",
                             "texture filtering");
 
-                    Writer.write(String.valueOf(preferenceManager.getBoolean(Constants.SUBTITLES, false)), Constants.configsPath
+                    Writer.write(String.valueOf( PreferenceManager.getDefaultSharedPreferences(MainActivity.this).getBoolean(Constants.SUBTITLES, false)), Constants.configsPath
                             + "/config/openmw/settings.cfg", "subtitles");
 
                     Writer.write("" + Settings.getFloat(Constants.CAMERA_MULTIPLISER, 2.0f), Constants.configsPath
@@ -410,7 +410,7 @@ public class MainActivity extends ActionBarActivity {
                             + "/config/openmw/settings.cfg", Constants.TOUCH_SENSITIVITY);
 
                     ScreenResolutionHelper screenHelper = new ScreenResolutionHelper(MainActivity.this);
-                    screenHelper.writeScreenResolution(preferenceManager.getString(Constants.RESOLUTION, "normalResolution"));
+                    screenHelper.writeScreenResolution(PreferenceManager.getDefaultSharedPreferences(MainActivity.this).getString(Constants.RESOLUTION, "normalResolution"));
 
 
                 } catch (Exception e) {
