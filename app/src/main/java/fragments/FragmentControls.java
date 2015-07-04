@@ -35,7 +35,7 @@ public class FragmentControls extends Fragment {
 
         PreferencesHelper.getPrefValues(this.getActivity());
         changeTextViewSizes(rootView);
-        int cameraStartPos = (int) (Settings.getFloat(Constants.CAMERA_MULTIPLISER, 0.2f) * 10f);
+        int cameraStartPos = (int) (Settings.getFloat(Constants.CAMERA_MULTIPLISER, 2.0f)  );
         int touchStartPos = (int) (Settings.getFloat(Constants.TOUCH_SENSITIVITY, 0.01f) * 1000f);
 
         findViews(rootView, cameraStartPos, touchStartPos, Constants.TOUCH_SENSITIVITY, Constants.CAMERA_MULTIPLISER);
