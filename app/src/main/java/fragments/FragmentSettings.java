@@ -1,12 +1,12 @@
 package fragments;
 
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
-import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.widget.Toast;
 
+import com.lb.material_preferences_library.custom_preferences.CheckBoxPreference;
+import com.lb.material_preferences_library.custom_preferences.ListPreference;
 import com.libopenmw.openmw.R;
 
 import constants.Constants;
