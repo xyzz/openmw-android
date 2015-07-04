@@ -15,7 +15,7 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.afollestad.materialdialogs.AlertDialogWrapper;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.libopenmw.openmw.FileChooser;
 import com.libopenmw.openmw.R;
 import com.mobeta.android.dslv.DragSortListView;
@@ -123,50 +123,38 @@ public class FragmentPlugins extends Fragment {
 
 
     private void showModDialog(final boolean isModEnable, String message) {
-        AlertDialogWrapper.Builder alert = new AlertDialogWrapper.Builder(
-                FragmentPlugins.this.getActivity());
-        alert.setTitle(message);
-
-        alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
+        new MaterialDialog.Builder(FragmentPlugins.this.getActivity())
+                .title(message)
+                .positiveText("OK")
+                .negativeText("Cancel").callback(new MaterialDialog.ButtonCallback() {
+            @Override
+            public void onPositive(MaterialDialog dialog) {
                 changeModsStatus(isModEnable);
-                dialog.dismiss();
             }
-        });
 
-        alert.setNegativeButton("Cancel",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        reloadAdapter();
-                        dialog.dismiss();
-                    }
-                });
+            @Override
+            public void onNegative(MaterialDialog dialog) {
+                reloadAdapter();
+            }
+        }).show();
 
-        alert.show();
+
     }
 
     private void showDependenciesDialog(final int pos) {
-        final AlertDialogWrapper.Builder alert = new AlertDialogWrapper.Builder(
-                FragmentPlugins.this.getActivity());
-        alert.setTitle("Dependencies");
-        pluginInfo = new TextView(FragmentPlugins.this.getActivity());
 
+        String dependencies = "";
         try {
-            pluginInfo.setText(PluginReader.read(Constants.dataPath + "/"
-                    + Plugins.get(pos).name));
+            dependencies = PluginReader.read(Constants.dataPath + "/"
+                    + Plugins.get(pos).name);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        alert.setView(pluginInfo);
-        alert.setNegativeButton("Close",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
+        new MaterialDialog.Builder(FragmentPlugins.this.getActivity())
+                .title("Dependencies")
+                .content(dependencies)
+                .negativeText("Close").show();
 
-                        dialog.dismiss();
-                    }
-                });
-
-        alert.show();
     }
 
 
@@ -258,27 +246,23 @@ public class FragmentPlugins extends Fragment {
 
 
     private void showDialod() {
-        AlertDialogWrapper.Builder alert = new AlertDialogWrapper.Builder(
-                FragmentPlugins.this.getActivity());
-        alert.setTitle("Do you want to delete " + Plugins.get(deletePos).name
-                + " ?");
-
-        alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
+        new MaterialDialog.Builder(FragmentPlugins.this.getActivity())
+                .title("Delete")
+                .content("Do you want to delete " + Plugins.get(deletePos).name
+                        + " ?")
+                .positiveText("OK")
+                .negativeText("Cancel").callback(new MaterialDialog.ButtonCallback() {
+            @Override
+            public void onPositive(MaterialDialog dialog) {
                 deletePlugin();
-                dialog.dismiss();
             }
-        });
 
-        alert.setNegativeButton("Cancel",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        reloadAdapter();
-                        dialog.dismiss();
-                    }
-                });
+            @Override
+            public void onNegative(MaterialDialog dialog) {
+                reloadAdapter();
+            }
+        }).show();
 
-        alert.show();
     }
 
     private void deletePlugin() {
