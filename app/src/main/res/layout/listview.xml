@@ -16,10 +16,10 @@
         app:drag_scroll_start="0.33"
         app:drag_start_mode="onLongPress"
         app:float_alpha="0.6"
-        app:remove_enabled="false"
-        app:remove_mode="clickRemove"
+        app:remove_enabled="true"
+        app:remove_mode="flingRemove"
         app:slide_shuffle_speed="0.3"
-        app:track_drag_sort="false" />
+        app:track_drag_sort="true" />
 
 </LinearLayout>
 

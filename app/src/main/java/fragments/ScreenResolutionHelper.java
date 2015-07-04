@@ -40,113 +40,9 @@ public class ScreenResolutionHelper {
         screenHeight = size.y;
     }
 
-    public void setupViews(View rootView) {
-        ScreenScaler.changeTextSize(rootView.findViewById(R.id.textView), 1.4f);
-        ScreenScaler.changeTextSize(rootView.findViewById(R.id.X), 2.5f);
-        RadioButton normalResolution = (RadioButton) rootView.findViewById(R.id.radioButtonNormalResolution);
-        ScreenScaler.changeTextSize(normalResolution, 3f);
 
-        RadioButton customlResolution = (RadioButton) rootView.findViewById(R.id.radioButtonCustomResolution);
-        ScreenScaler.changeTextSize(customlResolution, 3f);
-
-        RadioButton doublelResolution = (RadioButton) rootView.findViewById(R.id.radioButtonDoubleResolution);
-        ScreenScaler.changeTextSize(doublelResolution, 3f);
-        RadioButton halflResolution = (RadioButton) rootView.findViewById(R.id.radioButtonHalfResolution);
-        ScreenScaler.changeTextSize(halflResolution, 3f);
-
-        final EditText witdhEditText = (EditText) rootView.findViewById(R.id.width);
-        final EditText heightEditText = (EditText) rootView.findViewById(R.id.height);
-        witdhEditText.setText(PreferencesHelper.getPreferences(Constants.SCREEN_WIDTH, activity, "" + screenWidth));
-        heightEditText.setText(PreferencesHelper.getPreferences(Constants.SCREEN_HEIGHT, activity, "" + screenHeight));
-
-        witdhEditText.setEnabled(false);
-        heightEditText.setEnabled(false);
-
-        ScreenScaler.changeTextSize(witdhEditText, 2.5f);
-        ScreenScaler.changeTextSize(heightEditText, 2.5f);
-
-        RadioGroup radiogroup = (RadioGroup) rootView.findViewById(R.id.radioGroup);
-
-
-        radiogroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-
-
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId) {
-                    case R.id.radioButtonNormalResolution: {
-                        witdhEditText.setEnabled(false);
-                        heightEditText.setEnabled(false);
-                        writeScreenDataToFile("" + screenWidth, "" + screenHeight);
-                        PreferencesHelper.setPreferences(Constants.RADIO_BUTTON_MODE, "normalResolution", activity);
-
-                        break;
-                    }
-                    case R.id.radioButtonHalfResolution: {
-                        witdhEditText.setEnabled(false);
-                        heightEditText.setEnabled(false);
-                        writeScreenDataToFile("" + screenWidth / 2, "" + screenHeight / 2);
-                        PreferencesHelper.setPreferences(Constants.RADIO_BUTTON_MODE, "halfResolution", activity);
-
-                        break;
-                    }
-
-                    case R.id.radioButtonDoubleResolution: {
-                        witdhEditText.setEnabled(false);
-                        heightEditText.setEnabled(false);
-                        writeScreenDataToFile("" + screenWidth * 2, "" + screenHeight * 2);
-                        PreferencesHelper.setPreferences(Constants.RADIO_BUTTON_MODE, "doubleResolution", activity);
-
-                        break;
-                    }
-                    case R.id.radioButtonCustomResolution: {
-
-                        writeScreenDataToFile(witdhEditText.getText().toString(), heightEditText.getText().toString());
-                        witdhEditText.setEnabled(true);
-                        heightEditText.setEnabled(true);
-                        PreferencesHelper.setPreferences(Constants.RADIO_BUTTON_MODE, "customResolution", activity);
-
-                        break;
-                    }
-
-
-                    default:
-                        break;
-                }
-            }
-        });
-        addTextWacthers(witdhEditText, heightEditText);
-
-        String radioButtonMode = PreferencesHelper.getPreferences(Constants.RADIO_BUTTON_MODE, activity, "normalResolution");
-        switch (radioButtonMode) {
-
-            case "normalResolution":
-                radiogroup.check(R.id.radioButtonNormalResolution);
-                break;
-
-            case "halfResolution":
-                radiogroup.check(R.id.radioButtonHalfResolution);
-                break;
-
-            case "customResolution":
-                radiogroup.check(R.id.radioButtonCustomResolution);
-                break;
-
-            case "doubleResolution":
-                radiogroup.check(R.id.radioButtonDoubleResolution);
-                break;
-
-            default:
-                break;
-
-        }
-
-
-    }
-
-    public void writeScreenResolution() {
-        String radioButtonMode = PreferencesHelper.getPreferences(Constants.RADIO_BUTTON_MODE, activity, "normalResolution");
-        switch (radioButtonMode) {
+    public void writeScreenResolution(String currentResolutionMode) {
+        switch (currentResolutionMode) {
 
             case "normalResolution":
                 writeScreenDataToFile("" + screenWidth, "" + screenHeight);
@@ -154,11 +50,6 @@ public class ScreenResolutionHelper {
 
             case "halfResolution":
                 writeScreenDataToFile("" + screenWidth / 2, "" + screenHeight / 2);
-                break;
-
-            case "customResolution":
-                writeScreenDataToFile(PreferencesHelper.getPreferences(Constants.SCREEN_WIDTH, activity, "" + screenWidth),
-                        PreferencesHelper.getPreferences(Constants.SCREEN_HEIGHT, activity, "" + screenHeight));
                 break;
 
             case "doubleResolution":
@@ -169,63 +60,6 @@ public class ScreenResolutionHelper {
                 break;
 
         }
-
-    }
-
-
-    private void addTextWacthers(EditText witdhEditText, EditText heightEditText) {
-        witdhEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-                PreferencesHelper.setPreferences(Constants.SCREEN_WIDTH, s.toString(), activity);
-                try {
-                    Writer.write(s.toString(), Constants.configsPath
-                            + "/config/openmw/settings.cfg", "resolution x");
-
-                } catch (Exception e) {
-
-                }
-
-            }
-        });
-
-
-        heightEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                PreferencesHelper.setPreferences(Constants.SCREEN_HEIGHT, s.toString(), activity);
-
-                try {
-                    Writer.write(s.toString(), Constants.configsPath
-                            + "/config/openmw/settings.cfg", "resolution y");
-
-                } catch (Exception e) {
-
-                }
-
-            }
-        });
 
     }
 

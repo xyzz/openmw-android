@@ -1,0 +1,44 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity">
+    <group android:id="@+id/main_menu_group">
+        <item
+            android:id="@+id/action_browse_configs_path"
+            android:orderInCategory="100"
+            android:title="Path to configs files"
+            app:showAsAction="never" />
+
+        <item
+            android:id="@+id/action_browse_data_path"
+            android:orderInCategory="100"
+            android:title="Path to data files"
+            app:showAsAction="never" />
+
+        <item
+            android:id="@+id/action_command_line"
+            android:orderInCategory="100"
+            android:title="Command line"
+            app:showAsAction="never" />
+
+        <item
+            android:id="@+id/action_copy_files"
+            android:orderInCategory="100"
+            android:title="Copy configs files"
+            app:showAsAction="never" />
+
+        <item
+            android:id="@+id/action_show_screen_controls"
+            android:title="Show on-screen controls"
+            android:orderInCategory="100"
+             app:showAsAction="never" />
+
+        <item
+            android:id="@+id/action_reset_screen_controls"
+            android:orderInCategory="100"
+            android:title="Reset on-screen controls"
+            app:showAsAction="never" />
+
+
+    </group>
+</menu>

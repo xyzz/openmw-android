@@ -2,4 +2,29 @@
 <resources>
     <string name="app_name">Openmw</string>
 
+    <string-array name="encoding_entry">
+        <item>win1250</item>
+        <item>win1251</item>
+        <item>win1252</item>
+    </string-array>
+    <string-array name="mipmapping_array">
+        <item>none</item>
+        <item>trilinear</item>
+        <item>bilinear</item>
+        <item>anisotropic</item>
+    </string-array>
+
+    <string-array name="resolution_entry">
+        <item>Normal (1x)</item>
+        <item>Double (2x)</item>
+        <item>Half (0.5x)</item>
+    </string-array>
+
+
+    <string-array name="resolution_array">
+        <item>normalResolution</item>
+        <item>doubleResolution</item>
+        <item>halfResolution</item>
+    </string-array>
+
 </resources>

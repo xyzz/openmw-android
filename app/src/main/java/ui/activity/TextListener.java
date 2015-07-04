@@ -1,4 +1,4 @@
-package fragments;
+package ui.activity;
 
 import constants.Constants;
 import ui.files.PreferencesHelper;

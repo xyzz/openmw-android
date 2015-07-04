@@ -1,104 +1,127 @@
 package fragments;
 
-import screen.ScreenScaler;
-import ui.activity.ConfigureControls;
-import ui.files.PreferencesHelper;
+import android.app.Fragment;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.SeekBar;
+import android.widget.TextView;
 
 import com.libopenmw.openmw.R;
 
 import constants.Constants;
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.Toast;
+import screen.ScreenScaler;
+import ui.files.PreferencesHelper;
+import ui.files.Writer;
 
 public class FragmentControls extends Fragment {
 
-	private CheckBox Box;
+    private SharedPreferences Settings;
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
 
-		super.onCreate(savedInstanceState);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
 
-		View rootView = inflater.inflate(R.layout.controls, container, false);
+        super.onCreate(savedInstanceState);
 
-		PreferencesHelper.getPrefValues(this.getActivity());
+        Settings = this.getActivity().getSharedPreferences(
+                Constants.APP_PREFERENCES, Context.MODE_MULTI_PROCESS);
+        View rootView = inflater.inflate(R.layout.settings, container, false);
 
-		Box = (CheckBox) rootView.findViewById(R.id.checkBox1);
-		ScreenScaler.changeTextSize(Box, 2.2f);
+        PreferencesHelper.getPrefValues(this.getActivity());
+        changeTextViewSizes(rootView);
+        int cameraStartPos = (int) (Settings.getFloat(Constants.CAMERA_MULTIPLISER, 0.2f) * 10f);
+        int touchStartPos = (int) (Settings.getFloat(Constants.TOUCH_SENSITIVITY, 0.01f) * 1000f);
 
-		enableCheckBox();
+        findViews(rootView, cameraStartPos, touchStartPos, Constants.TOUCH_SENSITIVITY, Constants.CAMERA_MULTIPLISER);
 
-		Box.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				if (Box.isChecked()) {
-					Constants.contols = false;
-					PreferencesHelper.setPreferences(
-							Constants.APP_PREFERENCES_CONTROLS_FLAG, 1,
-							FragmentControls.this.getActivity());
+        return rootView;
+    }
 
-				} else {
-					Constants.contols = true;
-					PreferencesHelper.setPreferences(
-							Constants.APP_PREFERENCES_CONTROLS_FLAG, 0,
-							FragmentControls.this.getActivity());
-				}
 
-			}
+    private void changeTextViewSizes(View rootView) {
+        ScreenScaler
+                .changeTextSize(rootView.findViewById(R.id.cameraLabel), 3f);
+        ScreenScaler
+                .changeTextSize(rootView.findViewById(R.id.cameraValue), 3f);
+        ScreenScaler
+                .changeTextSize(rootView.findViewById(R.id.touchLabel), 3f);
+        ScreenScaler
+                .changeTextSize(rootView.findViewById(R.id.touchValue), 3f);
 
-		});
 
-		Button buttonControls = (Button) rootView
-				.findViewById(R.id.buttoncontrols);
-		ScreenScaler.changeTextSize(buttonControls, 2.5f);
-		buttonControls.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
+    }
 
-				Intent intent = new Intent(FragmentControls.this.getActivity(),
-						ConfigureControls.class);
-				FragmentControls.this.getActivity().startActivity(intent);
+    private void findViews(View rootView, int cameraStartPos, int touchStartPos, String touchPrefKey, String cameraPrefKey) {
+        SeekBar touchSeekBar = (SeekBar) rootView.findViewById(R.id.touchBar);
+        TextView touchProgress = (TextView) rootView.findViewById(R.id.touchValue);
+        addSeekBarListener(touchSeekBar, touchStartPos, 100, 1000, touchProgress, touchPrefKey);
 
-			}
+        SeekBar cameraSeekBar = (SeekBar) rootView.findViewById(R.id.cameraBar);
+        TextView cameraProgress = (TextView) rootView.findViewById(R.id.cameraValue);
+        addSeekBarListener(cameraSeekBar, cameraStartPos, 100, 1, cameraProgress, cameraPrefKey);
 
-		});
+    }
 
-		Button buttonResetControls = (Button) rootView
-				.findViewById(R.id.buttonresetcontrols);
-		ScreenScaler.changeTextSize(buttonResetControls, 2.5f);
 
-		buttonResetControls.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
+    private void addSeekBarListener(SeekBar seekBar, int startProgress, int maxValue, final int step, final TextView seekBarValue, final String prefKey) {
+        seekBar.setProgress(startProgress);
+        seekBar.setMax(maxValue);
+        final float[] finalProgress = {(float) startProgress / (float) step};
+        seekBarValue.setText(String.valueOf(finalProgress[0]));
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
-				PreferencesHelper.setPreferences(
-						Constants.APP_PREFERENCES_RESET_CONTROLS, 1,
-						FragmentControls.this.getActivity());
-				Toast toast = Toast.makeText(FragmentControls.this
-						.getActivity().getApplicationContext(),
-						"Reset on-screen controls", Toast.LENGTH_LONG);
-				toast.show();
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                finalProgress[0] = (float) progress / (float) step;
+                seekBarValue.setText(String.valueOf(finalProgress[0]));
+            }
 
-			}
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
 
-		});
+            }
 
-		return rootView;
-	}
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                setPreferences(prefKey, finalProgress[0]);
+                saveSeekBarProgress(String.valueOf(finalProgress[0]), prefKey);
 
-	private void enableCheckBox() {
-		if (Constants.hideControls == -1 || Constants.hideControls == 0) {
-			Box.setChecked(false);
-			Constants.contols = true;
-		} else if (Constants.hideControls == 1) {
-			Box.setChecked(true);
-			Constants.contols = false;
-		}
-	}
+            }
+        });
+    }
 
+    private void saveSeekBarProgress(final String progress, final String key) {
+        new Thread(new Runnable() {
+            public void run() {
+
+                try {
+                    Writer.write(progress, Constants.configsPath
+                            + "/config/openmw/settings.cfg", key);
+
+                } catch (Exception e)
+
+                {
+                }
+
+
+            }
+        }
+
+        ).start();
+
+    }
+
+
+    private void setPreferences(String prefValue, float value) {
+        Editor editor = Settings.edit();
+        editor.putFloat(prefValue, value);
+        editor.apply();
+
+    }
 }

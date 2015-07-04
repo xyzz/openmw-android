@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:key="genereal_settings"
+        android:title="General settings">
+        <CheckBoxPreference
+            android:key="hidecontrolscheckBox"
+            android:title="Hide onscreen buttons"></CheckBoxPreference>
+        <PreferenceScreen
+            android:key="Language"
+            android:summary="Language settings"
+            android:title="Language">
+            <PreferenceCategory
+                android:key="categ1anguage"
+                android:title="Language settings">
+                <ListPreference
+                    android:entries="@array/encoding_entry"
+                    android:entryValues="@array/encoding_entry"
+                    android:key="encoding"
+                    android:summary="Game language"
+                    android:title="Encoding"></ListPreference>
+
+                <CheckBoxPreference
+                    android:key="subtitiles"
+                    android:summary="Show subtitles"
+                    android:title="Subtitles"></CheckBoxPreference>
+            </PreferenceCategory>
+        </PreferenceScreen>
+        <PreferenceScreen
+            android:key="screen"
+            android:summary="Screen settings"
+            android:title="Screen">
+            <PreferenceCategory
+                android:key="categ2"
+                android:title="Screen Settings">
+                <ListPreference
+                    android:entries="@array/mipmapping_array"
+                    android:entryValues="@array/mipmapping_array"
+                    android:key="mipmapping"
+                    android:summary="Mipmapping options"
+                    android:title="Mipmapping"></ListPreference>
+
+                <ListPreference
+                    android:entries="@array/resolution_entry"
+                    android:entryValues="@array/resolution_array"
+                    android:key="resolution"
+                    android:summary="Screen resolution"
+                    android:title="Resolution"></ListPreference>
+            </PreferenceCategory>
+        </PreferenceScreen>
+    </PreferenceCategory>
+</PreferenceScreen>

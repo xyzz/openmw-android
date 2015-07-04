@@ -27,6 +27,7 @@
             android:layout_height="match_parent"
             android:layout_weight="120"
             android:gravity="left|center"
+            android:typeface="serif"
             android:textColor="#2196F3"
             android:textSize="19sp"
             android:textStyle="bold" />
@@ -37,6 +38,7 @@
             android:layout_height="match_parent"
             android:layout_weight="9"
             android:gravity="center"
+            android:typeface="serif"
             android:textColor="#2196F3"
             android:textStyle="bold"
             android:textSize="19sp" />
@@ -44,15 +46,6 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="vertical">
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Delete"
-            android:gravity="center"
-            android:textSize="10sp"
-            android:id="@+id/delete"
-            android:layout_weight="4" />
 
         <Button
             android:layout_width="match_parent"

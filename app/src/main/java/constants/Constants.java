@@ -136,7 +136,7 @@ public class Constants {
 
 	public static final String CONFIGS_PATH = "configs_path";
 	public static final String DATA_PATH = "data_path";
-	public static final String LANGUAGE = "spinner";
+	public static final String LANGUAGE = "encoding";
 	public static final String SUBTITLES = "subtitiles";
 	public static final String MIPMAPPING = "mipmapping";
 	public static final String COMMAND_LINE = "commandline";
@@ -149,7 +149,7 @@ public class Constants {
 	public static int hideControls =-1;
 	public static final String SCREEN_WIDTH = "screen_width";
 	public static final String SCREEN_HEIGHT = "screen_height";
-	public static final String RADIO_BUTTON_MODE = "radio_button_mode";
+	public static final String RESOLUTION = "resolution";
 
 
 }
