@@ -57,6 +57,13 @@ public class FragmentPlugins extends Fragment {
         loadPlugins(Constants.configsPath + "/files.json");
         setupViews(rootView);
 
+        try {
+            savePlugins();
+
+        } catch (Exception e) {
+
+        }
+
         return rootView;
     }
 
@@ -106,13 +113,13 @@ public class FragmentPlugins extends Fragment {
     }
 
     private DragSortListView.RemoveListener onRemove = new DragSortListView.RemoveListener() {
-         @Override
-         public void remove(int which) {
+        @Override
+        public void remove(int which) {
 
-             deletePos = which;
-             showDialod();
-             }
-         };
+            deletePos = which;
+            showDialod();
+        }
+    };
 
 
     private void showModDialog(final boolean isModEnable, String message) {
