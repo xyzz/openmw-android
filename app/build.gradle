@@ -24,7 +24,9 @@ android {
 repositories {
     maven {
         url "https://jitpack.io"
+
     }
+    maven { url 'https://dl.bintray.com/drummer-aidan/maven' }
 }
 
 dependencies {
@@ -34,6 +36,7 @@ dependencies {
     compile 'com.android.support:support-v4:22.1.1'
     compile files('libs/fileexplorer.jar')
     compile 'com.android.support:appcompat-v7:22.1.1'
+    compile 'com.afollestad:material-dialogs:0.7.6.0'
     compile 'com.github.AndroidDeveloperLB:MaterialPreferenceLibrary:1'
     compile('com.mikepenz.materialdrawer:library:0.9.5@aar') {
         transitive = true

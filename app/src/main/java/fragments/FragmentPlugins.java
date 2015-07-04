@@ -1,7 +1,6 @@
 package fragments;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -16,6 +15,7 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.AlertDialogWrapper;
 import com.libopenmw.openmw.FileChooser;
 import com.libopenmw.openmw.R;
 import com.mobeta.android.dslv.DragSortListView;
@@ -123,7 +123,7 @@ public class FragmentPlugins extends Fragment {
 
 
     private void showModDialog(final boolean isModEnable, String message) {
-        AlertDialog.Builder alert = new AlertDialog.Builder(
+        AlertDialogWrapper.Builder alert = new AlertDialogWrapper.Builder(
                 FragmentPlugins.this.getActivity());
         alert.setTitle(message);
 
@@ -146,7 +146,7 @@ public class FragmentPlugins extends Fragment {
     }
 
     private void showDependenciesDialog(final int pos) {
-        final AlertDialog.Builder alert = new AlertDialog.Builder(
+        final AlertDialogWrapper.Builder alert = new AlertDialogWrapper.Builder(
                 FragmentPlugins.this.getActivity());
         alert.setTitle("Dependencies");
         pluginInfo = new TextView(FragmentPlugins.this.getActivity());
@@ -258,7 +258,7 @@ public class FragmentPlugins extends Fragment {
 
 
     private void showDialod() {
-        AlertDialog.Builder alert = new AlertDialog.Builder(
+        AlertDialogWrapper.Builder alert = new AlertDialogWrapper.Builder(
                 FragmentPlugins.this.getActivity());
         alert.setTitle("Do you want to delete " + Plugins.get(deletePos).name
                 + " ?");
