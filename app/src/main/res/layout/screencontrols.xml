@@ -31,7 +31,7 @@
             android:background="@null"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:scaleType="fitXY"
+            android:scaleType="fitCenter"
             android:src="@drawable/run" />
 
         <ImageButton
@@ -41,7 +41,7 @@
             android:background="@null"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:scaleType="fitXY"
+            android:scaleType="fitCenter"
             android:src="@drawable/inventory" />
 
         <ui.controls.Joystick
@@ -60,7 +60,7 @@
             android:background="@null"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:scaleType="fitXY"
+            android:scaleType="fitCenter"
             android:src="@drawable/ontarget" />
 
         <ImageButton
@@ -70,7 +70,7 @@
             android:background="@null"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:scaleType="fitXY"
+            android:scaleType="fitCenter"
             android:src="@drawable/backup" />
 
         <ImageButton
@@ -80,7 +80,7 @@
             android:background="@null"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:scaleType="fitXY"
+            android:scaleType="fitCenter"
             android:src="@drawable/wait" />
 
         <Button
@@ -90,7 +90,7 @@
             android:focusable="true"
             android:gravity="center"
             android:focusableInTouchMode="true"
-            android:scaleType="fitXY" />
+            android:scaleType="fitCenter" />
 
         <Button
             android:id="@+id/showQuickPanel"
@@ -99,7 +99,7 @@
             android:focusable="true"
             android:gravity="center"
             android:focusableInTouchMode="true"
-            android:scaleType="fitXY"
+            android:scaleType="fitCenter"
             android:text="QP" />
 
         <Button
@@ -109,7 +109,7 @@
             android:focusable="true"
             android:gravity="center"
             android:focusableInTouchMode="true"
-            android:scaleType="fitXY"
+            android:scaleType="fitCenter"
             android:text="F1" />
 
         <ImageButton
@@ -119,7 +119,7 @@
             android:background="@null"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:scaleType="fitXY"
+            android:scaleType="fitCenter"
             android:src="@drawable/pause" />
 
         <ImageButton
@@ -129,7 +129,7 @@
             android:background="@null"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:scaleType="fitXY"
+            android:scaleType="fitCenter"
             android:src="@drawable/image1" />
 
         <ImageButton
@@ -139,7 +139,7 @@
             android:background="@null"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:scaleType="fitXY"
+            android:scaleType="fitCenter"
             android:src="@drawable/image2" />
 
         <ImageButton
@@ -149,7 +149,7 @@
             android:background="@null"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:scaleType="fitXY"
+            android:scaleType="fitCenter"
             android:src="@drawable/image3" />
 
         <ImageButton
@@ -159,7 +159,7 @@
             android:background="@null"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:scaleType="fitXY"
+            android:scaleType="fitCenter"
             android:src="@drawable/image4" />
 
         <ImageButton
@@ -169,7 +169,7 @@
             android:background="@null"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:scaleType="fitXY"
+            android:scaleType="fitCenter"
             android:src="@drawable/image5" />
 
         <ImageButton
@@ -179,7 +179,7 @@
             android:background="@null"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:scaleType="fitXY"
+            android:scaleType="fitCenter"
             android:src="@drawable/image6" />
 
         <ImageButton
@@ -189,7 +189,7 @@
             android:background="@null"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:scaleType="fitXY"
+            android:scaleType="fitCenter"
             android:src="@drawable/image7" />
 
         <ImageButton
@@ -199,7 +199,7 @@
             android:background="@null"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:scaleType="fitXY"
+            android:scaleType="fitCenter"
             android:src="@drawable/image8" />
 
         <ImageButton
@@ -209,7 +209,7 @@
             android:background="@null"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:scaleType="fitXY"
+            android:scaleType="fitCenter"
             android:src="@drawable/image9" />
 
         <ImageButton
@@ -219,7 +219,7 @@
             android:background="@null"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:scaleType="fitXY"
+            android:scaleType="fitCenter"
             android:src="@drawable/image0" />
 
         <ImageButton
@@ -229,7 +229,7 @@
             android:background="@null"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:scaleType="fitXY"
+            android:scaleType="fitCenter"
             android:src="@drawable/load" />
 
         <ImageButton
@@ -239,7 +239,7 @@
             android:background="@null"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:scaleType="fitXY"
+            android:scaleType="fitCenter"
             android:src="@drawable/save" />
 
         <ImageButton
@@ -249,7 +249,7 @@
             android:background="@null"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:scaleType="fitXY"
+            android:scaleType="fitCenter"
             android:src="@drawable/broadsword1" />
 
         <ImageButton
@@ -259,7 +259,7 @@
             android:background="@null"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:scaleType="fitXY"
+            android:scaleType="fitCenter"
             android:src="@drawable/jump" />
 
         <ImageButton
@@ -269,7 +269,7 @@
             android:background="@null"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:scaleType="fitXY"
+            android:scaleType="fitCenter"
             android:src="@drawable/crossbow" />
 
         <ImageButton
@@ -279,7 +279,7 @@
             android:background="@null"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:scaleType="fitXY"
+            android:scaleType="fitCenter"
             android:src="@drawable/starsattelites" />
 
         <ImageButton
@@ -289,7 +289,7 @@
             android:background="@null"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:scaleType="fitXY"
+            android:scaleType="fitCenter"
             android:src="@drawable/c" />
 
         <ImageButton
@@ -299,7 +299,7 @@
             android:background="@null"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:scaleType="fitXY"
+            android:scaleType="fitCenter"
             android:src="@drawable/di" />
 
         <ImageButton
@@ -309,7 +309,7 @@
             android:background="@null"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:scaleType="fitXY"
+            android:scaleType="fitCenter"
             android:src="@drawable/use" />
 
         <Button
@@ -318,7 +318,7 @@
             android:layout_height="50dip"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:scaleType="fitXY"
+            android:scaleType="fitCenter"
             android:text="size-"
             android:visibility="gone" />
 
@@ -328,7 +328,7 @@
             android:layout_height="50dip"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:scaleType="fitXY"
+            android:scaleType="fitCenter"
             android:text="size+"
             android:visibility="gone" />
 
@@ -338,7 +338,7 @@
             android:layout_height="50dip"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:scaleType="fitXY"
+            android:scaleType="fitCenter"
             android:text="opacity-"
             android:visibility="gone" />
 
@@ -348,7 +348,7 @@
             android:layout_height="50dip"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:scaleType="fitXY"
+            android:scaleType="fitCenter"
             android:text="opacity+"
             android:visibility="gone" />
     </RelativeLayout>
