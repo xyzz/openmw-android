@@ -64,7 +64,7 @@ public class FragmentControls extends Fragment {
 
         SeekBar cameraSeekBar = (SeekBar) rootView.findViewById(R.id.cameraBar);
         TextView cameraProgress = (TextView) rootView.findViewById(R.id.cameraValue);
-        addSeekBarListener(cameraSeekBar, cameraStartPos, 100, 1, cameraProgress, cameraPrefKey);
+        addSeekBarListener(cameraSeekBar, cameraStartPos, 10, 1, cameraProgress, cameraPrefKey);
 
     }
 
