@@ -345,7 +345,7 @@ public class MainActivity extends ActionBarActivity {
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         ScreenScaler.textScaler(path, 3f);
-        ScreenScaler.textScaler(browseButton, 4f);
+        ScreenScaler.textScaler(browseButton, 4.8f);
     }
 
     private void removeTextlistener() {
