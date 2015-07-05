@@ -124,7 +124,7 @@ public class FragmentPlugins extends Fragment {
 
     private void showModDialog(final boolean isModEnable, String message) {
         new MaterialDialog.Builder(FragmentPlugins.this.getActivity())
-                .title(message)
+                .content(message)
                 .positiveText("OK")
                 .negativeText("Cancel").callback(new MaterialDialog.ButtonCallback() {
             @Override
@@ -247,7 +247,6 @@ public class FragmentPlugins extends Fragment {
 
     private void showDialod() {
         new MaterialDialog.Builder(FragmentPlugins.this.getActivity())
-                .title("Delete")
                 .content("Do you want to delete " + Plugins.get(deletePos).name
                         + " ?")
                 .positiveText("OK")

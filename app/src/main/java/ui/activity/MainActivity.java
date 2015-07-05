@@ -22,7 +22,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.lb.material_preferences_library.custom_preferences.Preference;
 import com.libopenmw.openmw.FileChooser;
 import com.libopenmw.openmw.R;
 import com.melnykov.fab.FloatingActionButton;
