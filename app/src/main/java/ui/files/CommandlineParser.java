@@ -12,6 +12,7 @@ public class CommandlineParser {
 
     public CommandlineParser(String data) {
         this.data = data;
+        this.data.trim();
     }
 
     public void parseCommandLine() {
