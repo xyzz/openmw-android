@@ -27,20 +27,8 @@
             android:layout_height="match_parent"
             android:layout_weight="120"
             android:gravity="left|center"
-            android:textColor="#2196F3"
-            android:typeface="serif"
+            android:fontFamily="sans-serif"
             android:textSize="24sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/loadingPlace"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="9"
-            android:gravity="center"
-            android:textColor="#2196F3"
-            android:textSize="24sp"
-            android:typeface="serif"
             android:textStyle="bold" />
 
         <LinearLayout

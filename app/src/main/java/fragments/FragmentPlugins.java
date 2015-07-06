@@ -39,7 +39,6 @@ public class FragmentPlugins extends Fragment {
     private List<FilesData> Plugins;
     private Adapter adapter;
     private int deletePos = -1;
-    private TextView pluginInfo;
     private static final int REQUEST_PATH = 1;
     public static FragmentPlugins instance = null;
 
@@ -347,17 +346,6 @@ public class FragmentPlugins extends Fragment {
 
     }
 
-    private int loadingPos(int place) {
-        int countPlace = 0;
-        int[] loadingPlaces = new int[Plugins.size()];
-        for (int i = 0; i < Plugins.size(); i++)
-            if (Plugins.get(i).enabled == 1) {
-                loadingPlaces[i] = countPlace;
-                countPlace++;
-            }
-
-        return loadingPlaces[place];
-    }
 
     private void addNewFiles(File yourDir) throws JSONException, IOException {
         int lastEsmPos = 0;
@@ -488,13 +476,10 @@ public class FragmentPlugins extends Fragment {
             final CheckBox Box = (CheckBox) rowView
                     .findViewById(R.id.checkBoxenable);
 
-            final TextView loadingPlace = (TextView) rowView
-                    .findViewById(R.id.loadingPlace);
+
 
             if (Plugins.get(position).enabled == 1) {
                 Box.setChecked(true);
-                loadingPlace.setText("Loading Pos = " + loadingPos(position));
-
             }
 
             Button dependButton = (Button) rowView.findViewById(R.id.Dependencies);
@@ -512,14 +497,13 @@ public class FragmentPlugins extends Fragment {
                     if (Box.isChecked()) {
 
                         Plugins.get(position).enabled = 1;
-                        loadingPlace.setText("Loading Pos = " + loadingPos(position));
+
                         reloadAdapter();
 
                         savePluginsData(Constants.configsPath + "/files.json");
                     } else {
 
                         Plugins.get(position).enabled = 0;
-                        loadingPlace.setText("");
                         reloadAdapter();
 
                         savePluginsData(Constants.configsPath + "/files.json");
