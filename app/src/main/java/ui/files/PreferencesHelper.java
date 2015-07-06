@@ -20,8 +20,7 @@ public class PreferencesHelper {
                 "");
         Constants.dataPath = Settings.getString(Constants.DATA_PATH,
                 Environment.getExternalStorageDirectory() + "/libopenmw/data");
-        Constants.hideControls = Settings.getInt(
-                Constants.APP_PREFERENCES_CONTROLS_FLAG, -1);
+
 
     }
 

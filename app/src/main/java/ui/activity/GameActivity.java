@@ -8,14 +8,13 @@ import constants.Constants;
 import screen.ScreenScaler;
 import ui.controls.QuickPanel;
 import ui.controls.ScreenControls;
-import ui.files.PreferencesHelper;
+import ui.files.CommandlineParser;
 
 import android.os.Bundle;
 import android.os.Process;
 import android.preference.PreferenceManager;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.Toast;
 
 public class GameActivity extends SDLActivity {
 
@@ -25,9 +24,6 @@ public class GameActivity extends SDLActivity {
 
     private boolean hideControls = false;
 
-
-    private int argc = 0;
-    private String[] argv;
 
     static {
 
@@ -39,9 +35,9 @@ public class GameActivity extends SDLActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        parseCommandLine();
-
-        commandLine(argc, argv);
+        CommandlineParser commandlineParser = new CommandlineParser(Constants.commandLineData);
+        commandlineParser.parseCommandLine();
+        commandLine(commandlineParser.getArgc(), commandlineParser.getArgv());
         hideControls = PreferenceManager.getDefaultSharedPreferences(this).getBoolean(Constants.HIDE_CONTROLS, false);
         getPathToJni(Constants.configsPath);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -63,12 +59,7 @@ public class GameActivity extends SDLActivity {
 
     }
 
-    private void parseCommandLine() {
-        Constants.commandLineData = Constants.commandLineData.replace(
-                " ", "");
-        argv = Constants.commandLineData.split("/");
-        argc = argv.length;
-    }
+
 
     @Override
     public void onDestroy() {
