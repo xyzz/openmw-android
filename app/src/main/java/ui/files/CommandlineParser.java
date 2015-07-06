@@ -29,7 +29,7 @@ public class CommandlineParser {
     }
 
     private String[] createArgv(String[] argv) {
-        removeElements(argv, 0);
+        argv = removeElements(argv, 0);
         for (int i = 0; i < argv.length; i++)
             argv[i] = "--" + argv[i];
         return argv;
