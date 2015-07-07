@@ -3,6 +3,7 @@ package ui.activity;
 import com.libopenmw.openmw.R;
 
 import screen.ScreenScaler;
+import ui.controls.AlphaView;
 import ui.controls.ControlsParams;
 import ui.controls.Joystick;
 import ui.controls.MultiTouchListener;
@@ -136,11 +137,11 @@ public class ConfigureControls extends Activity {
 		buttonSize.setLayoutParams(ControlsParams.coordinates(buttonSize, 400,
 				280, 100, 80));
 		buttonSize.setVisibility(Button.VISIBLE);
-		buttonSize.setAlpha((float) 0.5);
+		AlphaView.setAlphaForView(buttonSize, 0.5f);
 
 		buttonSize1.setLayoutParams(ControlsParams.coordinates(buttonSize1,
 				520, 280, 100, 80));
-		buttonSize1.setAlpha((float) 0.5);
+		AlphaView.setAlphaForView(buttonSize1, 0.5f);
 
 		buttonSize1.setVisibility(Button.VISIBLE);
 
@@ -154,9 +155,8 @@ public class ConfigureControls extends Activity {
 		buttonOpacity1.setLayoutParams(ControlsParams.coordinates(
 				buttonOpacity1, 540, 400, 120, 100));
 		buttonOpacity1.setVisibility(Button.VISIBLE);
-
-		buttonOpacity.setAlpha((float) 0.5);
-		buttonOpacity1.setAlpha((float) 0.5);
+		AlphaView.setAlphaForView(buttonOpacity, 0.5f);
+		AlphaView.setAlphaForView(buttonOpacity1, 0.5f);
 
 		button.setTextColor(Color.WHITE);
 		button.setTextSize((float) ScreenScaler.getInstance()
@@ -262,7 +262,7 @@ public class ConfigureControls extends Activity {
 		buttonLoad = (ImageButton) findViewById(R.id.buttonsuperload);
 		buttonLoad.setOnTouchListener(touchListener);
 		buttonLoad.setId(8);
-		buttonLoad.setAlpha((float) 0.5);
+
 
 		buttonSave = (ImageButton) findViewById(R.id.buttonsupersave);
 		buttonSave.setOnTouchListener(touchListener);
@@ -309,24 +309,24 @@ public class ConfigureControls extends Activity {
 					Constants.APP_PREFERENCES_BUTTON_RUN_SIZE, ScreenScaler
 							.getInstance().getScaledCoordinateX(70));
 
-			buttonRun.setAlpha((float) 0.5);
-			joystick.setAlpha((float) 0.5);
-			buttonCrouch.setAlpha((float) 0.5);
-			buttonUse.setAlpha((float) 0.5);
-			buttonMagic.setAlpha((float) 0.5);
-			buttonFire.setAlpha((float) 0.5);
-			buttonJump.setAlpha((float) 0.5);
-			buttonWeapon.setAlpha((float) 0.5);
-			buttonInventory.setAlpha((float) 0.5);
-			buttonLoad.setAlpha((float) 0.5);
-
-			buttonSave.setAlpha((float) 0.5);
-			buttonPause.setAlpha((float) 0.5);
-			buttonDiary.setAlpha((float) 0.5);
-			buttonTouch.setAlpha((float) 0.5);
-			buttonChangePerson.setAlpha((float) 0.5);
-			buttonWait.setAlpha((float) 0.5);
-			buttonConsole.setAlpha((float) 0.5);
+			AlphaView.setAlphaForView(buttonRun, 0.5f);
+			AlphaView.setAlphaForView(joystick,0.5f);
+			AlphaView.setAlphaForView(buttonCrouch,0.5f);
+			AlphaView.setAlphaForView(buttonUse,0.5f);
+			AlphaView.setAlphaForView(buttonMagic,0.5f);
+			AlphaView.setAlphaForView(buttonFire,0.5f);
+			AlphaView.setAlphaForView(buttonJump,0.5f);
+			AlphaView.setAlphaForView(buttonJump,0.5f);
+			AlphaView.setAlphaForView(buttonWeapon,0.5f);
+			AlphaView.setAlphaForView(buttonInventory,0.5f);
+			AlphaView.setAlphaForView(buttonLoad,0.5f);
+			AlphaView.setAlphaForView(buttonSave,0.5f);
+			AlphaView.setAlphaForView(buttonPause,0.5f);
+			AlphaView.setAlphaForView(buttonDiary,0.5f);
+			AlphaView.setAlphaForView(buttonTouch,0.5f);
+			AlphaView.setAlphaForView(buttonChangePerson,0.5f);
+			AlphaView.setAlphaForView(buttonWait,0.5f);
+			AlphaView.setAlphaForView(buttonConsole,0.5f);
 
 			showPanel.setLayoutParams(ControlsParams.coordinates(showPanel, 68,
 					0, 65, 65));
@@ -351,18 +351,19 @@ public class ConfigureControls extends Activity {
 			key9.setLayoutParams(ControlsParams.coordinates(key9, 0, 675, 55,
 					55));
 
-			showPanel.setAlpha(0.5f);
-			f1.setAlpha(0.5f);
-			key0.setAlpha(1.0f);
-			key1.setAlpha(1.0f);
-			key2.setAlpha(1.0f);
-			key3.setAlpha(1.0f);
-			key4.setAlpha(1.0f);
-			key5.setAlpha(1.0f);
-			key6.setAlpha(1.0f);
-			key7.setAlpha(1.0f);
-			key8.setAlpha(1.0f);
-			key9.setAlpha(1.0f);
+			AlphaView.setAlphaForView(showPanel, 0.5f);
+			AlphaView.setAlphaForView(f1, 0.5f);
+			AlphaView.setAlphaForView(key0, 1.0f);
+			AlphaView.setAlphaForView(key1, 1.0f);
+			AlphaView.setAlphaForView(key2, 1.0f);
+			AlphaView.setAlphaForView(key3, 1.0f);
+			AlphaView.setAlphaForView(key5, 1.0f);
+			AlphaView.setAlphaForView(key6, 1.0f);
+			AlphaView.setAlphaForView(key7, 1.0f);
+			AlphaView.setAlphaForView(key8, 1.0f);
+			AlphaView.setAlphaForView(key9, 1.0f);
+
+
 			setAlphaToSharedPreferences(
 					Constants.APP_PREFERENCES_BUTTON_SHOWPANEL_OPASITY,
 					(float) 0.5);
@@ -545,39 +546,55 @@ public class ConfigureControls extends Activity {
 			editor.putInt(Constants.APP_PREFERENCES_RESET_CONTROLS, 0);
 			editor.apply();
 		} else if (controlsFlag == 0) {
-			buttonRun.setAlpha(Settings.getFloat(
-					Constants.APP_PREFERENCES_BUTTON_RUN_OPACITY, -1));
-			buttonConsole.setAlpha(Settings.getFloat(
+
+			AlphaView.setAlphaForView(buttonRun,Settings.getFloat(
+					Constants.APP_PREFERENCES_BUTTON_RUN_OPACITY, 0.5f));
+
+			AlphaView.setAlphaForView(buttonConsole,Settings.getFloat(
 					Constants.APP_PREFERENCES_BUTTON_CONSOLE_OPACITY, -1));
-			buttonChangePerson.setAlpha(Settings.getFloat(
-					Constants.APP_PREFERENCES_BUTTON_CHANGEPERSON_OPACITY, -1));
-			buttonWait.setAlpha(Settings.getFloat(
+
+			AlphaView.setAlphaForView(buttonWait, Settings.getFloat(
 					Constants.APP_PREFERENCES_BUTTON_WAIT_OPACITY, -1));
-			buttonTouch.setAlpha(Settings.getFloat(
+
+			AlphaView.setAlphaForView(buttonTouch, Settings.getFloat(
 					Constants.APP_PREFERENCES_BUTTON_TOUCH_OPACITY, -1));
-			buttonDiary.setAlpha(Settings.getFloat(
+
+			AlphaView.setAlphaForView(buttonDiary, Settings.getFloat(
 					Constants.APP_PREFERENCES_BUTTON_DIARY_OPACITY, -1));
-			buttonPause.setAlpha(Settings.getFloat(
+
+			AlphaView.setAlphaForView(buttonPause,Settings.getFloat(
 					Constants.APP_PREFERENCES_BUTTON_PAUSE_OPACITY, -1));
-			buttonLoad.setAlpha(Settings.getFloat(
+
+			AlphaView.setAlphaForView(buttonLoad, Settings.getFloat(
 					Constants.APP_PREFERENCES_BUTTON_LOAD_OPACITY, -1));
-			buttonSave.setAlpha(Settings.getFloat(
+
+			AlphaView.setAlphaForView(buttonSave, Settings.getFloat(
 					Constants.APP_PREFERENCES_BUTTON_SAVE_OPACITY, -1));
-			buttonWeapon.setAlpha(Settings.getFloat(
+
+			AlphaView.setAlphaForView(buttonWeapon, Settings.getFloat(
 					Constants.APP_PREFERENCES_BUTTON_WEAPON_OPACITY, -1));
-			buttonInventory.setAlpha(Settings.getFloat(
-					Constants.APP_PREFERENCES_BUTTON_INVENTORY_OPACITY, -1));
-			buttonJump.setAlpha(Settings.getFloat(
+
+			AlphaView.setAlphaForView(buttonJump, Settings.getFloat(
 					Constants.APP_PREFERENCES_BUTTON_JUMP_OPACITY, -1));
-			buttonFire.setAlpha(Settings.getFloat(
+
+			AlphaView.setAlphaForView(buttonInventory, Settings
+					.getFloat(
+							Constants.APP_PREFERENCES_BUTTON_INVENTORY_OPACITY,
+							-1));
+
+			AlphaView.setAlphaForView(buttonFire, Settings.getFloat(
 					Constants.APP_PREFERENCES_BUTTON_FIRE_OPACITY, -1));
-			buttonUse.setAlpha(Settings.getFloat(
+
+			AlphaView.setAlphaForView(buttonUse, Settings.getFloat(
 					Constants.APP_PREFERENCES_BUTTON_USE_OPACITY, -1));
-			buttonMagic.setAlpha(Settings.getFloat(
-					Constants.APP_PREFERENCES_BUTTON_MAGIC_OPACITY, -1));
-			buttonCrouch.setAlpha(Settings.getFloat(
+
+			AlphaView.setAlphaForView(buttonMagic, Settings.getFloat(
+					Constants.APP_PREFERENCES_BUTTON_USE_OPACITY, -1));
+
+			AlphaView.setAlphaForView(buttonCrouch, Settings.getFloat(
 					Constants.APP_PREFERENCES_BUTTON_CROUCH_OPACITY, -1));
-			joystick.setAlpha(Settings.getFloat(
+
+			AlphaView.setAlphaForView(joystick, Settings.getFloat(
 					Constants.APP_PREFERENCES_JOYSTICK_OPACITY, -1));
 
 			joystick.setLayoutParams(ControlsParams.coordinatesConfigureControls(
@@ -812,33 +829,40 @@ public class ConfigureControls extends Activity {
 											Constants.APP_PREFERENCES_BUTTON_CROUCH_SIZE,
 											-1)));
 
-			f1.setAlpha(Settings.getFloat(
-					(Constants.APP_PREFERENCES_KEY_F1_OPACITY), 0.5f));
-			showPanel
-					.setAlpha(Settings
-							.getFloat(
-									(Constants.APP_PREFERENCES_BUTTON_SHOWPANEL_OPASITY),
-									0.5f));
-			key0.setAlpha(Settings.getFloat(
-					(Constants.APP_PREFERENCES_KEY_0_OPACITY), 1.0f));
-			key1.setAlpha(Settings.getFloat(
-					(Constants.APP_PREFERENCES_KEY_1_OPACITY), 1.0f));
-			key2.setAlpha(Settings.getFloat(
-					(Constants.APP_PREFERENCES_KEY_2_OPACITY), 1.0f));
-			key3.setAlpha(Settings.getFloat(
-					(Constants.APP_PREFERENCES_KEY_3_OPACITY), 1.0f));
-			key4.setAlpha(Settings.getFloat(
-					(Constants.APP_PREFERENCES_KEY_4_OPACITY), 1.0f));
-			key5.setAlpha(Settings.getFloat(
-					(Constants.APP_PREFERENCES_KEY_5_OPACITY), 1.0f));
-			key6.setAlpha(Settings.getFloat(
-					(Constants.APP_PREFERENCES_KEY_6_OPACITY), 1.0f));
-			key7.setAlpha(Settings.getFloat(
-					(Constants.APP_PREFERENCES_KEY_7_OPACITY), 1.0f));
-			key8.setAlpha(Settings.getFloat(
-					(Constants.APP_PREFERENCES_KEY_8_OPACITY), 1.0f));
-			key9.setAlpha(Settings.getFloat(
-					(Constants.APP_PREFERENCES_KEY_9_OPACITY), 1.0f));
+
+            AlphaView.setAlphaForView(f1, Settings.getFloat(
+                    (Constants.APP_PREFERENCES_KEY_F1_OPACITY), 0.5f));
+
+            AlphaView.setAlphaForView(showPanel, Settings
+                    .getFloat(
+                            (Constants.APP_PREFERENCES_BUTTON_SHOWPANEL_OPASITY),
+                            0.5f));
+
+            AlphaView.setAlphaForView(key0, Settings.getFloat(
+                    (Constants.APP_PREFERENCES_KEY_0_OPACITY), 1.0f));
+
+            AlphaView.setAlphaForView(key1, Settings.getFloat(
+                    (Constants.APP_PREFERENCES_KEY_1_OPACITY), 1.0f));
+            AlphaView.setAlphaForView(key2, Settings.getFloat(
+                    (Constants.APP_PREFERENCES_KEY_2_OPACITY), 1.0f));
+            AlphaView.setAlphaForView(key3, Settings.getFloat(
+                    (Constants.APP_PREFERENCES_KEY_3_OPACITY), 1.0f));
+
+            AlphaView.setAlphaForView(key4, Settings.getFloat(
+                    (Constants.APP_PREFERENCES_KEY_4_OPACITY), 1.0f));
+
+            AlphaView.setAlphaForView(key5, Settings.getFloat(
+                    (Constants.APP_PREFERENCES_KEY_5_OPACITY), 1.0f));
+
+            AlphaView.setAlphaForView(key6, Settings.getFloat(
+                    (Constants.APP_PREFERENCES_KEY_6_OPACITY), 1.0f));
+            AlphaView.setAlphaForView(key7, Settings.getFloat(
+                    (Constants.APP_PREFERENCES_KEY_7_OPACITY), 1.0f));
+            AlphaView.setAlphaForView(key8, Settings.getFloat(
+                    (Constants.APP_PREFERENCES_KEY_8_OPACITY), 1.0f));
+
+            AlphaView.setAlphaForView(key9, Settings.getFloat(
+                    (Constants.APP_PREFERENCES_KEY_9_OPACITY), 1.0f));
 
 			f1.setLayoutParams(ControlsParams.coordinatesConfigureControls(f1,
 					Settings.getInt(Constants.APP_PREFERENCES_KEY_F1_X, -1),
@@ -1096,81 +1120,64 @@ public class ConfigureControls extends Activity {
 
 	public void setButtonsOpacity() {
 		if (buttonFlag == 1)
-			buttonRun
-					.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_RUN_OPACITY));
+            AlphaView.setAlphaForView(buttonRun, setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_RUN_OPACITY));
 		else if (buttonFlag == 2)
-			buttonConsole
-					.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_CONSOLE_OPACITY));
-		else if (buttonFlag == 3)
-			buttonChangePerson
-					.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_CHANGEPERSON_OPACITY));
-		else if (buttonFlag == 4)
-			buttonWait
-					.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_WAIT_OPACITY));
+            AlphaView.setAlphaForView(buttonConsole, setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_CONSOLE_OPACITY));
+        else if (buttonFlag == 3)
+            AlphaView.setAlphaForView(buttonChangePerson, setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_CHANGEPERSON_OPACITY));
+        else if (buttonFlag == 4)
+            AlphaView.setAlphaForView(buttonWait,setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_WAIT_OPACITY));
 		else if (buttonFlag == 5)
-			buttonTouch
-					.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_TOUCH_OPACITY));
-		else if (buttonFlag == 6)
-			buttonDiary
-					.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_DIARY_OPACITY));
-		else if (buttonFlag == 7)
-			buttonPause
-					.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_PAUSE_OPACITY));
-		if (buttonFlag == 8)
-			buttonLoad
-					.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_LOAD_OPACITY));
-		else if (buttonFlag == 9)
-			buttonSave
-					.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_SAVE_OPACITY));
+            AlphaView.setAlphaForView(buttonTouch,setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_TOUCH_OPACITY));
+        else if (buttonFlag == 6)
+            AlphaView.setAlphaForView(buttonDiary,setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_DIARY_OPACITY));
+        else if (buttonFlag == 7)
+            AlphaView.setAlphaForView(buttonPause, setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_PAUSE_OPACITY));
+        if (buttonFlag == 8)
+            AlphaView.setAlphaForView(buttonLoad, setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_LOAD_OPACITY));
+        else if (buttonFlag == 9)
+            AlphaView.setAlphaForView(buttonSave,setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_SAVE_OPACITY));
 		else if (buttonFlag == 10)
-			buttonWeapon
-					.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_WEAPON_OPACITY));
-		else if (buttonFlag == 11)
-			buttonInventory
-					.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_INVENTORY_OPACITY));
+            AlphaView.setAlphaForView(buttonWeapon,setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_WEAPON_OPACITY));
+        else if (buttonFlag == 11)
+            AlphaView.setAlphaForView(buttonInventory,setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_INVENTORY_OPACITY));
 		else if (buttonFlag == 12)
-			buttonJump
-					.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_JUMP_OPACITY));
+            AlphaView.setAlphaForView(buttonJump,setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_JUMP_OPACITY));
 		else if (buttonFlag == 13)
-			buttonFire
-					.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_FIRE_OPACITY));
-		else if (buttonFlag == 14)
-			buttonMagic
-					.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_MAGIC_OPACITY));
-		else if (buttonFlag == 15)
-			buttonUse
-					.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_USE_OPACITY));
-		else if (buttonFlag == 16)
-			buttonCrouch
-					.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_CROUCH_OPACITY));
-		else if (buttonFlag == 17)
-			joystick.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_JOYSTICK_OPACITY));
-		else if (buttonFlag == 18)
-			f1.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_KEY_F1_OPACITY));
-		else if (buttonFlag == 19)
-			showPanel
-					.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_SHOWPANEL_OPASITY));
+            AlphaView.setAlphaForView(buttonFire,setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_FIRE_OPACITY));
+        else if (buttonFlag == 14)
+            AlphaView.setAlphaForView(buttonMagic,setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_MAGIC_OPACITY));
+        else if (buttonFlag == 15)
+            AlphaView.setAlphaForView(buttonUse,setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_USE_OPACITY));
+        else if (buttonFlag == 16)
+            AlphaView.setAlphaForView(buttonCrouch,setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_CROUCH_OPACITY));
+        else if (buttonFlag == 17)
+            AlphaView.setAlphaForView(joystick,setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_JOYSTICK_OPACITY));
+        else if (buttonFlag == 18)
+            AlphaView.setAlphaForView(f1,setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_KEY_F1_OPACITY));
+        else if (buttonFlag == 19)
+            AlphaView.setAlphaForView(showPanel,setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_SHOWPANEL_OPASITY));
 		else if (buttonFlag == 20)
-			key0.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_KEY_0_OPACITY));
-		else if (buttonFlag == 21)
-			key1.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_KEY_1_OPACITY));
+            AlphaView.setAlphaForView(key0,setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_KEY_0_OPACITY));
+        else if (buttonFlag == 21)
+            AlphaView.setAlphaForView(key1,setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_KEY_1_OPACITY));
 		else if (buttonFlag == 22)
-			key2.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_KEY_2_OPACITY));
-		else if (buttonFlag == 23)
-			key3.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_KEY_3_OPACITY));
-		else if (buttonFlag == 24)
-			key4.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_KEY_4_OPACITY));
-		else if (buttonFlag == 25)
-			key5.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_KEY_5_OPACITY));
-		else if (buttonFlag == 26)
-			key6.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_KEY_6_OPACITY));
-		else if (buttonFlag == 27)
-			key7.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_KEY_7_OPACITY));
-		else if (buttonFlag == 28)
-			key8.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_KEY_8_OPACITY));
-		else if (buttonFlag == 29)
-			key9.setAlpha(setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_KEY_9_OPACITY));
-
+            AlphaView.setAlphaForView(key2,setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_KEY_2_OPACITY));
+        else if (buttonFlag == 23)
+            AlphaView.setAlphaForView(key3,setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_KEY_3_OPACITY));
+        else if (buttonFlag == 24)
+            AlphaView.setAlphaForView(key4,setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_KEY_4_OPACITY));
+        else if (buttonFlag == 25)
+            AlphaView.setAlphaForView(key5,setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_KEY_5_OPACITY));
+        else if (buttonFlag == 26)
+            AlphaView.setAlphaForView(key6,setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_KEY_6_OPACITY));
+        else if (buttonFlag == 27)
+            AlphaView.setAlphaForView(key7,setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_KEY_7_OPACITY));
+        else if (buttonFlag == 28)
+            AlphaView.setAlphaForView(key8,setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_KEY_8_OPACITY));
+        else if (buttonFlag == 29)
+            AlphaView.setAlphaForView(key9, setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_KEY_9_OPACITY));
+        
 	}
 
 	public void setButtonsSize() {

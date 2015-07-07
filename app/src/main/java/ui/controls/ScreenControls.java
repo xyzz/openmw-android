@@ -300,24 +300,26 @@ public class ScreenControls {
 				buttonRun.setLayoutParams(ControlsParams.coordinates(buttonRun,
 						65, 330, 70, 70));
 
-				buttonRun.setAlpha((float) 0.5);
-				joystick.setAlpha((float) 0.5);
-				buttonCrouch.setAlpha((float) 0.5);
-				buttonUse.setAlpha((float) 0.5);
-				buttonMagic.setAlpha((float) 0.5);
-				buttonFire.setAlpha((float) 0.5);
-				buttonJump.setAlpha((float) 0.5);
-				buttonWeapon.setAlpha((float) 0.5);
-				buttonInventory.setAlpha((float) 0.5);
-				buttonLoad.setAlpha((float) 0.5);
 
-				buttonSave.setAlpha((float) 0.5);
-				buttonPause.setAlpha((float) 0.5);
-				buttonDiary.setAlpha((float) 0.5);
-				buttonTouch.setAlpha((float) 0.5);
-				buttonChangePerson.setAlpha((float) 0.5);
-				buttonWait.setAlpha((float) 0.5);
-				buttonConsole.setAlpha((float) 0.5);
+				AlphaView.setAlphaForView(buttonRun, 0.5f);
+				AlphaView.setAlphaForView(joystick,0.5f);
+				AlphaView.setAlphaForView(buttonCrouch,0.5f);
+				AlphaView.setAlphaForView(buttonUse,0.5f);
+				AlphaView.setAlphaForView(buttonMagic,0.5f);
+				AlphaView.setAlphaForView(buttonFire,0.5f);
+				AlphaView.setAlphaForView(buttonJump,0.5f);
+				AlphaView.setAlphaForView(buttonJump,0.5f);
+				AlphaView.setAlphaForView(buttonWeapon,0.5f);
+				AlphaView.setAlphaForView(buttonInventory,0.5f);
+				AlphaView.setAlphaForView(buttonLoad,0.5f);
+				AlphaView.setAlphaForView(buttonSave,0.5f);
+				AlphaView.setAlphaForView(buttonPause,0.5f);
+				AlphaView.setAlphaForView(buttonDiary,0.5f);
+				AlphaView.setAlphaForView(buttonTouch,0.5f);
+				AlphaView.setAlphaForView(buttonChangePerson,0.5f);
+				AlphaView.setAlphaForView(buttonWait,0.5f);
+				AlphaView.setAlphaForView(buttonConsole,0.5f);
+
 
 				buttonConsole.setLayoutParams(ControlsParams.coordinates(
 						buttonConsole, 140, 0, 70, 70));
@@ -357,44 +359,57 @@ public class ScreenControls {
 						buttonCrouch, 940, 670, 80, 80));
 
 			} else if (controlsFlag == 0) {
-				buttonRun.setAlpha(Settings.getFloat(
-						Constants.APP_PREFERENCES_BUTTON_RUN_OPACITY, -1));
-				buttonConsole.setAlpha(Settings.getFloat(
+				AlphaView.setAlphaForView(buttonRun,Settings.getFloat(
+						Constants.APP_PREFERENCES_BUTTON_RUN_OPACITY, 0.5f));
+
+				AlphaView.setAlphaForView(buttonConsole,Settings.getFloat(
 						Constants.APP_PREFERENCES_BUTTON_CONSOLE_OPACITY, -1));
-				buttonChangePerson.setAlpha(Settings.getFloat(
-						Constants.APP_PREFERENCES_BUTTON_CHANGEPERSON_OPACITY,
-						-1));
-				buttonWait.setAlpha(Settings.getFloat(
+
+				AlphaView.setAlphaForView(buttonWait, Settings.getFloat(
 						Constants.APP_PREFERENCES_BUTTON_WAIT_OPACITY, -1));
-				buttonTouch.setAlpha(Settings.getFloat(
+
+				AlphaView.setAlphaForView(buttonTouch, Settings.getFloat(
 						Constants.APP_PREFERENCES_BUTTON_TOUCH_OPACITY, -1));
-				buttonDiary.setAlpha(Settings.getFloat(
+
+				AlphaView.setAlphaForView(buttonDiary, Settings.getFloat(
 						Constants.APP_PREFERENCES_BUTTON_DIARY_OPACITY, -1));
-				buttonPause.setAlpha(Settings.getFloat(
+
+				AlphaView.setAlphaForView(buttonPause,Settings.getFloat(
 						Constants.APP_PREFERENCES_BUTTON_PAUSE_OPACITY, -1));
-				buttonLoad.setAlpha(Settings.getFloat(
+
+				AlphaView.setAlphaForView(buttonLoad, Settings.getFloat(
 						Constants.APP_PREFERENCES_BUTTON_LOAD_OPACITY, -1));
-				buttonSave.setAlpha(Settings.getFloat(
+
+				AlphaView.setAlphaForView(buttonSave, Settings.getFloat(
 						Constants.APP_PREFERENCES_BUTTON_SAVE_OPACITY, -1));
-				buttonWeapon.setAlpha(Settings.getFloat(
+
+				AlphaView.setAlphaForView(buttonWeapon, Settings.getFloat(
 						Constants.APP_PREFERENCES_BUTTON_WEAPON_OPACITY, -1));
-				buttonInventory
-						.setAlpha(Settings
-								.getFloat(
-										Constants.APP_PREFERENCES_BUTTON_INVENTORY_OPACITY,
-										-1));
-				buttonJump.setAlpha(Settings.getFloat(
+
+				AlphaView.setAlphaForView(buttonJump, Settings.getFloat(
 						Constants.APP_PREFERENCES_BUTTON_JUMP_OPACITY, -1));
-				buttonFire.setAlpha(Settings.getFloat(
+
+				AlphaView.setAlphaForView(buttonInventory, Settings
+						.getFloat(
+								Constants.APP_PREFERENCES_BUTTON_INVENTORY_OPACITY,
+								-1));
+
+				AlphaView.setAlphaForView(buttonFire, Settings.getFloat(
 						Constants.APP_PREFERENCES_BUTTON_FIRE_OPACITY, -1));
-				buttonUse.setAlpha(Settings.getFloat(
+
+				AlphaView.setAlphaForView(buttonUse, Settings.getFloat(
 						Constants.APP_PREFERENCES_BUTTON_USE_OPACITY, -1));
-				buttonMagic.setAlpha(Settings.getFloat(
-						Constants.APP_PREFERENCES_BUTTON_MAGIC_OPACITY, -1));
-				buttonCrouch.setAlpha(Settings.getFloat(
+
+				AlphaView.setAlphaForView(buttonMagic, Settings.getFloat(
+						Constants.APP_PREFERENCES_BUTTON_USE_OPACITY, -1));
+
+				AlphaView.setAlphaForView(buttonCrouch, Settings.getFloat(
 						Constants.APP_PREFERENCES_BUTTON_CROUCH_OPACITY, -1));
-				joystick.setAlpha(Settings.getFloat(
+
+				AlphaView.setAlphaForView(joystick, Settings.getFloat(
 						Constants.APP_PREFERENCES_JOYSTICK_OPACITY, -1));
+
+
 
 				joystick.setLayoutParams(ControlsParams.coordinatesConfigureControls(
 						joystick, Settings.getInt(
