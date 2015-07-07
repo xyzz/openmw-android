@@ -397,6 +397,10 @@ public class ScreenControls {
 				AlphaView.setAlphaForView(buttonFire, Settings.getFloat(
 						Constants.APP_PREFERENCES_BUTTON_FIRE_OPACITY, -1));
 
+				AlphaView.setAlphaForView(buttonChangePerson, Settings.getFloat(
+						Constants.APP_PREFERENCES_BUTTON_CHANGEPERSON_OPACITY, -1));
+
+
 				AlphaView.setAlphaForView(buttonUse, Settings.getFloat(
 						Constants.APP_PREFERENCES_BUTTON_USE_OPACITY, -1));
 
