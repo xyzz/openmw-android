@@ -25,9 +25,9 @@ public class ScreenResolutionHelper {
     private void getScreenWidthAndHeight() {
         DisplayMetrics dm = activity.getResources().getDisplayMetrics();
 
-        screenWidth = (int)(dm.widthPixels / dm.xdpi);
+        screenWidth = dm.widthPixels;
 
-        screenHeight =(int) (dm.heightPixels / dm.ydpi);
+        screenHeight =dm.heightPixels;
     }
 
 
