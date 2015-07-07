@@ -310,10 +310,7 @@ public class FragmentPlugins extends Fragment {
 
     private boolean checkBsaExists(String path) {
         File inputfile = new File(path);
-        if (inputfile.exists())
-            return true;
-        else
-            return false;
+        return inputfile.exists();
 
     }
 

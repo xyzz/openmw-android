@@ -13,7 +13,7 @@ public class PreferencesHelper {
     public static void getPrefValues(Activity a) {
         SharedPreferences Settings;
         Settings = a.getSharedPreferences(Constants.APP_PREFERENCES,
-                Context.MODE_MULTI_PROCESS);
+                Context.MODE_PRIVATE);
         Constants.configsPath = Settings.getString(Constants.CONFIGS_PATH,
                 Environment.getExternalStorageDirectory() + "/libopenmw");
         Constants.commandLineData = Settings.getString(Constants.COMMAND_LINE,
@@ -36,20 +36,20 @@ public class PreferencesHelper {
     public static void setPreferences(String prefKey, int value, Activity a) {
         SharedPreferences Settings;
         Settings = a.getSharedPreferences(Constants.APP_PREFERENCES,
-                Context.MODE_MULTI_PROCESS);
+                Context.MODE_PRIVATE);
         Editor editor = Settings.edit();
         editor.putInt(prefKey, value);
-        editor.apply();
+        editor.commit();
 
     }
 
     public static void setPreferences(String prefKey, String value, Activity a) {
         SharedPreferences Settings;
         Settings = a.getSharedPreferences(Constants.APP_PREFERENCES,
-                Context.MODE_MULTI_PROCESS);
+                Context.MODE_PRIVATE);
         Editor editor = Settings.edit();
         editor.putString(prefKey, value);
-        editor.apply();
+        editor.commit();
 
     }
 

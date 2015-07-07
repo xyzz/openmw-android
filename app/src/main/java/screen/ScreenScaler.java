@@ -20,8 +20,8 @@ public class ScreenScaler {
 
 		float x = (float) width / STANDARD_WIDTH;
 		float y = (float) height / STANDARD_HEIGHT;
-		scaleRatio_x = (float) Math.max((float) x, (float) y);
-		scaleRatio_y = (float) Math.min((float) x, (float) y);
+		scaleRatio_x = Math.max(x, y);
+		scaleRatio_y = Math.min(x, y);
 		marginX = (width - (int) ((float) STANDARD_WIDTH * scaleRatio_x)) / 2;
 		marginY = (height - (int) ((float) STANDARD_HEIGHT * scaleRatio_y)) / 2;
 	}

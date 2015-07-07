@@ -119,7 +119,7 @@ public class QuickPanel {
             }
         });
 
-        f1.setOnTouchListener(new ButtonTouchListener(KeyEvent.KEYCODE_F1));
+        f1.setOnTouchListener(new ButtonTouchListener(131));
         key0.setOnTouchListener(new ButtonTouchListener(KeyEvent.KEYCODE_0));
         key1.setOnTouchListener(new ButtonTouchListener(KeyEvent.KEYCODE_1));
         key2.setOnTouchListener(new ButtonTouchListener(KeyEvent.KEYCODE_2));
@@ -138,7 +138,7 @@ public class QuickPanel {
         SharedPreferences Settings;
 
         Settings = a.getSharedPreferences(Constants.APP_PREFERENCES,
-                Context.MODE_MULTI_PROCESS);
+                Context.MODE_PRIVATE);
         controlsFlag = Settings.getInt(
                 Constants.APP_PREFERENCES_RESET_CONTROLS, -1);
 

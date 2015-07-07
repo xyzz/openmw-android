@@ -45,7 +45,7 @@ public class ScreenControls {
 			SharedPreferences Settings;
 
 			Settings = a.getSharedPreferences(Constants.APP_PREFERENCES,
-					Context.MODE_MULTI_PROCESS);
+					Context.MODE_PRIVATE);
 			controlsFlag = Settings.getInt(
 					Constants.APP_PREFERENCES_RESET_CONTROLS, -1);
 			enableTouch = false;
@@ -68,13 +68,13 @@ public class ScreenControls {
 					.findViewById(R.id.buttonrun1);
 
 			buttonRun.setOnTouchListener(new ButtonTouchListener(
-					KeyEvent.KEYCODE_CAPS_LOCK));
+					115));
 
 			final ImageButton buttonConsole = (ImageButton) a
 					.findViewById(R.id.buttonconsole);
 
 			buttonConsole.setOnTouchListener(new ButtonTouchListener(
-					KeyEvent.KEYCODE_F2));
+					132));
 
 			final ImageButton buttonChangePerson = (ImageButton) a
 					.findViewById(R.id.buttonchangeperson);
@@ -123,13 +123,13 @@ public class ScreenControls {
 					.findViewById(R.id.buttonsuperload);
 
 			buttonLoad.setOnTouchListener(new ButtonTouchListener(
-					KeyEvent.KEYCODE_F9));
+					139));
 
 			final ImageButton buttonSave = (ImageButton) a
 					.findViewById(R.id.buttonsupersave);
 
 			buttonSave.setOnTouchListener(new ButtonTouchListener(
-					KeyEvent.KEYCODE_F5));
+					135));
 
 			final ImageButton buttonWeapon = (ImageButton) a
 					.findViewById(R.id.buttonweapon);
@@ -172,11 +172,11 @@ public class ScreenControls {
 
 						if (crouchFlag == false) {
 							SDLActivity
-									.onNativeKeyDown(KeyEvent.KEYCODE_CTRL_LEFT);
+									.onNativeKeyDown(113);
 							crouchFlag = true;
 						} else {
 							SDLActivity
-									.onNativeKeyUp(KeyEvent.KEYCODE_CTRL_LEFT);
+									.onNativeKeyUp(113);
 							crouchFlag = false;
 						}
 						return true;

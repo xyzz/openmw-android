@@ -30,7 +30,7 @@ public class FragmentControls extends Fragment {
         super.onCreate(savedInstanceState);
 
         Settings = this.getActivity().getSharedPreferences(
-                Constants.APP_PREFERENCES, Context.MODE_MULTI_PROCESS);
+                Constants.APP_PREFERENCES, Context.MODE_PRIVATE);
         View rootView = inflater.inflate(R.layout.settings, container, false);
 
         PreferencesHelper.getPrefValues(this.getActivity());
@@ -121,7 +121,7 @@ public class FragmentControls extends Fragment {
     private void setPreferences(String prefValue, float value) {
         Editor editor = Settings.edit();
         editor.putFloat(prefValue, value);
-        editor.apply();
+        editor.commit();
 
     }
 }

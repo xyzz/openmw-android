@@ -27,4 +27,7 @@
         <item>halfResolution</item>
     </string-array>
 
+    <string name="closeDrawer">Navigation View</string>
+    <string name="openDrawer">Navigation View Closed</string>
+
 </resources>

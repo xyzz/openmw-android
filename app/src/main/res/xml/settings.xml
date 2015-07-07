@@ -7,50 +7,45 @@
         <com.lb.material_preferences_library.custom_preferences.CheckBoxPreference
             android:key="hidecontrols"
             android:title="Hide onscreen buttons" />
-        <PreferenceScreen
-            android:key="Language"
-            android:summary="Language settings"
-            android:title="Language">
-            <com.jenzz.materialpreference.PreferenceCategory
-                android:key="categ1anguage"
-                android:title="Language settings">
-                <com.lb.material_preferences_library.custom_preferences.ListPreference
-                    android:key="encoding"
-                    android:summary="Game language"
-                    android:title="Encoding"
-                    app:dialogTitle="Game language"
-                    app:entries="@array/encoding_entry"
-                    app:entryValues="@array/encoding_entry"></com.lb.material_preferences_library.custom_preferences.ListPreference>
-
-                <com.lb.material_preferences_library.custom_preferences.CheckBoxPreference
-                    android:key="subtitiles"
-                    android:summary="Show subtitles"
-                    android:title="Subtitles"></com.lb.material_preferences_library.custom_preferences.CheckBoxPreference>
-            </com.jenzz.materialpreference.PreferenceCategory>
-        </PreferenceScreen>
-        <PreferenceScreen
-            android:key="screen"
-            android:summary="Screen settings"
-            android:title="Screen">
-            <com.jenzz.materialpreference.PreferenceCategory
-                android:key="categ2"
-                android:title="Screen Settings">
-                <com.lb.material_preferences_library.custom_preferences.ListPreference
-                    android:key="mipmapping"
-                    android:summary="Mipmapping options"
-                    android:title="Mipmapping"
-                    app:dialogTitle="Mipmapping"
-                    app:entries="@array/mipmapping_array"
-                    app:entryValues="@array/mipmapping_array"></com.lb.material_preferences_library.custom_preferences.ListPreference>
-
-                <com.lb.material_preferences_library.custom_preferences.ListPreference
-                    android:key="resolution"
-                    android:summary="Screen resolution"
-                    android:title="Resolution"
-                    app:dialogTitle="Screen resolution"
-                    app:entries="@array/resolution_entry"
-                    app:entryValues="@array/resolution_array"></com.lb.material_preferences_library.custom_preferences.ListPreference>
-            </com.jenzz.materialpreference.PreferenceCategory>
-        </PreferenceScreen>
     </com.jenzz.materialpreference.PreferenceCategory>
+
+
+    <com.jenzz.materialpreference.PreferenceCategory
+        android:key="categ1anguage"
+        android:title="Language settings">
+        <com.lb.material_preferences_library.custom_preferences.ListPreference
+            android:key="encoding"
+            android:summary="Game language"
+            android:title="Encoding"
+            app:dialogTitle="Game language"
+            app:entries="@array/encoding_entry"
+            app:entryValues="@array/encoding_entry"></com.lb.material_preferences_library.custom_preferences.ListPreference>
+
+        <com.lb.material_preferences_library.custom_preferences.CheckBoxPreference
+            android:key="subtitiles"
+            android:summary="Show subtitles"
+            android:title="Subtitles"></com.lb.material_preferences_library.custom_preferences.CheckBoxPreference>
+    </com.jenzz.materialpreference.PreferenceCategory>
+
+
+    <com.jenzz.materialpreference.PreferenceCategory
+        android:key="categ2"
+        android:title="Screen Settings">
+        <com.lb.material_preferences_library.custom_preferences.ListPreference
+            android:key="mipmapping"
+            android:summary="Mipmapping options"
+            android:title="Mipmapping"
+            app:dialogTitle="Mipmapping"
+            app:entries="@array/mipmapping_array"
+            app:entryValues="@array/mipmapping_array"></com.lb.material_preferences_library.custom_preferences.ListPreference>
+
+        <com.lb.material_preferences_library.custom_preferences.ListPreference
+            android:key="resolution"
+            android:summary="Screen resolution"
+            android:title="Resolution"
+            app:dialogTitle="Screen resolution"
+            app:entries="@array/resolution_entry"
+            app:entryValues="@array/resolution_array"></com.lb.material_preferences_library.custom_preferences.ListPreference>
+    </com.jenzz.materialpreference.PreferenceCategory>
+
 </PreferenceScreen>

@@ -1,21 +1,11 @@
 package fragments;
 
 import android.app.Activity;
-import android.content.Context;
 import android.graphics.Point;
-import android.text.Editable;
-import android.text.TextWatcher;
+import android.util.DisplayMetrics;
 import android.view.Display;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-
-import com.libopenmw.openmw.R;
 
 import constants.Constants;
-import screen.ScreenScaler;
-import ui.files.PreferencesHelper;
 import ui.files.Writer;
 
 /**
@@ -33,11 +23,11 @@ public class ScreenResolutionHelper {
     }
 
     private void getScreenWidthAndHeight() {
-        Display display = activity.getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        screenWidth = size.x;
-        screenHeight = size.y;
+        DisplayMetrics dm = activity.getResources().getDisplayMetrics();
+
+        screenWidth = (int)(dm.widthPixels / dm.xdpi);
+
+        screenHeight =(int) (dm.heightPixels / dm.ydpi);
     }
 
 

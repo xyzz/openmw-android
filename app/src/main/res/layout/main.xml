@@ -1,98 +1,74 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/toolbar" />
-
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar" />
+
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:layout_height="match_parent">
 
-            <android.support.v4.widget.Space
+            <FrameLayout
+                android:id="@+id/content_frame"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="8" />
+                android:layout_weight="4"
 
+                />
+
+            <com.melnykov.fab.FloatingActionButton
+                android:id="@+id/fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|right"
+                android:layout_margin="16dp"
+                android:src="@android:drawable/ic_media_play"
+                fab:fab_colorNormal="#2196F3"
+                fab:fab_colorPressed="#1976D2"
+                fab:fab_colorRipple="@color/switch_thumb_normal_material_dark" />
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.3"
-                android:orientation="vertical">
+                android:id="@+id/linlaHeaderProgress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@null"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone">
 
 
-                <FrameLayout
-                    android:id="@+id/frame_container"
+                <ProgressBar
+                    android:id="@+id/pbHeaderProgress"
+                    style="?android:attr/progressBarStyleLarge"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"></FrameLayout>
-
+                    android:layout_weight="10"></ProgressBar>
 
             </LinearLayout>
 
-            <android.support.v4.widget.Space
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="8" />
+                android:layout_height="5dp"
+                android:background="@drawable/toolbar_dropshadow" />
+        </FrameLayout>
+    </LinearLayout>
 
-        </LinearLayout>
+    <android.support.design.widget.NavigationView
+        android:id="@+id/navigation_drawer"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:menu="@menu/drawer" />
 
-        <com.melnykov.fab.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right"
-            android:layout_margin="16dp"
-            android:src="@android:drawable/ic_media_play"
-            fab:fab_colorNormal="@android:color/holo_blue_light"
-            fab:fab_colorPressed="@android:color/holo_blue_dark"
-            fab:fab_colorRipple="@color/switch_thumb_normal_material_dark" />
-
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:background="@drawable/toolbar_dropshadow" />
-
-        <LinearLayout
-            android:id="@+id/linlaHeaderProgress"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_gravity="center"
-            android:background="@null"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:visibility="gone">
-
-            <android.support.v4.widget.Space
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="8" />
-
-            <ProgressBar
-                android:id="@+id/pbHeaderProgress"
-                style="?android:attr/progressBarStyleLarge"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="10"></ProgressBar>
-
-            <android.support.v4.widget.Space
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="8" />
-        </LinearLayout>
-
-    </FrameLayout>
-
-</LinearLayout>
-
+</android.support.v4.widget.DrawerLayout>

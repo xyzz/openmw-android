@@ -21,11 +21,13 @@
             android:layout_weight="1"
             android:textColor="@android:color/black"
             android:gravity="left|center"
-            android:background="@android:drawable/dialog_holo_light_frame"
+            android:visibility="gone"
+            android:background="@drawable/card_backround"
             android:inputType="text" />
         <Button
             android:textColor="@android:color/black"
             android:id="@+id/buttonBrowse"
+            android:visibility="gone"
             android:theme="@style/ThemeOverlay.AppCompat.Light"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

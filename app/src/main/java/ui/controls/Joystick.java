@@ -235,9 +235,9 @@ public class Joystick extends View {
     }
 
     interface JoystickMovedListener {
-        public void OnMoved(int pan, int tilt);
+        void OnMoved(int pan, int tilt);
 
-        public void OnReleased();
+        void OnReleased();
 
     }
 

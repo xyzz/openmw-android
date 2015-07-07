@@ -8,7 +8,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,12 +29,7 @@ import android.widget.Toast;
 import com.libopenmw.openmw.FileChooser;
 import com.libopenmw.openmw.R;
 import com.melnykov.fab.FloatingActionButton;
-import com.mikepenz.iconics.typeface.FontAwesome;
-import com.mikepenz.materialdrawer.Drawer;
-import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
-import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
-import com.mikepenz.materialdrawer.model.SectionDrawerItem;
-import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+
 
 import constants.Constants;
 import fragments.FragmentControls;
@@ -42,9 +41,10 @@ import ui.files.CopyFilesFromAssets;
 import ui.files.PreferencesHelper;
 import ui.files.Writer;
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends AppCompatActivity {
 
-    private Drawer.Result drawerResult = null;
+    private NavigationView navigationView;
+    private DrawerLayout drawerLayout;
     public TextView path;
     public Button browseButton;
     private Menu menu;
@@ -53,7 +53,8 @@ public class MainActivity extends ActionBarActivity {
     private SharedPreferences Settings;
     private TextListener listener;
 
-    private enum TEXT_MODE {DATA_PATH, COMMAND_LINE, CONGIGS_PATH};
+    private enum TEXT_MODE {DATA_PATH, COMMAND_LINE, CONGIGS_PATH}
+
     private LinearLayout linlaHeaderProgress;
     private static TEXT_MODE editTextMode;
 
@@ -66,7 +67,7 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.main);
         PreferencesHelper.getPrefValues(this);
         Settings = this.getSharedPreferences(
-                Constants.APP_PREFERENCES, Context.MODE_MULTI_PROCESS);
+                Constants.APP_PREFERENCES, Context.MODE_PRIVATE);
 
         LinearLayout layout = (LinearLayout) findViewById(R.id.toolbarLayout);
         linlaHeaderProgress = (LinearLayout)
@@ -88,10 +89,12 @@ public class MainActivity extends ActionBarActivity {
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        initializeDrawer(toolbar);
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.frame_container, new FragmentSettings()).commit();
 
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.content_frame, new FragmentSettings()).commit();
+
+        initializeNavigationView(toolbar);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -100,6 +103,73 @@ public class MainActivity extends ActionBarActivity {
 
         });
 
+
+    }
+
+    private void initializeNavigationView(Toolbar toolbar) {
+        navigationView = (NavigationView) findViewById(R.id.navigation_drawer);
+
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+
+            @Override
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
+
+                if (menuItem.isChecked()) menuItem.setChecked(false);
+                else menuItem.setChecked(true);
+
+                drawerLayout.closeDrawers();
+
+                switch (menuItem.getItemId()) {
+
+                    case R.id.start_game:
+                        startGame();
+                        return true;
+
+                    case R.id.plugins:
+                        showOverflowMenu(true);
+                        isSettingsEnabled = false;
+                        disableToolBarViews();
+                        MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new FragmentPlugins()).commit();
+                        return true;
+                    case R.id.controls:
+                        showOverflowMenu(false);
+                        disableToolBarViews();
+                        MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new FragmentControls()).commit();
+
+                        return true;
+                    case R.id.settings:
+                        disableToolBarViews();
+                        showOverflowMenu(true);
+                        isSettingsEnabled = true;
+                        MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new FragmentSettings()).commit();
+
+                        return true;
+
+                    default:
+
+                        return true;
+
+                }
+            }
+        });
+
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.openDrawer, R.string.closeDrawer) {
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+            }
+        };
+
+        drawerLayout.setDrawerListener(actionBarDrawerToggle);
+
+        actionBarDrawerToggle.syncState();
 
     }
 
@@ -125,68 +195,6 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
-
-    private void initializeDrawer(final Toolbar toolbar) {
-        drawerResult = new Drawer()
-                .withActivity(this)
-                .withToolbar(toolbar)
-                .withActionBarDrawerToggle(true)
-                .addDrawerItems(
-                        new PrimaryDrawerItem().withName("Start game").withIcon(FontAwesome.Icon.faw_play).withIdentifier(1),
-                        new PrimaryDrawerItem().withName("Plugins").withIcon(FontAwesome.Icon.faw_file_archive_o).withIdentifier(2),
-                        new SectionDrawerItem().withName("Settings"),
-                        new SecondaryDrawerItem().withName("Settings").withIcon(FontAwesome.Icon.faw_home).withIdentifier(3),
-                        new SecondaryDrawerItem().withName("Controls").withIcon(FontAwesome.Icon.faw_gamepad).withIdentifier(4)
-                )
-                .withOnDrawerListener(new Drawer.OnDrawerListener() {
-                    @Override
-                    public void onDrawerOpened(View drawerView) {
-                        InputMethodManager inputMethodManager = (InputMethodManager) MainActivity.this.getSystemService(Activity.INPUT_METHOD_SERVICE);
-                        inputMethodManager.hideSoftInputFromWindow(MainActivity.this.getCurrentFocus().getWindowToken(), 0);
-                    }
-
-                    @Override
-                    public void onDrawerClosed(View drawerView) {
-                    }
-                })
-                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id, IDrawerItem drawerItem) {
-                        if (drawerItem != null) {
-                            switch (drawerItem.getIdentifier()) {
-                                case 1:
-                                    startGame();
-                                    break;
-
-                                case 3:
-                                    disableToolBarViews();
-                                    showOverflowMenu(true);
-                                    isSettingsEnabled = true;
-                                    MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, new FragmentSettings()).commit();
-                                    break;
-                                case 4:
-                                    showOverflowMenu(false);
-                                    disableToolBarViews();
-                                    MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, new FragmentControls()).commit();
-                                    break;
-                                case 2:
-                                    showOverflowMenu(true);
-                                    isSettingsEnabled = false;
-                                    disableToolBarViews();
-                                    MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, new FragmentPlugins()).commit();
-                                    break;
-                                default:
-                                    break;
-
-
-                            }
-                        }
-
-                    }
-                })
-                .build();
-
-    }
 
     private void startGame() {
 
@@ -225,14 +233,6 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
-    @Override
-    public void onBackPressed() {
-        if (drawerResult.isDrawerOpen()) {
-            drawerResult.closeDrawer();
-        } else {
-            super.onBackPressed();
-        }
-    }
 
     public void showOverflowMenu(boolean showMenu) {
         if (menu == null)
@@ -277,7 +277,6 @@ public class MainActivity extends ActionBarActivity {
                 case R.id.action_command_line:
                     editTextMode = TEXT_MODE.COMMAND_LINE;
                     enableToolbarViews();
-                    browseButton.setVisibility(Button.GONE);
                     path.setText(Constants.commandLineData);
                     break;
 
@@ -399,7 +398,7 @@ public class MainActivity extends ActionBarActivity {
                                     + "/config/openmw/settings.cfg",
                             "texture filtering");
 
-                    Writer.write(String.valueOf( PreferenceManager.getDefaultSharedPreferences(MainActivity.this).getBoolean(Constants.SUBTITLES, false)), Constants.configsPath
+                    Writer.write(String.valueOf(PreferenceManager.getDefaultSharedPreferences(MainActivity.this).getBoolean(Constants.SUBTITLES, false)), Constants.configsPath
                             + "/config/openmw/settings.cfg", "subtitles");
 
                     Writer.write("" + Settings.getFloat(Constants.CAMERA_MULTIPLISER, 2.0f), Constants.configsPath

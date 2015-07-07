@@ -82,7 +82,7 @@ public class TextListener implements TextWatcher {
 	private void saveToSharedPreferences(String value, String buffer) {
 		Editor editor = Settings.edit();
 		editor.putString(value, buffer);
-		editor.apply();
+		editor.commit();
 	}
 
 }

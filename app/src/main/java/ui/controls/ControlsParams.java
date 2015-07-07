@@ -17,9 +17,9 @@ public static RelativeLayout.LayoutParams coordinates (View v,int x,int y,int wi
 		marginParams.width = ScreenScaler.getInstance()
 				.getScaledCoordinateX(width);
 		marginParams
-				.setMargins((int) (ScreenScaler.getInstance()
-						.getScaledCoordinateX(x)), (int) (ScreenScaler
-						.getInstance().getScaledCoordinateY(y)), 0, 0);
+				.setMargins(ScreenScaler.getInstance()
+						.getScaledCoordinateX(x), ScreenScaler
+						.getInstance().getScaledCoordinateY(y), 0, 0);
 		RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
 				marginParams); 
 		
@@ -35,7 +35,7 @@ public static RelativeLayout.LayoutParams coordinatesConfigureControls (View v,i
 	marginParams.height = height;
 	marginParams.width = width;
 	marginParams
-			.setMargins((int) x, (int) y, 0, 0);
+			.setMargins(x, y, 0, 0);
 	RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
 			marginParams); 
 	
