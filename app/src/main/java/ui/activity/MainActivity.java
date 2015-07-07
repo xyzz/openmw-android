@@ -277,6 +277,7 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.action_command_line:
                     editTextMode = TEXT_MODE.COMMAND_LINE;
                     enableToolbarViews();
+                    browseButton.setVisibility(Button.GONE);
                     path.setText(Constants.commandLineData);
                     break;
 
