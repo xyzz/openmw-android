@@ -27,7 +27,6 @@ import com.libopenmw.openmw.R;
 import com.melnykov.fab.FloatingActionButton;
 import com.mikepenz.iconics.typeface.FontAwesome;
 import com.mikepenz.materialdrawer.Drawer;
-import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SectionDrawerItem;
@@ -90,7 +89,7 @@ public class MainActivity extends ActionBarActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         initializeDrawer(toolbar);
-        getFragmentManager().beginTransaction()
+        getSupportFragmentManager().beginTransaction()
                 .replace(R.id.frame_container, new FragmentSettings()).commit();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -163,18 +162,18 @@ public class MainActivity extends ActionBarActivity {
                                     disableToolBarViews();
                                     showOverflowMenu(true);
                                     isSettingsEnabled = true;
-                                    MainActivity.this.getFragmentManager().beginTransaction().replace(R.id.frame_container, new FragmentSettings()).commit();
+                                    MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, new FragmentSettings()).commit();
                                     break;
                                 case 4:
                                     showOverflowMenu(false);
                                     disableToolBarViews();
-                                    MainActivity.this.getFragmentManager().beginTransaction().replace(R.id.frame_container, new FragmentControls()).commit();
+                                    MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, new FragmentControls()).commit();
                                     break;
                                 case 2:
                                     showOverflowMenu(true);
                                     isSettingsEnabled = false;
                                     disableToolBarViews();
-                                    MainActivity.this.getFragmentManager().beginTransaction().replace(R.id.frame_container, new FragmentPlugins()).commit();
+                                    MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, new FragmentPlugins()).commit();
                                     break;
                                 default:
                                     break;

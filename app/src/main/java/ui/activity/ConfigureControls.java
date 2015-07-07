@@ -1177,7 +1177,7 @@ public class ConfigureControls extends Activity {
             AlphaView.setAlphaForView(key8,setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_KEY_8_OPACITY));
         else if (buttonFlag == 29)
             AlphaView.setAlphaForView(key9, setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_KEY_9_OPACITY));
-        
+
 	}
 
 	public void setButtonsSize() {

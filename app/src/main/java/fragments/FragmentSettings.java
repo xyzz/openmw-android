@@ -2,15 +2,14 @@ package fragments;
 
 import android.os.Bundle;
 import android.preference.Preference;
-import android.preference.PreferenceFragment;
 import android.widget.Toast;
 
+import com.github.machinarius.preferencefragment.PreferenceFragment;
 import com.lb.material_preferences_library.custom_preferences.CheckBoxPreference;
 import com.lb.material_preferences_library.custom_preferences.ListPreference;
 import com.libopenmw.openmw.R;
 
 import constants.Constants;
-import ui.files.PreferencesHelper;
 import ui.files.Writer;
 
 public class FragmentSettings extends PreferenceFragment {

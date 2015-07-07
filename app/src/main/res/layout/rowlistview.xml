@@ -42,6 +42,7 @@
             android:layout_height="match_parent"
             android:text="Dependencies"
             android:gravity="center"
+            android:fontFamily="sans-serif"
             android:textSize="10sp"
             android:id="@+id/Dependencies"
             android:layout_weight="4" />

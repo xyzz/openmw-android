@@ -18,7 +18,7 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <Space
+            <android.support.v4.widget.Space
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="8" />
@@ -40,7 +40,7 @@
 
             </LinearLayout>
 
-            <Space
+            <android.support.v4.widget.Space
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="8" />
@@ -54,8 +54,8 @@
             android:layout_gravity="bottom|right"
             android:layout_margin="16dp"
             android:src="@android:drawable/ic_media_play"
-            fab:fab_colorNormal="@color/material_drawer_primary"
-            fab:fab_colorPressed="@color/material_drawer_primary_dark"
+            fab:fab_colorNormal="@android:color/holo_blue_light"
+            fab:fab_colorPressed="@android:color/holo_blue_dark"
             fab:fab_colorRipple="@color/switch_thumb_normal_material_dark" />
 
 
@@ -74,7 +74,7 @@
             android:orientation="vertical"
             android:visibility="gone">
 
-            <Space
+            <android.support.v4.widget.Space
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="8" />
@@ -86,7 +86,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="10"></ProgressBar>
 
-            <Space
+            <android.support.v4.widget.Space
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="8" />
