@@ -1,5 +1,6 @@
 package ui.controls;
 
+import android.os.Build;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 
@@ -8,9 +9,12 @@ import android.view.animation.AlphaAnimation;
  */
 public class AlphaView {
     public static void setAlphaForView(View v, float alpha) {
-        AlphaAnimation animation = new AlphaAnimation(alpha, alpha);
-        animation.setDuration(0);
-        animation.setFillAfter(true);
-        v.startAnimation(animation);
+        if (Build.VERSION.SDK_INT < 11) {
+            AlphaAnimation animation = new AlphaAnimation(alpha, alpha);
+            animation.setDuration(0);
+            animation.setFillAfter(true);
+            v.startAnimation(animation);
+        } else
+            v.setAlpha(alpha);
     }
 }
