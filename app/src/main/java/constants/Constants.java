@@ -2,6 +2,7 @@ package constants;
 
 public class Constants {
 
+	public static String GlExtensions="";
 	public static final String APP_PREFERENCES = "settings";
 	public static final String HIDE_CONTROLS = "hidecontrols";
 	public static final String APP_PREFERENCES_RESET_CONTROLS = "resetcontrols";
