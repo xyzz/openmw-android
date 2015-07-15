@@ -20,11 +20,17 @@ import constants.Constants;
  */
 public class GlExtensionsActivity extends Activity {
 
+    private String GLExtensions = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getGlExtencions();
+    }
+
+    private void getGlExtencions() {
         if (isDeviceSupportGles3()) {
-            Constants.GlExtensions = "GL_OES_compressed_ETC2";
+            Constants.textureCompressionMode = "ETC2";
             startMainActivity();
         } else {
             GLSurfaceView surfaceView = new GLSurfaceView(this);
@@ -35,13 +41,15 @@ public class GlExtensionsActivity extends Activity {
                             FrameLayout.LayoutParams.WRAP_CONTENT,
                             FrameLayout.LayoutParams.WRAP_CONTENT));
         }
+
     }
 
     GLSurfaceView.Renderer renderer = new GLSurfaceView.Renderer() {
         @Override
         public void onSurfaceCreated(GL10 gl, EGLConfig config) {
 
-            Constants.GlExtensions = gl.glGetString(GL10.GL_EXTENSIONS);
+            GLExtensions = gl.glGetString(GL10.GL_EXTENSIONS);
+            computeTextureCompressionMode();
             startMainActivity();
         }
 
@@ -61,6 +69,21 @@ public class GlExtensionsActivity extends Activity {
         GlExtensionsActivity.this.finish();
 
     }
+
+    public void computeTextureCompressionMode() {
+        if (GLExtensions.contains("GL_IMG_texture_compression_pvrtc")) {
+            Constants.textureCompressionMode = "PVR";
+        } else if (GLExtensions.contains("GL_OES_texture_compression_S3TC") ||
+                GLExtensions.contains("GL_EXT_texture_compression_s3tc")) {
+            Constants.textureCompressionMode = "DXT";
+        } else if (GLExtensions.contains("ETC1")) {
+            Constants.textureCompressionMode = "ETC1";
+        } else {
+            Constants.textureCompressionMode = "UNKNOWN";
+        }
+
+    }
+
 
     protected boolean isDeviceSupportGles3() {
         final ActivityManager activityManager =
