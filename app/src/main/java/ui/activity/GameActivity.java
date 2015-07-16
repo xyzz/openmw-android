@@ -16,11 +16,14 @@ import android.preference.PreferenceManager;
 import android.view.WindowManager;
 import android.widget.Button;
 
+import javax.microedition.khronos.egl.EGLConfig;
+import javax.microedition.khronos.opengles.GL10;
+
 public class GameActivity extends SDLActivity {
 
     public static native void getPathToJni(String path);
-
     public static native void commandLine(int argc, String[] argv);
+    public static native void saveCurrentTextureCompressionMode (String textureCompressionMode);
 
     private boolean hideControls = false;
 
@@ -38,6 +41,7 @@ public class GameActivity extends SDLActivity {
         CommandlineParser commandlineParser = new CommandlineParser(Constants.commandLineData);
         commandlineParser.parseCommandLine();
         commandLine(commandlineParser.getArgc(), commandlineParser.getArgv());
+        saveCurrentTextureCompressionMode(Constants.textureCompressionMode);
         hideControls = PreferenceManager.getDefaultSharedPreferences(this).getBoolean(Constants.HIDE_CONTROLS, false);
         getPathToJni(Constants.configsPath);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -58,8 +62,6 @@ public class GameActivity extends SDLActivity {
             inputfile.delete();
 
     }
-
-
 
     @Override
     public void onDestroy() {
