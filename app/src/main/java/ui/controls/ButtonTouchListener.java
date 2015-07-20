@@ -24,6 +24,11 @@ public class ButtonTouchListener implements OnTouchListener {
             case MotionEvent.ACTION_UP:
                 SdlNativeKeys.keyUp(keyCode);
                 return true;
+            
+            case MotionEvent.ACTION_CANCEL:
+                SdlNativeKeys.keyUp(keyCode);
+                return true;
+
         }
         return false;
     }
