@@ -4,32 +4,35 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.libopenmw.openmw.FileChooser;
 import com.libopenmw.openmw.R;
 import com.melnykov.fab.FloatingActionButton;
 
+import javax.microedition.khronos.egl.EGLConfig;
+import javax.microedition.khronos.opengles.GL10;
 
 import constants.Constants;
 import fragments.FragmentControls;
@@ -55,8 +58,8 @@ public class MainActivity extends AppCompatActivity {
 
     private enum TEXT_MODE {DATA_PATH, COMMAND_LINE, CONGIGS_PATH}
 
-    private LinearLayout linlaHeaderProgress;
     private static TEXT_MODE editTextMode;
+    private MaterialDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,8 +73,6 @@ public class MainActivity extends AppCompatActivity {
                 Constants.APP_PREFERENCES, Context.MODE_PRIVATE);
 
         LinearLayout layout = (LinearLayout) findViewById(R.id.toolbarLayout);
-        linlaHeaderProgress = (LinearLayout)
-                findViewById(R.id.linlaHeaderProgress);
         layout.setVisibility(LinearLayout.VISIBLE);
         path = (TextView) findViewById(R.id.path);
         browseButton = (Button) findViewById(R.id.buttonBrowse);
@@ -356,15 +357,14 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void copyFiles() {
-        linlaHeaderProgress.setVisibility(View.VISIBLE);
+        showCopyDialog();
         Thread th = new Thread(new Runnable() {
 
             public Handler UI = new Handler() {
                 @Override
                 public void dispatchMessage(Message msg) {
                     super.dispatchMessage(msg);
-
-                    linlaHeaderProgress.setVisibility(View.GONE);
+                    dialog.dismiss();
                     Toast toast = Toast.makeText(MainActivity.this.getApplicationContext(),
                             "files copied", Toast.LENGTH_LONG);
                     toast.show();
@@ -420,6 +420,13 @@ public class MainActivity extends AppCompatActivity {
         th.start();
     }
 
+    private void showCopyDialog() {
+        dialog = new MaterialDialog.Builder(this)
+                .title("Copying config files")
+                .content("Please wait")
+                .progress(true, 0)
+                .show();
+    }
 
 }
 

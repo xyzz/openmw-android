@@ -37,26 +37,6 @@
                 fab:fab_colorPressed="#1976D2"
                 fab:fab_colorRipple="@color/switch_thumb_normal_material_dark" />
 
-            <LinearLayout
-                android:id="@+id/linlaHeaderProgress"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="@null"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-
-                <ProgressBar
-                    android:id="@+id/pbHeaderProgress"
-                    style="?android:attr/progressBarStyleLarge"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="10"></ProgressBar>
-
-            </LinearLayout>
-
             <View
                 android:layout_width="match_parent"
                 android:layout_height="5dp"
