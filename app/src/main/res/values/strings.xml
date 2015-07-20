@@ -8,10 +8,8 @@
         <item>win1252</item>
     </string-array>
     <string-array name="mipmapping_array">
-        <item>none</item>
         <item>trilinear</item>
         <item>bilinear</item>
-        <item>anisotropic</item>
     </string-array>
 
     <string-array name="resolution_entry">
