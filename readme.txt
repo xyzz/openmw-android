@@ -1,8 +1,3 @@
-eclipse-project
-===============
-== Android build OpenMW ==
-===============
-=== Preparation of building environment ===
 Before you start building OpenMW on Android you have to do few steps of preparation:
 Download crystax ndk from https://www.crystax.net
 Download and install [http://developer.android.com/sdk/index.html Google Android SDK]
@@ -28,6 +23,9 @@ mygui 3.2.1
 https://github.com/MyGUI/mygui
 zzip
 zlib
+
+Prebuilt openmw dependencies for armv7 arch
+https://drive.google.com/file/d/0B5mOME9qjLFuWWl6YjF2TWc2bnc/view?usp=sharing
 
 Compilation of OpenMW dependencies
 
