@@ -184,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == REQUEST_PATH) {
             if (resultCode == Activity.RESULT_OK) {
                 String curDir = data.getStringExtra("GetDir");
-                path.setText(curDir);
+
                 switch (editTextMode) {
                     case CONGIGS_PATH:
                         Constants.configsPath = curDir;
@@ -192,6 +192,11 @@ public class MainActivity extends AppCompatActivity {
                     case DATA_PATH:
                         Constants.dataPath = curDir;
                 }
+                setTexWatcher();
+                path.setVisibility(EditText.VISIBLE);
+                browseButton.setVisibility(Button.VISIBLE);
+                path.setText(curDir);
+
             }
         }
     }
