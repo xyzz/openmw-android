@@ -139,6 +139,7 @@ public class Constants {
 	public static final String DATA_PATH = "data_path";
 	public static final String LANGUAGE = "encoding";
 	public static final String SUBTITLES = "subtitiles";
+	public static final String USE_GYROSCOPE = "gyroscope_camera";
 	public static final String MIPMAPPING = "mipmapping";
 	public static final String COMMAND_LINE = "commandline";
 	public static final String TOUCH_SENSITIVITY= "camera sensitivity";
