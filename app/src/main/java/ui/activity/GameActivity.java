@@ -34,6 +34,7 @@ public class GameActivity extends SDLActivity implements SensorEventListener {
 
     private SensorManager sManager;
     private boolean useGyroscope = false;
+    private boolean sensorAvailable=false;
     // public static native void saveCurrentTextureCompressionMode (String textureCompressionMode);
 
     private boolean hideControls = false;
@@ -66,6 +67,7 @@ public class GameActivity extends SDLActivity implements SensorEventListener {
         sManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 
         useGyroscope = PreferenceManager.getDefaultSharedPreferences(this).getBoolean(Constants.USE_GYROSCOPE, false);
+        sensorAvailable=isSensorAvailable();
 
     }
 
@@ -107,7 +109,7 @@ public class GameActivity extends SDLActivity implements SensorEventListener {
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        if (useGyroscope && isSensorAvailable()) {
+        if (useGyroscope && sensorAvailable) {
 
             if (event.accuracy == SensorManager.SENSOR_STATUS_UNRELIABLE) {
                 return;

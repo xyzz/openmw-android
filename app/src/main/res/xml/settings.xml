@@ -7,6 +7,11 @@
         <com.lb.material_preferences_library.custom_preferences.CheckBoxPreference
             android:key="hidecontrols"
             android:title="Hide onscreen buttons" />
+        <com.lb.material_preferences_library.custom_preferences.CheckBoxPreference
+            android:key="gyroscope_camera"
+            android:summary="Use gyroscope for camera controls"
+            android:title="Gyroscope camera"></com.lb.material_preferences_library.custom_preferences.CheckBoxPreference>
+
     </com.jenzz.materialpreference.PreferenceCategory>
 
 
@@ -26,10 +31,6 @@
             android:summary="Show subtitles"
             android:title="Subtitles"></com.lb.material_preferences_library.custom_preferences.CheckBoxPreference>
 
-        <com.lb.material_preferences_library.custom_preferences.CheckBoxPreference
-            android:key="gyroscope_camera"
-            android:summary="Use gyroscope for camera controls"
-            android:title="Gyroscope camera"></com.lb.material_preferences_library.custom_preferences.CheckBoxPreference>
 
     </com.jenzz.materialpreference.PreferenceCategory>
 
