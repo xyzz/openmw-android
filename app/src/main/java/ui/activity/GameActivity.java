@@ -9,6 +9,7 @@ import constants.Constants;
 import screen.ScreenScaler;
 import ui.controls.QuickPanel;
 import ui.controls.ScreenControls;
+import ui.controls.SdlNativeKeys;
 import ui.files.CommandlineParser;
 
 import android.content.pm.PackageManager;
@@ -32,9 +33,12 @@ public class GameActivity extends SDLActivity implements SensorEventListener {
 
     public static native void commandLine(int argc, String[] argv);
 
+    private float constTouch = 0;
+    private float[] xmas = new float[2];
+    private float[] ymas = new float[2];
+
     private SensorManager sManager;
     private boolean useGyroscope = false;
-    private boolean sensorAvailable=false;
     // public static native void saveCurrentTextureCompressionMode (String textureCompressionMode);
 
     private boolean hideControls = false;
@@ -65,16 +69,10 @@ public class GameActivity extends SDLActivity implements SensorEventListener {
         if (!hideControls)
             QuickPanel.getInstance().f1.setVisibility(Button.VISIBLE);
         sManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-
         useGyroscope = PreferenceManager.getDefaultSharedPreferences(this).getBoolean(Constants.USE_GYROSCOPE, false);
-        sensorAvailable=isSensorAvailable();
 
     }
 
-    private boolean isSensorAvailable() {
-        PackageManager PM = this.getPackageManager();
-        return PM.hasSystemFeature(PackageManager.FEATURE_SENSOR_GYROSCOPE);
-    }
 
     private void deleteVideoFile() {
         File inputfile = new File(Constants.dataPath
@@ -94,12 +92,14 @@ public class GameActivity extends SDLActivity implements SensorEventListener {
     @Override
     protected void onResume() {
         super.onResume();
-        sManager.registerListener(this, sManager.getDefaultSensor(Sensor.TYPE_ORIENTATION), SensorManager.SENSOR_DELAY_FASTEST);
+        if (useGyroscope)
+            sManager.registerListener(this, sManager.getDefaultSensor(Sensor.TYPE_ORIENTATION), SensorManager.SENSOR_DELAY_FASTEST);
     }
 
     @Override
     protected void onStop() {
-        sManager.unregisterListener(this);
+        if (useGyroscope)
+            sManager.unregisterListener(this);
         super.onStop();
     }
 
@@ -109,15 +109,86 @@ public class GameActivity extends SDLActivity implements SensorEventListener {
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        if (useGyroscope && sensorAvailable) {
+        if (useGyroscope) {
 
             if (event.accuracy == SensorManager.SENSOR_STATUS_UNRELIABLE) {
                 return;
             }
 
-            SDLActivity.onNativeTouch(0, 0,
-                    MotionEvent.ACTION_DOWN, event.values[2], event.values[1], 0);
+            simulateCameraMovement(event.values[2], event.values[1]);
         }
+    }
+
+
+    private void simulateCameraMovement(float x, float y) {
+
+        xmas[0] = x;
+        ymas[0] = y;
+
+        if (xmas[0] == xmas[1] && ymas[0] < ymas[1]
+                && ymas[1] - ymas[0] > constTouch) {
+
+        } else if (xmas[0] == xmas[1] && ymas[0] > ymas[1]
+                && ymas[0] - ymas[1] > constTouch)
+
+        {
+            SDLActivity.onNativeTouch(0, 0,
+                    MotionEvent.ACTION_DOWN, 0.5f, 0.3f, 0);
+
+
+        } else if (xmas[0] < xmas[1] && ymas[0] == ymas[1]
+                && xmas[1] - xmas[0] > constTouch)
+
+        {
+            SDLActivity.onNativeTouch(0, 0,
+                    MotionEvent.ACTION_DOWN, 0.9f, 0.5f, 0);
+
+        } else if (xmas[0] > xmas[1] && ymas[0] == ymas[1]
+                && xmas[0] - xmas[1] > constTouch)
+
+        {
+            SDLActivity.onNativeTouch(0, 0,
+                    MotionEvent.ACTION_DOWN, 0.3f, 0.5f, 0);
+
+
+        } else if (xmas[0] < xmas[1] && ymas[0] < ymas[1]
+                && ymas[1] - ymas[0] > constTouch
+                && xmas[1] - xmas[0] > constTouch)
+
+        {
+            SDLActivity.onNativeTouch(0, 0,
+                    MotionEvent.ACTION_DOWN, 0.9f, 0.9f, 0);
+
+        } else if (xmas[0] > xmas[1] && ymas[0] > ymas[1]
+                && ymas[0] - ymas[1] > constTouch
+                && xmas[0] - xmas[1] > constTouch)
+
+        {
+            SDLActivity.onNativeTouch(0, 0,
+                    MotionEvent.ACTION_DOWN, 0.3f, 0.3f, 0);
+
+        } else if (xmas[0] < xmas[1] && ymas[0] > ymas[1]
+                && ymas[0] - ymas[1] > constTouch
+                && xmas[1] - xmas[0] > constTouch)
+
+        {
+            SDLActivity.onNativeTouch(0, 0,
+                    MotionEvent.ACTION_DOWN, 0.9f, 0.3f, 0);
+
+        } else if (xmas[0] > xmas[1] && ymas[0] < ymas[1]
+                && ymas[1] - ymas[0] > constTouch
+                && xmas[0] - xmas[1] > constTouch)
+
+        {
+            SDLActivity.onNativeTouch(0, 0,
+                    MotionEvent.ACTION_DOWN, 0.3f, 0.9f, 0);
+
+        }
+
+        xmas[0] = xmas[1];
+        ymas[0] = ymas[1];
+
+
     }
 
 

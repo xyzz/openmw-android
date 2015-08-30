@@ -1,5 +1,6 @@
 package fragments;
 
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.widget.Toast;
@@ -19,7 +20,7 @@ public class FragmentSettings extends PreferenceFragment {
         super.onCreate(savedInstanceState);
 
         addPreferencesFromResource(R.xml.settings);
-        
+
         CheckBoxPreference subtitlescheckBoxPreference = (CheckBoxPreference) findPreference(Constants.SUBTITLES);
         subtitlescheckBoxPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
@@ -30,6 +31,10 @@ public class FragmentSettings extends PreferenceFragment {
                 return true;
             }
         });
+
+        CheckBoxPreference gyroscopeCheckBoxPreference = (CheckBoxPreference) findPreference(Constants.USE_GYROSCOPE);
+        if (!isSensorAvailable())
+            gyroscopeCheckBoxPreference.setEnabled(false);
 
         ListPreference encodingList = (ListPreference) findPreference(Constants.LANGUAGE);
 
@@ -103,6 +108,11 @@ public class FragmentSettings extends PreferenceFragment {
             toast.show();
         }
 
+    }
+
+    private boolean isSensorAvailable() {
+        PackageManager PM = this.getActivity().getPackageManager();
+        return PM.hasSystemFeature(PackageManager.FEATURE_SENSOR_GYROSCOPE);
     }
 
 
