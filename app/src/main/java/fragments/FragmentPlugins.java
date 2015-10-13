@@ -40,7 +40,7 @@ public class FragmentPlugins extends Fragment {
     private List<FilesData> Plugins;
     private Adapter adapter;
     private int deletePos = -1;
-    private static final int REQUEST_PATH = 1;
+    private static final int REQUEST_PATH = 12;
     public static FragmentPlugins instance = null;
 
 
@@ -212,9 +212,10 @@ public class FragmentPlugins extends Fragment {
         if (requestCode == REQUEST_PATH) {
             if (resultCode == Activity.RESULT_OK) {
                 exportImportMods(data);
-
             }
         }
+        super.onActivityResult(requestCode,resultCode,data);
+
     }
 
 

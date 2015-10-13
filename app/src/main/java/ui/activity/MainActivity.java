@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -14,14 +13,12 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,9 +27,6 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.libopenmw.openmw.FileChooser;
 import com.libopenmw.openmw.R;
 import com.melnykov.fab.FloatingActionButton;
-
-import javax.microedition.khronos.egl.EGLConfig;
-import javax.microedition.khronos.opengles.GL10;
 
 import constants.Constants;
 import fragments.FragmentControls;
@@ -103,9 +97,8 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
-
-
     }
+
 
     private void initializeNavigationView(Toolbar toolbar) {
         navigationView = (NavigationView) findViewById(R.id.navigation_drawer);
@@ -145,6 +138,11 @@ public class MainActivity extends AppCompatActivity {
                         MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new FragmentSettings()).commit();
 
                         return true;
+/*                    case R.id.textureDecoder:
+                        showOverflowMenu(false);
+                        disableToolBarViews();
+                        MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new DDSDecoderFragment()).commit();
+                        return true;*/
 
                     default:
 
@@ -199,6 +197,8 @@ public class MainActivity extends AppCompatActivity {
 
             }
         }
+        super.onActivityResult(requestCode,resultCode,data);
+
     }
 
 
