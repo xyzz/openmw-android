@@ -102,9 +102,10 @@ public class QuickPanel {
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
-
+                        ScaleSimulation.onTouchDown(v);
                         return true;
                     case MotionEvent.ACTION_UP:
+                        ScaleSimulation.onTouchUp(v);
                         if (!enablePanel) {
                             enablePanel = true;
                             setPanelVisible();

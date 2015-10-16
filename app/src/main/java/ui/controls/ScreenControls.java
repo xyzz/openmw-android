@@ -100,10 +100,11 @@ public class ScreenControls {
 				public boolean onTouch(View v, MotionEvent event) {
 					switch (event.getAction()) {
 					case MotionEvent.ACTION_DOWN:
-
+						ScaleSimulation.onTouchDown(v);
 						return true;
 					case MotionEvent.ACTION_UP:
 						if (enableTouch == false) {
+							ScaleSimulation.onTouchUp(v);
 							buttonTouch.setText("on");
 							enableTouch = true;
 							touch.setVisibility(TouchCameraSimulation.VISIBLE);
@@ -169,6 +170,7 @@ public class ScreenControls {
 				public boolean onTouch(View v, MotionEvent event) {
 					switch (event.getAction()) {
 					case MotionEvent.ACTION_DOWN:
+						ScaleSimulation.onTouchDown(v);
 
 						if (crouchFlag == false) {
 							SDLActivity
@@ -181,7 +183,7 @@ public class ScreenControls {
 						}
 						return true;
 					case MotionEvent.ACTION_UP:
-
+						ScaleSimulation.onTouchUp(v);
 						return true;
 					}
 					return false;
