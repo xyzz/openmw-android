@@ -3,7 +3,7 @@ package ui.controls;
 import android.view.View;
 
 public class ScaleSimulation {
-    private static final float MAX_SCALE = 1.2f;
+    private static final float MAX_SCALE = 1.3f;
 
     public static void onTouchDown(View v) {
         v.setScaleX(MAX_SCALE);
