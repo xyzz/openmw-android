@@ -103,8 +103,9 @@ public class ScreenControls {
 						ScaleSimulation.onTouchDown(v);
 						return true;
 					case MotionEvent.ACTION_UP:
+						ScaleSimulation.onTouchUp(v);
+
 						if (enableTouch == false) {
-							ScaleSimulation.onTouchUp(v);
 							buttonTouch.setText("on");
 							enableTouch = true;
 							touch.setVisibility(TouchCameraSimulation.VISIBLE);
@@ -210,6 +211,7 @@ public class ScreenControls {
 				public boolean onTouch(View v, MotionEvent event) {
 					switch (event.getAction()) {
 					case MotionEvent.ACTION_DOWN:
+						ScaleSimulation.onTouchUp(v);
 
 						// PRESSED
 						if (hideControls == false) {
@@ -262,6 +264,7 @@ public class ScreenControls {
 							hideControls = true;
 						} else {
 
+							ScaleSimulation.onTouchUp(v);
 							QuickPanel.getInstance().showPanel
 									.setVisibility(Button.VISIBLE);
 							buttonChangePerson
