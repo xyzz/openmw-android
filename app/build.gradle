@@ -6,8 +6,8 @@ android {
 
     defaultConfig {
         applicationId "com.libopenmw.openmw"
-        minSdkVersion 8
-        targetSdkVersion 22
+        minSdkVersion 21
+        targetSdkVersion 23
         compileOptions {
             sourceCompatibility JavaVersion.VERSION_1_7
             targetCompatibility JavaVersion.VERSION_1_7
