@@ -8,7 +8,6 @@ import android.view.KeyEvent;
  */
 public class EscapeKeySimulation {
     private static final int KEYCODE_BACK = 4;
-    private static final int KEYCODE_ESCAPE = 27;
 
     public static void onBackPressed(int keyCode, KeyEvent event) {
         if (keyCode == KEYCODE_BACK)

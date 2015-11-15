@@ -20,6 +20,8 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Process;
 import android.preference.PreferenceManager;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -106,6 +108,7 @@ public class GameActivity extends SDLActivity implements SensorEventListener {
     @Override
     public void onAccuracyChanged(Sensor arg0, int arg1) {
     }
+
 
     @Override
     public void onSensorChanged(SensorEvent event) {
