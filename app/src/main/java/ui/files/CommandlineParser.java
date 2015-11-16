@@ -14,7 +14,6 @@ public class CommandlineParser {
 
     public CommandlineParser(String data) {
         this.data = data;
-        this.data = this.data.replace(" ", "");
     }
 
     public void parseCommandLine() {
@@ -30,8 +29,10 @@ public class CommandlineParser {
 
     private String[] createArgv(String[] argv) {
         argv = removeElements(argv, 0);
-        for (int i = 0; i < argv.length; i++)
+        for (int i = 0; i < argv.length; i++) {
             argv[i] = "--" + argv[i];
+            argv[i]=argv[i].trim();
+        }
         return argv;
     }
 
