@@ -80,14 +80,21 @@ I copied all  libraries  in one folder . For example AndroidDependencies
 Also you must copy tis library to the same folder
 and build openmw like this
 
-cmake /home/sylar/openmw -DCMAKE_TOOLCHAIN_FILE=/home/sylar/android-cmake-master/android.toolchain.cmake 
--DOPENMW_DEPENDENCIES_DIR=/home/sylar/AndroidDependencies -DANDROID_NATIVE_API_LEVEL=14
+cmake /home/sandstranger/Android/openmw -DCMAKE_TOOLCHAIN_FILE=/home/sandstranger/Android/android-cmake-master/android.toolchain.cmake
+ -DANDROID_TOOLCHAIN_NAME=aarch64-linux-android-4.9 -DANDROID_NATIVE_API_LEVEL=android-21 -DANDROID_NDK=/home/sandstranger/Android/crystax-ndk-10.1.0/
+ -DANDROID_ABI=arm64-v8a -DOPENMW_DEPENDENCIES_DIR=/home/sandstranger/Android/AndroidDependenciesARMV8
+ -DOSG_PLUGINS_DIR=/home/sandstranger/Android/AndroidDependenciesARMV8/lib/osgPlugins-3.3.8
+
 
 After builing openmw library, you must copy all the libraries to libs folder in the  java project folder
 for example :
  /eclipse-project/app/src/main/jniLibs/armeabi-v7a
 Then you must import this java project in android-studio , which included with the android sdk.
 Also you need to import the configuration files openmw.
+
+You need to decode dds textures , because most Android gles videocards not support dxt texture compression .The easiest way to do it, use crunch
+https://github.com/Unvanquished/crunch
+
 
 
 
