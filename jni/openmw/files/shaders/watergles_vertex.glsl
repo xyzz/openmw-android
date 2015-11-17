@@ -1,5 +1,7 @@
-#version 120
-    
+#version 100
+precision mediump float;    
+precision mediump int;    
+
 varying vec3  screenCoordsPassthrough;
 varying vec4  position;
 varying float  depthPassthrough;

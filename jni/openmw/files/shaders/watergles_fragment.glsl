@@ -1,4 +1,6 @@
-#version 120
+#version 100
+precision mediump float;    
+precision mediump int;    
 
 #define REFRACTION @refraction_enabled
 
