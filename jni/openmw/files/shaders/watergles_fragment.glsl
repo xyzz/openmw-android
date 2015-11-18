@@ -1,6 +1,22 @@
 #version 100
-precision mediump float;    
-precision mediump int;    
+precision mediump float;
+precision mediump int;
+
+struct osg_LightSourceParameters {
+            mediump vec4  ambient;
+            mediump vec4  diffuse;
+            mediump vec4  specular;
+            mediump vec4  position;
+            mediump vec4  halfVector;
+            mediump vec3  spotDirection;
+            mediump float  spotExponent;
+            mediump float  spotCutoff;
+            mediump float  spotCosCutoff;
+            mediump float  constantAttenuation;
+            mediump float  linearAttenuation;
+            mediump float  quadraticAttenuation;
+          };
+uniform osg_LightSourceParameters osg_LightSource[1];
 
 #define REFRACTION @refraction_enabled
 
@@ -53,7 +69,7 @@ float fresnel_dielectric(vec3 Incoming, vec3 Normal, float eta)
         result = 0.5 * A * A *(1.0 + B * B);
     }
     else
-        result = 1.0;  /* TIR (no refracted component) */
+        result = 1.0;
 
     return result;
 }
@@ -69,7 +85,7 @@ uniform sampler2D reflectionMap;
 uniform sampler2D refractionMap;
 uniform sampler2D refractionDepthMap;
 #endif
-                
+
 uniform float osg_SimulationTime;
 
 uniform float near;
@@ -124,7 +140,7 @@ void main(void)
     lNormal = vec3(-lNormal.x, -lNormal.y, lNormal.z);
 
 
-    vec3 lVec = normalize((gl_ModelViewMatrixInverse * vec4(gl_LightSource[0].position.xyz, 0.0)).xyz);
+    vec3 lVec = normalize((gl_ModelViewMatrixInverse * vec4(osg_LightSource[0].position.xyz, 0.0)).xyz);
 
     vec3 cameraPos = (gl_ModelViewMatrixInverse * vec4(0,0,0,1)).xyz;
     vec3 vVec = normalize(position.xyz - cameraPos.xyz);
@@ -170,15 +186,15 @@ void main(void)
     float refractionDepth = texture2D(refractionDepthMap, screenCoords-(normal.xy*REFR_BUMP)).x;
     float z_n = 2.0 * refractionDepth - 1.0;
     refractionDepth = 2.0 * near * far / (far + near - z_n * (far - near));
-    
+
     float waterDepth = refractionDepth - depthPassthrough;
 
     if (cameraPos.z > 0.0)
         refraction = mix(refraction, waterColor, clamp(waterDepth/VISIBILITY, 0.0, 1.0));
 
-    gl_FragData[0].xyz = mix( mix(refraction,  scatterColour,  lightScatter),  reflection,  fresnel) + specular * gl_LightSource[0].specular.xyz;
+    gl_FragData[0].xyz = mix( mix(refraction,  scatterColour,  lightScatter),  reflection,  fresnel) + specular * osg_LightSource[0].specular.xyz;
 #else
-    gl_FragData[0].xyz = mix(reflection,  waterColor,  (1.0-fresnel)*0.5) + specular * gl_LightSource[0].specular.xyz;
+    gl_FragData[0].xyz = mix(reflection,  waterColor,  (1.0-fresnel)*0.5) + specular * osg_LightSource[0].specular.xyz;
 #endif
 
     // fog
