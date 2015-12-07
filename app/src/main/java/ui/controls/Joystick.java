@@ -23,13 +23,12 @@ public class Joystick extends View {
 
     private final String TAG = "JoystickView";
     private Paint circlePaint;
-    private Paint handlePaint;
     private double touchX, touchY;
     private int innerPadding;
     private int handleRadius;
     private int handleInnerBoundaries;
-    private JoystickMovedListener listener;
     private int sensitivity;
+    public static boolean isGameEnabled=false;
 
     // =========================================
     // Constructors
@@ -63,28 +62,9 @@ public class Joystick extends View {
         circlePaint.setStrokeWidth(1);
         circlePaint.setStyle(Paint.Style.FILL_AND_STROKE);
 
-
-        handlePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        //handlePaint.setColor(Color.argb(90, 255, 255, 255));
-        handlePaint.setColor(Color.DKGRAY);
-        handlePaint.setStrokeWidth(1);
-        handlePaint.setStyle(Paint.Style.FILL_AND_STROKE);
-
         innerPadding = 10;
         sensitivity = 10;
     }
-
-    // =========================================
-    // Public Methods
-    // =========================================
-
-    public void setOnJostickMovedListener(JoystickMovedListener listener) {
-        this.listener = listener;
-    }
-
-    // =========================================
-    // Drawing Functionality
-    // =========================================
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
@@ -117,27 +97,18 @@ public class Joystick extends View {
 
     @Override
     protected void onDraw(final Canvas canvas) {
+        if (!isGameEnabled){
         final int px = getMeasuredWidth() / 2;
         final int py = getMeasuredHeight() / 2;
-        int radius = Math.min(px, py);
-
-        // Draw the background
-        canvas.drawCircle(px, py, radius - innerPadding, circlePaint);
-
-        // Draw the handle
-        canvas.drawCircle((int) touchX + px, (int) touchY + py, handleRadius,
-                handlePaint);
-
-
-        canvas.save();
+        final int radius = Math.min(px, py);
+         canvas.drawCircle(px, py, radius - innerPadding, circlePaint);
+         canvas.save();
+        }
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-
         playerMovement(event);
-
-
         return true;
     }
 
@@ -146,17 +117,15 @@ public class Joystick extends View {
         int actionType = event.getAction();
         switch (actionType) {
             case MotionEvent.ACTION_MOVE: {
+
                 int px = getMeasuredWidth() / 2;
                 int py = getMeasuredHeight() / 2;
                 final int radius = Math.min(px, py) - handleInnerBoundaries;
-
                 touchX = (event.getX() - px);
                 touchX = Math.max(Math.min(touchX, radius), -radius);
-
                 touchY = (event.getY() - py);
-
                 touchY = Math.max(Math.min(touchY, radius), -radius);
-                if (touchY < -radius / 3 && (touchX > 0 || touchX < 0))
+               if (touchY < -radius / 3 && (touchX > 0 || touchX < 0))
                    SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_W);
                 else
                     SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_W);
@@ -178,21 +147,11 @@ public class Joystick extends View {
                 else
                     SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_D);
 
-                // Pressure
-                if (listener != null) {
-                    listener.OnMoved((int) (touchX / radius * sensitivity),
-                            (int) (touchY / radius * sensitivity));
-                }
-
-
-                invalidate();
-
                 break;
             }
             case MotionEvent.ACTION_UP: {
                 releaseKeys();
 
-                returnHandleToCenter();
                 break;
             }
             default: {
@@ -207,37 +166,6 @@ public class Joystick extends View {
         SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_S);
         SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_A);
         SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_D);
-
-    }
-
-
-    private void returnHandleToCenter() {
-
-        Handler handler = new Handler();
-        int numberOfFrames = 5;
-        final double intervalsX = (0 - touchX) / numberOfFrames;
-        final double intervalsY = (0 - touchY) / numberOfFrames;
-
-        for (int i = 0; i < numberOfFrames; i++) {
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    touchX += intervalsX;
-                    touchY += intervalsY;
-                    invalidate();
-                }
-            }, i * 40);
-        }
-
-        if (listener != null) {
-            listener.OnReleased();
-        }
-    }
-
-    interface JoystickMovedListener {
-        void OnMoved(int pan, int tilt);
-
-        void OnReleased();
 
     }
 

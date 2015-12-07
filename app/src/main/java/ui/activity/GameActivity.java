@@ -7,6 +7,7 @@ import org.libsdl.app.SDLActivity;
 
 import constants.Constants;
 import screen.ScreenScaler;
+import ui.controls.Joystick;
 import ui.controls.QuickPanel;
 import ui.controls.ScreenControls;
 import ui.controls.SdlNativeKeys;
@@ -56,6 +57,7 @@ public class GameActivity extends SDLActivity implements SensorEventListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Joystick.isGameEnabled=true;
         CommandlineParser commandlineParser = new CommandlineParser(Constants.commandLineData);
         commandlineParser.parseCommandLine();
         commandLine(commandlineParser.getArgc(), commandlineParser.getArgv());
