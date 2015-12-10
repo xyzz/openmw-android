@@ -14,17 +14,17 @@ public class Writer {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(file));
 		String line = reader.readLine();
 		StringBuilder builder = new StringBuilder();
-		boolean contains = true;
+		boolean contains = false;
 		while (line != null) {
-			if (line.contains(value) && contains) {
+			if (line.startsWith(value) && !contains) {
 				builder.append(value + "=" + data);
-				contains = false;
+				contains = true;
 			} else
 				builder.append(line);
 			builder.append("\n");
 			line = reader.readLine();
 		}
-		if (contains)
+		if (!contains)
 			builder.append(value + "=" + data);
 
 		reader.close();
