@@ -1,4 +1,4 @@
-package com.libopenmw.openmw;
+package ui.controls;
 
 import org.libsdl.app.SDLActivity;
 
@@ -14,7 +14,7 @@ public class TouchCameraSimulation extends View {
 
 	private Paint circlePaint;
 
-	static double costTouch=0;
+	public static double costTouch=0;
 	private double[] xmas = new double[2];
 	private double[] ymas = new double[2];
 

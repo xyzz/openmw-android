@@ -1,4 +1,4 @@
-package com.libopenmw.openmw;
+package ui.files;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -14,11 +14,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.libopenmw.openmw.ParseJson.FilesData;
+import ui.activity.MainActivity;
+import ui.files.ParseJson.FilesData;
 
 public class ParseJson {
 
-	static final String jsonFilePath = MainActivity.configsPath + "/files.json";
+	public static final String jsonFilePath = MainActivity.configsPath + "/files.json";
 
 	public static void savetofile(FilesData ti) throws IOException {
 		List<FilesData> loadedFile = loadFile();

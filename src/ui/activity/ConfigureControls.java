@@ -1,5 +1,14 @@
-package com.libopenmw.openmw;
+package ui.activity;
 
+import com.libopenmw.openmw.R;
+import com.libopenmw.openmw.R.id;
+import com.libopenmw.openmw.R.layout;
+
+import screen.ScreenScaler;
+import ui.controls.ControlsParams;
+import ui.controls.Joystick;
+import ui.controls.MultiTouchListener;
+import constants.Constants;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -43,7 +52,7 @@ public class ConfigureControls extends Activity {
 	private ImageButton buttonMagic;
 	private ImageButton buttonUse;
 	private ImageButton buttonCrouch;
-	static int buttonFlag = 0;
+	public static int buttonFlag = 0;
 
 	public static boolean buttonOpacityFlag = false;
 	public static boolean buttonSizeFlag = false;

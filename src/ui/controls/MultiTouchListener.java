@@ -1,5 +1,6 @@
-package com.libopenmw.openmw;
+package ui.controls;
 
+import ui.activity.ConfigureControls;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;

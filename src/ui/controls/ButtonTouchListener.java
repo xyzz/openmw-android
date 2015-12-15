@@ -1,4 +1,4 @@
-package com.libopenmw.openmw;
+package ui.controls;
 
 import org.libsdl.app.SDLActivity;
 

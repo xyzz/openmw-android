@@ -1,4 +1,4 @@
-package com.libopenmw.openmw;
+package constants;
 
 public class Constants {
 

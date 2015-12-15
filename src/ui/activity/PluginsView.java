@@ -1,4 +1,4 @@
-package com.libopenmw.openmw;
+package ui.activity;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -8,7 +8,12 @@ import java.util.List;
 
 import org.json.JSONException;
 
-import com.libopenmw.openmw.ParseJson.FilesData;
+import ui.files.ParseJson;
+import ui.files.ParseJson.FilesData;
+
+import com.libopenmw.openmw.R;
+import com.libopenmw.openmw.R.id;
+import com.libopenmw.openmw.R.layout;
 import com.mobeta.android.dslv.DragSortListView;
 
 import android.app.Activity;

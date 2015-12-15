@@ -1,9 +1,21 @@
-package com.libopenmw.openmw;
+package ui.activity;
 
 import java.io.File;
 
 import org.libsdl.app.SDLActivity;
 
+import screen.ScreenScaler;
+import ui.controls.ButtonTouchListener;
+import ui.controls.ControlsParams;
+import ui.controls.Joystick;
+import ui.controls.JoystickView;
+import ui.controls.TouchCameraSimulation;
+
+import com.libopenmw.openmw.R;
+import com.libopenmw.openmw.R.id;
+import com.libopenmw.openmw.R.layout;
+
+import constants.Constants;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;

@@ -1,4 +1,4 @@
-package com.libopenmw.openmw;
+package ui.files;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;

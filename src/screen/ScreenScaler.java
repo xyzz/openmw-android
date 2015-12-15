@@ -1,4 +1,4 @@
-package com.libopenmw.openmw;
+package screen;
 
 
 

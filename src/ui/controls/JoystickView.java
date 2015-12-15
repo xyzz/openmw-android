@@ -1,4 +1,7 @@
-package com.libopenmw.openmw;
+package ui.controls;
+
+import com.libopenmw.openmw.R;
+import com.libopenmw.openmw.R.drawable;
 
 import android.content.Context;
 import android.graphics.Bitmap;

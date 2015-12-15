@@ -1,5 +1,6 @@
-package com.libopenmw.openmw;
+package ui.controls;
 
+import screen.ScreenScaler;
 import android.view.View;
 import android.view.ViewGroup.MarginLayoutParams;
 import android.widget.RelativeLayout;

@@ -1,4 +1,4 @@
-package com.libopenmw.openmw;
+package ui.files;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -18,7 +18,7 @@ public class CopyFilesFromAssets {
 		this.context=context;
 		this.configsPath=configsPath;
 	}
-	void copyFileOrDir(String path) {
+	public void copyFileOrDir(String path) {
 
 		AssetManager assetManager = context.getAssets();
 		String assets[] = null;
