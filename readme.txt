@@ -26,10 +26,10 @@ zzip
 zlib
 
 Prebuilt openmw dependencies for armv7 arch
-https://drive.google.com/file/d/0B5mOME9qjLFuckRrSWd6ZTMtZGM/view?usp=sharing
+https://drive.google.com/file/d/0B5mOME9qjLFuS3F6ZlNnWXZCZkk/view?usp=sharing
 
 Prebuilt openmw dependencies for armv8 arch
-https://drive.google.com/file/d/0B5mOME9qjLFuVkpRc2FWb3h1SW8/view?usp=sharing
+https://drive.google.com/file/d/0B5mOME9qjLFuUFhjS3o0TFRnX2c/view?usp=sharing
 
 Compilation of OpenMW dependencies
 
