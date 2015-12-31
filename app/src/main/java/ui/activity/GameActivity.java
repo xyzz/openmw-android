@@ -65,7 +65,6 @@ public class GameActivity extends SDLActivity implements SensorEventListener {
         hideControls = PreferenceManager.getDefaultSharedPreferences(this).getBoolean(Constants.HIDE_CONTROLS, false);
         getPathToJni(Constants.configsPath);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        deleteVideoFile();
         ScreenControls controls = new ScreenControls(this);
         controls.showControls(hideControls);
         QuickPanel panel = new QuickPanel(this);
@@ -77,14 +76,6 @@ public class GameActivity extends SDLActivity implements SensorEventListener {
 
     }
 
-
-    private void deleteVideoFile() {
-        File inputfile = new File(Constants.dataPath
-                + "/Video/bethesda logo.bik");
-        if (inputfile.exists())
-            inputfile.delete();
-
-    }
 
     @Override
     public void onDestroy() {
