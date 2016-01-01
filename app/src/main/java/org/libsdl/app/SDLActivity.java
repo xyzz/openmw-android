@@ -368,14 +368,14 @@ public class SDLActivity extends Activity {
                 break;
             case COMMAND_SET_KEEP_SCREEN_ON:
             {
-                Window window = ((Activity) context).getWindow();
+             /*   Window window = ((Activity) context).getWindow();
                 if (window != null) {
                     if ((msg.obj instanceof Integer) && (((Integer) msg.obj).intValue() != 0)) {
                         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
                     } else {
                         window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
                     }
-                }
+                }*/
                 break;
             }
             default:

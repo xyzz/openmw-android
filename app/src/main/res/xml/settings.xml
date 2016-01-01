@@ -12,6 +12,12 @@
             android:summary="Use gyroscope for camera controls"
             android:title="Gyroscope camera"></com.lb.material_preferences_library.custom_preferences.CheckBoxPreference>
 
+        <com.lb.material_preferences_library.custom_preferences.CheckBoxPreference
+            android:key="screen_keeper"
+            android:summary="Keep screen always on"
+            android:title="Screen"></com.lb.material_preferences_library.custom_preferences.CheckBoxPreference>
+
+
     </com.jenzz.materialpreference.PreferenceCategory>
 
 

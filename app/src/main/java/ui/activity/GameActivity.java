@@ -57,14 +57,14 @@ public class GameActivity extends SDLActivity implements SensorEventListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Joystick.isGameEnabled=true;
+        KeepScreenOn();
+        Joystick.isGameEnabled = true;
         CommandlineParser commandlineParser = new CommandlineParser(Constants.commandLineData);
         commandlineParser.parseCommandLine();
         commandLine(commandlineParser.getArgc(), commandlineParser.getArgv());
         //    saveCurrentTextureCompressionMode(Constants.textureCompressionMode);
         hideControls = PreferenceManager.getDefaultSharedPreferences(this).getBoolean(Constants.HIDE_CONTROLS, false);
         getPathToJni(Constants.configsPath);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         ScreenControls controls = new ScreenControls(this);
         controls.showControls(hideControls);
         QuickPanel panel = new QuickPanel(this);
@@ -76,6 +76,13 @@ public class GameActivity extends SDLActivity implements SensorEventListener {
 
     }
 
+
+    private void KeepScreenOn() {
+        boolean needKeepScreenOn = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("screen_keeper", false);
+        if (needKeepScreenOn) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        }
+    }
 
     @Override
     public void onDestroy() {
