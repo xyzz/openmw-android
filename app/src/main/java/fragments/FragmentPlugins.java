@@ -2,7 +2,6 @@ package fragments;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,13 +29,13 @@ import java.util.List;
 
 import constants.Constants;
 import ui.files.ParseJson;
-import ui.files.ParseJson.FilesData;
+import ui.files.ParseJson.PluginInfo;
 import ui.files.PluginReader;
 import ui.files.PreferencesHelper;
 
 public class FragmentPlugins extends Fragment {
 
-    private List<FilesData> Plugins;
+    private List<PluginInfo> Plugins;
     private Adapter adapter;
     private int deletePos = -1;
     private static final int REQUEST_PATH = 12;
@@ -185,7 +183,7 @@ public class FragmentPlugins extends Fragment {
         try {
             Plugins = ParseJson.loadFile(path);
             if (Plugins == null)
-                Plugins = new ArrayList<ParseJson.FilesData>();
+                Plugins = new ArrayList<PluginInfo>();
 
             File yourDir = new File(Constants.dataPath);
 
@@ -214,7 +212,7 @@ public class FragmentPlugins extends Fragment {
                 exportImportMods(data);
             }
         }
-        super.onActivityResult(requestCode,resultCode,data);
+        super.onActivityResult(requestCode, resultCode, data);
 
     }
 
@@ -288,13 +286,14 @@ public class FragmentPlugins extends Fragment {
             while (i < Plugins.size()) {
 
                 if (Plugins.get(i).enabled == 1) {
-                    writer.write("content= " + Plugins.get(i).name + "\n");
+                    PluginInfo pluginInfo = Plugins.get(i);
+                    writer.write("content= " + pluginInfo.name + "\n");
+                    String bsaFileNameName = getBsaFileName(pluginInfo);
 
-                    if (checkBsaExists(Constants.dataPath + "/"
-                            + Plugins.get(i).nameBsa))
+                    if (!bsaFileNameName.isEmpty()) {
                         writer.write("fallback-archive= "
-                                + Plugins.get(i).nameBsa + "\n");
-
+                                + bsaFileNameName + "\n");
+                    }
                     writer.flush();
                 }
                 i++;
@@ -309,17 +308,30 @@ public class FragmentPlugins extends Fragment {
         }
     }
 
-    private boolean checkBsaExists(String path) {
-        File inputfile = new File(path);
-        return inputfile.exists();
-
+    private String getBsaFileName(PluginInfo pluginInfo) {
+        File dir = new File(Constants.dataPath);
+        for (File file : dir.listFiles()) {
+            if (file.isFile()) {
+                String bsaExtension = "";
+                if (file.getName().endsWith(".bsa")) {
+                    bsaExtension = ".bsa";
+                } else if (file.getName().endsWith(".BSA")) {
+                    bsaExtension = ".BSA";
+                }
+                if (!bsaExtension.isEmpty() && pluginInfo.name.contains(file.getName().replace(bsaExtension, ""))) {
+                    return file.getName();
+                }
+            }
+        }
+        return "";
     }
+
 
     private void checkFilesDeleted(File yourDir) throws JSONException,
             IOException {
         int deletedFilesCount = 0;
         int i = 0;
-        List<FilesData> tmp = ParseJson.loadFile(Constants.configsPath + "/files.json");
+        List<PluginInfo> tmp = ParseJson.loadFile(Constants.configsPath + "/files.json");
         for (i = 0; i < tmp.size(); i++) {
             boolean fileDeleted = true;
 
@@ -361,7 +373,7 @@ public class FragmentPlugins extends Fragment {
         for (File f : yourDir.listFiles()) {
 
             boolean newPlugin = true;
-            for (FilesData data : Plugins) {
+            for (PluginInfo data : Plugins) {
                 if (f.isFile() && f.getName().endsWith(data.name)) {
 
                     newPlugin = false;
@@ -372,7 +384,7 @@ public class FragmentPlugins extends Fragment {
 
             }
             if (newPlugin) {
-                FilesData pluginData = new FilesData();
+                PluginInfo pluginData = new PluginInfo();
 
                 pluginData.name = f.getName();
                 pluginData.nameBsa = f.getName().split("\\.")[0] + ".bsa";
@@ -397,7 +409,7 @@ public class FragmentPlugins extends Fragment {
     private DragSortListView.DropListener onDrop = new DragSortListView.DropListener() {
         @Override
         public void drop(int from, int to) {
-            FilesData item = Plugins.get(from);
+            PluginInfo item = Plugins.get(from);
 
 
             Plugins.remove(from);
@@ -475,7 +487,6 @@ public class FragmentPlugins extends Fragment {
 
             final CheckBox Box = (CheckBox) rowView
                     .findViewById(R.id.checkBoxenable);
-
 
 
             if (Plugins.get(position).enabled == 1) {
