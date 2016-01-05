@@ -15,13 +15,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import constants.Constants;
-import ui.activity.MainActivity;
 
 public class ParseJson {
 
 
-	public static void savetofile(FilesData ti) throws IOException {
-		List<FilesData> loadedFile = loadFile(Constants.configsPath+"/files.json");
+	public static void savetofile(PluginInfo ti) throws IOException {
+		List<PluginInfo> loadedFile = loadFile(Constants.configsPath+"/files.json");
 		loadedFile.add(ti);
 
 		try {
@@ -33,7 +32,7 @@ public class ParseJson {
 
 	}
 
-	public static void saveFile(List<FilesData> loadedFile,String path)
+	public static void saveFile(List<PluginInfo> loadedFile, String path)
 			throws JSONException, IOException {
 
 		String file = "";
@@ -84,8 +83,8 @@ public class ParseJson {
 		}
 	}
 
-	public static List<FilesData> loadFile(String jsonFilePath) throws IOException {
-		List<FilesData> ret = new ArrayList<ParseJson.FilesData>();
+	public static List<PluginInfo> loadFile(String jsonFilePath) throws IOException {
+		List<PluginInfo> ret = new ArrayList<PluginInfo>();
 
 		try {
 
@@ -103,7 +102,7 @@ public class ParseJson {
 					jsonObjects.add((JSONObject) jsonArray.get(i));
 				}
 				for (JSONObject obj : jsonObjects) {
-					FilesData ti = new FilesData();
+					PluginInfo ti = new PluginInfo();
 					ti.name = obj.getString("name");
 					ti.nameBsa = obj.getString("nameBsa");
 					ti.enabled = obj.getLong("enabled");
@@ -118,8 +117,8 @@ public class ParseJson {
 
 	}
 
-	public static class FilesData {
-		public FilesData() {
+	public static class PluginInfo {
+		public PluginInfo() {
 			this.name = "";
 			this.nameBsa = "";
 			this.enabled = 0;
