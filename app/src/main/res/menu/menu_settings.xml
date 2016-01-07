@@ -4,12 +4,6 @@
     tools:context=".MainActivity">
     <group android:id="@+id/main_menu_group">
         <item
-            android:id="@+id/action_browse_configs_path"
-            android:orderInCategory="100"
-            android:title="Path to configs files"
-            app:showAsAction="never" />
-
-        <item
             android:id="@+id/action_browse_data_path"
             android:orderInCategory="100"
             android:title="Path to data files"

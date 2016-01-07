@@ -1,11 +1,9 @@
 package fragments;
 
 import android.app.Activity;
-import android.graphics.Point;
 import android.util.DisplayMetrics;
-import android.view.Display;
 
-import constants.Constants;
+import ui.files.ConfigsFileStorageHelper;
 import ui.files.Writer;
 
 /**
@@ -56,9 +54,9 @@ public class ScreenResolutionHelper {
 
     private void writeScreenDataToFile(String screenWidth, String screenHeight) {
         try {
-            Writer.write(screenWidth, Constants.configsPath
+            Writer.write(screenWidth, ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH
                     + "/config/openmw/settings.cfg", "resolution x");
-            Writer.write(screenHeight, Constants.configsPath
+            Writer.write(screenHeight, ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH
                     + "/config/openmw/settings.cfg", "resolution y");
         } catch (Exception e) {
 

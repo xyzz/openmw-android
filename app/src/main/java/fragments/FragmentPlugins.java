@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import constants.Constants;
+import ui.files.ConfigsFileStorageHelper;
 import ui.files.ParseJson;
 import ui.files.ParseJson.PluginInfo;
 import ui.files.PluginReader;
@@ -52,7 +53,7 @@ public class FragmentPlugins extends Fragment {
         View rootView = inflater.inflate(R.layout.listview, container, false);
 
         PreferencesHelper.getPrefValues(this.getActivity());
-        loadPlugins(Constants.configsPath + "/files.json");
+        loadPlugins(ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH + "/files.json");
         setupViews(rootView);
 
         try {
@@ -144,7 +145,7 @@ public class FragmentPlugins extends Fragment {
 
         String dependencies = "";
         try {
-            dependencies = PluginReader.read(Constants.dataPath + "/"
+            dependencies = PluginReader.read(Constants.APPLICATION_DATA_STORAGE_PATH + "/"
                     + Plugins.get(pos).name);
         } catch (IOException e) {
             e.printStackTrace();
@@ -164,7 +165,7 @@ public class FragmentPlugins extends Fragment {
             else
                 Plugins.get(i).enabled = 0;
         reloadAdapter();
-        savePluginsData(Constants.configsPath + "/files.json");
+        savePluginsData(ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH + "/files.json");
     }
 
     private void reloadAdapter() {
@@ -185,7 +186,7 @@ public class FragmentPlugins extends Fragment {
             if (Plugins == null)
                 Plugins = new ArrayList<PluginInfo>();
 
-            File yourDir = new File(Constants.dataPath);
+            File yourDir = new File(Constants.APPLICATION_DATA_STORAGE_PATH);
 
             checkFilesDeleted(yourDir);
 
@@ -265,12 +266,12 @@ public class FragmentPlugins extends Fragment {
     }
 
     private void deletePlugin() {
-        File inputfile = new File(Constants.dataPath + "/"
+        File inputfile = new File(Constants.APPLICATION_DATA_STORAGE_PATH + "/"
                 + Plugins.get(deletePos).name);
         if (inputfile.exists())
             inputfile.delete();
         Plugins.remove(deletePos);
-        savePluginsData(Constants.configsPath + "/files.json");
+        savePluginsData(ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH + "/files.json");
         reloadAdapter();
 
     }
@@ -279,7 +280,7 @@ public class FragmentPlugins extends Fragment {
 
         try {
 
-            FileWriter writer = new FileWriter(Constants.configsPath
+            FileWriter writer = new FileWriter(ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH
                     + "/openmw/openmw.cfg");
 
             int i = 0;
@@ -309,7 +310,7 @@ public class FragmentPlugins extends Fragment {
     }
 
     private String getBsaFileName(PluginInfo pluginInfo) {
-        File dir = new File(Constants.dataPath);
+        File dir = new File(Constants.APPLICATION_DATA_STORAGE_PATH);
         for (File file : dir.listFiles()) {
             if (file.isFile()) {
                 String bsaExtension = "";
@@ -331,7 +332,7 @@ public class FragmentPlugins extends Fragment {
             IOException {
         int deletedFilesCount = 0;
         int i = 0;
-        List<PluginInfo> tmp = ParseJson.loadFile(Constants.configsPath + "/files.json");
+        List<PluginInfo> tmp = ParseJson.loadFile(ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH + "/files.json");
         for (i = 0; i < tmp.size(); i++) {
             boolean fileDeleted = true;
 
@@ -354,7 +355,7 @@ public class FragmentPlugins extends Fragment {
 
         }
         if (Plugins.size() < i)
-            savePluginsData(Constants.configsPath + "/files.json");
+            savePluginsData(ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH + "/files.json");
 
     }
 
@@ -403,7 +404,7 @@ public class FragmentPlugins extends Fragment {
 
         }
 
-        savePluginsData(Constants.configsPath + "/files.json");
+        savePluginsData(ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH + "/files.json");
     }
 
     private DragSortListView.DropListener onDrop = new DragSortListView.DropListener() {
@@ -416,7 +417,7 @@ public class FragmentPlugins extends Fragment {
 
             Plugins.add(to, item);
             reloadAdapter();
-            savePluginsData(Constants.configsPath + "/files.json");
+            savePluginsData(ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH + "/files.json");
         }
     };
 
@@ -511,13 +512,13 @@ public class FragmentPlugins extends Fragment {
 
                         reloadAdapter();
 
-                        savePluginsData(Constants.configsPath + "/files.json");
+                        savePluginsData(ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH + "/files.json");
                     } else {
 
                         Plugins.get(position).enabled = 0;
                         reloadAdapter();
 
-                        savePluginsData(Constants.configsPath + "/files.json");
+                        savePluginsData(ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH + "/files.json");
 
                     }
                 }

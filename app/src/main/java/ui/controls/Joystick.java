@@ -28,7 +28,7 @@ public class Joystick extends View {
     private int handleRadius;
     private int handleInnerBoundaries;
     private int sensitivity;
-    public static boolean isGameEnabled=false;
+    public static boolean isGameEnabled = false;
 
     // =========================================
     // Constructors
@@ -97,12 +97,12 @@ public class Joystick extends View {
 
     @Override
     protected void onDraw(final Canvas canvas) {
-        if (!isGameEnabled){
-        final int px = getMeasuredWidth() / 2;
-        final int py = getMeasuredHeight() / 2;
-        final int radius = Math.min(px, py);
-         canvas.drawCircle(px, py, radius - innerPadding, circlePaint);
-         canvas.save();
+        if (!isGameEnabled) {
+            final int px = getMeasuredWidth() / 2;
+            final int py = getMeasuredHeight() / 2;
+            final int radius = Math.min(px, py);
+            canvas.drawCircle(px, py, radius - innerPadding, circlePaint);
+            canvas.save();
         }
     }
 
@@ -125,8 +125,8 @@ public class Joystick extends View {
                 touchX = Math.max(Math.min(touchX, radius), -radius);
                 touchY = (event.getY() - py);
                 touchY = Math.max(Math.min(touchY, radius), -radius);
-               if (touchY < -radius / 3 && (touchX > 0 || touchX < 0))
-                   SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_W);
+                if (touchY < -radius / 3 && (touchX > 0 || touchX < 0))
+                    SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_W);
                 else
                     SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_W);
 
@@ -161,7 +161,7 @@ public class Joystick extends View {
         }
     }
 
-    private void releaseKeys(){
+    private void releaseKeys() {
         SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_W);
         SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_S);
         SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_A);

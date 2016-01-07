@@ -7,7 +7,6 @@ import org.libsdl.app.SDLActivity;
 public class SdlNativeKeys {
 
     public static void keyDown(final int keyCode) {
-
         SDLActivity.onNativeKeyDown(keyCode);
     }
 

@@ -144,12 +144,10 @@ public class Constants {
 	public static final String COMMAND_LINE = "commandline";
 	public static final String TOUCH_SENSITIVITY= "camera sensitivity";
 	public static final String CAMERA_MULTIPLISER = "camera y multiplier";
-	public static String configsPath = "";
-	public static String dataPath = "";
 	public static String commandLineData = "";
 	public static final String SCREEN_WIDTH = "screen_width";
 	public static final String SCREEN_HEIGHT = "screen_height";
 	public static final String RESOLUTION = "resolution";
 
-
+	public static String APPLICATION_DATA_STORAGE_PATH ="";
 }

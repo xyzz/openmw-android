@@ -14,17 +14,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import constants.Constants;
-
 public class ParseJson {
 
 
 	public static void savetofile(PluginInfo ti) throws IOException {
-		List<PluginInfo> loadedFile = loadFile(Constants.configsPath+"/files.json");
+		List<PluginInfo> loadedFile = loadFile(ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH +"/files.json");
 		loadedFile.add(ti);
 
 		try {
-			saveFile(loadedFile,Constants.configsPath+"/files.json");
+			saveFile(loadedFile, ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH +"/files.json");
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

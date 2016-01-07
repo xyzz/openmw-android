@@ -14,13 +14,10 @@ public class PreferencesHelper {
         SharedPreferences Settings;
         Settings = a.getSharedPreferences(Constants.APP_PREFERENCES,
                 Context.MODE_PRIVATE);
-        Constants.configsPath = Settings.getString(Constants.CONFIGS_PATH,
-                Environment.getExternalStorageDirectory() + "/libopenmw");
+        Constants.APPLICATION_DATA_STORAGE_PATH = Settings.getString(Constants.DATA_PATH,
+                Environment.getExternalStorageDirectory() + "/libopenmw/data");
         Constants.commandLineData = Settings.getString(Constants.COMMAND_LINE,
                 "");
-        Constants.dataPath = Settings.getString(Constants.DATA_PATH,
-                Environment.getExternalStorageDirectory() + "/libopenmw/data");
-
 
     }
 

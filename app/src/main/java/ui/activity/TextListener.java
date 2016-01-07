@@ -1,6 +1,6 @@
 package ui.activity;
 
-import constants.Constants;
+import ui.files.ConfigsFileStorageHelper;
 import ui.files.PreferencesHelper;
 import ui.files.Writer;
 import android.app.Activity;
@@ -62,7 +62,7 @@ public class TextListener implements TextWatcher {
 
 						break;
 					case "data":
-						Writer.write(s + data, Constants.configsPath
+						Writer.write(s + data, ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH
 								+ "/config/openmw/openmw.cfg", value);
 
 						break;

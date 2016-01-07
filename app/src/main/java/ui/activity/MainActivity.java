@@ -5,9 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -23,7 +20,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.libopenmw.openmw.FileChooser;
 import com.libopenmw.openmw.R;
 import com.melnykov.fab.FloatingActionButton;
@@ -32,11 +28,9 @@ import constants.Constants;
 import fragments.FragmentControls;
 import fragments.FragmentPlugins;
 import fragments.FragmentSettings;
-import fragments.ScreenResolutionHelper;
 import screen.ScreenScaler;
-import ui.files.CopyFilesFromAssets;
+import ui.files.ConfigsFileStorageHelper;
 import ui.files.PreferencesHelper;
-import ui.files.Writer;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -49,23 +43,20 @@ public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_PATH = 1;
     private SharedPreferences Settings;
     private TextListener listener;
-
-    private enum TEXT_MODE {DATA_PATH, COMMAND_LINE, CONGIGS_PATH}
-
+    private enum TEXT_MODE {DATA_PATH, COMMAND_LINE}
     private static TEXT_MODE editTextMode;
-    private MaterialDialog dialog;
+    private ConfigsFileStorageHelper configsFileStorageHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-
         isSettingsEnabled = true;
         setContentView(R.layout.main);
         PreferencesHelper.getPrefValues(this);
         Settings = this.getSharedPreferences(
                 Constants.APP_PREFERENCES, Context.MODE_PRIVATE);
-
+        configsFileStorageHelper= new ConfigsFileStorageHelper(this,Settings);
+        configsFileStorageHelper.checkAppFirstTimeRun();
         LinearLayout layout = (LinearLayout) findViewById(R.id.toolbarLayout);
         layout.setVisibility(LinearLayout.VISIBLE);
         path = (TextView) findViewById(R.id.path);
@@ -184,11 +175,9 @@ public class MainActivity extends AppCompatActivity {
                 String curDir = data.getStringExtra("GetDir");
 
                 switch (editTextMode) {
-                    case CONGIGS_PATH:
-                        Constants.configsPath = curDir;
-                        break;
                     case DATA_PATH:
-                        Constants.dataPath = curDir;
+                        Constants.APPLICATION_DATA_STORAGE_PATH = curDir;
+                        break;
                 }
                 setTexWatcher();
                 path.setVisibility(EditText.VISIBLE);
@@ -197,7 +186,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         }
-        super.onActivityResult(requestCode,resultCode,data);
+        super.onActivityResult(requestCode, resultCode, data);
 
     }
 
@@ -220,17 +209,10 @@ public class MainActivity extends AppCompatActivity {
                         Constants.commandLineData, Settings, "commandLine");
                 path.addTextChangedListener(listener);
                 break;
-            case CONGIGS_PATH:
-                removeTextlistener();
-                listener = new TextListener(this,
-                        "/resources", "resources", Constants.CONFIGS_PATH,
-                        Constants.configsPath, Settings, "configs");
-                path.addTextChangedListener(listener);
-                break;
             case DATA_PATH:
                 removeTextlistener();
                 listener = new TextListener(this,
-                        "", "data", Constants.DATA_PATH, Constants.dataPath, Settings,
+                        "", "data", Constants.DATA_PATH, Constants.APPLICATION_DATA_STORAGE_PATH, Settings,
                         "data");
                 path.addTextChangedListener(listener);
                 break;
@@ -286,20 +268,13 @@ public class MainActivity extends AppCompatActivity {
                     browseButton.setVisibility(Button.GONE);
                     path.setText(Constants.commandLineData);
                     break;
-
-                case R.id.action_browse_configs_path:
-                    editTextMode = TEXT_MODE.CONGIGS_PATH;
-                    enableToolbarViews();
-                    path.setText(Constants.configsPath);
-                    enableToolbarViews();
-                    break;
                 case R.id.action_browse_data_path:
                     editTextMode = TEXT_MODE.DATA_PATH;
                     enableToolbarViews();
-                    path.setText(Constants.dataPath);
+                    path.setText(Constants.APPLICATION_DATA_STORAGE_PATH);
                     break;
                 case R.id.action_copy_files:
-                    copyFiles();
+                    configsFileStorageHelper.copyFiles();
                     break;
 
                 case R.id.action_reset_screen_controls:
@@ -358,79 +333,6 @@ public class MainActivity extends AppCompatActivity {
             path.removeTextChangedListener(listener);
 
 
-    }
-
-
-    private void copyFiles() {
-        showCopyDialog();
-        Thread th = new Thread(new Runnable() {
-
-            public Handler UI = new Handler() {
-                @Override
-                public void dispatchMessage(Message msg) {
-                    super.dispatchMessage(msg);
-                    dialog.dismiss();
-                    Toast toast = Toast.makeText(MainActivity.this.getApplicationContext(),
-                            "files copied", Toast.LENGTH_LONG);
-                    toast.show();
-                }
-            };
-
-            @Override
-            public void run() {
-
-                CopyFilesFromAssets copyFiles = new CopyFilesFromAssets(
-                        MainActivity.this,
-                        Constants.configsPath);
-                copyFiles.copyFileOrDir("libopenmw");
-
-                try {
-
-                    Writer.write(
-                            Constants.configsPath + "/resources",
-                            Constants.configsPath + "/config/openmw/openmw.cfg",
-                            "resources");
-                    Writer.write(Constants.dataPath, Constants.configsPath
-                            + "/config/openmw/openmw.cfg", "data");
-
-                    Writer.write(
-                            PreferenceManager.getDefaultSharedPreferences(MainActivity.this).getString(Constants.LANGUAGE, "win1250"),
-                            Constants.configsPath + "/config/openmw/openmw.cfg",
-                            "encoding");
-
-
-                    Writer.write(PreferenceManager.getDefaultSharedPreferences(MainActivity.this).getString(Constants.MIPMAPPING, "none"),
-                            Constants.configsPath
-                                    + "/config/openmw/settings.cfg",
-                            "texture filtering");
-
-                    Writer.write(String.valueOf(PreferenceManager.getDefaultSharedPreferences(MainActivity.this).getBoolean(Constants.SUBTITLES, false)), Constants.configsPath
-                            + "/config/openmw/settings.cfg", "subtitles");
-
-                    Writer.write("" + Settings.getFloat(Constants.CAMERA_MULTIPLISER, 2.0f), Constants.configsPath
-                            + "/config/openmw/settings.cfg", Constants.CAMERA_MULTIPLISER);
-                    Writer.write("" + Settings.getFloat(Constants.TOUCH_SENSITIVITY, 0.01f), Constants.configsPath
-                            + "/config/openmw/settings.cfg", Constants.TOUCH_SENSITIVITY);
-
-                    ScreenResolutionHelper screenHelper = new ScreenResolutionHelper(MainActivity.this);
-                    screenHelper.writeScreenResolution(PreferenceManager.getDefaultSharedPreferences(MainActivity.this).getString(Constants.RESOLUTION, "normalResolution"));
-
-
-                } catch (Exception e) {
-                }
-
-                UI.sendEmptyMessage(0);
-            }
-        });
-        th.start();
-    }
-
-    private void showCopyDialog() {
-        dialog = new MaterialDialog.Builder(this)
-                .title("Copying config files")
-                .content("Please wait")
-                .progress(true, 0)
-                .show();
     }
 
 }

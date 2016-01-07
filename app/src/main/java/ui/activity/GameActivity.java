@@ -1,8 +1,5 @@
 package ui.activity;
 
-import java.io.File;
-import java.util.List;
-
 import org.libsdl.app.SDLActivity;
 
 import constants.Constants;
@@ -10,10 +7,9 @@ import screen.ScreenScaler;
 import ui.controls.Joystick;
 import ui.controls.QuickPanel;
 import ui.controls.ScreenControls;
-import ui.controls.SdlNativeKeys;
 import ui.files.CommandlineParser;
+import ui.files.ConfigsFileStorageHelper;
 
-import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -21,14 +17,9 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Process;
 import android.preference.PreferenceManager;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.WindowManager;
 import android.widget.Button;
-
-import javax.microedition.khronos.egl.EGLConfig;
-import javax.microedition.khronos.opengles.GL10;
 
 public class GameActivity extends SDLActivity implements SensorEventListener {
 
@@ -64,7 +55,7 @@ public class GameActivity extends SDLActivity implements SensorEventListener {
         commandLine(commandlineParser.getArgc(), commandlineParser.getArgv());
         //    saveCurrentTextureCompressionMode(Constants.textureCompressionMode);
         hideControls = PreferenceManager.getDefaultSharedPreferences(this).getBoolean(Constants.HIDE_CONTROLS, false);
-        getPathToJni(Constants.configsPath);
+        getPathToJni(ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH);
         ScreenControls controls = new ScreenControls(this);
         controls.showControls(hideControls);
         QuickPanel panel = new QuickPanel(this);

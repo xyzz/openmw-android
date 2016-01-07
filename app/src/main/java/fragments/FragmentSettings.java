@@ -11,6 +11,7 @@ import com.lb.material_preferences_library.custom_preferences.ListPreference;
 import com.libopenmw.openmw.R;
 
 import constants.Constants;
+import ui.files.ConfigsFileStorageHelper;
 import ui.files.Writer;
 
 public class FragmentSettings extends PreferenceFragment {
@@ -45,7 +46,7 @@ public class FragmentSettings extends PreferenceFragment {
                 try {
                     Writer.write(
                             encoding,
-                            Constants.configsPath + "/config/openmw/openmw.cfg",
+                            ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH + "/config/openmw/openmw.cfg",
                             "encoding");
 
                 } catch (Exception e) {
@@ -82,7 +83,7 @@ public class FragmentSettings extends PreferenceFragment {
     private void saveSubtitlesSettings(boolean showSubtitles) {
 
         try {
-            Writer.write(String.valueOf(showSubtitles), Constants.configsPath
+            Writer.write(String.valueOf(showSubtitles), ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH
                     + "/config/openmw/settings.cfg", "subtitles");
 
         } catch (Exception e) {
@@ -96,7 +97,7 @@ public class FragmentSettings extends PreferenceFragment {
 
     private void saveMipMappingOptions(String mipmapping) {
         try {
-            Writer.write(mipmapping, Constants.configsPath
+            Writer.write(mipmapping, ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH
                             + "/config/openmw/settings.cfg",
                     "texture filtering");
 
