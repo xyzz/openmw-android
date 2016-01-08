@@ -29,7 +29,7 @@ Prebuilt openmw dependencies for armv7 arch
 https://drive.google.com/file/d/0B5mOME9qjLFuaWtBakdZdk9lT1E/view?usp=sharing
 
 Prebuilt openmw dependencies for armv8 arch
-https://drive.google.com/file/d/0B5mOME9qjLFuR0VFaFBkT21DeU0/view?usp=sharing
+https://drive.google.com/file/d/0B5mOME9qjLFua1NoS2NpVGF3cUk/view?usp=sharing
 
 Compilation of OpenMW dependencies
 
