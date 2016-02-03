@@ -53,8 +53,8 @@ public class Joystick extends View {
                 y1 = event.getY();
                 break;
             case MotionEvent.ACTION_MOVE: {
-                x2 = event.getRawX();
-                y2 = event.getRawY();
+                x2 = event.getX();
+                y2 = event.getY();
                 onJoystickDirection(directionListener.getCurrentDirection(x1, y1, x2, y2));
                 x1 = x2;
                 y1 = y2;

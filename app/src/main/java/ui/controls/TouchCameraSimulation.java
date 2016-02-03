@@ -101,8 +101,8 @@ public class TouchCameraSimulation extends View {
                 break;
             }
             case MotionEvent.ACTION_MOVE: {
-                xmas[1] = event.getRawX();
-                ymas[1] = event.getRawY();
+                xmas[1] = event.getX();
+                ymas[1] = event.getY();
                 if (xmas[0] == xmas[1] && ymas[0] < ymas[1]
                         && ymas[1] - ymas[0] > constTouch) {
                     SdlNativeKeys.touchDown(0.5f, 0.9f, MotionEvent.ACTION_MOVE,event);
