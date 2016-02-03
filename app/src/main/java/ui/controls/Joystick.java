@@ -12,7 +12,8 @@ import android.view.View;
 public class Joystick extends View {
 
     public static boolean isGameEnabled = false;
-    private float x1, x2, y1, y2, dx, dy;
+    private float x1, x2, y1, y2;
+    private DirectionListener directionListener;
 
     public Joystick(Context context) {
         super(context);
@@ -31,6 +32,9 @@ public class Joystick extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        if (directionListener == null) {
+            directionListener = new DirectionListener();
+        }
         playerMovement(event);
         return true;
     }
@@ -45,20 +49,13 @@ public class Joystick extends View {
         int actionType = event.getAction();
         switch (actionType) {
             case (MotionEvent.ACTION_DOWN):
-                dx = x1 = event.getX();
-                dy = y1 = event.getY();
+                x1 = event.getX();
+                y1 = event.getY();
                 break;
             case MotionEvent.ACTION_MOVE: {
-                x2 = event.getX();
-                y2 = event.getY();
-
-                if (x2 == x1) {
-                    x1 = dx;
-                }
-                if (y2 == y1) {
-                    y1 = dy;
-                }
-                onJoystickDirection(DirectionListener.getCurrentDirection(x1, y1, x2, y2));
+                x2 = event.getRawX();
+                y2 = event.getRawY();
+                onJoystickDirection(directionListener.getCurrentDirection(x1, y1, x2, y2));
                 x1 = x2;
                 y1 = y2;
                 break;
@@ -74,35 +71,34 @@ public class Joystick extends View {
         }
     }
 
-
     private void onJoystickDirection(DirectionListener.Direction currentDirection) {
         releaseKeys();
         switch (currentDirection) {
-            case left:
+            case LEFT:
                 SdlNativeKeys.keyDown(KeyEvent.KEYCODE_A);
                 break;
-            case right:
+            case RIGHT:
                 SdlNativeKeys.keyDown(KeyEvent.KEYCODE_D);
                 break;
-            case up:
+            case UP:
                 SdlNativeKeys.keyDown(KeyEvent.KEYCODE_W);
                 break;
-            case down:
+            case DOWN:
                 SdlNativeKeys.keyDown(KeyEvent.KEYCODE_S);
                 break;
-            case left_down:
+            case DOWN_LEFT:
                 SdlNativeKeys.keyDown(KeyEvent.KEYCODE_A);
                 SdlNativeKeys.keyDown(KeyEvent.KEYCODE_S);
                 break;
-            case right_down:
+            case DOWN_RIGHT:
                 SdlNativeKeys.keyDown(KeyEvent.KEYCODE_D);
                 SdlNativeKeys.keyDown(KeyEvent.KEYCODE_S);
                 break;
-            case left_up:
+            case UP_LEFT:
                 SdlNativeKeys.keyDown(KeyEvent.KEYCODE_A);
                 SdlNativeKeys.keyDown(KeyEvent.KEYCODE_W);
                 break;
-            case right_up:
+            case UP_RIGHT:
                 SdlNativeKeys.keyDown(KeyEvent.KEYCODE_D);
                 SdlNativeKeys.keyDown(KeyEvent.KEYCODE_W);
                 break;
