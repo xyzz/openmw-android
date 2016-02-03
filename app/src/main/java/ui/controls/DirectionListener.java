@@ -1,13 +1,15 @@
 package ui.controls;
 
 
+import android.content.Context;
 import android.util.Log;
+import android.view.Display;
+import android.view.WindowManager;
 
 public class DirectionListener {
 
-    private final float constTouch = 5f;
-    private final float measurementErrorMovement = 2.5f;
-
+    private float constTouch = 0;
+    private float measurementErrorMovement = 0f;
 
     public enum Direction {
         LEFT,
@@ -23,8 +25,17 @@ public class DirectionListener {
 
     private Direction currentDirection;
 
-    public DirectionListener() {
+    public DirectionListener(Context context) {
         currentDirection = Direction.UNDEFINED;
+        calculateErrorMovent(context);
+    }
+
+    private void calculateErrorMovent(Context context) {
+        WindowManager wm = (WindowManager) context
+                .getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        constTouch = (float) display.getWidth() / 385.f;
+        measurementErrorMovement = constTouch / 2.f;
     }
 
     public Direction getCurrentDirection(float x1, float y1, float x2, float y2) {
@@ -66,7 +77,7 @@ public class DirectionListener {
                 && y2 - y1 > constTouch
                 && x1 - x2 > constTouch) {
             return Direction.DOWN_LEFT;
-        }else
+        } else
             return currentDirection;
     }
 

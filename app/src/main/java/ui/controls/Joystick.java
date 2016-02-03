@@ -14,26 +14,30 @@ public class Joystick extends View {
     public static boolean isGameEnabled = false;
     private float x1, x2, y1, y2;
     private DirectionListener directionListener;
+    private Context context;
 
     public Joystick(Context context) {
         super(context);
+        this.context=context;
         drawBackgroundColor();
     }
 
     public Joystick(Context context, AttributeSet attrs) {
         super(context, attrs);
+        this.context=context;
         drawBackgroundColor();
     }
 
     public Joystick(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        this.context=context;
         drawBackgroundColor();
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (directionListener == null) {
-            directionListener = new DirectionListener();
+            directionListener = new DirectionListener(context);
         }
         playerMovement(event);
         return true;
