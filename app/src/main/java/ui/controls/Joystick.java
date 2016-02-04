@@ -37,7 +37,7 @@ public class Joystick extends View {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (directionListener == null) {
-            directionListener = new DirectionListener(context);
+            directionListener = new DirectionListener(context,false);
         }
         playerMovement(event);
         return true;

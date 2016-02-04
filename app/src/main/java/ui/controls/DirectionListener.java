@@ -2,13 +2,13 @@ package ui.controls;
 
 
 import android.content.Context;
-import android.util.Log;
-import android.view.Display;
-import android.view.WindowManager;
+
+import screen.ScreenInfo;
 
 public class DirectionListener {
 
-    private float constTouch = 0;
+    private float constTouch = 0f;
+    private boolean isTouchCameraChosen = false;
     private float measurementErrorMovement = 0f;
 
     public enum Direction {
@@ -25,17 +25,20 @@ public class DirectionListener {
 
     private Direction currentDirection;
 
-    public DirectionListener(Context context) {
+    public DirectionListener(Context context, boolean isTouchCameraChosen) {
         currentDirection = Direction.UNDEFINED;
-        calculateErrorMovent(context);
+        this.isTouchCameraChosen = isTouchCameraChosen;
+        calculateErrorMovment(context);
     }
 
-    private void calculateErrorMovent(Context context) {
-        WindowManager wm = (WindowManager) context
-                .getSystemService(Context.WINDOW_SERVICE);
-        Display display = wm.getDefaultDisplay();
-        constTouch = (float) display.getWidth() / 385.f;
-        measurementErrorMovement = constTouch / 2.f;
+    private void calculateErrorMovment(Context context) {
+        ScreenInfo screenInfo = new ScreenInfo(context);
+        if (!isTouchCameraChosen) {
+            constTouch = screenInfo.screenWidth / 385.f;
+            measurementErrorMovement = constTouch / 2.f;
+        } else if (screenInfo.diagonalSize() < 7) {
+            constTouch = screenInfo.screenHeight / screenInfo.screenWidth;
+        }
     }
 
     public Direction getCurrentDirection(float x1, float y1, float x2, float y2) {
@@ -46,8 +49,8 @@ public class DirectionListener {
     private Direction ComputeDirection(float x1, float y1, float x2, float y2) {
         float dy = Math.abs(Math.abs(y1) - Math.abs(y2));
         float dx = Math.abs(Math.abs(x1) - Math.abs(x2));
-        boolean isXnotChanges = dx < measurementErrorMovement;
-        boolean isYnotChanges = dy < measurementErrorMovement;
+        boolean isXnotChanges = dx <= measurementErrorMovement;
+        boolean isYnotChanges = dy <= measurementErrorMovement;
 
         if (isXnotChanges && y1 < y2
                 && dy > constTouch) {
@@ -56,29 +59,34 @@ public class DirectionListener {
                 && dy > constTouch) {
             return Direction.UP;
         } else if (x1 < x2 && isYnotChanges
-                && x2 - x1 > constTouch) {
+                && dx > constTouch) {
             return Direction.RIGHT;
         } else if (x1 > x2 && isYnotChanges
-                && x1 - x2 > constTouch) {
+                && dx > constTouch) {
             return Direction.LEFT;
         } else if (x1 < x2 && y1 < y2
-                && y2 - y1 > constTouch
-                && x2 - x1 > constTouch) {
+                && dy > constTouch
+                && dx > constTouch) {
             return Direction.DOWN_RIGHT;
         } else if (x1 > x2 && y1 > y2
-                && y1 - y2 > constTouch
-                && x1 - x2 > constTouch) {
+                && dy > constTouch
+                && dx > constTouch) {
             return Direction.UP_LEFT;
         } else if (x1 < x2 && y1 > y2
-                && y1 - y2 > constTouch
-                && x2 - x1 > constTouch) {
+                && dy > constTouch
+                && dx > constTouch) {
             return Direction.UP_RIGHT;
         } else if (x1 > x2 && y1 < y2
-                && y2 - y1 > constTouch
-                && x1 - x2 > constTouch) {
+                && dy > constTouch
+                && dx > constTouch) {
             return Direction.DOWN_LEFT;
-        } else
-            return currentDirection;
+        } else {
+            if (!isTouchCameraChosen) {
+                return currentDirection;
+            } else {
+                return Direction.UNDEFINED;
+            }
+        }
     }
 
 }

@@ -1,8 +1,10 @@
 package fragments;
 
 import android.app.Activity;
+import android.content.Context;
 import android.util.DisplayMetrics;
 
+import screen.ScreenInfo;
 import ui.files.ConfigsFileStorageHelper;
 import ui.files.Writer;
 
@@ -12,8 +14,8 @@ import ui.files.Writer;
 public class ScreenResolutionHelper {
 
     private Activity activity;
-    private int screenWidth;
-    private int screenHeight;
+    private float screenWidth;
+    private float screenHeight;
 
     public ScreenResolutionHelper(Activity activity) {
         this.activity = activity;
@@ -21,13 +23,10 @@ public class ScreenResolutionHelper {
     }
 
     private void getScreenWidthAndHeight() {
-        DisplayMetrics dm = activity.getResources().getDisplayMetrics();
-
-        screenWidth = dm.widthPixels;
-
-        screenHeight =dm.heightPixels;
+        ScreenInfo screenInfo = new ScreenInfo(activity);
+        screenWidth = screenInfo.screenWidth;
+        screenHeight = screenInfo.screenHeight;
     }
-
 
     public void writeScreenResolution(String currentResolutionMode) {
         switch (currentResolutionMode) {
