@@ -33,11 +33,11 @@ public class DirectionListener {
 
     private void calculateErrorMovment(Context context) {
         ScreenInfo screenInfo = new ScreenInfo(context);
+        measurementErrorMovement = screenInfo.screenWidth / screenInfo.screenHeight;
         if (!isTouchCameraChosen) {
-            constTouch = screenInfo.screenWidth / 385.f;
-            measurementErrorMovement = constTouch / 2.f;
+            constTouch = measurementErrorMovement * 2;
         } else if (screenInfo.diagonalSize() < 7) {
-            constTouch = screenInfo.screenHeight / screenInfo.screenWidth;
+            constTouch = measurementErrorMovement;
         }
     }
 
