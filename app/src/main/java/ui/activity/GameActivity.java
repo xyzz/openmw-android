@@ -67,6 +67,13 @@ public class GameActivity extends SDLActivity {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         }
     }
+    @Override
+    public void onDestroy() {
+        finish();
+        Process.killProcess(Process.myPid());
+        super.onDestroy();
+    }
+
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
