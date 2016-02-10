@@ -14,6 +14,7 @@ import com.libopenmw.openmw.R;
 import org.libsdl.app.SDLActivity;
 
 import constants.Constants;
+import listener.NativeListener;
 import screen.ScreenScaler;
 import ui.controls.Joystick;
 import ui.controls.QuickPanel;
@@ -52,6 +53,7 @@ public class GameActivity extends SDLActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Instance = this;
+        NativeListener.initJavaVm();
         KeepScreenOn();
         Joystick.isGameEnabled = true;
         CommandlineParser commandlineParser = new CommandlineParser(Constants.commandLineData);
@@ -72,9 +74,14 @@ public class GameActivity extends SDLActivity {
         return Instance;
     }
 
-    public void hideTouchCamera(boolean needHideCamera) {
+    public void hideTouchCamera(final boolean needHideCamera) {
         if (!hideControls) {
-            touchCamera.hideCamera(needHideCamera);
+            GameActivity.this.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    touchCamera.hideCamera(needHideCamera);
+                }
+            });
         }
     }
 
