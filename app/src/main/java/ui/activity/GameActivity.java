@@ -73,7 +73,9 @@ public class GameActivity extends SDLActivity {
     }
 
     public void hideTouchCamera(boolean needHideCamera) {
-        touchCamera.hideCamera(needHideCamera);
+        if (!hideControls) {
+            touchCamera.hideCamera(needHideCamera);
+        }
     }
 
     private void KeepScreenOn() {
