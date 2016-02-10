@@ -38,7 +38,7 @@ public class TouchCameraSimulation extends View {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (directionListener == null) {
-            directionListener = new DirectionListener(context,true);
+            directionListener = new DirectionListener(context, true);
         }
         this.event = event;
         simulateCameraMovement();
@@ -71,6 +71,14 @@ public class TouchCameraSimulation extends View {
                 break;
         }
 
+    }
+
+    public void hideCamera(boolean needHideCamera) {
+        if (needHideCamera) {
+            this.setVisibility(GONE);
+        } else {
+            this.setVisibility(VISIBLE);
+        }
     }
 
     private void onCameraMovement(DirectionListener.Direction currentDirection) {

@@ -9,6 +9,8 @@ import android.preference.PreferenceManager;
 import android.view.WindowManager;
 import android.widget.Button;
 
+import com.libopenmw.openmw.R;
+
 import org.libsdl.app.SDLActivity;
 
 import constants.Constants;
@@ -16,6 +18,7 @@ import screen.ScreenScaler;
 import ui.controls.Joystick;
 import ui.controls.QuickPanel;
 import ui.controls.ScreenControls;
+import ui.controls.TouchCameraSimulation;
 import ui.files.CommandlineParser;
 import ui.files.ConfigsFileStorageHelper;
 
@@ -25,8 +28,11 @@ public class GameActivity extends SDLActivity {
 
     public static native void commandLine(int argc, String[] argv);
 
+    private TouchCameraSimulation touchCamera;
+
     private boolean hideControls = false;
     private ScreenControls screenControls;
+    private static GameActivity Instance = null;
 
 
     static {
@@ -45,6 +51,7 @@ public class GameActivity extends SDLActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Instance = this;
         KeepScreenOn();
         Joystick.isGameEnabled = true;
         CommandlineParser commandlineParser = new CommandlineParser(Constants.commandLineData);
@@ -58,8 +65,16 @@ public class GameActivity extends SDLActivity {
         panel.showQuickPanel(hideControls);
         if (!hideControls)
             QuickPanel.getInstance().f1.setVisibility(Button.VISIBLE);
+        touchCamera = (TouchCameraSimulation) findViewById(R.id.superTouch);
     }
 
+    public static GameActivity getInstance() {
+        return Instance;
+    }
+
+    public void hideTouchCamera(boolean needHideCamera) {
+        touchCamera.hideCamera(needHideCamera);
+    }
 
     private void KeepScreenOn() {
         boolean needKeepScreenOn = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("screen_keeper", false);
@@ -67,6 +82,7 @@ public class GameActivity extends SDLActivity {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         }
     }
+
     @Override
     public void onDestroy() {
         finish();
