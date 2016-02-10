@@ -7,6 +7,8 @@ import ui.activity.GameActivity;
  */
 public class NativeListener {
 
+    public static native void initJavaVm();
+
     public static void hideTouchCamera(boolean needHideCamera) {
         if (GameActivity.getInstance() != null) {
             GameActivity.getInstance().hideTouchCamera(needHideCamera);
