@@ -84,15 +84,6 @@
             android:src="@drawable/wait" />
 
         <Button
-            android:id="@+id/buttontouch"
-            android:layout_width="50dip"
-            android:layout_height="50dip"
-            android:focusable="true"
-            android:gravity="center"
-            android:focusableInTouchMode="true"
-            android:scaleType="fitCenter" />
-
-        <Button
             android:id="@+id/showQuickPanel"
             android:layout_width="50dip"
             android:layout_height="50dip"

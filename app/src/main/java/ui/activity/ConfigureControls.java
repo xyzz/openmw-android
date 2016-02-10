@@ -35,7 +35,6 @@ public class ConfigureControls extends Activity {
 	private ImageButton buttonWait;
 	private Button buttonSize;
 	private Button buttonSize1;
-	private Button buttonTouch;
 
 	private Button buttonOpacity;
 	private Button buttonOpacity1;
@@ -54,7 +53,6 @@ public class ConfigureControls extends Activity {
 	private ImageButton buttonUse;
 	private ImageButton buttonCrouch;
 	Button f1;
-	Button showPanel;
 	ImageButton key0;
 	ImageButton key1;
 	ImageButton key2;
@@ -94,7 +92,6 @@ public class ConfigureControls extends Activity {
 		final MultiTouchListener touchListener = new MultiTouchListener();
 
 		f1 = (Button) findViewById(R.id.F1);
-		showPanel = (Button) findViewById(R.id.showQuickPanel);
 		key0 = (ImageButton) findViewById(R.id.key0);
 		key1 = (ImageButton) findViewById(R.id.key1);
 		key2 = (ImageButton) findViewById(R.id.key2);
@@ -108,8 +105,6 @@ public class ConfigureControls extends Activity {
 
 		f1.setOnTouchListener(touchListener);
 		f1.setId(18);
-		showPanel.setOnTouchListener(touchListener);
-		showPanel.setId(19);
 		key0.setOnTouchListener(touchListener);
 		key0.setId(20);
 		key1.setOnTouchListener(touchListener);
@@ -249,9 +244,6 @@ public class ConfigureControls extends Activity {
 		buttonWait.setOnTouchListener(touchListener);
 		buttonWait.setId(4);
 
-		buttonTouch = (Button) findViewById(R.id.buttontouch);
-		buttonTouch.setOnTouchListener(touchListener);
-		buttonTouch.setId(5);
 		buttonDiary = (ImageButton) findViewById(R.id.buttonDiary);
 		buttonDiary.setOnTouchListener(touchListener);
 		buttonDiary.setId(6);
@@ -324,13 +316,10 @@ public class ConfigureControls extends Activity {
 			AlphaView.setAlphaForView(buttonSave,0.5f);
 			AlphaView.setAlphaForView(buttonPause,0.5f);
 			AlphaView.setAlphaForView(buttonDiary,0.5f);
-			AlphaView.setAlphaForView(buttonTouch,0.5f);
 			AlphaView.setAlphaForView(buttonChangePerson,0.5f);
 			AlphaView.setAlphaForView(buttonWait,0.5f);
 			AlphaView.setAlphaForView(buttonConsole,0.5f);
 
-			showPanel.setLayoutParams(ControlsParams.coordinates(showPanel, 68,
-					0, 65, 65));
 			f1.setLayoutParams(ControlsParams.coordinates(f1, 68, 95, 55, 55));
 			key0.setLayoutParams(ControlsParams.coordinates(key0, 0, 0, 55, 55));
 			key1.setLayoutParams(ControlsParams
@@ -352,7 +341,6 @@ public class ConfigureControls extends Activity {
 			key9.setLayoutParams(ControlsParams.coordinates(key9, 0, 675, 55,
 					55));
 
-			AlphaView.setAlphaForView(showPanel, 0.5f);
 			AlphaView.setAlphaForView(f1, 0.5f);
 			AlphaView.setAlphaForView(key0, 1.0f);
 			AlphaView.setAlphaForView(key1, 1.0f);
@@ -477,8 +465,6 @@ public class ConfigureControls extends Activity {
 			setSizeToSharedPreferences(
 					Constants.APP_PREFERENCES_BUTTON_WAIT_SIZE, ScreenScaler
 							.getInstance().getScaledCoordinateX(70));
-			buttonTouch.setLayoutParams(ControlsParams.coordinates(buttonTouch,
-					346, 0, 70, 70));
 			setSizeToSharedPreferences(
 					Constants.APP_PREFERENCES_BUTTON_TOUCH_SIZE, ScreenScaler
 							.getInstance().getScaledCoordinateX(70));
@@ -556,9 +542,6 @@ public class ConfigureControls extends Activity {
 
 			AlphaView.setAlphaForView(buttonWait, Settings.getFloat(
 					Constants.APP_PREFERENCES_BUTTON_WAIT_OPACITY, -1));
-
-			AlphaView.setAlphaForView(buttonTouch, Settings.getFloat(
-					Constants.APP_PREFERENCES_BUTTON_TOUCH_OPACITY, -1));
 
 			AlphaView.setAlphaForView(buttonDiary, Settings.getFloat(
 					Constants.APP_PREFERENCES_BUTTON_DIARY_OPACITY, -1));
@@ -663,21 +646,6 @@ public class ConfigureControls extends Activity {
 									Constants.APP_PREFERENCES_BUTTON_WAIT_SIZE,
 									-1), Settings.getInt(
 									Constants.APP_PREFERENCES_BUTTON_WAIT_SIZE,
-									-1)));
-			buttonTouch
-					.setLayoutParams(ControlsParams.coordinatesConfigureControls(
-							buttonTouch,
-							Settings.getInt(
-									Constants.APP_PREFERENCES_BUTTON_TOUCH_X,
-									-1),
-							Settings.getInt(
-									Constants.APP_PREFERENCES_BUTTON_TOUCH_Y,
-									-1),
-							Settings.getInt(
-									Constants.APP_PREFERENCES_BUTTON_TOUCH_SIZE,
-									-1),
-							Settings.getInt(
-									Constants.APP_PREFERENCES_BUTTON_TOUCH_SIZE,
 									-1)));
 			buttonWeapon
 					.setLayoutParams(ControlsParams
@@ -837,10 +805,6 @@ public class ConfigureControls extends Activity {
             AlphaView.setAlphaForView(f1, Settings.getFloat(
                     (Constants.APP_PREFERENCES_KEY_F1_OPACITY), 0.5f));
 
-            AlphaView.setAlphaForView(showPanel, Settings
-                    .getFloat(
-                            (Constants.APP_PREFERENCES_BUTTON_SHOWPANEL_OPASITY),
-                            0.5f));
 
             AlphaView.setAlphaForView(key0, Settings.getFloat(
                     (Constants.APP_PREFERENCES_KEY_0_OPACITY), 1.0f));
@@ -873,22 +837,6 @@ public class ConfigureControls extends Activity {
 					Settings.getInt(Constants.APP_PREFERENCES_KEY_F1_Y, -1),
 					Settings.getInt(Constants.APP_PREFERENCES_KEY_F1_SIZE, -1),
 					Settings.getInt(Constants.APP_PREFERENCES_KEY_F1_SIZE, -1)));
-
-			showPanel
-					.setLayoutParams(ControlsParams.coordinatesConfigureControls(
-							showPanel,
-							Settings.getInt(
-									Constants.APP_PREFERENCES_BUTTON_SHOWPANEL_X,
-									-1),
-							Settings.getInt(
-									Constants.APP_PREFERENCES_BUTTON_SHOWPANEL_Y,
-									-1),
-							Settings.getInt(
-									Constants.APP_PREFERENCES_BUTTON_SHOWPANEL_SIZE,
-									-1),
-							Settings.getInt(
-									Constants.APP_PREFERENCES_BUTTON_SHOWPANEL_SIZE,
-									-1)));
 
 			key0.setLayoutParams(ControlsParams.coordinatesConfigureControls(
 					key0,
@@ -999,10 +947,6 @@ public class ConfigureControls extends Activity {
 				(int) ViewHelper.getX(buttonWait));
 		editor.putInt(Constants.APP_PREFERENCES_BUTTON_WAIT_Y,
 				(int) ViewHelper.getY(buttonWait));
-		editor.putInt(Constants.APP_PREFERENCES_BUTTON_TOUCH_X,
-				(int) ViewHelper.getX(buttonTouch));
-		editor.putInt(Constants.APP_PREFERENCES_BUTTON_TOUCH_Y,
-				(int) ViewHelper.getY(buttonTouch));
 		editor.putInt(Constants.APP_PREFERENCES_BUTTON_DIARY_X,
 				(int) ViewHelper.getX(buttonDiary));
 		editor.putInt(Constants.APP_PREFERENCES_BUTTON_DIARY_Y,
@@ -1053,10 +997,6 @@ public class ConfigureControls extends Activity {
 				(int) ViewHelper.getY(joystick));
 		editor.putInt(Constants.APP_PREFERENCES_KEY_F1_X, (int) ViewHelper.getY(f1));
 		editor.putInt(Constants.APP_PREFERENCES_KEY_F1_Y, (int) ViewHelper.getY(f1));
-		editor.putInt(Constants.APP_PREFERENCES_BUTTON_SHOWPANEL_X,
-				(int) ViewHelper.getX(showPanel));
-		editor.putInt(Constants.APP_PREFERENCES_BUTTON_SHOWPANEL_Y,
-				(int) ViewHelper.getY(showPanel));
 
         editor.putInt(Constants.APP_PREFERENCES_KEY_0_X, (int) ViewHelper.getX(key0));
         editor.putInt(Constants.APP_PREFERENCES_KEY_0_Y, (int) ViewHelper.getY(key0));
@@ -1132,8 +1072,6 @@ public class ConfigureControls extends Activity {
             AlphaView.setAlphaForView(buttonChangePerson, setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_CHANGEPERSON_OPACITY));
         else if (buttonFlag == 4)
             AlphaView.setAlphaForView(buttonWait,setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_WAIT_OPACITY));
-		else if (buttonFlag == 5)
-            AlphaView.setAlphaForView(buttonTouch,setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_TOUCH_OPACITY));
         else if (buttonFlag == 6)
             AlphaView.setAlphaForView(buttonDiary,setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_DIARY_OPACITY));
         else if (buttonFlag == 7)
@@ -1161,8 +1099,6 @@ public class ConfigureControls extends Activity {
         else if (buttonFlag == 18)
             AlphaView.setAlphaForView(f1,setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_KEY_F1_OPACITY));
         else if (buttonFlag == 19)
-            AlphaView.setAlphaForView(showPanel,setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_SHOWPANEL_OPASITY));
-		else if (buttonFlag == 20)
             AlphaView.setAlphaForView(key0,setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_KEY_0_OPACITY));
         else if (buttonFlag == 21)
             AlphaView.setAlphaForView(key1,setAlphaFromButtonToSharedPreferences(Constants.APP_PREFERENCES_KEY_1_OPACITY));
@@ -1221,14 +1157,6 @@ public class ConfigureControls extends Activity {
 							(int) ViewHelper.getY(buttonWait),
 							setSizeFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_WAIT_SIZE),
 							setSizeFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_WAIT_SIZE)));
-		else if (buttonFlag == 5)
-			buttonTouch
-					.setLayoutParams(ControlsParams.coordinatesConfigureControls(
-							buttonTouch,
-							(int) ViewHelper.getX(buttonTouch),
-							(int) ViewHelper.getY(buttonTouch),
-							setSizeFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_TOUCH_SIZE),
-							setSizeFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_TOUCH_SIZE)));
 		else if (buttonFlag == 6)
 			buttonDiary
 					.setLayoutParams(ControlsParams.coordinatesConfigureControls(
@@ -1342,14 +1270,6 @@ public class ConfigureControls extends Activity {
 					(int) ViewHelper.getY(f1),
 					setSizeFromButtonToSharedPreferences(Constants.APP_PREFERENCES_KEY_F1_SIZE),
 					setSizeFromButtonToSharedPreferences(Constants.APP_PREFERENCES_KEY_F1_SIZE)));
-		else if (buttonFlag == 19)
-			showPanel
-					.setLayoutParams(ControlsParams.coordinatesConfigureControls(
-                            showPanel,
-                            (int) ViewHelper.getX(showPanel),
-                            (int) ViewHelper.getY(showPanel),
-                            setSizeFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_SHOWPANEL_SIZE),
-                            setSizeFromButtonToSharedPreferences(Constants.APP_PREFERENCES_BUTTON_SHOWPANEL_SIZE)));
 		else if (buttonFlag == 20)
 			key0.setLayoutParams(ControlsParams.coordinatesConfigureControls(
 					key0,
@@ -1430,7 +1350,6 @@ public class ConfigureControls extends Activity {
 		ScreenScaler.textScaler(buttonOpacity1, 4);
 		ScreenScaler.textScaler(buttonSize, 4);
 		ScreenScaler.textScaler(buttonSize1, 4);
-		ScreenScaler.textScaler(showPanel,4 );
 		ScreenScaler.textScaler(f1,4 );
 		ScreenScaler.textScaler(button,2.7f );
 

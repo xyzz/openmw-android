@@ -103,10 +103,8 @@ public class GameActivity extends SDLActivity {
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         if (!hideControls) {
-            ScreenScaler.textScaler(QuickPanel.getInstance().showPanel, 4);
             ScreenScaler.textScaler(QuickPanel.getInstance().f1, 4);
             QuickPanel.getInstance().f1.setVisibility(Button.GONE);
-            ScreenScaler.textScaler(screenControls.buttonTouch, 4);
         }
     }
 

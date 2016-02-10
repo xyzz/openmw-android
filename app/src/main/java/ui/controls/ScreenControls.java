@@ -24,7 +24,6 @@ public class ScreenControls {
 	private boolean enableTouch = false;
 	private boolean crouchFlag = false;
 	private boolean hideControls;
-	public Button buttonTouch;
 	Activity a;
 	private static ScreenControls instance = null;
 
@@ -88,38 +87,6 @@ public class ScreenControls {
 			buttonWait.setOnTouchListener(new ButtonTouchListener(
 					KeyEvent.KEYCODE_T));
 
-			buttonTouch = (Button) a
-					.findViewById(R.id.buttontouch);
-			final TouchCameraSimulation touch = (TouchCameraSimulation) a
-					.findViewById(R.id.superTouch);
-
-			buttonTouch.setText("off");
-
-			buttonTouch.setOnTouchListener(new View.OnTouchListener() {
-				@Override
-				public boolean onTouch(View v, MotionEvent event) {
-					switch (event.getAction()) {
-					case MotionEvent.ACTION_DOWN:
-						ScaleSimulation.onTouchDown(v);
-						return true;
-					case MotionEvent.ACTION_UP:
-						ScaleSimulation.onTouchUp(v);
-
-						if (enableTouch == false) {
-							buttonTouch.setText("on");
-							enableTouch = true;
-							touch.setVisibility(TouchCameraSimulation.VISIBLE);
-
-						} else {
-							enableTouch = false;
-							touch.setVisibility(TouchCameraSimulation.INVISIBLE);
-							buttonTouch.setText("off");
-						}
-						return true;
-					}
-					return false;
-				}
-			});
 
 			final ImageButton buttonLoad = (ImageButton) a
 					.findViewById(R.id.buttonsuperload);
@@ -216,12 +183,9 @@ public class ScreenControls {
 						// PRESSED
 						if (hideControls == false) {
 							enableTouch = false;
-							touch.setVisibility(TouchCameraSimulation.INVISIBLE);
-							buttonTouch.setText("off");
 							buttonChangePerson.setVisibility(ImageButton.GONE);
 							joystick.setVisibility(Joystick.GONE);
 							buttonConsole.setVisibility(ImageButton.GONE);
-							buttonTouch.setVisibility(Button.GONE);
 							buttonConsole.setVisibility(ImageButton.GONE);
 							buttonCrouch.setVisibility(ImageButton.GONE);
 							buttonDiary.setVisibility(ImageButton.GONE);
@@ -270,7 +234,6 @@ public class ScreenControls {
 									.setVisibility(ImageButton.VISIBLE);
 							joystick.setVisibility(Joystick.VISIBLE);
 							buttonConsole.setVisibility(ImageButton.VISIBLE);
-							buttonTouch.setVisibility(Button.VISIBLE);
 							buttonConsole.setVisibility(ImageButton.VISIBLE);
 							buttonCrouch.setVisibility(ImageButton.VISIBLE);
 							buttonDiary.setVisibility(ImageButton.VISIBLE);
@@ -320,7 +283,6 @@ public class ScreenControls {
 				AlphaView.setAlphaForView(buttonSave,0.5f);
 				AlphaView.setAlphaForView(buttonPause,0.5f);
 				AlphaView.setAlphaForView(buttonDiary,0.5f);
-				AlphaView.setAlphaForView(buttonTouch,0.5f);
 				AlphaView.setAlphaForView(buttonChangePerson,0.5f);
 				AlphaView.setAlphaForView(buttonWait,0.5f);
 				AlphaView.setAlphaForView(buttonConsole,0.5f);
@@ -333,8 +295,6 @@ public class ScreenControls {
 						buttonChangePerson, 212, 0, 70, 70));
 				buttonWait.setLayoutParams(ControlsParams.coordinates(
 						buttonWait, 274, 0, 70, 70));
-				buttonTouch.setLayoutParams(ControlsParams.coordinates(
-						buttonTouch, 346, 0, 70, 70));
 				buttonWeapon.setLayoutParams(ControlsParams.coordinates(
 						buttonWeapon, 880, 95, 70, 70));
 				buttonDiary.setLayoutParams(ControlsParams.coordinates(
@@ -372,9 +332,6 @@ public class ScreenControls {
 
 				AlphaView.setAlphaForView(buttonWait, Settings.getFloat(
 						Constants.APP_PREFERENCES_BUTTON_WAIT_OPACITY, -1));
-
-				AlphaView.setAlphaForView(buttonTouch, Settings.getFloat(
-						Constants.APP_PREFERENCES_BUTTON_TOUCH_OPACITY, -1));
 
 				AlphaView.setAlphaForView(buttonDiary, Settings.getFloat(
 						Constants.APP_PREFERENCES_BUTTON_DIARY_OPACITY, -1));
@@ -491,22 +448,6 @@ public class ScreenControls {
 												-1),
 										Settings.getInt(
 												Constants.APP_PREFERENCES_BUTTON_WAIT_SIZE,
-												-1)));
-				buttonTouch
-						.setLayoutParams(ControlsParams
-								.coordinatesConfigureControls(
-										buttonTouch,
-										Settings.getInt(
-												Constants.APP_PREFERENCES_BUTTON_TOUCH_X,
-												-1),
-										Settings.getInt(
-												Constants.APP_PREFERENCES_BUTTON_TOUCH_Y,
-												-1),
-										Settings.getInt(
-												Constants.APP_PREFERENCES_BUTTON_TOUCH_SIZE,
-												-1),
-										Settings.getInt(
-												Constants.APP_PREFERENCES_BUTTON_TOUCH_SIZE,
 												-1)));
 				buttonWeapon
 						.setLayoutParams(ControlsParams
