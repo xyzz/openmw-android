@@ -11,7 +11,7 @@ public class NativeListener {
 
     public static void hideTouchCamera(boolean needHideCamera) {
         if (GameActivity.getInstance() != null) {
-            GameActivity.getInstance().hideTouchCamera(needHideCamera);
+            GameActivity.getInstance().hideControlsRootLayout(needHideCamera);
         }
     }
 }

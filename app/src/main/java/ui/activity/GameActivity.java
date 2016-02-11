@@ -1,13 +1,13 @@
 
 package ui.activity;
 
-import android.hardware.Sensor;
-import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Process;
 import android.preference.PreferenceManager;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.FrameLayout;
 
 import com.libopenmw.openmw.R;
 
@@ -19,7 +19,6 @@ import screen.ScreenScaler;
 import ui.controls.Joystick;
 import ui.controls.QuickPanel;
 import ui.controls.ScreenControls;
-import ui.controls.TouchCameraSimulation;
 import ui.files.CommandlineParser;
 import ui.files.ConfigsFileStorageHelper;
 
@@ -29,8 +28,7 @@ public class GameActivity extends SDLActivity {
 
     public static native void commandLine(int argc, String[] argv);
 
-    private TouchCameraSimulation touchCamera;
-
+    private FrameLayout controlsRootLayout;
     private boolean hideControls = false;
     private ScreenControls screenControls;
     private static GameActivity Instance = null;
@@ -61,25 +59,30 @@ public class GameActivity extends SDLActivity {
         commandLine(commandlineParser.getArgc(), commandlineParser.getArgv());
         hideControls = PreferenceManager.getDefaultSharedPreferences(this).getBoolean(Constants.HIDE_CONTROLS, false);
         getPathToJni(ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH);
-        screenControls = new ScreenControls(this);
-        screenControls.showControls(hideControls);
-        QuickPanel panel = new QuickPanel(this);
-        panel.showQuickPanel(hideControls);
-        if (!hideControls)
+        if (!hideControls) {
+            screenControls = new ScreenControls(this);
+            screenControls.showControls(hideControls);
+            QuickPanel panel = new QuickPanel(this);
+            panel.showQuickPanel(hideControls);
             QuickPanel.getInstance().f1.setVisibility(Button.VISIBLE);
-        touchCamera = (TouchCameraSimulation) findViewById(R.id.superTouch);
+            controlsRootLayout = (FrameLayout) findViewById(R.id.rootLayout);
+        }
     }
 
     public static GameActivity getInstance() {
         return Instance;
     }
 
-    public void hideTouchCamera(final boolean needHideCamera) {
+    public void hideControlsRootLayout(final boolean needHideControls) {
         if (!hideControls) {
             GameActivity.this.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    touchCamera.hideCamera(needHideCamera);
+                    if (needHideControls) {
+                        controlsRootLayout.setVisibility(View.GONE);
+                    } else {
+                        controlsRootLayout.setVisibility(View.VISIBLE);
+                    }
                 }
             });
         }
@@ -103,6 +106,7 @@ public class GameActivity extends SDLActivity {
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         if (!hideControls) {
+            ScreenScaler.textScaler(QuickPanel.getInstance().showPanel, 4);
             ScreenScaler.textScaler(QuickPanel.getInstance().f1, 4);
             QuickPanel.getInstance().f1.setVisibility(Button.GONE);
         }
