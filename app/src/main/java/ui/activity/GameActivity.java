@@ -4,6 +4,7 @@ package ui.activity;
 import android.os.Bundle;
 import android.os.Process;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -32,6 +33,8 @@ public class GameActivity extends SDLActivity {
     private boolean hideControls = false;
     private ScreenControls screenControls;
     private static GameActivity Instance = null;
+    private boolean needHideControls = false;
+    private boolean cursorVisible = false;
 
 
     static {
@@ -45,13 +48,13 @@ public class GameActivity extends SDLActivity {
         System.loadLibrary("openal");
         System.loadLibrary("SDL2");
         System.loadLibrary("openmw");
+        System.loadLibrary("cursorvisibilty");
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Instance = this;
-        NativeListener.initJavaVm();
         KeepScreenOn();
         Joystick.isGameEnabled = true;
         CommandlineParser commandlineParser = new CommandlineParser(Constants.commandLineData);
@@ -66,6 +69,7 @@ public class GameActivity extends SDLActivity {
             panel.showQuickPanel(hideControls);
             QuickPanel.getInstance().f1.setVisibility(Button.VISIBLE);
             controlsRootLayout = (FrameLayout) findViewById(R.id.rootLayout);
+            backgroundTask();
         }
     }
 
@@ -86,6 +90,31 @@ public class GameActivity extends SDLActivity {
                 }
             });
         }
+    }
+
+    private void backgroundTask() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(2000);
+                } catch (Exception e) {
+                }
+                while (true) {
+                    boolean currentCursorState = NativeListener.getCursorVisible();
+                    if (cursorVisible != currentCursorState) {
+                        cursorVisible = currentCursorState;
+                        hideControlsRootLayout(cursorVisible);
+                    }
+                    try {
+                        Thread.sleep(2000);
+                    } catch (Exception e) {
+                    }
+                }
+
+            }
+        }).start();
+
     }
 
     private void KeepScreenOn() {
