@@ -107,7 +107,7 @@ public class GameActivity extends SDLActivity {
                         hideControlsRootLayout(cursorVisible);
                     }
                     try {
-                        Thread.sleep(2000);
+                        Thread.sleep(1000);
                     } catch (Exception e) {
                     }
                 }
