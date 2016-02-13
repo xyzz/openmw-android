@@ -15,6 +15,8 @@ import com.libopenmw.openmw.R;
 import org.libsdl.app.SDLActivity;
 
 import constants.Constants;
+import cursor.ControlsHider;
+import cursor.CursorVisibility;
 import listener.NativeListener;
 import screen.ScreenScaler;
 import ui.controls.Joystick;
@@ -23,7 +25,7 @@ import ui.controls.ScreenControls;
 import ui.files.CommandlineParser;
 import ui.files.ConfigsFileStorageHelper;
 
-public class GameActivity extends SDLActivity {
+public class GameActivity extends SDLActivity implements ControlsHider {
 
     public static native void getPathToJni(String path);
 
@@ -32,10 +34,6 @@ public class GameActivity extends SDLActivity {
     private FrameLayout controlsRootLayout;
     private boolean hideControls = false;
     private ScreenControls screenControls;
-    private static GameActivity Instance = null;
-    private boolean needHideControls = false;
-    private boolean cursorVisible = false;
-
 
     static {
         System.loadLibrary("avcodec");
@@ -54,7 +52,6 @@ public class GameActivity extends SDLActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Instance = this;
         KeepScreenOn();
         Joystick.isGameEnabled = true;
         CommandlineParser commandlineParser = new CommandlineParser(Constants.commandLineData);
@@ -69,13 +66,11 @@ public class GameActivity extends SDLActivity {
             panel.showQuickPanel(hideControls);
             QuickPanel.getInstance().f1.setVisibility(Button.VISIBLE);
             controlsRootLayout = (FrameLayout) findViewById(R.id.rootLayout);
-            backgroundTask();
+            CursorVisibility cursorVisibility = new CursorVisibility(this);
+            cursorVisibility.runBackgroundTask();
         }
     }
 
-    public static GameActivity getInstance() {
-        return Instance;
-    }
 
     public void hideControlsRootLayout(final boolean needHideControls) {
         if (!hideControls) {
@@ -90,31 +85,6 @@ public class GameActivity extends SDLActivity {
                 }
             });
         }
-    }
-
-    private void backgroundTask() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(2000);
-                } catch (Exception e) {
-                }
-                while (true) {
-                    boolean currentCursorState = NativeListener.getCursorVisible();
-                    if (cursorVisible != currentCursorState) {
-                        cursorVisible = currentCursorState;
-                        hideControlsRootLayout(cursorVisible);
-                    }
-                    try {
-                        Thread.sleep(1000);
-                    } catch (Exception e) {
-                    }
-                }
-
-            }
-        }).start();
-
     }
 
     private void KeepScreenOn() {
