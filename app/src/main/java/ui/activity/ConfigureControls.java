@@ -328,6 +328,8 @@ public class ConfigureControls extends Activity {
             AlphaView.setAlphaForView(buttonWait, 0.5f);
             AlphaView.setAlphaForView(buttonConsole, 0.5f);
 
+            showPanel.setLayoutParams(ControlsParams.coordinates(showPanel, 68,
+                    				0, 65, 65));
             f1.setLayoutParams(ControlsParams.coordinates(f1, 68, 95, 55, 55));
             key0.setLayoutParams(ControlsParams.coordinates(key0, 0, 0, 55, 55));
             key1.setLayoutParams(ControlsParams
