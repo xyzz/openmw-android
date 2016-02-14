@@ -1,6 +1,5 @@
 Before you start building OpenMW on Android you have to do few steps of preparation:
-Download crystax ndk from https://www.crystax.net
-Openmw building without errors only on crystax ndk 10.1.0 version.
+Download crystax ndk 10.3.1 from https://www.crystax.net
 Download and install [http://developer.android.com/sdk/index.html Google Android SDK]
 Download [https://github.com/taka-no-me/android-cmake Cmake for Android] (it will be used for OpenMW and its dependencies compilation)
 Java
@@ -25,11 +24,16 @@ https://github.com/MyGUI/mygui
 zzip
 zlib
 
+Current dependendencies built on crystax ndk 10.3.1 and gcc 5.3
+
 Prebuilt openmw dependencies for armv7 arch
 https://drive.google.com/file/d/0B5mOME9qjLFuOEt2MEpOMHc5cjg/view?usp=sharing
 
 Prebuilt openmw dependencies for armv8 arch
 https://drive.google.com/file/d/0B5mOME9qjLFuNFo3emxyWHhpUEU/view?usp=sharing
+custom android cmake toolchain for sucsessfull building with gcc 5.3 and armv7-hard.
+Without this toolchain openmw will not build on gcc 5.3
+https://drive.google.com/file/d/0B5mOME9qjLFuQWZjWjRYc0t3T3c/view?usp=sharing
 
 Compilation of OpenMW dependencies
 
