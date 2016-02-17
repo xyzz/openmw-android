@@ -53,12 +53,20 @@ public class GameActivity extends SDLActivity implements ControlsHider {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         KeepScreenOn();
-        Joystick.isGameEnabled = true;
+        parseCommandLineData();
+        getPathToJni(ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH);
+        showControls();
+    }
+
+    private void parseCommandLineData() {
         CommandlineParser commandlineParser = new CommandlineParser(Constants.commandLineData);
         commandlineParser.parseCommandLine();
         commandLine(commandlineParser.getArgc(), commandlineParser.getArgv());
+    }
+
+    private void showControls() {
+        Joystick.isGameEnabled = true;
         hideControls = PreferenceManager.getDefaultSharedPreferences(this).getBoolean(Constants.HIDE_CONTROLS, false);
-        getPathToJni(ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH);
         if (!hideControls) {
             screenControls = new ScreenControls(this);
             screenControls.showControls(hideControls);
@@ -70,7 +78,6 @@ public class GameActivity extends SDLActivity implements ControlsHider {
             cursorVisibility.runBackgroundTask();
         }
     }
-
 
     public void hideControlsRootLayout(final boolean needHideControls) {
         if (!hideControls) {
