@@ -27,10 +27,11 @@ zlib
 Current dependendencies built on crystax ndk 10.3.1 and gcc 5.3
 
 Prebuilt openmw dependencies for armv7 arch
-https://drive.google.com/file/d/0B5mOME9qjLFuOEt2MEpOMHc5cjg/view?usp=sharing
+https://drive.google.com/file/d/0B5mOME9qjLFud2l1RXBhNWZhS3c/view?usp=sharing
 
 Prebuilt openmw dependencies for armv8 arch
-https://drive.google.com/file/d/0B5mOME9qjLFuNFo3emxyWHhpUEU/view?usp=sharing
+https://drive.google.com/file/d/0B5mOME9qjLFuMENxQXdTTkV5RzQ/view?usp=sharing
+
 custom android cmake toolchain for sucsessfull building with gcc 5.3 and armv7-hard.
 Without this toolchain openmw will not build on gcc 5.3
 https://drive.google.com/file/d/0B5mOME9qjLFuQWZjWjRYc0t3T3c/view?usp=sharing

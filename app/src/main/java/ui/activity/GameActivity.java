@@ -47,7 +47,7 @@ public class GameActivity extends SDLActivity implements ControlsHider {
         System.loadLibrary("SDL2");
         System.loadLibrary("GL");
         System.loadLibrary("openmw");
-//        System.loadLibrary("cursorvisibilty");
+        System.loadLibrary("cursorvisibilty");
     }
 
     @Override
@@ -75,9 +75,8 @@ public class GameActivity extends SDLActivity implements ControlsHider {
             panel.showQuickPanel(hideControls);
             QuickPanel.getInstance().f1.setVisibility(Button.VISIBLE);
             controlsRootLayout = (FrameLayout) findViewById(R.id.rootLayout);
-            hideControlsRootLayout(true);
-  //          CursorVisibility cursorVisibility = new CursorVisibility(this);
-    //        cursorVisibility.runBackgroundTask();
+            CursorVisibility cursorVisibility = new CursorVisibility(this);
+            cursorVisibility.runBackgroundTask();
         }
     }
 
