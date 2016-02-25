@@ -14,6 +14,10 @@ android {
         }
     }
 
+    lintOptions {
+        checkReleaseBuilds false
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -21,13 +25,6 @@ android {
         }
     }
 }
-repositories {
-    maven {
-        url "https://jitpack.io"
-
-    }
-}
-
 repositories {
     maven {
         url "https://jitpack.io"
