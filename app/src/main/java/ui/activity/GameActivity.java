@@ -34,6 +34,7 @@ public class GameActivity extends SDLActivity implements ControlsHider {
     private FrameLayout controlsRootLayout;
     private boolean hideControls = false;
     private ScreenControls screenControls;
+    protected CursorVisibility cursorVisibility;
 
     static {
         System.loadLibrary("avcodec");
@@ -75,7 +76,7 @@ public class GameActivity extends SDLActivity implements ControlsHider {
             panel.showQuickPanel(hideControls);
             QuickPanel.getInstance().f1.setVisibility(Button.VISIBLE);
             controlsRootLayout = (FrameLayout) findViewById(R.id.rootLayout);
-            CursorVisibility cursorVisibility = new CursorVisibility(this);
+            cursorVisibility = new CursorVisibility(this);
             cursorVisibility.runBackgroundTask();
         }
     }
@@ -104,6 +105,9 @@ public class GameActivity extends SDLActivity implements ControlsHider {
 
     @Override
     public void onDestroy() {
+        if (!hideControls){
+            cursorVisibility.stopBackgroundTask();
+        }
         finish();
         Process.killProcess(Process.myPid());
         super.onDestroy();

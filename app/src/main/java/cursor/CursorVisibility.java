@@ -11,16 +11,17 @@ public class CursorVisibility {
 
     private ControlsHider controlsHider;
     private static final int THREAD_SLEEP_TIME = 1000;
+    private Thread thread;
 
     public CursorVisibility(ControlsHider controlsHider) {
         this.controlsHider = controlsHider;
     }
 
     public void runBackgroundTask() {
-        new Thread(new Runnable() {
+     thread= new Thread(new Runnable() {
             @Override
             public void run() {
-                while (true) {
+                while (!Thread.currentThread().isInterrupted()) {
                     sleepThread();
                     boolean currentCursorState = NativeListener.getCursorVisible();
                     if (cursorVisible != currentCursorState) {
@@ -30,10 +31,15 @@ public class CursorVisibility {
                 }
 
             }
-        }).start();
-
+        });
+        thread.start();
     }
 
+    public void stopBackgroundTask(){
+        if (!thread.isInterrupted()){
+            thread.interrupt();
+        }
+    }
     private void sleepThread() {
         try {
             Thread.sleep(THREAD_SLEEP_TIME);
