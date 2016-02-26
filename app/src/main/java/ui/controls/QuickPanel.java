@@ -120,17 +120,17 @@ public class QuickPanel {
             }
         });
 
-        f1.setOnTouchListener(new ButtonTouchListener(131));
-        key0.setOnTouchListener(new ButtonTouchListener(KeyEvent.KEYCODE_0));
-        key1.setOnTouchListener(new ButtonTouchListener(KeyEvent.KEYCODE_1));
-        key2.setOnTouchListener(new ButtonTouchListener(KeyEvent.KEYCODE_2));
-        key3.setOnTouchListener(new ButtonTouchListener(KeyEvent.KEYCODE_3));
-        key4.setOnTouchListener(new ButtonTouchListener(KeyEvent.KEYCODE_4));
-        key5.setOnTouchListener(new ButtonTouchListener(KeyEvent.KEYCODE_5));
-        key6.setOnTouchListener(new ButtonTouchListener(KeyEvent.KEYCODE_6));
-        key7.setOnTouchListener(new ButtonTouchListener(KeyEvent.KEYCODE_7));
-        key8.setOnTouchListener(new ButtonTouchListener(KeyEvent.KEYCODE_8));
-        key9.setOnTouchListener(new ButtonTouchListener(KeyEvent.KEYCODE_9));
+        f1.setOnTouchListener(new ButtonTouchListener(131,false));
+        key0.setOnTouchListener(new ButtonTouchListener(KeyEvent.KEYCODE_0,false));
+        key1.setOnTouchListener(new ButtonTouchListener(KeyEvent.KEYCODE_1,false));
+        key2.setOnTouchListener(new ButtonTouchListener(KeyEvent.KEYCODE_2,false));
+        key3.setOnTouchListener(new ButtonTouchListener(KeyEvent.KEYCODE_3,false));
+        key4.setOnTouchListener(new ButtonTouchListener(KeyEvent.KEYCODE_4,false));
+        key5.setOnTouchListener(new ButtonTouchListener(KeyEvent.KEYCODE_5,false));
+        key6.setOnTouchListener(new ButtonTouchListener(KeyEvent.KEYCODE_6,false));
+        key7.setOnTouchListener(new ButtonTouchListener(KeyEvent.KEYCODE_7,false));
+        key8.setOnTouchListener(new ButtonTouchListener(KeyEvent.KEYCODE_8,false));
+        key9.setOnTouchListener(new ButtonTouchListener(KeyEvent.KEYCODE_9,false));
 
     }
 
