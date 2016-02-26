@@ -52,7 +52,7 @@ public class TouchCameraSimulation extends View {
             case MotionEvent.ACTION_DOWN: {
                 x1 = event.getX();
                 y1 = event.getY();
-                SdlNativeKeys.touchDown(0f, 0f, MotionEvent.ACTION_DOWN, event);
+                SdlNativeKeys.touchDown(0f, 0f, MotionEvent.ACTION_MOVE, event);
                 break;
             }
             case MotionEvent.ACTION_MOVE: {

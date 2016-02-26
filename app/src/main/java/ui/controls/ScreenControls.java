@@ -24,6 +24,8 @@ public class ScreenControls {
 	private boolean enableTouch = false;
 	private boolean crouchFlag = false;
 	private boolean hideControls;
+	private static final int LEFT_MOUSE_BUTTON_CODE=1;
+	private static final int RIGHT_MOUSE_BUTTON_CODE=2;
 	Activity a;
 	private static ScreenControls instance = null;
 
@@ -67,67 +69,67 @@ public class ScreenControls {
 					.findViewById(R.id.buttonrun1);
 
 			buttonRun.setOnTouchListener(new ButtonTouchListener(
-					115));
+					115,false));
 
 			final ImageButton buttonConsole = (ImageButton) a
 					.findViewById(R.id.buttonconsole);
 
 			buttonConsole.setOnTouchListener(new ButtonTouchListener(
-					132));
+					132,false));
 
 			final ImageButton buttonChangePerson = (ImageButton) a
 					.findViewById(R.id.buttonchangeperson);
 
 			buttonChangePerson.setOnTouchListener(new ButtonTouchListener(
-					KeyEvent.KEYCODE_TAB));
+					KeyEvent.KEYCODE_TAB,false));
 
 			final ImageButton buttonWait = (ImageButton) a
 					.findViewById(R.id.buttonwait);
 
 			buttonWait.setOnTouchListener(new ButtonTouchListener(
-					KeyEvent.KEYCODE_T));
+					KeyEvent.KEYCODE_T,false));
 
 
 			final ImageButton buttonLoad = (ImageButton) a
 					.findViewById(R.id.buttonsuperload);
 
 			buttonLoad.setOnTouchListener(new ButtonTouchListener(
-					139));
+					139,false));
 
 			final ImageButton buttonSave = (ImageButton) a
 					.findViewById(R.id.buttonsupersave);
 
 			buttonSave.setOnTouchListener(new ButtonTouchListener(
-					135));
+					135,false));
 
 			final ImageButton buttonWeapon = (ImageButton) a
 					.findViewById(R.id.buttonweapon);
 
 			buttonWeapon.setOnTouchListener(new ButtonTouchListener(
-					KeyEvent.KEYCODE_F));
+					KeyEvent.KEYCODE_F,false));
 
 			final ImageButton buttonInventory = (ImageButton) a
 					.findViewById(R.id.buttoninventory);
 
 			buttonInventory.setOnTouchListener(new ButtonTouchListener(
-					KeyEvent.KEYCODE_L));
+					RIGHT_MOUSE_BUTTON_CODE,true));
 
 			final ImageButton buttonJump = (ImageButton) a
 					.findViewById(R.id.buttonsuperjump);
 
 			buttonJump.setOnTouchListener(new ButtonTouchListener(
-					KeyEvent.KEYCODE_E));
+					KeyEvent.KEYCODE_E,false));
 
 			final ImageButton buttonFire = (ImageButton) a
 					.findViewById(R.id.buttonFire);
 
 			buttonFire.setOnTouchListener(new ButtonTouchListener(
-					KeyEvent.KEYCODE_Z));
+					LEFT_MOUSE_BUTTON_CODE,true));
 			final ImageButton buttonMagic = (ImageButton) a
 					.findViewById(R.id.buttonMagic);
 
 			buttonMagic.setOnTouchListener(new ButtonTouchListener(
-					KeyEvent.KEYCODE_R));
+					KeyEvent.KEYCODE_R,false));
 			crouchFlag = false;
 
 			final ImageButton buttonCrouch = (ImageButton) a
@@ -162,18 +164,18 @@ public class ScreenControls {
 					.findViewById(R.id.buttonDiary);
 
 			buttonDiary.setOnTouchListener(new ButtonTouchListener(
-					KeyEvent.KEYCODE_J));
+					KeyEvent.KEYCODE_J,false));
 
 			final ImageButton buttonUse = (ImageButton) a
 					.findViewById(R.id.buttonUse);
 
 			buttonUse.setOnTouchListener(new ButtonTouchListener(
-					KeyEvent.KEYCODE_SPACE));
+					KeyEvent.KEYCODE_SPACE,false));
 			hideControls = false;
 			final ImageButton buttonPause = (ImageButton) a
 					.findViewById(R.id.buttonpause);
 
-			buttonPause.setOnTouchListener(new ButtonTouchListener(KeyEvent.KEYCODE_ESCAPE));
+			buttonPause.setOnTouchListener(new ButtonTouchListener(KeyEvent.KEYCODE_ESCAPE,false));
 
 			if (controlsFlag == -1 || controlsFlag == 1) {
 				joystick.setLayoutParams(ControlsParams.coordinates(joystick,
