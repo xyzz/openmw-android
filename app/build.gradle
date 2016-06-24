@@ -2,12 +2,12 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "22.0.1"
+    buildToolsVersion "23.0.1"
 
     defaultConfig {
         applicationId "com.libopenmw.openmw"
-        minSdkVersion 21
-        targetSdkVersion 23
+        minSdkVersion 14
+        targetSdkVersion 22
         compileOptions {
             sourceCompatibility JavaVersion.VERSION_1_7
             targetCompatibility JavaVersion.VERSION_1_7
@@ -23,6 +23,15 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
+        debug {
+            jniDebuggable true
+            debuggable true
+            renderscriptDebuggable true
+        }
+    }
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_7
+        sourceCompatibility JavaVersion.VERSION_1_7
     }
 }
 repositories {
@@ -39,9 +48,9 @@ dependencies {
     compile files('libs/fileexplorer.jar')
     compile 'com.jenzz:materialpreference:1.3'
     compile 'com.github.AndroidDeveloperLB:MaterialPreferenceLibrary:1'
-    compile 'com.android.support:design:23.1.1'
-    compile 'com.android.support:appcompat-v7:23.1.1'
-    compile 'com.android.support:recyclerview-v7:23.1.1'
-    compile 'com.android.support:support-annotations:23.1.1'
+    compile 'com.android.support:appcompat-v7:23.4.0'
+    compile 'com.android.support:recyclerview-v7:23.4.0'
+    compile 'com.android.support:support-annotations:23.4.0'
     compile 'me.zhanghai.android.materialprogressbar:library:1.1.4'
+    compile 'com.android.support:design:23.4.0'
 }
