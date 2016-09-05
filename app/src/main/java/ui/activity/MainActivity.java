@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.content.PermissionChecker;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -28,6 +29,7 @@ import constants.Constants;
 import fragments.FragmentControls;
 import fragments.FragmentPlugins;
 import fragments.FragmentSettings;
+import permission.PermissionHelper;
 import screen.ScreenScaler;
 import ui.files.ConfigsFileStorageHelper;
 import ui.files.PreferencesHelper;
@@ -50,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        PermissionHelper.getWriteExternalStoragePermission(MainActivity.this);
         isSettingsEnabled = true;
         setContentView(R.layout.main);
         PreferencesHelper.getPrefValues(this);

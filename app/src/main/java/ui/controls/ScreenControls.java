@@ -2,6 +2,7 @@ package ui.controls;
 
 import org.libsdl.app.SDLActivity;
 
+import cursor.CursorVisibility;
 import screen.ScreenScaler;
 
 import com.libopenmw.openmw.R;
@@ -175,7 +176,14 @@ public class ScreenControls {
 			final ImageButton buttonPause = (ImageButton) a
 					.findViewById(R.id.buttonpause);
 
-			buttonPause.setOnTouchListener(new ButtonTouchListener(KeyEvent.KEYCODE_ESCAPE,false));
+			buttonPause.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					if (CursorVisibility.Instance!=null){
+						CursorVisibility.Instance.stopBackgroundTask();
+					}
+				}
+			}); // setOnTouchListener(new ButtonTouchListener(KeyEvent.KEYCODE_ESCAPE,false));
 
 			if (controlsFlag == -1 || controlsFlag == 1) {
 				joystick.setLayoutParams(ControlsParams.coordinates(joystick,

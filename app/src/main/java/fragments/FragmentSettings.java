@@ -33,9 +33,6 @@ public class FragmentSettings extends PreferenceFragment {
             }
         });
 
-        CheckBoxPreference gyroscopeCheckBoxPreference = (CheckBoxPreference) findPreference(Constants.USE_GYROSCOPE);
-        if (!isSensorAvailable())
-            gyroscopeCheckBoxPreference.setEnabled(false);
 
         ListPreference encodingList = (ListPreference) findPreference(Constants.LANGUAGE);
 

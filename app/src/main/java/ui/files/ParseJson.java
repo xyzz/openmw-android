@@ -88,9 +88,11 @@ public class ParseJson {
 
 			String input = "";
 			File inputfile = new File(jsonFilePath);
+			if (!inputfile.exists())
 			inputfile.createNewFile();
 			FileInputStream fin = new FileInputStream(inputfile);
 			input = convertStreamToString(fin);
+			fin.close();
 
 			if (input != "") {
 				JSONObject jsonObject = new JSONObject(input);

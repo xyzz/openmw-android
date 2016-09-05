@@ -30,7 +30,6 @@ public class ConfigsFileStorageHelper {
 
     public void checkAppFirstTimeRun() {
         if (Settings.getBoolean(FIRST_TIME_RUN_KEY, true)) {
-            copyFiles();
             Settings.edit().putBoolean(FIRST_TIME_RUN_KEY, false).commit();
         }
     }
@@ -57,9 +56,9 @@ public class ConfigsFileStorageHelper {
                 try {
 
                     Writer.write(
-                            CONFIGS_FILES_STORAGE_PATH + "/resources",
+                            CONFIGS_FILES_STORAGE_PATH + "/libopenmw/resources",
                             CONFIGS_FILES_STORAGE_PATH + "/config/openmw/openmw.cfg",
-                            "resources");
+                            "libopenmw/resources");
                     Writer.write(Constants.APPLICATION_DATA_STORAGE_PATH, CONFIGS_FILES_STORAGE_PATH
                             + "/config/openmw/openmw.cfg", "data");
 
