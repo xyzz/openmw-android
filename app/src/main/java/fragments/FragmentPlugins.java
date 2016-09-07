@@ -31,38 +31,24 @@ import constants.Constants;
 import ui.files.ConfigsFileStorageHelper;
 import json.JsonReader;
 import json.JsonReader.PluginInfo;
-import ui.files.PluginReader;
+import plugins.PluginReader;
 import ui.files.PreferencesHelper;
 
 public class FragmentPlugins extends Fragment {
 
-    private List<PluginInfo> pluginsList = new ArrayList<PluginInfo>();
     private Adapter adapter;
     private int deletePos = -1;
     private static final int REQUEST_PATH = 12;
-    public static FragmentPlugins instance = null;
-
+    private static FragmentPlugins Instance = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-
-        instance = this;
+        Instance = this;
         View rootView = inflater.inflate(R.layout.listview, container, false);
-
         PreferencesHelper.getPrefValues(this.getActivity());
-        loadPlugins(ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH + "/files.json");
         setupViews(rootView);
-
-        try {
-            savePlugins();
-
-        } catch (Exception e) {
-
-        }
-
         return rootView;
     }
 
@@ -104,17 +90,13 @@ public class FragmentPlugins extends Fragment {
         try {
             FileChooser.isDirMode = true;
             getFileOrFolder();
-
         } catch (Exception e) {
-
         }
-
     }
 
     private DragSortListView.RemoveListener onRemove = new DragSortListView.RemoveListener() {
         @Override
         public void remove(int which) {
-
             deletePos = which;
             showDialod();
         }
@@ -179,27 +161,6 @@ public class FragmentPlugins extends Fragment {
 
     }
 
-
-    private void loadPlugins(String path) {
-        try {
-            pluginsList = JsonReader.loadFile(path);
-            if (pluginsList == null)
-                pluginsList = new ArrayList<PluginInfo>();
-
-            File yourDir = new File(Constants.APPLICATION_DATA_STORAGE_PATH);
-
-            checkFilesDeleted(yourDir);
-
-            addNewFiles(yourDir);
-
-
-        } catch (Exception e) {
-            Toast.makeText(
-                    FragmentPlugins.this.getActivity().getApplicationContext(),
-                    "data files not found", Toast.LENGTH_LONG).show();
-        }
-
-    }
 
     public void getFileOrFolder() {
         Intent intent = new Intent(FragmentPlugins.this.getActivity(), FileChooser.class);
@@ -276,145 +237,15 @@ public class FragmentPlugins extends Fragment {
 
     }
 
-    private void savePlugins() throws IOException {
-
-        try {
-
-            FileWriter writer = new FileWriter(ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH
-                    + "/openmw/openmw.cfg");
-
-            int i = 0;
-            while (i < pluginsList.size()) {
-
-                if (pluginsList.get(i).enabled == 1) {
-                    PluginInfo pluginInfo = pluginsList.get(i);
-                    writer.write("content= " + pluginInfo.name + "\n");
-                    String bsaFileNameName = getBsaFileName(pluginInfo);
-
-                    if (!bsaFileNameName.isEmpty()) {
-                        writer.write("fallback-archive= "
-                                + bsaFileNameName + "\n");
-                    }
-                    writer.flush();
-                }
-                i++;
-
-            }
-            writer.close();
 
 
-        } catch (Exception e) {
-
-            e.printStackTrace();
-        }
-    }
-
-    private String getBsaFileName(PluginInfo pluginInfo) {
-        File dir = new File(Constants.APPLICATION_DATA_STORAGE_PATH);
-        for (File file : dir.listFiles()) {
-            if (file.isFile()) {
-                String bsaExtension = "";
-                if (file.getName().endsWith(".bsa")) {
-                    bsaExtension = ".bsa";
-                } else if (file.getName().endsWith(".BSA")) {
-                    bsaExtension = ".BSA";
-                }
-                if (!bsaExtension.isEmpty() && pluginInfo.name.contains(file.getName().replace(bsaExtension, ""))) {
-                    return file.getName();
-                }
-            }
-        }
-        return "";
-    }
-
-
-    private void checkFilesDeleted(File yourDir) throws JSONException,
-            IOException {
-        int deletedFilesCount = 0;
-        int i = 0;
-        List<PluginInfo> tmp = JsonReader.loadFile(ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH + "/files.json");
-        for (i = 0; i < tmp.size(); i++) {
-            boolean fileDeleted = true;
-
-            for (File f : yourDir.listFiles()) {
-
-                if (f.isFile() && f.getName().endsWith(tmp.get(i).name)) {
-
-                    fileDeleted = false;
-                    break;
-
-                } else
-                    fileDeleted = true;
-
-            }
-
-            if (fileDeleted) {
-                pluginsList.remove(i - deletedFilesCount);
-                deletedFilesCount++;
-            }
-
-        }
-        if (pluginsList.size() < i)
-            savePluginsData(ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH + "/files.json");
-
-    }
-
-
-    private void addNewFiles(File yourDir) throws JSONException, IOException {
-        int lastEsmPos = 0;
-
-        for (int i = 0; i < pluginsList.size(); i++) {
-            if (pluginsList.get(i).name.endsWith(".esm")
-                    || pluginsList.get(i).name.endsWith(".ESM"))
-                lastEsmPos = i;
-            else
-                break;
-        }
-
-        for (File f : yourDir.listFiles()) {
-
-            boolean newPlugin = true;
-            for (PluginInfo data : pluginsList) {
-                if (f.isFile() && f.getName().endsWith(data.name)) {
-
-                    newPlugin = false;
-                    break;
-
-                } else
-                    newPlugin = true;
-
-            }
-            if (newPlugin) {
-                PluginInfo pluginData = new PluginInfo();
-
-                pluginData.name = f.getName();
-                pluginData.nameBsa = f.getName().split("\\.")[0] + ".bsa";
-                if (f.getName().endsWith(".esm")
-                        || f.getName().endsWith(".ESM")) {
-                    pluginsList.add(lastEsmPos, pluginData);
-                    lastEsmPos++;
-                } else if (f.getName().endsWith(".esp")
-                        || f.getName().endsWith(".ESP")
-                        || f.getName().endsWith(".omwgame")
-                        || f.getName().endsWith(".omwaddon")) {
-                    pluginsList.add(pluginData);
-                }
-
-            }
-
-        }
-
-        savePluginsData(ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH + "/files.json");
-    }
 
     private DragSortListView.DropListener onDrop = new DragSortListView.DropListener() {
         @Override
         public void drop(int from, int to) {
             PluginInfo item = pluginsList.get(from);
 
-
             pluginsList.remove(from);
-
             pluginsList.add(to, item);
             reloadAdapter();
             savePluginsData(ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH + "/files.json");

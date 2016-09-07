@@ -14,6 +14,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import plugins.PluginInfo;
+import utils.Utils;
+
 public class JsonReader {
     private static final String NAME_PLUGIN_KEY = "name";
     private static final String NAME_BSA_KEY = "nameBsa";
@@ -29,10 +32,7 @@ public class JsonReader {
             c.put(PLUGIN_ENABLED_KEY, loadedFile.get(i).enabled);
             jsonArray.put(c);
         }
-        FileWriter jsonFileWriter = new FileWriter(path);
-        jsonFileWriter.write(jsonArray.toString());
-        jsonFileWriter.flush();
-        jsonFileWriter.close();
+        Utils.saveDataToFile(jsonArray.toString(),path);
     }
 
     public static String convertStreamToString(InputStream is)
@@ -85,9 +85,4 @@ public class JsonReader {
         return ret;
     }
 
-    public static class PluginInfo {
-        public String name = "";
-        public String nameBsa = "";
-        public long enabled = 0;
-    }
 }
