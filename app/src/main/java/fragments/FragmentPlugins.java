@@ -29,14 +29,14 @@ import java.util.List;
 
 import constants.Constants;
 import ui.files.ConfigsFileStorageHelper;
-import ui.files.ParseJson;
-import ui.files.ParseJson.PluginInfo;
+import json.JsonReader;
+import json.JsonReader.PluginInfo;
 import ui.files.PluginReader;
 import ui.files.PreferencesHelper;
 
 public class FragmentPlugins extends Fragment {
 
-    private List<PluginInfo> Plugins;
+    private List<PluginInfo> pluginsList = new ArrayList<PluginInfo>();
     private Adapter adapter;
     private int deletePos = -1;
     private static final int REQUEST_PATH = 12;
@@ -146,7 +146,7 @@ public class FragmentPlugins extends Fragment {
         String dependencies = "";
         try {
             dependencies = PluginReader.read(Constants.APPLICATION_DATA_STORAGE_PATH + "/"
-                    + Plugins.get(pos).name);
+                    + pluginsList.get(pos).name);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -159,11 +159,11 @@ public class FragmentPlugins extends Fragment {
 
 
     private void changeModsStatus(boolean isModEnable) {
-        for (int i = 0; i < Plugins.size(); i++)
+        for (int i = 0; i < pluginsList.size(); i++)
             if (isModEnable)
-                Plugins.get(i).enabled = 1;
+                pluginsList.get(i).enabled = 1;
             else
-                Plugins.get(i).enabled = 0;
+                pluginsList.get(i).enabled = 0;
         reloadAdapter();
         savePluginsData(ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH + "/files.json");
     }
@@ -182,9 +182,9 @@ public class FragmentPlugins extends Fragment {
 
     private void loadPlugins(String path) {
         try {
-            Plugins = ParseJson.loadFile(path);
-            if (Plugins == null)
-                Plugins = new ArrayList<PluginInfo>();
+            pluginsList = JsonReader.loadFile(path);
+            if (pluginsList == null)
+                pluginsList = new ArrayList<PluginInfo>();
 
             File yourDir = new File(Constants.APPLICATION_DATA_STORAGE_PATH);
 
@@ -248,7 +248,7 @@ public class FragmentPlugins extends Fragment {
 
     private void showDialod() {
         new MaterialDialog.Builder(FragmentPlugins.this.getActivity())
-                .content("Do you want to delete " + Plugins.get(deletePos).name
+                .content("Do you want to delete " + pluginsList.get(deletePos).name
                         + " ?")
                 .positiveText("OK")
                 .negativeText("Cancel").callback(new MaterialDialog.ButtonCallback() {
@@ -267,10 +267,10 @@ public class FragmentPlugins extends Fragment {
 
     private void deletePlugin() {
         File inputfile = new File(Constants.APPLICATION_DATA_STORAGE_PATH + "/"
-                + Plugins.get(deletePos).name);
+                + pluginsList.get(deletePos).name);
         if (inputfile.exists())
             inputfile.delete();
-        Plugins.remove(deletePos);
+        pluginsList.remove(deletePos);
         savePluginsData(ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH + "/files.json");
         reloadAdapter();
 
@@ -284,10 +284,10 @@ public class FragmentPlugins extends Fragment {
                     + "/openmw/openmw.cfg");
 
             int i = 0;
-            while (i < Plugins.size()) {
+            while (i < pluginsList.size()) {
 
-                if (Plugins.get(i).enabled == 1) {
-                    PluginInfo pluginInfo = Plugins.get(i);
+                if (pluginsList.get(i).enabled == 1) {
+                    PluginInfo pluginInfo = pluginsList.get(i);
                     writer.write("content= " + pluginInfo.name + "\n");
                     String bsaFileNameName = getBsaFileName(pluginInfo);
 
@@ -332,7 +332,7 @@ public class FragmentPlugins extends Fragment {
             IOException {
         int deletedFilesCount = 0;
         int i = 0;
-        List<PluginInfo> tmp = ParseJson.loadFile(ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH + "/files.json");
+        List<PluginInfo> tmp = JsonReader.loadFile(ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH + "/files.json");
         for (i = 0; i < tmp.size(); i++) {
             boolean fileDeleted = true;
 
@@ -349,12 +349,12 @@ public class FragmentPlugins extends Fragment {
             }
 
             if (fileDeleted) {
-                Plugins.remove(i - deletedFilesCount);
+                pluginsList.remove(i - deletedFilesCount);
                 deletedFilesCount++;
             }
 
         }
-        if (Plugins.size() < i)
+        if (pluginsList.size() < i)
             savePluginsData(ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH + "/files.json");
 
     }
@@ -363,9 +363,9 @@ public class FragmentPlugins extends Fragment {
     private void addNewFiles(File yourDir) throws JSONException, IOException {
         int lastEsmPos = 0;
 
-        for (int i = 0; i < Plugins.size(); i++) {
-            if (Plugins.get(i).name.endsWith(".esm")
-                    || Plugins.get(i).name.endsWith(".ESM"))
+        for (int i = 0; i < pluginsList.size(); i++) {
+            if (pluginsList.get(i).name.endsWith(".esm")
+                    || pluginsList.get(i).name.endsWith(".ESM"))
                 lastEsmPos = i;
             else
                 break;
@@ -374,7 +374,7 @@ public class FragmentPlugins extends Fragment {
         for (File f : yourDir.listFiles()) {
 
             boolean newPlugin = true;
-            for (PluginInfo data : Plugins) {
+            for (PluginInfo data : pluginsList) {
                 if (f.isFile() && f.getName().endsWith(data.name)) {
 
                     newPlugin = false;
@@ -391,13 +391,13 @@ public class FragmentPlugins extends Fragment {
                 pluginData.nameBsa = f.getName().split("\\.")[0] + ".bsa";
                 if (f.getName().endsWith(".esm")
                         || f.getName().endsWith(".ESM")) {
-                    Plugins.add(lastEsmPos, pluginData);
+                    pluginsList.add(lastEsmPos, pluginData);
                     lastEsmPos++;
                 } else if (f.getName().endsWith(".esp")
                         || f.getName().endsWith(".ESP")
                         || f.getName().endsWith(".omwgame")
                         || f.getName().endsWith(".omwaddon")) {
-                    Plugins.add(pluginData);
+                    pluginsList.add(pluginData);
                 }
 
             }
@@ -410,12 +410,12 @@ public class FragmentPlugins extends Fragment {
     private DragSortListView.DropListener onDrop = new DragSortListView.DropListener() {
         @Override
         public void drop(int from, int to) {
-            PluginInfo item = Plugins.get(from);
+            PluginInfo item = pluginsList.get(from);
 
 
-            Plugins.remove(from);
+            pluginsList.remove(from);
 
-            Plugins.add(to, item);
+            pluginsList.add(to, item);
             reloadAdapter();
             savePluginsData(ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH + "/files.json");
         }
@@ -428,7 +428,7 @@ public class FragmentPlugins extends Fragment {
             @Override
             public void run() {
                 try {
-                    ParseJson.saveFile(Plugins, path);
+                    JsonReader.saveFile(pluginsList, path);
                 } catch (JSONException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
@@ -490,7 +490,7 @@ public class FragmentPlugins extends Fragment {
                     .findViewById(R.id.checkBoxenable);
 
 
-            if (Plugins.get(position).enabled == 1) {
+            if (pluginsList.get(position).enabled == 1) {
                 Box.setChecked(true);
             }
 
@@ -508,14 +508,14 @@ public class FragmentPlugins extends Fragment {
                 public void onClick(View v) {
                     if (Box.isChecked()) {
 
-                        Plugins.get(position).enabled = 1;
+                        pluginsList.get(position).enabled = 1;
 
                         reloadAdapter();
 
                         savePluginsData(ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH + "/files.json");
                     } else {
 
-                        Plugins.get(position).enabled = 0;
+                        pluginsList.get(position).enabled = 0;
                         reloadAdapter();
 
                         savePluginsData(ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH + "/files.json");
@@ -525,7 +525,7 @@ public class FragmentPlugins extends Fragment {
 
             });
 
-            data.setText(Plugins.get(position).name);
+            data.setText(pluginsList.get(position).name);
             return rowView;
 
         }
@@ -560,7 +560,7 @@ public class FragmentPlugins extends Fragment {
         @Override
         public int getCount() {
 
-            return Plugins.size();
+            return pluginsList.size();
 
         }
 
