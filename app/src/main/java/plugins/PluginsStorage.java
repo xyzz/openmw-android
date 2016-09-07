@@ -31,38 +31,13 @@ public class PluginsStorage {
     public PluginsStorage(Context context) {
         this.context = context;
         loadPlugins(JSON_FILE_LOCATION);
-        try {
-            savePlugins();
-        } catch (Exception e) {
-        }
+        PluginsUtils.savePlugins(pluginsList);
     }
 
     public List<PluginInfo> getPluginsList() {
         return pluginsList;
     }
-
-    private void savePlugins() throws IOException {
-        try {
-            String pathToFile = ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH
-                    + "/openmw/openmw.cfg";
-            StringBuilder stringBuilder = new StringBuilder();
-            for (PluginInfo pluginInfo : pluginsList) {
-                if (pluginInfo.enabled == 1) {
-                    stringBuilder.append("content= " + pluginInfo.name + "\n");
-                    String bsaFileNameName = PluginsUtils.getBsaFileName(pluginInfo);
-                    if (!bsaFileNameName.isEmpty()) {
-                        stringBuilder.append("fallback-archive= "
-                                + bsaFileNameName + "\n");
-                    }
-                }
-            }
-            Utils.saveDataToFile(stringBuilder.toString(), pathToFile);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-
+    
     private void loadPlugins(String path) {
         try {
             pluginsList = JsonReader.loadFile(path);
@@ -123,13 +98,13 @@ public class PluginsStorage {
         while (iterator.hasNext()) {
             boolean isFileExists = false;
             for (File f : dataDir.listFiles()) {
-                if (f.isFile() && f.getName().endsWith(tmp.get(i).name)) {
+                if (f.isFile() && f.getName().endsWith(iterator.next().name)) {
                     isFileExists = true;
                     break;
                 }
             }
             if (!isFileExists) {
-                pluginsList.remove(iterator);
+                pluginsList.remove(iterator.next());
             }
         }
     }
