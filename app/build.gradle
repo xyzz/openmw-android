@@ -32,10 +32,6 @@ android {
             renderscriptDebuggable true
         }
     }
-    compileOptions {
-        targetCompatibility JavaVersion.VERSION_1_7
-        sourceCompatibility JavaVersion.VERSION_1_7
-    }
 }
 repositories {
     maven {
