@@ -1,51 +1,38 @@
 package cursor;
 
+import android.util.Log;
+
 import listener.NativeListener;
 
 /**
  * Created by sandstranger on 13.02.16.
  */
 public class CursorVisibility {
+    private static native void InitBackgroundTask();
 
-    private boolean cursorVisible = false;
+    private static native void StopBackgroundTask();
 
     private ControlsHider controlsHider;
-    private static final int THREAD_SLEEP_TIME = 1000;
-    private Thread thread;
+    private static CursorVisibility Instance = null;
 
     public CursorVisibility(ControlsHider controlsHider) {
+        Instance = this;
         this.controlsHider = controlsHider;
     }
 
     public void runBackgroundTask() {
-     thread= new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (!Thread.currentThread().isInterrupted()) {
-                    sleepThread();
-                    boolean currentCursorState = NativeListener.getCursorVisible();
-                    if (cursorVisible != currentCursorState) {
-                        cursorVisible = currentCursorState;
-                        controlsHider.hideControlsRootLayout(cursorVisible);
-                    }
-                }
-
-            }
-        });
-        thread.start();
+        InitBackgroundTask();
     }
 
-    public void stopBackgroundTask(){
-        if (!thread.isInterrupted()){
-            thread.interrupt();
+    //called from c++ code
+    public static void updateScreenControlsState(boolean cursorVisibility) {
+        if (Instance != null) {
+            Instance.controlsHider.hideControlsRootLayout(cursorVisibility);
         }
     }
-    private void sleepThread() {
-        try {
-            Thread.sleep(THREAD_SLEEP_TIME);
-        } catch (Exception e) {
-        }
 
+    public void stopBackgroundTask() {
+        StopBackgroundTask();
     }
 
 }
