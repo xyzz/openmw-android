@@ -1,10 +1,16 @@
 
 package ui.activity;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.os.Process;
 import android.preference.PreferenceManager;
+import android.system.ErrnoException;
+import android.system.Os;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -22,6 +28,7 @@ import screen.ScreenScaler;
 import ui.controls.Joystick;
 import ui.controls.QuickPanel;
 import ui.controls.ScreenControls;
+import ui.controls.TouchCameraSimulation;
 import ui.files.CommandlineParser;
 import ui.files.ConfigsFileStorageHelper;
 
@@ -48,17 +55,17 @@ public class GameActivity extends SDLActivity implements ControlsHider {
         System.loadLibrary("SDL2");
         System.loadLibrary("GL");
         System.loadLibrary("openmw");
-        System.loadLibrary("cursorvisibilty");
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        NativeListener.initJavaVm();
         KeepScreenOn();
         parseCommandLineData();
         getPathToJni(ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH);
         showControls();
-    }
+     }
 
     private void parseCommandLineData() {
         CommandlineParser commandlineParser = new CommandlineParser(Constants.commandLineData);
@@ -105,7 +112,7 @@ public class GameActivity extends SDLActivity implements ControlsHider {
 
     @Override
     public void onDestroy() {
-        if (!hideControls){
+        if (!hideControls) {
             cursorVisibility.stopBackgroundTask();
         }
         finish();
