@@ -2,7 +2,9 @@ package plugins;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import constants.Constants;
 import ui.files.ConfigsFileStorageHelper;
@@ -12,20 +14,14 @@ import utils.Utils;
  * Created by sandstranger on 07.09.2016.
  */
 public class PluginsUtils {
+
     public static String getBsaFileName(PluginInfo pluginInfo) {
-        File dir = new File(Constants.APPLICATION_DATA_STORAGE_PATH);
-        for (File file : dir.listFiles()) {
-            if (file.isFile()) {
-                String bsaExtension = "";
-                if (file.getName().endsWith(".bsa")) {
-                    bsaExtension = ".bsa";
-                } else if (file.getName().endsWith(".BSA")) {
-                    bsaExtension = ".BSA";
-                }
-                if (!bsaExtension.isEmpty() && pluginInfo.name.contains(file.getName().replace(bsaExtension, ""))) {
-                    return file.getName();
-                }
-            }
+        String pluginFileName = pluginInfo.name.replace(".esm", "").replace(".ESM", "").replace(".ESP", "").replace(".esp", "");
+        List<File> fileList = Arrays.asList(new File(Constants.APPLICATION_DATA_STORAGE_PATH).
+                listFiles((d, name) -> (d.isFile() && (name.endsWith(".BSA") || name.endsWith("bsa")))));
+        Optional<File> optional = fileList.stream().filter(item -> item.getName().contains(pluginFileName)).findFirst();
+        if (optional != null && optional.isPresent()) {
+            return optional.get().getName();
         }
         return "";
     }
