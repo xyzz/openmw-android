@@ -1,9 +1,5 @@
 package cursor;
 
-import android.util.Log;
-
-import listener.NativeListener;
-
 /**
  * Created by sandstranger on 13.02.16.
  */

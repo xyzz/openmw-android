@@ -14,10 +14,12 @@ import com.libopenmw.openmw.R;
 import com.mobeta.android.dslv.DragSortListView;
 import java.io.IOException;
 import constants.Constants;
+import game.GameState;
 import plugins.PluginReader;
 import plugins.PluginsAdapter;
 import plugins.PluginsStorage;
 import plugins.PluginsUtils;
+import ui.activity.GameActivity;
 import ui.activity.MainActivity;
 import ui.files.PreferencesHelper;
 
@@ -51,7 +53,7 @@ public class FragmentPlugins extends Fragment {
     @Override
     public void onDestroy(){
         super.onDestroy();
-        if (!MainActivity.isGameStarted) {
+        if (!GameState.getGameState()) {
             savePluginsDataToDisk();
         }
     }

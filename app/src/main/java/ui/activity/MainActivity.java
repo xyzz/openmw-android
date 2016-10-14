@@ -25,6 +25,7 @@ import com.libopenmw.openmw.R;
 import com.melnykov.fab.FloatingActionButton;
 
 import constants.Constants;
+import game.GameState;
 import ui.fragments.FragmentControls;
 import ui.fragments.FragmentPlugins;
 import ui.fragments.FragmentSettings;
@@ -47,9 +48,9 @@ public class MainActivity extends AppCompatActivity {
     private enum TEXT_MODE {DATA_PATH, COMMAND_LINE}
     private static TEXT_MODE editTextMode;
     private ConfigsFileStorageHelper configsFileStorageHelper;
-    public static boolean isGameStarted = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        GameState.setGameState(false);
         super.onCreate(savedInstanceState);
         PermissionHelper.getWriteExternalStoragePermission(MainActivity.this);
         isSettingsEnabled = true;
@@ -86,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                isGameStarted = true;
+                GameState.setGameState(true);
                 if (FragmentPlugins.getInstance()!=null){
                     FragmentPlugins.getInstance().savePluginsDataToDisk();
                 }

@@ -23,6 +23,7 @@ import org.libsdl.app.SDLActivity;
 import constants.Constants;
 import cursor.ControlsHider;
 import cursor.CursorVisibility;
+import game.GameState;
 import listener.NativeListener;
 import screen.ScreenScaler;
 import ui.controls.Joystick;
@@ -60,6 +61,7 @@ public class GameActivity extends SDLActivity implements ControlsHider {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        GameState.setGameState(true);
         NativeListener.initJavaVm();
         KeepScreenOn();
         parseCommandLineData();
