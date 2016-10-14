@@ -86,11 +86,7 @@ public class PluginsStorage {
     }
 
     private void sortPlugins(){
-        Collections.sort(pluginsList, new Comparator<PluginInfo>() {
-            public int compare(PluginInfo p1, PluginInfo p2)  {
-                return  Boolean.compare(p1.isPluginEsp,p2.isPluginEsp);
-            }
-        });
+        Collections.sort(pluginsList,(p1,p2)-> Boolean.compare(p1.isPluginEsp,p2.isPluginEsp));
     }
 
     private void removeDeletedFiles() {
