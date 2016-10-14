@@ -67,7 +67,8 @@ public class PluginsStorage {
     }
 
     private void addNewFiles() throws JSONException, IOException {
-        File[] files = dataDir.listFiles((d,name) -> name.endsWith(".ESM") || name.endsWith(".ESP") || name.endsWith(".esp") || name.endsWith(".esm"));
+        File[] files = dataDir.listFiles((d,name) -> name.endsWith(".ESM") || name.endsWith(".ESP") || name.endsWith(".esp") || name.endsWith(".esm") ||
+                name.endsWith(".omwgame") || name.endsWith(".omwaddon"));
         boolean isFileAdded = false;
         for (File f : files) {
             if (!isListContainsFile(f)) {

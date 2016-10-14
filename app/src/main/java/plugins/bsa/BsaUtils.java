@@ -18,7 +18,7 @@ public class BsaUtils {
     }
 
     public String getBsaFileName(PluginInfo pluginInfo) {
-        String pluginFileName = pluginInfo.name.replace(".esm", "").replace(".ESM", "").replace(".ESP", "").replace(".esp", "");
+        String pluginFileName = pluginInfo.name.replace(".esm", "").replace(".ESM", "").replace(".ESP", "").replace(".esp", "").replace(".omwaddon","").replace("omwgame","");
         for (File file : bsaList) {
             if (file.isFile() && file.getName().contains(pluginFileName)) {
                 return file.getName();
