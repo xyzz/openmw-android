@@ -3,5 +3,8 @@ package plugins;
 public class PluginInfo {
     public String name = "";
     public String nameBsa = "";
-    public long enabled = 0;
+    public boolean enabled = false;
+    public PluginInfo(){
+
+    }
 }

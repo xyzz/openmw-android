@@ -1,44 +1,43 @@
 package plugins;
 
-import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import org.json.JSONException;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 import constants.Constants;
-import fragments.FragmentPlugins;
-import json.JsonReader;
+import parser.json.JsonReader;
 import ui.files.ConfigsFileStorageHelper;
-import utils.Utils;
 
 /**
  * Created by sandstranger on 07.09.2016.
  */
 public class PluginsStorage {
+    private final String dataPath = Constants.APPLICATION_DATA_STORAGE_PATH;
     private List<PluginInfo> pluginsList = new ArrayList<PluginInfo>();
-    private File dataDir = new File(Constants.APPLICATION_DATA_STORAGE_PATH);
+    private File dataDir = new File(dataPath);
     private final static String JSON_FILE_LOCATION = ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH + "/files.json";
     private Context context;
 
     public PluginsStorage(Context context) {
         this.context = context;
         loadPlugins(JSON_FILE_LOCATION);
-        PluginsUtils.savePlugins(pluginsList);
     }
 
     public List<PluginInfo> getPluginsList() {
         return pluginsList;
     }
-    
-    private void loadPlugins(String path) {
+
+    public void loadPlugins(String path) {
         try {
             pluginsList = JsonReader.loadFile(path);
             removeDeletedFiles();
@@ -50,14 +49,19 @@ public class PluginsStorage {
         }
     }
 
-
     private boolean isListContainsFile(File f) {
-        for (PluginInfo data : pluginsList) {
-            if (f.isFile() && f.getName().endsWith(data.name)) {
+        for (PluginInfo plugin : pluginsList ) {
+            if (f.isFile() && !plugin.name.isEmpty() && f.getName().endsWith(plugin.name)){
                 return true;
             }
         }
         return false;
+    }
+
+    public void replacePlugins(int from, int to) {
+        PluginInfo item = pluginsList.get(from);
+        pluginsList.remove(from);
+        pluginsList.add(to, item);
     }
 
     private int getLastEsmPosition() {
@@ -74,7 +78,12 @@ public class PluginsStorage {
 
     private void addNewFiles() throws JSONException, IOException {
         int lastEsmPos = getLastEsmPosition();
-        for (File f : dataDir.listFiles()) {
+        for (PluginInfo plugin:pluginsList){
+            Log.d("PLUGIN",plugin.name);
+        }
+
+        File[] files = dataDir.listFiles((d,name) -> name.endsWith(".ESM") || name.endsWith(".ESP") || name.endsWith(".esp") || name.endsWith(".esm"));
+        for (File f : files) {
             if (!isListContainsFile(f)) {
                 PluginInfo pluginData = new PluginInfo();
                 pluginData.name = f.getName();
@@ -96,16 +105,32 @@ public class PluginsStorage {
     private void removeDeletedFiles() {
         Iterator<PluginInfo> iterator = pluginsList.iterator();
         while (iterator.hasNext()) {
-            boolean isFileExists = false;
-            for (File f : dataDir.listFiles()) {
-                if (f.isFile() && f.getName().endsWith(iterator.next().name)) {
-                    isFileExists = true;
-                    break;
-                }
-            }
-            if (!isFileExists) {
-                pluginsList.remove(iterator.next());
+            PluginInfo pluginInfo = iterator.next();
+            File file = new File(dataPath + "/" + pluginInfo.name);
+            if (!file.exists()) {
+                pluginsList.remove(pluginInfo);
             }
         }
     }
+
+    public void updatePluginsStatus(boolean needEnableMods) {
+        for (int i = 0; i < pluginsList.size(); i++) {
+            pluginsList.get(i).enabled = needEnableMods;
+        }
+    }
+
+    public void updatePluginStatus(int position ,boolean status){
+        pluginsList.get(position).enabled = status;
+    }
+
+    public void savePluginsData(final String path) {
+           String finalPath = path.isEmpty() ? JSON_FILE_LOCATION : path;
+        try {
+            JsonReader.saveFile(pluginsList, finalPath);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }
+

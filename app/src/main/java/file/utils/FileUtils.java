@@ -1,12 +1,8 @@
-package utils;
+package file.utils;
 
 import java.io.FileWriter;
-import java.io.IOException;
 
-/**
- * Created by sandstranger on 07.09.2016.
- */
-public class Utils {
+public class FileUtils {
     public static void saveDataToFile(String data, String path) {
         try {
             FileWriter writer = new FileWriter(path, false);
@@ -17,4 +13,5 @@ public class Utils {
             e.printStackTrace();
         }
     }
+
 }

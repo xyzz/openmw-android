@@ -1,21 +1,18 @@
-package json;
+package parser.json;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import file.utils.FileUtils;
 import plugins.PluginInfo;
-import utils.Utils;
 
 public class JsonReader {
     private static final String NAME_PLUGIN_KEY = "name";
@@ -32,7 +29,7 @@ public class JsonReader {
             c.put(PLUGIN_ENABLED_KEY, loadedFile.get(i).enabled);
             jsonArray.put(c);
         }
-        Utils.saveDataToFile(jsonArray.toString(),path);
+       FileUtils.saveDataToFile(jsonArray.toString(),path);
     }
 
     public static String convertStreamToString(InputStream is)
@@ -76,11 +73,12 @@ public class JsonReader {
                 PluginInfo ti = new PluginInfo();
                 ti.name = obj.getString(NAME_PLUGIN_KEY);
                 ti.nameBsa = obj.getString(NAME_BSA_KEY);
-                ti.enabled = obj.getLong(PLUGIN_ENABLED_KEY);
+                ti.enabled = obj.getBoolean(PLUGIN_ENABLED_KEY);
                 ret.add(ti);
             }
         } catch (Exception e) {
             e.printStackTrace();
+            return new ArrayList<PluginInfo>();
         }
         return ret;
     }

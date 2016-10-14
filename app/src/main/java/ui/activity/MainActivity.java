@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.v4.content.PermissionChecker;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -26,9 +25,9 @@ import com.libopenmw.openmw.R;
 import com.melnykov.fab.FloatingActionButton;
 
 import constants.Constants;
-import fragments.FragmentControls;
-import fragments.FragmentPlugins;
-import fragments.FragmentSettings;
+import ui.fragments.FragmentControls;
+import ui.fragments.FragmentPlugins;
+import ui.fragments.FragmentSettings;
 import permission.PermissionHelper;
 import screen.ScreenScaler;
 import ui.files.ConfigsFileStorageHelper;
@@ -48,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
     private enum TEXT_MODE {DATA_PATH, COMMAND_LINE}
     private static TEXT_MODE editTextMode;
     private ConfigsFileStorageHelper configsFileStorageHelper;
-
+    public static boolean isGameStarted = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,6 +86,10 @@ public class MainActivity extends AppCompatActivity {
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                isGameStarted = true;
+                if (FragmentPlugins.getInstance()!=null){
+                    FragmentPlugins.getInstance().savePluginsDataToDisk();
+                }
                 startGame();
             }
 
@@ -249,16 +252,24 @@ public class MainActivity extends AppCompatActivity {
         if (!isSettingsEnabled)
             switch (id) {
                 case R.id.action_enable:
-                    FragmentPlugins.instance.enableMods();
+                    if (FragmentPlugins.getInstance()!=null) {
+                        FragmentPlugins.getInstance().enableMods();
+                    }
                     break;
                 case R.id.action_disable:
-                    FragmentPlugins.instance.disableMods();
+                    if (FragmentPlugins.getInstance()!=null) {
+                        FragmentPlugins.getInstance().disableMods();
+                    }
                     break;
                 case R.id.action_importMods:
-                    FragmentPlugins.instance.importMods();
+                    if (FragmentPlugins.getInstance()!=null) {
+                        FragmentPlugins.getInstance().importMods();
+                    }
                     break;
                 case R.id.action_export:
-                    FragmentPlugins.instance.exportMods();
+                    if (FragmentPlugins.getInstance()!=null) {
+                        FragmentPlugins.getInstance().exportMods();
+                    }
                     break;
                 default:
                     break;
