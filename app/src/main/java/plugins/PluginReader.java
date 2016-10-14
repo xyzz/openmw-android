@@ -1,4 +1,4 @@
-package ui.files;
+package plugins;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -15,7 +15,6 @@ public class PluginReader {
 		StringBuilder builder = new StringBuilder();
 
 		while (line != null) {
-
 			int count = line.split("MAST").length;
 			if (count > 0)
 				for (int i = 0; i < count; i++) {
@@ -51,9 +50,7 @@ public class PluginReader {
 			if (line.contains("NAME"))
 				break;
 			line = reader.readLine();
-
 		}
-
 		reader.close();
 		return builder.toString();
 	}

@@ -10,7 +10,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.libopenmw.openmw.BuildConfig;
 
 import constants.Constants;
-import fragments.ScreenResolutionHelper;
+import ui.fragments.ScreenResolutionHelper;
 
 /**
  * Created by sandstranger on 07.01.16.
@@ -55,30 +55,30 @@ public class ConfigsFileStorageHelper {
 
                 try {
 
-                    Writer.write(
+                    file.Writer.write(
                             CONFIGS_FILES_STORAGE_PATH + "/libopenmw/resources",
                             CONFIGS_FILES_STORAGE_PATH + "/config/openmw/openmw.cfg",
                             "libopenmw/resources");
-                    Writer.write(Constants.APPLICATION_DATA_STORAGE_PATH, CONFIGS_FILES_STORAGE_PATH
+                    file.Writer.write(Constants.APPLICATION_DATA_STORAGE_PATH, CONFIGS_FILES_STORAGE_PATH
                             + "/config/openmw/openmw.cfg", "data");
 
-                    Writer.write(
+                    file.Writer.write(
                             PreferenceManager.getDefaultSharedPreferences(activity).getString(Constants.LANGUAGE, "win1250"),
                             CONFIGS_FILES_STORAGE_PATH + "/config/openmw/openmw.cfg",
                             "encoding");
 
 
-                    Writer.write(PreferenceManager.getDefaultSharedPreferences(activity).getString(Constants.MIPMAPPING, "none"),
+                    file.Writer.write(PreferenceManager.getDefaultSharedPreferences(activity).getString(Constants.MIPMAPPING, "none"),
                             CONFIGS_FILES_STORAGE_PATH
                                     + "/config/openmw/settings.cfg",
                             "texture filtering");
 
-                    Writer.write(String.valueOf(PreferenceManager.getDefaultSharedPreferences(activity).getBoolean(Constants.SUBTITLES, false)), CONFIGS_FILES_STORAGE_PATH
+                    file.Writer.write(String.valueOf(PreferenceManager.getDefaultSharedPreferences(activity).getBoolean(Constants.SUBTITLES, false)), CONFIGS_FILES_STORAGE_PATH
                             + "/config/openmw/settings.cfg", "subtitles");
 
-                    Writer.write("" + Settings.getFloat(Constants.CAMERA_MULTIPLISER, 2.0f), CONFIGS_FILES_STORAGE_PATH
+                    file.Writer.write("" + Settings.getFloat(Constants.CAMERA_MULTIPLISER, 2.0f), CONFIGS_FILES_STORAGE_PATH
                             + "/config/openmw/settings.cfg", Constants.CAMERA_MULTIPLISER);
-                    Writer.write("" + Settings.getFloat(Constants.TOUCH_SENSITIVITY, 0.01f), CONFIGS_FILES_STORAGE_PATH
+                    file.Writer.write("" + Settings.getFloat(Constants.TOUCH_SENSITIVITY, 0.01f), CONFIGS_FILES_STORAGE_PATH
                             + "/config/openmw/settings.cfg", Constants.TOUCH_SENSITIVITY);
 
                     ScreenResolutionHelper screenHelper = new ScreenResolutionHelper(activity);

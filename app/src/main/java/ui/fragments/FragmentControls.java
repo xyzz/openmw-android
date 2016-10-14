@@ -1,4 +1,4 @@
-package fragments;
+package ui.fragments;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -17,7 +17,6 @@ import constants.Constants;
 import screen.ScreenScaler;
 import ui.files.ConfigsFileStorageHelper;
 import ui.files.PreferencesHelper;
-import ui.files.Writer;
 
 public class FragmentControls extends Fragment {
 
@@ -102,7 +101,7 @@ public class FragmentControls extends Fragment {
             public void run() {
 
                 try {
-                    Writer.write(progress, ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH
+                    file.Writer.write(progress, ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH
                             + "/config/openmw/settings.cfg", key);
 
                 } catch (Exception e)

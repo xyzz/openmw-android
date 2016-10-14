@@ -1,4 +1,4 @@
-package fragments;
+package ui.fragments;
 
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -12,7 +12,6 @@ import com.libopenmw.openmw.R;
 
 import constants.Constants;
 import ui.files.ConfigsFileStorageHelper;
-import ui.files.Writer;
 
 public class FragmentSettings extends PreferenceFragment {
 
@@ -41,7 +40,7 @@ public class FragmentSettings extends PreferenceFragment {
             public boolean onPreferenceChange(final Preference preference, final Object newValue) {
                 String encoding = newValue.toString();
                 try {
-                    Writer.write(
+                    file.Writer.write(
                             encoding,
                             ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH + "/config/openmw/openmw.cfg",
                             "encoding");
@@ -80,7 +79,7 @@ public class FragmentSettings extends PreferenceFragment {
     private void saveSubtitlesSettings(boolean showSubtitles) {
 
         try {
-            Writer.write(String.valueOf(showSubtitles), ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH
+            file.Writer.write(String.valueOf(showSubtitles), ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH
                     + "/config/openmw/settings.cfg", "subtitles");
 
         } catch (Exception e) {
@@ -94,7 +93,7 @@ public class FragmentSettings extends PreferenceFragment {
 
     private void saveMipMappingOptions(String mipmapping) {
         try {
-            Writer.write(mipmapping, ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH
+            file.Writer.write(mipmapping, ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH
                             + "/config/openmw/settings.cfg",
                     "texture filtering");
 

@@ -2,7 +2,7 @@ package ui.activity;
 
 import ui.files.ConfigsFileStorageHelper;
 import ui.files.PreferencesHelper;
-import ui.files.Writer;
+
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -57,12 +57,12 @@ public class TextListener implements TextWatcher {
 				try {
 					switch (mode) {
 					case "configs":
-						Writer.write(s + data, s + "/config/openmw/openmw.cfg",
+						file.Writer.write(s + data, s + "/config/openmw/openmw.cfg",
 								value);
 
 						break;
 					case "data":
-						Writer.write(s + data, ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH
+						file.Writer.write(s + data, ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH
 								+ "/config/openmw/openmw.cfg", value);
 
 						break;

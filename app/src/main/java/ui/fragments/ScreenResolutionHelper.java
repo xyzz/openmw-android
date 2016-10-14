@@ -1,12 +1,9 @@
-package fragments;
+package ui.fragments;
 
 import android.app.Activity;
-import android.content.Context;
-import android.util.DisplayMetrics;
 
 import screen.ScreenInfo;
 import ui.files.ConfigsFileStorageHelper;
-import ui.files.Writer;
 
 /**
  * Created by sylar on 13.06.15.
@@ -53,9 +50,9 @@ public class ScreenResolutionHelper {
 
     private void writeScreenDataToFile(String screenWidth, String screenHeight) {
         try {
-            Writer.write(screenWidth, ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH
+            file.Writer.write(screenWidth, ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH
                     + "/config/openmw/settings.cfg", "resolution x");
-            Writer.write(screenHeight, ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH
+            file.Writer.write(screenHeight, ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH
                     + "/config/openmw/settings.cfg", "resolution y");
         } catch (Exception e) {
 

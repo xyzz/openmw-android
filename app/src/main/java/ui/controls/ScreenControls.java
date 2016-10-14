@@ -179,12 +179,8 @@ public class ScreenControls {
 			buttonPause.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					if (CursorVisibility.Instance!=null){
-						CursorVisibility.Instance.stopBackgroundTask();
-					}
 				}
-			}); // setOnTouchListener(new ButtonTouchListener(KeyEvent.KEYCODE_ESCAPE,false));
-
+			});
 			if (controlsFlag == -1 || controlsFlag == 1) {
 				joystick.setLayoutParams(ControlsParams.coordinates(joystick,
 						75, 400, 250, 250));
