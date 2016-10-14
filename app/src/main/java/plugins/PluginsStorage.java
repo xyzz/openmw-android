@@ -30,7 +30,6 @@ public class PluginsStorage {
     private File dataDir = new File(dataPath);
     private final static String JSON_FILE_LOCATION = ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH + "/files.json";
     private Context context;
-
     public PluginsStorage(Context context) {
         this.context = context;
         loadPlugins(JSON_FILE_LOCATION);
@@ -69,8 +68,10 @@ public class PluginsStorage {
 
     private void addNewFiles() throws JSONException, IOException {
         File[] files = dataDir.listFiles((d,name) -> name.endsWith(".ESM") || name.endsWith(".ESP") || name.endsWith(".esp") || name.endsWith(".esm"));
+        boolean isFileAdded = false;
         for (File f : files) {
             if (!isListContainsFile(f)) {
+                isFileAdded = true;
                 PluginInfo pluginData = new PluginInfo();
                 pluginData.name = f.getName();
                 pluginData.nameBsa = f.getName().split("\\.")[0] + ".bsa";
@@ -79,7 +80,9 @@ public class PluginsStorage {
                 pluginsList.add(pluginData);
             }
         }
-        sortPlugins();
+        if (isFileAdded) {
+            sortPlugins();
+        }
     }
 
     private void sortPlugins(){

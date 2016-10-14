@@ -30,6 +30,7 @@ public class JsonReader {
             c.put(NAME_BSA_KEY, loadedFile.get(i).nameBsa);
             c.put(FILE_EXTENSION, loadedFile.get(i).pluginExtension);
             c.put(IS_PLUGIN_ESP_KEY, loadedFile.get(i).isPluginEsp);
+            c.put(PLUGIN_ENABLED_KEY, loadedFile.get(i).enabled);
             jsonArray.put(c);
         }
        FileUtils.saveDataToFile(jsonArray.toString(),path);
