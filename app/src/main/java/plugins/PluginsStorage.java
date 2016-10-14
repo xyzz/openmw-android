@@ -10,11 +10,14 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
 import constants.Constants;
+import file.utils.FileUtils;
 import parser.json.JsonReader;
 import ui.files.ConfigsFileStorageHelper;
 
@@ -64,42 +67,27 @@ public class PluginsStorage {
         pluginsList.add(to, item);
     }
 
-    private int getLastEsmPosition() {
-        int lastEsmPos = 0;
-        for (int i = 0; i < pluginsList.size(); i++) {
-            if (pluginsList.get(i).name.endsWith(".esm")
-                    || pluginsList.get(i).name.endsWith(".ESM"))
-                lastEsmPos = i;
-            else
-                break;
-        }
-        return lastEsmPos;
-    }
-
     private void addNewFiles() throws JSONException, IOException {
-        int lastEsmPos = getLastEsmPosition();
-        for (PluginInfo plugin:pluginsList){
-            Log.d("PLUGIN",plugin.name);
-        }
-
         File[] files = dataDir.listFiles((d,name) -> name.endsWith(".ESM") || name.endsWith(".ESP") || name.endsWith(".esp") || name.endsWith(".esm"));
         for (File f : files) {
             if (!isListContainsFile(f)) {
                 PluginInfo pluginData = new PluginInfo();
                 pluginData.name = f.getName();
                 pluginData.nameBsa = f.getName().split("\\.")[0] + ".bsa";
-                if (f.getName().endsWith(".esm")
-                        || f.getName().endsWith(".ESM")) {
-                    pluginsList.add(lastEsmPos, pluginData);
-                    lastEsmPos++;
-                } else if (f.getName().endsWith(".esp")
-                        || f.getName().endsWith(".ESP")
-                        || f.getName().endsWith(".omwgame")
-                        || f.getName().endsWith(".omwaddon")) {
-                    pluginsList.add(pluginData);
-                }
+                pluginData.isPluginEsp = f.getName().endsWith(".ESP") ||f.getName().endsWith(".esp");
+                pluginData.pluginExtension = FileUtils.getFileExtension(f.getName());
+                pluginsList.add(pluginData);
             }
         }
+        sortPlugins();
+    }
+
+    private void sortPlugins(){
+        Collections.sort(pluginsList, new Comparator<PluginInfo>() {
+            public int compare(PluginInfo p1, PluginInfo p2)  {
+                return  Boolean.compare(p1.isPluginEsp,p2.isPluginEsp);
+            }
+        });
     }
 
     private void removeDeletedFiles() {
@@ -131,6 +119,5 @@ public class PluginsStorage {
             e.printStackTrace();
         }
     }
-
 }
 
