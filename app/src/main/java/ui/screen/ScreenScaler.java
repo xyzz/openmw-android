@@ -1,4 +1,4 @@
-package screen;
+package ui.screen;
 
 import android.util.TypedValue;
 import android.view.View;

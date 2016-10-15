@@ -3,7 +3,7 @@ package ui.controls;
 
 import android.content.Context;
 
-import screen.ScreenInfo;
+import ui.screen.ScreenInfo;
 
 public class DirectionListener {
 

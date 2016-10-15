@@ -14,9 +14,9 @@ import android.widget.TextView;
 import com.libopenmw.openmw.R;
 
 import constants.Constants;
-import screen.ScreenScaler;
-import ui.files.ConfigsFileStorageHelper;
-import ui.files.PreferencesHelper;
+import ui.screen.ScreenScaler;
+import file.ConfigsFileStorageHelper;
+import prefs.PreferencesHelper;
 
 public class FragmentControls extends Fragment {
 

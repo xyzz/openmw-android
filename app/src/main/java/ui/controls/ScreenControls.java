@@ -2,8 +2,7 @@ package ui.controls;
 
 import org.libsdl.app.SDLActivity;
 
-import cursor.CursorVisibility;
-import screen.ScreenScaler;
+import ui.screen.ScreenScaler;
 
 import com.libopenmw.openmw.R;
 
@@ -17,7 +16,6 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 
 public class ScreenControls {

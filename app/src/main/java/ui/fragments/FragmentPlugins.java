@@ -13,15 +13,13 @@ import com.libopenmw.openmw.R;
 import com.mobeta.android.dslv.DragSortListView;
 import java.io.IOException;
 import constants.Constants;
-import dialog.MaterialDialogInterface;
-import dialog.MaterialDialogManager;
-import game.GameState;
+import ui.dialog.MaterialDialogInterface;
+import ui.dialog.MaterialDialogManager;
+import ui.game.GameState;
 import plugins.PluginReader;
 import plugins.PluginsAdapter;
 import plugins.PluginsStorage;
-import plugins.PluginsUtils;
-import plugins.bsa.BsaWriter;
-import ui.files.PreferencesHelper;
+import prefs.PreferencesHelper;
 
 public class FragmentPlugins extends Fragment {
 
@@ -46,11 +44,12 @@ public class FragmentPlugins extends Fragment {
 
     public void savePluginsDataToDisk() {
         if (pluginsStorage != null && pluginsStorage.getPluginsList() != null) {
-            pluginsStorage.savePluginsData("");
-            if (!BsaWriter.getSaveAllBsaFilesValue(FragmentPlugins.this.getActivity())) {
-                PluginsUtils.savePlugins(pluginsStorage.getPluginsList(), FragmentPlugins.this.getActivity());
-            } else {
-                BsaWriter.saveAllBsaFiles(FragmentPlugins.this.getActivity(), true);
+            try {
+                pluginsStorage.saveJson("");
+                pluginsStorage.savePlugins();
+            }
+            catch (Exception e){
+                e.printStackTrace();
             }
         }
     }
@@ -189,7 +188,7 @@ public class FragmentPlugins extends Fragment {
         } else {
             curPath = data.getStringExtra("GetDir");
             try {
-                pluginsStorage.savePluginsData(curPath + "/files.json");
+                pluginsStorage.saveJson(curPath + "/files.json");
                 Toast.makeText(
                         FragmentPlugins.this.getActivity().getApplicationContext(),
                         "file exported to " + curPath + "/files.json", Toast.LENGTH_LONG).show();

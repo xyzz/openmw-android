@@ -1,4 +1,4 @@
-package dialog;
+package ui.dialog;
 import android.app.Activity;
 import com.afollestad.materialdialogs.MaterialDialog;
 /**

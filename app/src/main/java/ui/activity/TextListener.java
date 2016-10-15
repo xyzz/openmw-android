@@ -1,7 +1,7 @@
 package ui.activity;
 
-import ui.files.ConfigsFileStorageHelper;
-import ui.files.PreferencesHelper;
+import file.ConfigsFileStorageHelper;
+import prefs.PreferencesHelper;
 
 import android.app.Activity;
 import android.content.SharedPreferences;

@@ -11,7 +11,8 @@ import com.lb.material_preferences_library.custom_preferences.ListPreference;
 import com.libopenmw.openmw.R;
 
 import constants.Constants;
-import ui.files.ConfigsFileStorageHelper;
+import file.ConfigsFileStorageHelper;
+import ui.screen.ScreenResolutionHelper;
 
 public class FragmentSettings extends PreferenceFragment {
 

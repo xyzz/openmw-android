@@ -1,4 +1,4 @@
-package screen;
+package ui.screen;
 
 import android.content.Context;
 import android.util.DisplayMetrics;

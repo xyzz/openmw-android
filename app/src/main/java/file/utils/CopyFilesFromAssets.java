@@ -1,4 +1,4 @@
-package ui.files;
+package file.utils;
 
 import java.io.File;
 import java.io.FileOutputStream;

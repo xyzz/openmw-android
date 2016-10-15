@@ -25,15 +25,15 @@ import com.libopenmw.openmw.R;
 import com.melnykov.fab.FloatingActionButton;
 
 import constants.Constants;
-import game.GameState;
-import plugins.bsa.BsaWriter;
+import plugins.bsa.BsaUtils;
+import ui.game.GameState;
 import ui.fragments.FragmentControls;
 import ui.fragments.FragmentPlugins;
 import ui.fragments.FragmentSettings;
 import permission.PermissionHelper;
-import screen.ScreenScaler;
-import ui.files.ConfigsFileStorageHelper;
-import ui.files.PreferencesHelper;
+import ui.screen.ScreenScaler;
+import file.ConfigsFileStorageHelper;
+import prefs.PreferencesHelper;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -274,10 +274,10 @@ public class MainActivity extends AppCompatActivity {
                     }
                     break;
                 case R.id.action_enableBsa:
-                    BsaWriter.setSaveAllBsaFilesValue(MainActivity.this,true);
+                    BsaUtils.setSaveAllBsaFilesValue(MainActivity.this,true);
                     break;
                 case R.id.action_disableBsa:
-                    BsaWriter.setSaveAllBsaFilesValue(MainActivity.this,false);
+                    BsaUtils.setSaveAllBsaFilesValue(MainActivity.this,false);
                     break;
                 default:
                     break;

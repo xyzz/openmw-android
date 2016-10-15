@@ -1,9 +1,9 @@
-package ui.fragments;
+package ui.screen;
 
 import android.app.Activity;
 
-import screen.ScreenInfo;
-import ui.files.ConfigsFileStorageHelper;
+import ui.screen.ScreenInfo;
+import file.ConfigsFileStorageHelper;
 
 /**
  * Created by sylar on 13.06.15.

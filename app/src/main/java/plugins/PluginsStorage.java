@@ -1,7 +1,6 @@
 package plugins;
 
-import android.content.Context;
-import android.util.Log;
+import android.app.Activity;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -16,7 +15,8 @@ import java.util.List;
 import constants.Constants;
 import file.utils.FileUtils;
 import parser.json.JsonReader;
-import ui.files.ConfigsFileStorageHelper;
+import file.ConfigsFileStorageHelper;
+import plugins.bsa.BsaUtils;
 
 /**
  * Created by sandstranger on 07.09.2016.
@@ -25,10 +25,12 @@ public class PluginsStorage {
     private final String dataPath = Constants.APPLICATION_DATA_STORAGE_PATH;
     private List<PluginInfo> pluginsList = new ArrayList<PluginInfo>();
     private File dataDir = new File(dataPath);
-    private final static String JSON_FILE_LOCATION = ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH + "/files.json";
-    private Context context;
-    public PluginsStorage(Context context) {
-        this.context = context;
+    private final String JSON_FILE_LOCATION = ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH + "/files.json";
+    private final String CFG_FILE_LOCATION =  ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH + "/openmw/openmw.cfg";
+    private Activity activity;
+
+    public PluginsStorage(Activity activity) {
+        this.activity = activity;
         loadPlugins(JSON_FILE_LOCATION);
     }
 
@@ -45,14 +47,14 @@ public class PluginsStorage {
         } catch (Exception e) {
             e.printStackTrace();
             Toast.makeText(
-                    context,
+                    activity,
                     "data files not found", Toast.LENGTH_LONG).show();
         }
     }
 
     private boolean isListContainsFile(File f) {
-        for (PluginInfo plugin : pluginsList ) {
-            if (f.isFile() && !plugin.name.isEmpty() && f.getName().endsWith(plugin.name)){
+        for (PluginInfo plugin : pluginsList) {
+            if (f.isFile() && !plugin.name.isEmpty() && f.getName().endsWith(plugin.name)) {
                 return true;
             }
         }
@@ -66,7 +68,7 @@ public class PluginsStorage {
     }
 
     private void addNewFiles() throws JSONException, IOException {
-        File[] files = dataDir.listFiles((d,name) -> name.endsWith(".ESM") || name.endsWith(".ESP") || name.endsWith(".esp") || name.endsWith(".esm") ||
+        File[] files = dataDir.listFiles((d, name) -> name.endsWith(".ESM") || name.endsWith(".ESP") || name.endsWith(".esp") || name.endsWith(".esm") ||
                 name.endsWith(".omwgame") || name.endsWith(".omwaddon"));
         boolean isFileAdded = false;
         for (File f : files) {
@@ -75,9 +77,8 @@ public class PluginsStorage {
                 PluginInfo pluginData = new PluginInfo();
                 pluginData.name = f.getName();
                 pluginData.nameBsa = f.getName().split("\\.")[0] + ".bsa";
-                pluginData.isPluginEsp = f.getName().endsWith(".ESP") ||f.getName().endsWith(".esp");
-                Log.d("FILENAME",f.getName());
-                pluginData.pluginExtension = FileUtils.getFileName(f.getName(),true);
+                pluginData.isPluginEsp = f.getName().endsWith(".ESP") || f.getName().endsWith(".esp");
+                pluginData.pluginExtension = FileUtils.getFileName(f.getName(), true);
                 pluginsList.add(pluginData);
             }
         }
@@ -86,8 +87,8 @@ public class PluginsStorage {
         }
     }
 
-    private void sortPlugins(){
-        Collections.sort(pluginsList,(p1,p2)-> Boolean.compare(p1.isPluginEsp,p2.isPluginEsp));
+    private void sortPlugins() {
+        Collections.sort(pluginsList, (p1, p2) -> Boolean.compare(p1.isPluginEsp, p2.isPluginEsp));
     }
 
     private void removeDeletedFiles() {
@@ -107,14 +108,43 @@ public class PluginsStorage {
         }
     }
 
-    public void updatePluginStatus(int position ,boolean status){
+    public void updatePluginStatus(int position, boolean status) {
         pluginsList.get(position).enabled = status;
     }
 
-    public void savePluginsData(final String path) {
-           String finalPath = path.isEmpty() ? JSON_FILE_LOCATION : path;
+    public void saveJson(final String path) {
+        String finalPath = path.isEmpty() ? JSON_FILE_LOCATION : path;
         try {
             JsonReader.saveFile(pluginsList, finalPath);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void savePlugins() {
+        try {
+            boolean needRegisterBsaFiles = BsaUtils.getSaveAllBsaFilesValue(activity);
+            BsaUtils bsaUtils = new BsaUtils();
+            StringBuilder stringBuilder = new StringBuilder();
+            for (PluginInfo pluginInfo : pluginsList) {
+                if (pluginInfo.enabled) {
+                    stringBuilder.append("content= " + pluginInfo.name + "\n");
+                    if (!needRegisterBsaFiles) {
+                        String bsaFileNameName = bsaUtils.getBsaFileName(pluginInfo);
+                        if (!bsaFileNameName.isEmpty()) {
+                            stringBuilder.append("fallback-archive= "
+                                    + bsaFileNameName + "\n");
+                        }
+                    }
+                }
+            }
+            if (needRegisterBsaFiles) {
+                List<File> list = bsaUtils.getBsaList();
+                for (File f : list) {
+                    stringBuilder.append("fallback-archive= " + f.getName() + "\n");
+                }
+            }
+            FileUtils.saveDataToFile(stringBuilder.toString(), CFG_FILE_LOCATION, false);
         } catch (Exception e) {
             e.printStackTrace();
         }

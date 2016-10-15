@@ -1,4 +1,4 @@
-package ui.files;
+package prefs;
 
 import constants.Constants;
 

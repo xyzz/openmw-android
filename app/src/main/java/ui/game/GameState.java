@@ -1,4 +1,4 @@
-package game;
+package ui.game;
 
 /**
  * Created by sandstranger on 14.10.16.

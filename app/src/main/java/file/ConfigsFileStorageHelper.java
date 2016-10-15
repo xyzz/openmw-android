@@ -1,4 +1,4 @@
-package ui.files;
+package file;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
@@ -10,7 +10,8 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.libopenmw.openmw.BuildConfig;
 
 import constants.Constants;
-import ui.fragments.ScreenResolutionHelper;
+import file.utils.CopyFilesFromAssets;
+import ui.screen.ScreenResolutionHelper;
 
 /**
  * Created by sandstranger on 07.01.16.

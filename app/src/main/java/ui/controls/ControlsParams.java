@@ -1,6 +1,6 @@
 package ui.controls;
 
-import screen.ScreenScaler;
+import ui.screen.ScreenScaler;
 import android.view.View;
 import android.view.ViewGroup.MarginLayoutParams;
 import android.widget.RelativeLayout;

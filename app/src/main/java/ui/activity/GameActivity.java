@@ -1,16 +1,9 @@
 
 package ui.activity;
 
-import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
-import android.os.PowerManager;
 import android.os.Process;
 import android.preference.PreferenceManager;
-import android.system.ErrnoException;
-import android.system.Os;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -23,15 +16,14 @@ import org.libsdl.app.SDLActivity;
 import constants.Constants;
 import cursor.ControlsHider;
 import cursor.CursorVisibility;
-import game.GameState;
+import ui.game.GameState;
 import listener.NativeListener;
-import screen.ScreenScaler;
+import ui.screen.ScreenScaler;
 import ui.controls.Joystick;
 import ui.controls.QuickPanel;
 import ui.controls.ScreenControls;
-import ui.controls.TouchCameraSimulation;
 import ui.files.CommandlineParser;
-import ui.files.ConfigsFileStorageHelper;
+import file.ConfigsFileStorageHelper;
 
 public class GameActivity extends SDLActivity implements ControlsHider {
 

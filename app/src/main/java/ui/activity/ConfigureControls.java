@@ -2,14 +2,13 @@ package ui.activity;
 
 import com.libopenmw.openmw.R;
 
-import screen.ScreenScaler;
+import ui.screen.ScreenScaler;
 import ui.controls.AlphaView;
 import ui.controls.ControlsParams;
 import ui.controls.Joystick;
 import ui.controls.MultiTouchListener;
 import constants.Constants;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 
 import com.nineoldandroids.view.ViewHelper;
@@ -20,7 +19,6 @@ import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
