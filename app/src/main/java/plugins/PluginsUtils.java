@@ -17,7 +17,7 @@ public class PluginsUtils {
 
     public static void savePlugins(List<PluginInfo> pluginsList, Activity activity) {
         try {
-            boolean needRegisterBsaFiles = false;//BsaWriter.getSaveAllBsaFilesValue(activity);
+            boolean needRegisterBsaFiles = BsaWriter.getSaveAllBsaFilesValue(activity);
             BsaUtils bsaUtils = new BsaUtils();
             String pathToFile = ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH
                     + "/openmw/openmw.cfg";
