@@ -17,6 +17,8 @@ import com.mobeta.android.dslv.DragSortListView;
 import java.io.IOException;
 
 import constants.Constants;
+import dialog.MaterialDialogInterface;
+import dialog.MaterialDialogManager;
 import game.GameState;
 import plugins.PluginReader;
 import plugins.PluginsAdapter;
@@ -31,7 +33,7 @@ public class FragmentPlugins extends Fragment {
 
     private PluginsAdapter adapter;
     private PluginsStorage pluginsStorage;
-    private int deletePos = -1;
+    protected MaterialDialogManager materialDialogManager;
     private static final int REQUEST_PATH = 12;
     private static FragmentPlugins Instance = null;
 
@@ -40,6 +42,7 @@ public class FragmentPlugins extends Fragment {
                              Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Instance = this;
+        materialDialogManager = new MaterialDialogManager(FragmentPlugins.this.getActivity());
         pluginsStorage = new PluginsStorage(this.getActivity());
         View rootView = inflater.inflate(R.layout.listview, container, false);
         PreferencesHelper.getPrefValues(this.getActivity());
@@ -102,20 +105,18 @@ public class FragmentPlugins extends Fragment {
     }
 
     private void showModDialog(final boolean isModEnable, String message) {
-        new MaterialDialog.Builder(FragmentPlugins.this.getActivity())
-                .content(message)
-                .positiveText("OK")
-                .negativeText("Cancel").callback(new MaterialDialog.ButtonCallback() {
+        MaterialDialogInterface materialDialogInterface = new MaterialDialogInterface() {
             @Override
-            public void onPositive(MaterialDialog dialog) {
+            public void onPositiveButtonPressed() {
                 changeModsStatus(isModEnable);
             }
 
             @Override
-            public void onNegative(MaterialDialog dialog) {
+            public void onNegativeButtonPressed() {
                 reloadAdapter();
             }
-        }).show();
+        };
+        materialDialogManager.showDialog("", message, "Cancel", "OK", materialDialogInterface);
     }
 
     public void importMods() {
@@ -137,7 +138,6 @@ public class FragmentPlugins extends Fragment {
 
 
     public void showDependenciesDialog(final int pos) {
-
         String dependencies = "";
         try {
             dependencies = PluginReader.read(Constants.APPLICATION_DATA_STORAGE_PATH + "/"
@@ -145,11 +145,7 @@ public class FragmentPlugins extends Fragment {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        new MaterialDialog.Builder(FragmentPlugins.this.getActivity())
-                .title("Dependencies")
-                .content(dependencies)
-                .negativeText("Close").show();
-
+        materialDialogManager.showMessageDialogBox("Dependencies", dependencies, "Close");
     }
 
 
@@ -208,5 +204,4 @@ public class FragmentPlugins extends Fragment {
 
         }
     }
-
 }
