@@ -61,6 +61,7 @@ public class FragmentPlugins extends Fragment {
         if (!GameState.getGameState()) {
             savePluginsDataToDisk();
         }
+        Instance = null;
     }
 
     public static FragmentPlugins getInstance() {
