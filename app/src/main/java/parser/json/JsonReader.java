@@ -33,7 +33,7 @@ public class JsonReader {
             c.put(PLUGIN_ENABLED_KEY, loadedFile.get(i).enabled);
             jsonArray.put(c);
         }
-       FileUtils.saveDataToFile(jsonArray.toString(),path);
+       FileUtils.saveDataToFile(jsonArray.toString(),path,false);
     }
 
     public static String convertStreamToString(InputStream is)

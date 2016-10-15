@@ -9,12 +9,9 @@ import org.json.JSONException;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Optional;
 
 import constants.Constants;
 import file.utils.FileUtils;
@@ -40,11 +37,13 @@ public class PluginsStorage {
     }
 
     public void loadPlugins(String path) {
+
         try {
             pluginsList = JsonReader.loadFile(path);
             removeDeletedFiles();
             addNewFiles();
         } catch (Exception e) {
+            e.printStackTrace();
             Toast.makeText(
                     context,
                     "data files not found", Toast.LENGTH_LONG).show();
@@ -77,7 +76,8 @@ public class PluginsStorage {
                 pluginData.name = f.getName();
                 pluginData.nameBsa = f.getName().split("\\.")[0] + ".bsa";
                 pluginData.isPluginEsp = f.getName().endsWith(".ESP") ||f.getName().endsWith(".esp");
-                pluginData.pluginExtension = FileUtils.getFileExtension(f.getName());
+                Log.d("FILENAME",f.getName());
+                pluginData.pluginExtension = FileUtils.getFileName(f.getName(),true);
                 pluginsList.add(pluginData);
             }
         }

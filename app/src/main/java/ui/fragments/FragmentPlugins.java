@@ -8,17 +8,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.libopenmw.openmw.FileChooser;
 import com.libopenmw.openmw.R;
 import com.mobeta.android.dslv.DragSortListView;
+
 import java.io.IOException;
+
 import constants.Constants;
 import game.GameState;
 import plugins.PluginReader;
 import plugins.PluginsAdapter;
 import plugins.PluginsStorage;
 import plugins.PluginsUtils;
+import plugins.bsa.BsaWriter;
 import ui.activity.GameActivity;
 import ui.activity.MainActivity;
 import ui.files.PreferencesHelper;
@@ -43,26 +47,31 @@ public class FragmentPlugins extends Fragment {
         return rootView;
     }
 
-    public void savePluginsDataToDisk(){
-        if (pluginsStorage!=null && pluginsStorage.getPluginsList()!=null){
+    public void savePluginsDataToDisk() {
+        if (pluginsStorage != null && pluginsStorage.getPluginsList() != null) {
             pluginsStorage.savePluginsData("");
-            PluginsUtils.savePlugins(pluginsStorage.getPluginsList());
+            if (!BsaWriter.getSaveAllBsaFilesValue(FragmentPlugins.this.getActivity())) {
+                PluginsUtils.savePlugins(pluginsStorage.getPluginsList(), FragmentPlugins.this.getActivity());
+            } else {
+                BsaWriter.saveAllBsaFiles(FragmentPlugins.this.getActivity(), true);
+            }
         }
     }
 
     @Override
-    public void onDestroy(){
+    public void onDestroy() {
         super.onDestroy();
         if (!GameState.getGameState()) {
             savePluginsDataToDisk();
         }
     }
 
-    public static FragmentPlugins getInstance(){
+    public static FragmentPlugins getInstance() {
         return Instance;
     }
-    public PluginsStorage getPluginsStorage(){
-        return  pluginsStorage;
+
+    public PluginsStorage getPluginsStorage() {
+        return pluginsStorage;
     }
 
     private void setupViews(View rootView) {
@@ -76,7 +85,7 @@ public class FragmentPlugins extends Fragment {
     private DragSortListView.DropListener onDrop = new DragSortListView.DropListener() {
         @Override
         public void drop(int from, int to) {
-            if (pluginsStorage!=null) {
+            if (pluginsStorage != null) {
                 pluginsStorage.replacePlugins(from, to);
                 reloadAdapter();
             }
@@ -101,6 +110,7 @@ public class FragmentPlugins extends Fragment {
             public void onPositive(MaterialDialog dialog) {
                 changeModsStatus(isModEnable);
             }
+
             @Override
             public void onNegative(MaterialDialog dialog) {
                 reloadAdapter();
@@ -144,14 +154,14 @@ public class FragmentPlugins extends Fragment {
 
 
     private void changeModsStatus(boolean needEnableMods) {
-        if (pluginsStorage!=null){
+        if (pluginsStorage != null) {
             pluginsStorage.updatePluginsStatus(needEnableMods);
         }
         reloadAdapter();
     }
 
     private void reloadAdapter() {
-        if (adapter!=null) {
+        if (adapter != null) {
             adapter.notifyDataSetChanged();
         }
     }

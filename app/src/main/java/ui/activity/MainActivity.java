@@ -26,6 +26,7 @@ import com.melnykov.fab.FloatingActionButton;
 
 import constants.Constants;
 import game.GameState;
+import plugins.bsa.BsaWriter;
 import ui.fragments.FragmentControls;
 import ui.fragments.FragmentPlugins;
 import ui.fragments.FragmentSettings;
@@ -271,6 +272,12 @@ public class MainActivity extends AppCompatActivity {
                     if (FragmentPlugins.getInstance()!=null) {
                         FragmentPlugins.getInstance().exportMods();
                     }
+                    break;
+                case R.id.action_enableBsa:
+                    BsaWriter.setSaveAllBsaFilesValue(MainActivity.this,true);
+                    break;
+                case R.id.action_disableBsa:
+                    BsaWriter.setSaveAllBsaFilesValue(MainActivity.this,false);
                     break;
                 default:
                     break;

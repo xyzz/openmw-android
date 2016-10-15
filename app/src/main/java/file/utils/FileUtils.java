@@ -1,11 +1,13 @@
 package file.utils;
 
+import android.util.Log;
+
 import java.io.FileWriter;
 
 public class FileUtils {
-    public static void saveDataToFile(String data, String path) {
+    public static void saveDataToFile(String data, String path,boolean append) {
         try {
-            FileWriter writer = new FileWriter(path, false);
+            FileWriter writer = new FileWriter(path, append);
             writer.write(data);
             writer.flush();
             writer.close();
@@ -14,12 +16,14 @@ public class FileUtils {
         }
     }
 
-    public static String getFileExtension(String fileName){
-        String extension = "";
-        int i = fileName.lastIndexOf('.');
-        if (i > 0) {
-            extension = fileName.substring(i+1);
+    public static String getFileName(String fileName, boolean getOnlyExtension) {
+        try {
+            String[] splittedFileName = fileName.split("\\.");
+            return getOnlyExtension ? splittedFileName[1] : splittedFileName[0];
         }
-        return extension;
+        catch (Exception e){
+            e.printStackTrace();
+            return "";
+        }
     }
 }
