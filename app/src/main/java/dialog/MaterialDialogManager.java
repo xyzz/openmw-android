@@ -1,11 +1,6 @@
 package dialog;
-
 import android.app.Activity;
-
 import com.afollestad.materialdialogs.MaterialDialog;
-
-import ui.fragments.FragmentPlugins;
-
 /**
  * Created by sandstranger on 14.10.16.
  */

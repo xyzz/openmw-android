@@ -8,14 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.libopenmw.openmw.FileChooser;
 import com.libopenmw.openmw.R;
 import com.mobeta.android.dslv.DragSortListView;
-
 import java.io.IOException;
-
 import constants.Constants;
 import dialog.MaterialDialogInterface;
 import dialog.MaterialDialogManager;
@@ -25,8 +21,6 @@ import plugins.PluginsAdapter;
 import plugins.PluginsStorage;
 import plugins.PluginsUtils;
 import plugins.bsa.BsaWriter;
-import ui.activity.GameActivity;
-import ui.activity.MainActivity;
 import ui.files.PreferencesHelper;
 
 public class FragmentPlugins extends Fragment {
