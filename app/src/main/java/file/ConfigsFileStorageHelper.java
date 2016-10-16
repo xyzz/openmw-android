@@ -57,7 +57,7 @@ public class ConfigsFileStorageHelper {
                 try {
 
                     file.Writer.write(
-                            CONFIGS_FILES_STORAGE_PATH + "/libopenmw/resources",
+                            CONFIGS_FILES_STORAGE_PATH + "/resources",
                             CONFIGS_FILES_STORAGE_PATH + "/config/openmw/openmw.cfg",
                             "libopenmw/resources");
                     file.Writer.write(Constants.APPLICATION_DATA_STORAGE_PATH, CONFIGS_FILES_STORAGE_PATH
