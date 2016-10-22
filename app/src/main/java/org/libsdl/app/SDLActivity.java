@@ -71,17 +71,13 @@ public class SDLActivity extends Activity {
      */
     protected String[] getLibraries() {
         return new String[] {
-            "SDL2",
-            // "SDL2_image",
-            // "SDL2_mixer",
-            // "SDL2_net",
-            // "SDL2_ttf",
-            "main"
+                ""
         };
     }
 
     // Load the .so
     public void loadLibraries() {
+        return;
     }
 
     /**
@@ -366,7 +362,10 @@ public class SDLActivity extends Activity {
                 break;
             case COMMAND_TEXTEDIT_HIDE:
                 if (mTextEdit != null) {
-                    mTextEdit.setVisibility(View.GONE);
+                    // Note: On some devices setting view to GONE creates a flicker in landscape.
+                    // Setting the View's sizes to 0 is similar to GONE but without the flicker.
+                    // The sizes will be set to useful values when the keyboard is shown again.
+                    mTextEdit.setLayoutParams(new RelativeLayout.LayoutParams(0, 0));
 
                     InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(mTextEdit.getWindowToken(), 0);
@@ -721,6 +720,21 @@ public class SDLActivity extends Activity {
         }
     }
 
+    // Check if a given device is considered a possible SDL joystick
+    public static boolean isDeviceSDLJoystick(int deviceId) {
+        InputDevice device = InputDevice.getDevice(deviceId);
+        // We cannot use InputDevice.isVirtual before API 16, so let's accept
+        // only nonnegative device ids (VIRTUAL_KEYBOARD equals -1)
+        if ((device == null) || (deviceId < 0)) {
+            return false;
+        }
+        int sources = device.getSources();
+        return (((sources & InputDevice.SOURCE_CLASS_JOYSTICK) == InputDevice.SOURCE_CLASS_JOYSTICK) ||
+                ((sources & InputDevice.SOURCE_DPAD) == InputDevice.SOURCE_DPAD) ||
+                ((sources & InputDevice.SOURCE_GAMEPAD) == InputDevice.SOURCE_GAMEPAD)
+        );
+    }
+
     // APK expansion files support
 
     /** com.android.vending.expansion.zipfile.ZipResourceFile object or null. */
@@ -1051,7 +1065,8 @@ class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
     }
 
     public void handlePause() {
-//        enableSensor(Sensor.TYPE_ACCELEROMETER, false);
+
+       // enableSensor(Sensor.TYPE_ACCELEROMETER, false);
     }
 
     public void handleResume() {
@@ -1060,7 +1075,7 @@ class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
         requestFocus();
         setOnKeyListener(this);
         setOnTouchListener(this);
-  //      enableSensor(Sensor.TYPE_ACCELEROMETER, true);
+//        enableSensor(Sensor.TYPE_ACCELEROMETER, true);
     }
 
     public Surface getNativeSurface() {
@@ -1186,7 +1201,7 @@ class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
             // Start up the C app thread and enable sensor input for the first time
 
             final Thread sdlThread = new Thread(new SDLMain(), "SDLThread");
-           // enableSensor(Sensor.TYPE_ACCELEROMETER, true);
+      //      enableSensor(Sensor.TYPE_ACCELEROMETER, true);
             sdlThread.start();
 
             // Set up a listener thread to catch when the native thread ends
@@ -1217,12 +1232,15 @@ class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
     @Override
     public boolean onKey(View  v, int keyCode, KeyEvent event) {
         // Dispatch the different events depending on where they come from
-        // Some SOURCE_DPAD or SOURCE_GAMEPAD are also SOURCE_KEYBOARD
-        // So, we try to process them as DPAD or GAMEPAD events first, if that fails we try them as KEYBOARD
+        // Some SOURCE_JOYSTICK, SOURCE_DPAD or SOURCE_GAMEPAD are also SOURCE_KEYBOARD
+        // So, we try to process them as JOYSTICK/DPAD/GAMEPAD events first, if that fails we try them as KEYBOARD
+        //
+        // Furthermore, it's possible a game controller has SOURCE_KEYBOARD and
+        // SOURCE_JOYSTICK, while its key events arrive from the keyboard source
+        // So, retrieve the device itself and check all of its sources
         EscapeKeySimulation.onBackPressed(keyCode,event);
-
-        if ( (event.getSource() & InputDevice.SOURCE_GAMEPAD) != 0 ||
-                   (event.getSource() & InputDevice.SOURCE_DPAD) != 0 ) {
+        if (SDLActivity.isDeviceSDLJoystick(event.getDeviceId())) {
+            // Note that we process events with specific key codes here
             if (event.getAction() == KeyEvent.ACTION_DOWN) {
                 if (SDLActivity.onNativePadDown(event.getDeviceId(), keyCode) == 0) {
                     return true;
@@ -1234,7 +1252,7 @@ class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
             }
         }
 
-        if( (event.getSource() & InputDevice.SOURCE_KEYBOARD) != 0) {
+        if ((event.getSource() & InputDevice.SOURCE_KEYBOARD) != 0) {
             if (event.getAction() == KeyEvent.ACTION_DOWN) {
                 //Log.v("SDL", "key down: " + keyCode);
                 SDLActivity.onNativeKeyDown(keyCode);
@@ -1353,7 +1371,15 @@ class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
 
     // Sensor events
     public void enableSensor(int sensortype, boolean enabled) {
-        return;
+        // TODO: This uses getDefaultSensor - what if we have >1 accels?
+        if (enabled) {
+            mSensorManager.registerListener(this,
+                            mSensorManager.getDefaultSensor(sensortype),
+                            SensorManager.SENSOR_DELAY_GAME, null);
+        } else {
+            mSensorManager.unregisterListener(this,
+                            mSensorManager.getDefaultSensor(sensortype));
+        }
     }
 
     @Override
@@ -1385,7 +1411,7 @@ class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
             }
             SDLActivity.onNativeAccel(-x / SensorManager.GRAVITY_EARTH,
                                       y / SensorManager.GRAVITY_EARTH,
-                                      event.values[2] / SensorManager.GRAVITY_EARTH - 1);
+                                      event.values[2] / SensorManager.GRAVITY_EARTH);
         }
     }
 }
@@ -1412,7 +1438,7 @@ class DummyEdit extends View implements View.OnKeyListener {
     public boolean onKey(View v, int keyCode, KeyEvent event) {
 
         // This handles the hardware keyboard input
-        if (event.isPrintingKey()) {
+        if (event.isPrintingKey() || keyCode == KeyEvent.KEYCODE_SPACE) {
             if (event.getAction() == KeyEvent.ACTION_DOWN) {
                 ic.commitText(String.valueOf((char) event.getUnicodeChar()), 1);
             }
@@ -1475,7 +1501,7 @@ class SDLInputConnection extends BaseInputConnection {
          */
         int keyCode = event.getKeyCode();
         if (event.getAction() == KeyEvent.ACTION_DOWN) {
-            if (event.isPrintingKey()) {
+            if (event.isPrintingKey() || keyCode == KeyEvent.KEYCODE_SPACE) {
                 commitText(String.valueOf((char) event.getUnicodeChar()), 1);
             }
             SDLActivity.onNativeKeyDown(keyCode);
@@ -1576,13 +1602,7 @@ class SDLJoystickHandler_API12 extends SDLJoystickHandler {
             if (joystick == null) {
                 joystick = new SDLJoystick();
                 InputDevice joystickDevice = InputDevice.getDevice(deviceIds[i]);
-
-                if ( 
-                      (joystickDevice.getSources() & InputDevice.SOURCE_CLASS_JOYSTICK) != 0 
-                   ||
-                      (joystickDevice.getSources() & InputDevice.SOURCE_CLASS_BUTTON) != 0 
-                  )
-                {
+                if (SDLActivity.isDeviceSDLJoystick(deviceIds[i])) {
                     joystick.device_id = deviceIds[i];
                     joystick.name = joystickDevice.getName();
                     joystick.axes = new ArrayList<InputDevice.MotionRange>();
@@ -1591,7 +1611,7 @@ class SDLJoystickHandler_API12 extends SDLJoystickHandler {
                     List<InputDevice.MotionRange> ranges = joystickDevice.getMotionRanges();
                     Collections.sort(ranges, new RangeComparator());
                     for (InputDevice.MotionRange range : ranges ) {
-                        if ((range.getSource() & InputDevice.SOURCE_CLASS_JOYSTICK) != 0 ) {
+                        if ((range.getSource() & InputDevice.SOURCE_CLASS_JOYSTICK) != 0) {
                             if (range.getAxis() == MotionEvent.AXIS_HAT_X ||
                                 range.getAxis() == MotionEvent.AXIS_HAT_Y) {
                                 joystick.hats.add(range);
@@ -1645,7 +1665,7 @@ class SDLJoystickHandler_API12 extends SDLJoystickHandler {
 
     @Override
     public boolean handleMotionEvent(MotionEvent event) {
-        if ( (event.getSource() & InputDevice.SOURCE_JOYSTICK) != 0) {
+        if ((event.getSource() & InputDevice.SOURCE_JOYSTICK) != 0) {
             int actionPointerIndex = event.getActionIndex();
             int action = event.getActionMasked();
             switch(action) {
