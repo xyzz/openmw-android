@@ -362,11 +362,7 @@ public class SDLActivity extends Activity {
                 break;
             case COMMAND_TEXTEDIT_HIDE:
                 if (mTextEdit != null) {
-                    // Note: On some devices setting view to GONE creates a flicker in landscape.
-                    // Setting the View's sizes to 0 is similar to GONE but without the flicker.
-                    // The sizes will be set to useful values when the keyboard is shown again.
-                    mTextEdit.setLayoutParams(new RelativeLayout.LayoutParams(0, 0));
-
+                    mTextEdit.setVisibility(View.GONE);
                     InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(mTextEdit.getWindowToken(), 0);
                 }
