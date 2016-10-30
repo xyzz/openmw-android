@@ -2,7 +2,7 @@
     package="com.libopenmw.openmw"
     android:installLocation="auto"
     android:versionCode="1"
-    android:versionName="0.38">
+    android:versionName="0.40">
 
     <application
         android:hardwareAccelerated="true"
@@ -19,6 +19,9 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
         </activity>
 
         <activity
@@ -45,6 +48,8 @@
             <action android:name="com.libopenmw.openmw.FileChooser" />
             <category android:name="android.intent.category.DEFAULT" />
         </activity>
+
+
     </application>
 
     <uses-feature android:glEsVersion="0x00020000" android:required="true" />
