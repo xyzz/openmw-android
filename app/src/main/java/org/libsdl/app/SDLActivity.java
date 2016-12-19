@@ -77,7 +77,6 @@ public class SDLActivity extends Activity {
 
     // Load the .so
     public void loadLibraries() {
-        return;
     }
 
     /**
@@ -362,6 +361,10 @@ public class SDLActivity extends Activity {
                 break;
             case COMMAND_TEXTEDIT_HIDE:
                 if (mTextEdit != null) {
+                    // Note: On some devices setting view to GONE creates a flicker in landscape.
+                    // Setting the View's sizes to 0 is similar to GONE but without the flicker.
+                    // The sizes will be set to useful values when the keyboard is shown again.
+//                    mTextEdit.setLayoutParams(new RelativeLayout.LayoutParams(0, 0));
                     mTextEdit.setVisibility(View.GONE);
                     InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(mTextEdit.getWindowToken(), 0);
@@ -1061,8 +1064,7 @@ class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
     }
 
     public void handlePause() {
-
-       // enableSensor(Sensor.TYPE_ACCELEROMETER, false);
+        enableSensor(Sensor.TYPE_ACCELEROMETER, false);
     }
 
     public void handleResume() {
@@ -1071,7 +1073,7 @@ class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
         requestFocus();
         setOnKeyListener(this);
         setOnTouchListener(this);
-//        enableSensor(Sensor.TYPE_ACCELEROMETER, true);
+        enableSensor(Sensor.TYPE_ACCELEROMETER, true);
     }
 
     public Surface getNativeSurface() {
@@ -1197,7 +1199,7 @@ class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
             // Start up the C app thread and enable sensor input for the first time
 
             final Thread sdlThread = new Thread(new SDLMain(), "SDLThread");
-      //      enableSensor(Sensor.TYPE_ACCELEROMETER, true);
+            enableSensor(Sensor.TYPE_ACCELEROMETER, true);
             sdlThread.start();
 
             // Set up a listener thread to catch when the native thread ends
