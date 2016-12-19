@@ -1073,7 +1073,7 @@ class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
         requestFocus();
         setOnKeyListener(this);
         setOnTouchListener(this);
-        enableSensor(Sensor.TYPE_ACCELEROMETER, true);
+        enableSensor(Sensor.TYPE_ACCELEROMETER, false);
     }
 
     public Surface getNativeSurface() {
@@ -1199,7 +1199,7 @@ class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
             // Start up the C app thread and enable sensor input for the first time
 
             final Thread sdlThread = new Thread(new SDLMain(), "SDLThread");
-            enableSensor(Sensor.TYPE_ACCELEROMETER, true);
+            enableSensor(Sensor.TYPE_ACCELEROMETER, false);
             sdlThread.start();
 
             // Set up a listener thread to catch when the native thread ends
