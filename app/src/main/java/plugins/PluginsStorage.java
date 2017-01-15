@@ -17,6 +17,7 @@ import file.utils.FileUtils;
 import parser.json.JsonReader;
 import file.ConfigsFileStorageHelper;
 import plugins.bsa.BsaUtils;
+import utils.Utils;
 
 /**
  * Created by sandstranger on 07.09.2016.
@@ -46,9 +47,8 @@ public class PluginsStorage {
             addNewFiles();
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(
-                    activity,
-                    "data files not found", Toast.LENGTH_LONG).show();
+            Utils.deleteFile(JSON_FILE_LOCATION);
+            loadPlugins(JSON_FILE_LOCATION);
         }
     }
 
