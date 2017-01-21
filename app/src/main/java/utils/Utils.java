@@ -13,4 +13,8 @@ public class Utils {
             file.delete();
         }
     }
+
+    public static boolean fileExists(String path) {
+        return new File(path).exists();
+    }
 }

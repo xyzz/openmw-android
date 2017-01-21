@@ -47,8 +47,10 @@ public class PluginsStorage {
             addNewFiles();
         } catch (Exception e) {
             e.printStackTrace();
-            Utils.deleteFile(JSON_FILE_LOCATION);
-            loadPlugins(JSON_FILE_LOCATION);
+            if (Utils.fileExists(JSON_FILE_LOCATION)) {
+                Utils.deleteFile(JSON_FILE_LOCATION);
+                loadPlugins(JSON_FILE_LOCATION);
+            }
         }
     }
 
