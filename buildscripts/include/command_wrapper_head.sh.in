@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# Head: Preprocessed by build.sh
+
+export PKG_CONFIG_LIBDIR="$DIR/prefix/arm/lib/pkgconfig"
+export CC="$ARCH-linux-androideabi-clang"
+export CXX="$ARCH-linux-androideabi-clang++"
+export PATH="$DIR/toolchain/$ARCH/bin/:$DIR/toolchain/ndk/:$PATH"
