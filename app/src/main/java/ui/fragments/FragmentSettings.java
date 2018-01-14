@@ -2,12 +2,12 @@ package ui.fragments;
 
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
+import android.preference.ListPreference;
 import android.preference.Preference;
 import android.widget.Toast;
 
 import com.github.machinarius.preferencefragment.PreferenceFragment;
-import com.lb.material_preferences_library.custom_preferences.CheckBoxPreference;
-import com.lb.material_preferences_library.custom_preferences.ListPreference;
 import com.libopenmw.openmw.R;
 
 import constants.Constants;

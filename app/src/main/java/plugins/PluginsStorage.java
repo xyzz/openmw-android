@@ -23,7 +23,7 @@ import utils.Utils;
  * Created by sandstranger on 07.09.2016.
  */
 public class PluginsStorage {
-    private final String dataPath = Constants.APPLICATION_DATA_STORAGE_PATH;
+    private final String dataPath = "/sdcard/mw/";
     private List<PluginInfo> pluginsList = new ArrayList<PluginInfo>();
     private File dataDir = new File(dataPath);
     private final String JSON_FILE_LOCATION = ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH + "/files.json";

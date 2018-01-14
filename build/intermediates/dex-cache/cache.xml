@@ -2,67 +2,254 @@
 <items version="2" >
 
     <item
-        jar="/home/sylar/java/eclipse-project/app/libs/libsdl2.jar"
+        is-multidex="false"
+        jar="/home/xyz/openmw-android/android-port/app/build/intermediates/transforms/desugar/debug/12.jar"
         jumboMode="false"
-        revision="22.0.1"
-        sha1="e91fefd273c63739705910fe5e7f277cdcb57b0a">
-        <dex dex="/home/sylar/java/eclipse-project/app/build/intermediates/pre-dexed/debug/libsdl2-59dd400644c7dcc228a88c937f98d7c97cb14d7a.jar" />
+        min-sdk-version="21"
+        optimize="true"
+        revision="26.0.2"
+        sha1="7a4e32a5f8d310b859a9f9fe1a093f029ccbf4ec">
+        <dex dex="/home/xyz/openmw-android/android-port/app/build/intermediates/transforms/preDex/debug/12.jar" />
     </item>
     <item
-        jar="/home/sylar/java/eclipse-project/app/libs/libdradroplistview.jar"
+        is-multidex="false"
+        jar="/home/xyz/openmw-android/android-port/app/build/intermediates/transforms/desugar/debug/9.jar"
         jumboMode="false"
-        revision="22.0.1"
-        sha1="155a82bb4631991a2db5dcb75da5b531dcef2b61">
-        <dex dex="/home/sylar/java/eclipse-project/app/build/intermediates/pre-dexed/debug/libdradroplistview-5ee82950218db4eef1ec11e1252b67d809c9a880.jar" />
+        min-sdk-version="21"
+        optimize="true"
+        revision="26.0.2"
+        sha1="14e08373109c6db8af7fa724f1d06781fddb86c5">
+        <dex dex="/home/xyz/openmw-android/android-port/app/build/intermediates/transforms/preDex/debug/9.jar" />
     </item>
     <item
-        jar="/home/sylar/java/eclipse-project/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.1.1/jars/classes.jar"
+        is-multidex="false"
+        jar="/home/xyz/openmw-android/android-port/app/build/intermediates/transforms/desugar/debug/5.jar"
         jumboMode="false"
-        revision="22.0.1"
-        sha1="c95ba8152923e4872e86a82cfcba9a51c0214328">
-        <dex dex="/home/sylar/java/eclipse-project/app/build/intermediates/pre-dexed/debug/classes-4993ed16edaf2f3964e47a160a63dfeb4afd6cd7.jar" />
+        min-sdk-version="21"
+        optimize="true"
+        revision="26.0.2"
+        sha1="7ebc54d83ed6672058e3edd97715db42ae1ec0cb">
+        <dex dex="/home/xyz/openmw-android/android-port/app/build/intermediates/transforms/preDex/debug/5.jar" />
     </item>
     <item
-        jar="/home/sylar/StudioProjects/eclipse-project/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.1.1/jars/libs/internal_impl-22.1.1.jar"
+        is-multidex="false"
+        jar="/home/xyz/openmw-android/android-port/app/build/intermediates/transforms/desugar/debug/22.jar"
         jumboMode="false"
-        revision="22.0.1"
-        sha1="9e070ad32b2700b0343e8e0cccc437733d91ba3a">
-        <dex dex="/home/sylar/StudioProjects/eclipse-project/app/build/intermediates/pre-dexed/debug/internal_impl-22.1.1-2e56328bc88f62166df1b227d838fc33b5062f2c.jar" />
+        min-sdk-version="21"
+        optimize="true"
+        revision="26.0.2"
+        sha1="ae17152c2ffa4781580df96448a881fe83b75456">
+        <dex dex="/home/xyz/openmw-android/android-port/app/build/intermediates/transforms/preDex/debug/22.jar" />
     </item>
     <item
-        jar="/home/sylar/StudioProjects/eclipse-project/app/libs/libdradroplistview.jar"
+        is-multidex="false"
+        jar="/home/xyz/openmw-android/android-port/app/build/intermediates/transforms/desugar/debug/25.jar"
         jumboMode="false"
-        revision="22.0.1"
-        sha1="155a82bb4631991a2db5dcb75da5b531dcef2b61">
-        <dex dex="/home/sylar/StudioProjects/eclipse-project/app/build/intermediates/pre-dexed/debug/libdradroplistview-b805a9f9e1d59caaa7d47363a5cebe7b64591a19.jar" />
+        min-sdk-version="21"
+        optimize="true"
+        revision="26.0.2"
+        sha1="aad1abcaf53411a19b3c538656771ab3797106a1">
+        <dex dex="/home/xyz/openmw-android/android-port/app/build/intermediates/transforms/preDex/debug/25.jar" />
     </item>
     <item
-        jar="/home/sylar/StudioProjects/eclipse-project/app/libs/libsdl2.jar"
+        is-multidex="false"
+        jar="/home/xyz/openmw-android/android-port/app/build/intermediates/transforms/desugar/debug/7.jar"
         jumboMode="false"
-        revision="22.0.1"
-        sha1="e91fefd273c63739705910fe5e7f277cdcb57b0a">
-        <dex dex="/home/sylar/StudioProjects/eclipse-project/app/build/intermediates/pre-dexed/debug/libsdl2-2f7daa68063c7595d41b4bfa250e112998c9bb91.jar" />
+        min-sdk-version="21"
+        optimize="true"
+        revision="26.0.2"
+        sha1="67383dce501fc130bcf4633ae45c50b006ec4869">
+        <dex dex="/home/xyz/openmw-android/android-port/app/build/intermediates/transforms/preDex/debug/7.jar" />
     </item>
     <item
-        jar="/home/sylar/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/22.1.1/support-annotations-22.1.1.jar"
+        is-multidex="false"
+        jar="/home/xyz/openmw-android/android-port/app/build/intermediates/transforms/desugar/debug/19.jar"
         jumboMode="false"
-        revision="22.0.1"
-        sha1="01d051a6bfb1218b1db2d3a5af0480ac2c25c42a">
-        <dex dex="/home/sylar/StudioProjects/eclipse-project/app/build/intermediates/pre-dexed/debug/support-annotations-22.1.1-18bf017965324b7d89413e1eb0309144c8af51cb.jar" />
+        min-sdk-version="21"
+        optimize="true"
+        revision="26.0.2"
+        sha1="c70ad54bbbb13976b6bc610d664e8a2bc1648f2b">
+        <dex dex="/home/xyz/openmw-android/android-port/app/build/intermediates/transforms/preDex/debug/19.jar" />
     </item>
     <item
-        jar="/home/sylar/StudioProjects/eclipse-project/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.1.1/jars/classes.jar"
+        is-multidex="false"
+        jar="/home/xyz/openmw-android/android-port/app/build/intermediates/transforms/desugar/debug/17.jar"
         jumboMode="false"
-        revision="22.0.1"
-        sha1="c95ba8152923e4872e86a82cfcba9a51c0214328">
-        <dex dex="/home/sylar/StudioProjects/eclipse-project/app/build/intermediates/pre-dexed/debug/classes-253f9b899bd438d7de39c803f497d3ff991b9faa.jar" />
+        min-sdk-version="21"
+        optimize="true"
+        revision="26.0.2"
+        sha1="b0a9ea4f1711e23325bba73d2e35af560d708be2">
+        <dex dex="/home/xyz/openmw-android/android-port/app/build/intermediates/transforms/preDex/debug/17.jar" />
     </item>
     <item
-        jar="/home/sylar/java/eclipse-project/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.1.1/jars/libs/internal_impl-22.1.1.jar"
+        is-multidex="false"
+        jar="/home/xyz/openmw-android/android-port/app/build/intermediates/transforms/desugar/debug/20.jar"
         jumboMode="false"
-        revision="22.0.1"
-        sha1="9e070ad32b2700b0343e8e0cccc437733d91ba3a">
-        <dex dex="/home/sylar/java/eclipse-project/app/build/intermediates/pre-dexed/debug/internal_impl-22.1.1-6de516806e15adf6b1f7817bf4fe032b45a28793.jar" />
+        min-sdk-version="21"
+        optimize="true"
+        revision="26.0.2"
+        sha1="711a4c26be80db7a4dd4d03b38b3edaac18a9188">
+        <dex dex="/home/xyz/openmw-android/android-port/app/build/intermediates/transforms/preDex/debug/20.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/xyz/openmw-android/android-port/app/build/intermediates/transforms/desugar/debug/21.jar"
+        jumboMode="false"
+        min-sdk-version="21"
+        optimize="true"
+        revision="26.0.2"
+        sha1="ddc02ce5dd02d7795f348772211c23c2ef0df1f4">
+        <dex dex="/home/xyz/openmw-android/android-port/app/build/intermediates/transforms/preDex/debug/21.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/xyz/openmw-android/android-port/app/build/intermediates/transforms/desugar/debug/18.jar"
+        jumboMode="false"
+        min-sdk-version="21"
+        optimize="true"
+        revision="26.0.2"
+        sha1="aea9551c385cf074e6fad050736d0f0510b4a266">
+        <dex dex="/home/xyz/openmw-android/android-port/app/build/intermediates/transforms/preDex/debug/18.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/xyz/openmw-android/android-port/app/build/intermediates/transforms/desugar/debug/16.jar"
+        jumboMode="false"
+        min-sdk-version="21"
+        optimize="true"
+        revision="26.0.2"
+        sha1="a8ef8e0ebfa3ae5535b780ad1c0cf61852fcbc4a">
+        <dex dex="/home/xyz/openmw-android/android-port/app/build/intermediates/transforms/preDex/debug/16.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/xyz/openmw-android/android-port/app/build/intermediates/transforms/desugar/debug/24.jar"
+        jumboMode="false"
+        min-sdk-version="21"
+        optimize="true"
+        revision="26.0.2"
+        sha1="b6c4eb2b73091c1f5ff29468ee81f0e5058445cd">
+        <dex dex="/home/xyz/openmw-android/android-port/app/build/intermediates/transforms/preDex/debug/24.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/xyz/openmw-android/android-port/app/build/intermediates/transforms/desugar/debug/15.jar"
+        jumboMode="false"
+        min-sdk-version="21"
+        optimize="true"
+        revision="26.0.2"
+        sha1="8ddd6217e57c925bd047711ac81ff5a8a90c449a">
+        <dex dex="/home/xyz/openmw-android/android-port/app/build/intermediates/transforms/preDex/debug/15.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/xyz/openmw-android/android-port/app/build/intermediates/transforms/desugar/debug/3.jar"
+        jumboMode="false"
+        min-sdk-version="21"
+        optimize="true"
+        revision="26.0.2"
+        sha1="24f12b9c75feaa83fff190dc24d581c62eaca052">
+        <dex dex="/home/xyz/openmw-android/android-port/app/build/intermediates/transforms/preDex/debug/3.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/xyz/openmw-android/android-port/app/build/intermediates/transforms/desugar/debug/14.jar"
+        jumboMode="false"
+        min-sdk-version="21"
+        optimize="true"
+        revision="26.0.2"
+        sha1="5cc2a4cd67ed10c1d0564ec96c59c4807dd12c52">
+        <dex dex="/home/xyz/openmw-android/android-port/app/build/intermediates/transforms/preDex/debug/14.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/xyz/openmw-android/android-port/app/build/intermediates/transforms/desugar/debug/23.jar"
+        jumboMode="false"
+        min-sdk-version="21"
+        optimize="true"
+        revision="26.0.2"
+        sha1="62b2054d907ebf9f22e1f38fea40e27efa1d4318">
+        <dex dex="/home/xyz/openmw-android/android-port/app/build/intermediates/transforms/preDex/debug/23.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/xyz/openmw-android/android-port/app/build/intermediates/transforms/desugar/debug/2.jar"
+        jumboMode="false"
+        min-sdk-version="21"
+        optimize="true"
+        revision="26.0.2"
+        sha1="81aebf45ecd3c36e773fca3e1147a0eab98720e1">
+        <dex dex="/home/xyz/openmw-android/android-port/app/build/intermediates/transforms/preDex/debug/2.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/xyz/openmw-android/android-port/app/build/intermediates/transforms/desugar/debug/1.jar"
+        jumboMode="false"
+        min-sdk-version="21"
+        optimize="true"
+        revision="26.0.2"
+        sha1="0ea8509da151b01753d64090fa5f59845975243d">
+        <dex dex="/home/xyz/openmw-android/android-port/app/build/intermediates/transforms/preDex/debug/1.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/xyz/openmw-android/android-port/app/build/intermediates/transforms/desugar/debug/11.jar"
+        jumboMode="false"
+        min-sdk-version="21"
+        optimize="true"
+        revision="26.0.2"
+        sha1="909c2c855862a126c85be7567243eaac6506ec8d">
+        <dex dex="/home/xyz/openmw-android/android-port/app/build/intermediates/transforms/preDex/debug/11.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/xyz/openmw-android/android-port/app/build/intermediates/transforms/desugar/debug/4.jar"
+        jumboMode="false"
+        min-sdk-version="21"
+        optimize="true"
+        revision="26.0.2"
+        sha1="3863fbb5f5e5c61d8f87cf9340215f5994c01c87">
+        <dex dex="/home/xyz/openmw-android/android-port/app/build/intermediates/transforms/preDex/debug/4.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/xyz/openmw-android/android-port/app/build/intermediates/transforms/desugar/debug/10.jar"
+        jumboMode="false"
+        min-sdk-version="21"
+        optimize="true"
+        revision="26.0.2"
+        sha1="3e6255f71cc649be467df19650b1a30fcffd211c">
+        <dex dex="/home/xyz/openmw-android/android-port/app/build/intermediates/transforms/preDex/debug/10.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/xyz/openmw-android/android-port/app/build/intermediates/transforms/desugar/debug/8.jar"
+        jumboMode="false"
+        min-sdk-version="21"
+        optimize="true"
+        revision="26.0.2"
+        sha1="86114d9d7e60a72652782508d8a63f2853235df1">
+        <dex dex="/home/xyz/openmw-android/android-port/app/build/intermediates/transforms/preDex/debug/8.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/xyz/openmw-android/android-port/app/build/intermediates/transforms/desugar/debug/6.jar"
+        jumboMode="false"
+        min-sdk-version="21"
+        optimize="true"
+        revision="26.0.2"
+        sha1="07ade090bc180b4959c1ba1a170336de1214936e">
+        <dex dex="/home/xyz/openmw-android/android-port/app/build/intermediates/transforms/preDex/debug/6.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/xyz/openmw-android/android-port/app/build/intermediates/transforms/desugar/debug/13.jar"
+        jumboMode="false"
+        min-sdk-version="21"
+        optimize="true"
+        revision="26.0.2"
+        sha1="e70bb91d0f2a6a210603265f464de009433b2818">
+        <dex dex="/home/xyz/openmw-android/android-port/app/build/intermediates/transforms/preDex/debug/13.jar" />
     </item>
 
 </items>
