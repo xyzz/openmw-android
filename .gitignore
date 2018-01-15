@@ -1,3 +1,6 @@
 .gradle
 build
 jniLibs
+.idea
+local.properties
+*.iml
