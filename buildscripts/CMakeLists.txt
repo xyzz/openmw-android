@@ -53,20 +53,20 @@ set(app_abi armeabi-v7a) # TODO
 set(osg_plugins_dir ${prefix}/lib/osgPlugins-3.4.1) # TODO: extract version?
 
 ExternalProject_Add(libjpeg-turbo
-    URL https://sourceforge.net/projects/libjpeg-turbo/files/${LIBJPEG_TURBO_VERSION}/libjpeg-turbo-${LIBJPEG_TURBO_VERSION}.tar.gz/download
-    URL_HASH ${LIBJPEG_TURBO_HASH}
-    DOWNLOAD_DIR ${download_dir}
+	URL https://sourceforge.net/projects/libjpeg-turbo/files/${LIBJPEG_TURBO_VERSION}/libjpeg-turbo-${LIBJPEG_TURBO_VERSION}.tar.gz/download
+	URL_HASH ${LIBJPEG_TURBO_HASH}
+	DOWNLOAD_DIR ${download_dir}
 
-    CONFIGURE_COMMAND ${wrapper_command} <SOURCE_DIR>/configure
-    --host=${ndk_triple}
-    --enable-static
-    --disable-shared
-    --prefix=${prefix}
-    --with-simd
+	CONFIGURE_COMMAND ${wrapper_command} <SOURCE_DIR>/configure
+	--host=${ndk_triple}
+	--enable-static
+	--disable-shared
+	--prefix=${prefix}
+	--with-simd
 
-    BUILD_COMMAND ${wrapper_command} $(MAKE) PROGRAMS=
+	BUILD_COMMAND ${wrapper_command} $(MAKE) PROGRAMS=
 
-    INSTALL_COMMAND ${wrapper_command} $(MAKE) install-libLTLIBRARIES install-data-am
+	INSTALL_COMMAND ${wrapper_command} $(MAKE) install-libLTLIBRARIES install-data-am
 )
 
 ExternalProject_Add(libpng
@@ -243,58 +243,58 @@ ExternalProject_Add(mygui
 )
 
 ExternalProject_Add(osg
-    DEPENDS libjpeg-turbo libpng
+	DEPENDS libjpeg-turbo libpng
 
-    GIT_REPOSITORY https://github.com/xyzz/osg.git
-    GIT_TAG ${OSG_TAG}
+	GIT_REPOSITORY https://github.com/xyzz/osg.git
+	GIT_TAG ${OSG_TAG}
 
-    PATCH_COMMAND mkdir -p <SOURCE_DIR>/3rdparty/build/libpng
-    COMMAND mkdir -p <SOURCE_DIR>/3rdparty/build/libjpeg
+	PATCH_COMMAND mkdir -p <SOURCE_DIR>/3rdparty/build/libpng
+	COMMAND mkdir -p <SOURCE_DIR>/3rdparty/build/libjpeg
 
-    CONFIGURE_COMMAND ${wrapper_command} cmake <SOURCE_DIR>
-    -DCMAKE_TOOLCHAIN_FILE=${CMAKE_SOURCE_DIR}/toolchain/ndk/build/cmake/android.toolchain.cmake
+	CONFIGURE_COMMAND ${wrapper_command} cmake <SOURCE_DIR>
+	-DCMAKE_TOOLCHAIN_FILE=${CMAKE_SOURCE_DIR}/toolchain/ndk/build/cmake/android.toolchain.cmake
 	-DCMAKE_INSTALL_PREFIX=${prefix}
 	-DCMAKE_FIND_ROOT_PATH=${prefix}
 	-DANDROID_PLATFORM=${android_platform}
 	-DANDROID_STL=c++_shared
-    -DOPENGL_PROFILE="GLES1"
-    -DDYNAMIC_OPENTHREADS=OFF
-    -DDYNAMIC_OPENSCENEGRAPH=OFF
-    -DBUILD_OSG_PLUGIN_OSG=ON
-    -DBUILD_OSG_PLUGIN_DDS=ON
-    -DBUILD_OSG_PLUGIN_TGA=ON
-    -DBUILD_OSG_PLUGIN_BMP=ON
-    -DBUILD_OSG_PLUGIN_JPEG=ON
-    -DBUILD_OSG_PLUGIN_PNG=ON
-    -DJPEG_INCLUDE_DIR=${prefix}/include/
-    -DPNG_INCLUDE_DIR=${prefix}/include/
-    -DOSG_CPP_EXCEPTIONS_AVAILABLE=TRUE
-    -DOSG_GL1_AVAILABLE=OFF
-    -DOSG_GL2_AVAILABLE=OFF
-    -DOSG_GL3_AVAILABLE=OFF
-    -DOSG_GLES1_AVAILABLE=ON
-    -DOSG_GLES2_AVAILABLE=OFF
-    -DOSG_GL_LIBRARY_STATIC=OFF
-    -DOSG_GL_DISPLAYLISTS_AVAILABLE=OFF
-    -DOSG_GL_MATRICES_AVAILABLE=ON
-    -DOSG_GL_VERTEX_FUNCS_AVAILABLE=ON
-    -DOSG_GL_VERTEX_ARRAY_FUNCS_AVAILABLE=ON
-    -DOSG_GL_FIXED_FUNCTION_AVAILABLE=ON
-    -DDYNAMIC_OPENTHREADS=OFF
-    -DDYNAMIC_OPENSCENEGRAPH=OFF
-    -DBUILD_OSG_APPLICATIONS=OFF
-    -DBUILD_OSG_PLUGINS_BY_DEFAULT=OFF
-    -DBUILD_OSG_PLUGIN_OSG=ON
-    -DBUILD_OSG_PLUGIN_DDS=ON
-    -DBUILD_OSG_PLUGIN_TGA=ON
-    -DBUILD_OSG_PLUGIN_BMP=ON
-    -DBUILD_OSG_PLUGIN_JPEG=ON
-    -DBUILD_OSG_PLUGIN_PNG=ON
-    -DBUILD_OSG_DEPRECATED_SERIALIZERS=OFF
+	-DOPENGL_PROFILE="GLES1"
+	-DDYNAMIC_OPENTHREADS=OFF
+	-DDYNAMIC_OPENSCENEGRAPH=OFF
+	-DBUILD_OSG_PLUGIN_OSG=ON
+	-DBUILD_OSG_PLUGIN_DDS=ON
+	-DBUILD_OSG_PLUGIN_TGA=ON
+	-DBUILD_OSG_PLUGIN_BMP=ON
+	-DBUILD_OSG_PLUGIN_JPEG=ON
+	-DBUILD_OSG_PLUGIN_PNG=ON
+	-DJPEG_INCLUDE_DIR=${prefix}/include/
+	-DPNG_INCLUDE_DIR=${prefix}/include/
+	-DOSG_CPP_EXCEPTIONS_AVAILABLE=TRUE
+	-DOSG_GL1_AVAILABLE=OFF
+	-DOSG_GL2_AVAILABLE=OFF
+	-DOSG_GL3_AVAILABLE=OFF
+	-DOSG_GLES1_AVAILABLE=ON
+	-DOSG_GLES2_AVAILABLE=OFF
+	-DOSG_GL_LIBRARY_STATIC=OFF
+	-DOSG_GL_DISPLAYLISTS_AVAILABLE=OFF
+	-DOSG_GL_MATRICES_AVAILABLE=ON
+	-DOSG_GL_VERTEX_FUNCS_AVAILABLE=ON
+	-DOSG_GL_VERTEX_ARRAY_FUNCS_AVAILABLE=ON
+	-DOSG_GL_FIXED_FUNCTION_AVAILABLE=ON
+	-DDYNAMIC_OPENTHREADS=OFF
+	-DDYNAMIC_OPENSCENEGRAPH=OFF
+	-DBUILD_OSG_APPLICATIONS=OFF
+	-DBUILD_OSG_PLUGINS_BY_DEFAULT=OFF
+	-DBUILD_OSG_PLUGIN_OSG=ON
+	-DBUILD_OSG_PLUGIN_DDS=ON
+	-DBUILD_OSG_PLUGIN_TGA=ON
+	-DBUILD_OSG_PLUGIN_BMP=ON
+	-DBUILD_OSG_PLUGIN_JPEG=ON
+	-DBUILD_OSG_PLUGIN_PNG=ON
+	-DBUILD_OSG_DEPRECATED_SERIALIZERS=OFF
 
-    BUILD_COMMAND ${wrapper_command} $(MAKE)
+	BUILD_COMMAND ${wrapper_command} $(MAKE)
 
-    INSTALL_COMMAND $(MAKE) install
+	INSTALL_COMMAND $(MAKE) install
 )
 
 # TODO: git fix? and shallow?
