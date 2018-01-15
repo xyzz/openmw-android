@@ -70,7 +70,7 @@ ExternalProject_Add(libjpeg-turbo
 )
 
 ExternalProject_Add(libpng
-	URL http://prdownloads.sourceforge.net/libpng/libpng-${LIBPNG_VERSION}.tar.xz?download
+	URL http://prdownloads.sourceforge.net/libpng/libpng-${LIBPNG_VERSION}.tar.xz
 	URL_HASH ${LIBPNG_HASH}
 	DOWNLOAD_DIR ${download_dir}
 
@@ -191,8 +191,9 @@ ExternalProject_Add(sdl2
 	APP_ABI=${app_abi}
 	-j4
 
-	INSTALL_COMMAND cp libs/${app_abi}/libSDL2.so ${prefix}/lib
-	COMMAND cp -r <SOURCE_DIR>/include ${prefix}
+	INSTALL_COMMAND mkdir -p ${prefix}/lib/
+	COMMAND cp libs/${app_abi}/libSDL2.so ${prefix}/lib/
+	COMMAND cp -r <SOURCE_DIR>/include ${prefix}/
 )
 
 ExternalProject_Add(bullet
