@@ -249,9 +249,6 @@ ExternalProject_Add(osg
 	GIT_REPOSITORY https://github.com/xyzz/osg.git
 	GIT_TAG ${OSG_TAG}
 
-	PATCH_COMMAND mkdir -p <SOURCE_DIR>/3rdparty/build/libpng
-	COMMAND mkdir -p <SOURCE_DIR>/3rdparty/build/libjpeg
-
 	CONFIGURE_COMMAND ${wrapper_command} cmake <SOURCE_DIR>
 	-DCMAKE_TOOLCHAIN_FILE=${CMAKE_SOURCE_DIR}/toolchain/ndk/build/cmake/android.toolchain.cmake
 	-DCMAKE_INSTALL_PREFIX=${prefix}
@@ -295,7 +292,8 @@ ExternalProject_Add(osg
 
 	BUILD_COMMAND ${wrapper_command} $(MAKE)
 
-	INSTALL_COMMAND $(MAKE) install
+	INSTALL_COMMAND mkdir -p <SOURCE_DIR>/3rdparty/build/libpng <SOURCE_DIR>/3rdparty/build/libjpeg
+	COMMAND $(MAKE) install
 )
 
 # TODO: git fix? and shallow?
