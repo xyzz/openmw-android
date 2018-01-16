@@ -27,7 +27,7 @@ public class PluginsStorage {
     private List<PluginInfo> pluginsList = new ArrayList<PluginInfo>();
     private File dataDir = new File(dataPath);
     private final String JSON_FILE_LOCATION = ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH + "/files.json";
-    private final String CFG_FILE_LOCATION =  ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH + "/openmw/openmw.cfg";
+    private final String CFG_FILE_LOCATION =  ConfigsFileStorageHelper.OPENMW_CFG;
     private Activity activity;
 
     public PluginsStorage(Activity activity) {

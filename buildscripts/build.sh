@@ -50,4 +50,26 @@ cp ./toolchain/$ARCH/*/lib/armv7-a/libc++_shared.so ../app/src/main/jniLibs/arme
 
 arm-linux-androideabi-strip ../app/src/main/jniLibs/armeabi-v7a/*.so # TODO
 
+echo "==> Deploying resources"
+
+DST=$DIR/../app/src/main/assets/libopenmw/
+SRC=build/$ARCH/openmw-prefix/src/openmw-build/
+
+rm -rf "$DST" && mkdir -p "$DST"
+
+# resources
+cp -r "$SRC/resources" "$DST"
+
+# global config
+mkdir -p "$DST/openmw/"
+cp "$SRC/settings-default.cfg" "$DST/openmw/"
+cp "$SRC/gamecontrollerdb.txt" "$DST/openmw/"
+
+# local config
+mkdir -p "$DST/config/openmw/"
+# TODO: do we really need this twice?
+cp "$SRC/gamecontrollerdb.txt" "$DST/config/openmw/"
+cp "$DIR/../app/openmw-base.cfg" "$DST/config/openmw/openmw.cfg"
+cp "$DIR/../app/settings-base.cfg" "$DST/config/openmw/settings.cfg"
+
 echo "==> Success"

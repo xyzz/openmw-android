@@ -7,10 +7,10 @@
             android:checked="false"
             android:title="Start game" />
 
-        <item
-            android:id="@+id/plugins"
-            android:checked="false"
-            android:title="Plugins" />
+        <!--<item-->
+            <!--android:id="@+id/plugins"-->
+            <!--android:checked="false"-->
+            <!--android:title="Plugins" />-->
 
         <item
             android:id="@+id/settings"

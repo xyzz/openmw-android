@@ -19,6 +19,8 @@ import ui.screen.ScreenResolutionHelper;
 public class ConfigsFileStorageHelper {
 
     public static final String CONFIGS_FILES_STORAGE_PATH = Environment.getExternalStorageDirectory() + "/Android/data/" + BuildConfig.APPLICATION_ID;
+    public static final String SETTINGS_CFG = CONFIGS_FILES_STORAGE_PATH + "/config/openmw/settings.cfg";
+    public static final String OPENMW_CFG = CONFIGS_FILES_STORAGE_PATH + "/config/openmw/openmw.cfg";
     private MaterialDialog dialog;
     private Activity activity;
     private SharedPreferences Settings;
@@ -58,32 +60,27 @@ public class ConfigsFileStorageHelper {
 
                     file.Writer.write(
                             CONFIGS_FILES_STORAGE_PATH + "/resources",
-                            CONFIGS_FILES_STORAGE_PATH + "/config/openmw/openmw.cfg",
+                            OPENMW_CFG,
                             "libopenmw/resources");
-                    file.Writer.write(Constants.APPLICATION_DATA_STORAGE_PATH, CONFIGS_FILES_STORAGE_PATH
-                            + "/config/openmw/openmw.cfg", "data");
+                    file.Writer.write(Constants.APPLICATION_DATA_STORAGE_PATH, OPENMW_CFG, "data");
 
                     file.Writer.write(
                             PreferenceManager.getDefaultSharedPreferences(activity).getString(Constants.LANGUAGE, "win1250"),
-                            CONFIGS_FILES_STORAGE_PATH + "/config/openmw/openmw.cfg",
+                            OPENMW_CFG,
                             "encoding");
 
 
                     file.Writer.write(PreferenceManager.getDefaultSharedPreferences(activity).getString(Constants.MIPMAPPING, "none"),
-                            CONFIGS_FILES_STORAGE_PATH
-                                    + "/config/openmw/settings.cfg",
+                            SETTINGS_CFG,
                             "texture filtering");
 
-                    file.Writer.write(String.valueOf(PreferenceManager.getDefaultSharedPreferences(activity).getBoolean(Constants.SUBTITLES, false)), CONFIGS_FILES_STORAGE_PATH
-                            + "/config/openmw/settings.cfg", "subtitles");
+                    file.Writer.write(String.valueOf(PreferenceManager.getDefaultSharedPreferences(activity).getBoolean(Constants.SUBTITLES, false)), SETTINGS_CFG, "subtitles");
 
-                    file.Writer.write("" + Settings.getFloat(Constants.CAMERA_MULTIPLISER, 2.0f), CONFIGS_FILES_STORAGE_PATH
-                            + "/config/openmw/settings.cfg", Constants.CAMERA_MULTIPLISER);
-                    file.Writer.write("" + Settings.getFloat(Constants.TOUCH_SENSITIVITY, 0.01f), CONFIGS_FILES_STORAGE_PATH
-                            + "/config/openmw/settings.cfg", Constants.TOUCH_SENSITIVITY);
+                    file.Writer.write("" + Settings.getFloat(Constants.CAMERA_MULTIPLISER, 2.0f), SETTINGS_CFG, Constants.CAMERA_MULTIPLISER);
+                    file.Writer.write("" + Settings.getFloat(Constants.TOUCH_SENSITIVITY, 0.01f), SETTINGS_CFG, Constants.TOUCH_SENSITIVITY);
 
                     ScreenResolutionHelper screenHelper = new ScreenResolutionHelper(activity);
-                    screenHelper.writeScreenResolution(PreferenceManager.getDefaultSharedPreferences(activity).getString(Constants.RESOLUTION, "normalResolution"));
+//                    screenHelper.writeScreenResolution(PreferenceManager.getDefaultSharedPreferences(activity).getString(Constants.RESOLUTION, "normalResolution"));
 
 
                 } catch (Exception e) {

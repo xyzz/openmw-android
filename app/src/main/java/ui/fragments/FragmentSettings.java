@@ -1,10 +1,14 @@
 package ui.fragments;
 
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
+import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
+import android.preference.PreferenceGroup;
 import android.widget.Toast;
 
 import com.github.machinarius.preferencefragment.PreferenceFragment;
@@ -14,13 +18,14 @@ import constants.Constants;
 import file.ConfigsFileStorageHelper;
 import ui.screen.ScreenResolutionHelper;
 
-public class FragmentSettings extends PreferenceFragment {
+public class FragmentSettings extends PreferenceFragment implements OnSharedPreferenceChangeListener {
 
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         addPreferencesFromResource(R.xml.settings);
+        getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
 
         CheckBoxPreference subtitlescheckBoxPreference = (CheckBoxPreference) findPreference(Constants.SUBTITLES);
         subtitlescheckBoxPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
@@ -43,7 +48,7 @@ public class FragmentSettings extends PreferenceFragment {
                 try {
                     file.Writer.write(
                             encoding,
-                            ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH + "/config/openmw/openmw.cfg",
+                            ConfigsFileStorageHelper.OPENMW_CFG,
                             "encoding");
 
                 } catch (Exception e) {
@@ -62,26 +67,29 @@ public class FragmentSettings extends PreferenceFragment {
                 return true;
             }
         });
+    }
 
-        ListPreference resolutionList = (ListPreference) findPreference(Constants.RESOLUTION);
-
-        resolutionList.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(final Preference preference, final Object newValue) {
-                String currentResolution = newValue.toString();
-                ScreenResolutionHelper resolutionHelper = new ScreenResolutionHelper(FragmentSettings.this.getActivity());
-                resolutionHelper.writeScreenResolution(currentResolution);
-                return true;
+    @Override
+    public void onResume() {
+        super.onResume();
+        for (int i = 0; i < getPreferenceScreen().getPreferenceCount(); ++i) {
+            Preference preference = getPreferenceScreen().getPreference(i);
+            if (preference instanceof PreferenceGroup) {
+                PreferenceGroup preferenceGroup = (PreferenceGroup) preference;
+                for (int j = 0; j < preferenceGroup.getPreferenceCount(); ++j) {
+                    Preference singlePref = preferenceGroup.getPreference(j);
+                    updatePreference(singlePref, singlePref.getKey());
+                }
+            } else {
+                updatePreference(preference, preference.getKey());
             }
-        });
-
+        }
     }
 
     private void saveSubtitlesSettings(boolean showSubtitles) {
 
         try {
-            file.Writer.write(String.valueOf(showSubtitles), ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH
-                    + "/config/openmw/settings.cfg", "subtitles");
+            file.Writer.write(String.valueOf(showSubtitles), ConfigsFileStorageHelper.SETTINGS_CFG, "subtitles");
 
         } catch (Exception e) {
 
@@ -94,8 +102,7 @@ public class FragmentSettings extends PreferenceFragment {
 
     private void saveMipMappingOptions(String mipmapping) {
         try {
-            file.Writer.write(mipmapping, ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH
-                            + "/config/openmw/settings.cfg",
+            file.Writer.write(mipmapping, ConfigsFileStorageHelper.SETTINGS_CFG,
                     "texture filtering");
 
         } catch (Exception e) {
@@ -113,5 +120,18 @@ public class FragmentSettings extends PreferenceFragment {
         return PM.hasSystemFeature(PackageManager.FEATURE_SENSOR_GYROSCOPE);
     }
 
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        updatePreference(findPreference(key), key);
+    }
+
+    private void updatePreference(Preference preference, String key) {
+        if (preference == null)
+            return;
+        if (preference instanceof EditTextPreference) {
+            EditTextPreference editTextPreference = (EditTextPreference) preference;
+            editTextPreference.setSummary(editTextPreference.getText());
+        }
+    }
 
 }

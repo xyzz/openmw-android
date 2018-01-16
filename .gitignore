@@ -4,3 +4,5 @@ jniLibs
 .idea
 local.properties
 *.iml
+obj
+assets

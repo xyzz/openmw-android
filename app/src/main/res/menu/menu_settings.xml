@@ -4,21 +4,9 @@
     tools:context=".MainActivity">
     <group android:id="@+id/main_menu_group">
         <item
-            android:id="@+id/action_browse_data_path"
-            android:orderInCategory="100"
-            android:title="Path to data files"
-            app:showAsAction="never" />
-
-        <item
             android:id="@+id/action_command_line"
             android:orderInCategory="100"
             android:title="Command line"
-            app:showAsAction="never" />
-
-        <item
-            android:id="@+id/action_copy_files"
-            android:orderInCategory="100"
-            android:title="Copy configs files"
             app:showAsAction="never" />
 
         <item

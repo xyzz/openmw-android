@@ -4,6 +4,12 @@
     <PreferenceCategory
         android:key="genereal_settings"
         android:title="General settings">
+
+        <EditTextPreference
+            android:key="data_files"
+            android:title="@string/data_files"
+            />
+
         <CheckBoxPreference
             android:key="hidecontrols"
             android:title="Hide onscreen buttons" />
