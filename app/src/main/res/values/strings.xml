@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Openmw</string>
+    <string name="app_name">OpenMW</string>
 
     <string-array name="encoding_entry">
         <item>win1250</item>
@@ -28,5 +28,6 @@
     <string name="start_game_label">Start game</string>
     <string name="closeDrawer">Navigation View</string>
     <string name="openDrawer">Navigation View Closed</string>
+    <string name="data_files">Path to game data files</string>
 
 </resources>

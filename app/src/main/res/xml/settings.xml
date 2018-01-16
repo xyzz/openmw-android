@@ -1,60 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <com.jenzz.materialpreference.PreferenceCategory
+    <PreferenceCategory
         android:key="genereal_settings"
         android:title="General settings">
-        <com.lb.material_preferences_library.custom_preferences.CheckBoxPreference
+
+        <EditTextPreference
+            android:key="data_files"
+            android:title="@string/data_files"
+            />
+
+        <CheckBoxPreference
             android:key="hidecontrols"
             android:title="Hide onscreen buttons" />
 
-        <com.lb.material_preferences_library.custom_preferences.CheckBoxPreference
+        <CheckBoxPreference
             android:key="screen_keeper"
             android:summary="Keep screen always on"
-            android:title="Screen"></com.lb.material_preferences_library.custom_preferences.CheckBoxPreference>
+            android:title="Screen" />
 
 
-    </com.jenzz.materialpreference.PreferenceCategory>
+    </PreferenceCategory>
 
 
-    <com.jenzz.materialpreference.PreferenceCategory
+    <PreferenceCategory
         android:key="categ1anguage"
         android:title="Language settings">
-        <com.lb.material_preferences_library.custom_preferences.ListPreference
+        <ListPreference
             android:key="encoding"
             android:summary="Game language"
             android:title="Encoding"
-            app:dialogTitle="Game language"
-            app:entries="@array/encoding_entry"
-            app:entryValues="@array/encoding_entry"></com.lb.material_preferences_library.custom_preferences.ListPreference>
+            android:dialogTitle="Game language"
+            android:entries="@array/encoding_entry"
+            android:entryValues="@array/encoding_entry" />
 
-        <com.lb.material_preferences_library.custom_preferences.CheckBoxPreference
+        <CheckBoxPreference
             android:key="subtitiles"
             android:summary="Show subtitles"
-            android:title="Subtitles"></com.lb.material_preferences_library.custom_preferences.CheckBoxPreference>
+            android:title="Subtitles" />
 
 
-    </com.jenzz.materialpreference.PreferenceCategory>
+    </PreferenceCategory>
 
 
-    <com.jenzz.materialpreference.PreferenceCategory
+    <PreferenceCategory
         android:key="categ2"
         android:title="Screen Settings">
-        <com.lb.material_preferences_library.custom_preferences.ListPreference
+        <ListPreference
             android:key="mipmapping"
             android:summary="Mipmapping options"
             android:title="Mipmapping"
-            app:dialogTitle="Mipmapping"
-            app:entries="@array/mipmapping_array"
-            app:entryValues="@array/mipmapping_array"></com.lb.material_preferences_library.custom_preferences.ListPreference>
+            android:dialogTitle="Mipmapping"
+            android:entries="@array/mipmapping_array"
+            android:entryValues="@array/mipmapping_array" />
 
-        <com.lb.material_preferences_library.custom_preferences.ListPreference
+        <ListPreference
             android:key="resolution"
             android:summary="Screen resolution"
             android:title="Resolution"
-            app:dialogTitle="Screen resolution"
-            app:entries="@array/resolution_entry"
-            app:entryValues="@array/resolution_array"></com.lb.material_preferences_library.custom_preferences.ListPreference>
-    </com.jenzz.materialpreference.PreferenceCategory>
+            android:dialogTitle="Screen resolution"
+            android:entries="@array/resolution_entry"
+            android:entryValues="@array/resolution_array" />
+    </PreferenceCategory>
 
 </PreferenceScreen>

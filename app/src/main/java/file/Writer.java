@@ -1,6 +1,7 @@
 package file;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -12,8 +13,14 @@ import java.io.InputStreamReader;
 
   public class Writer {
 
+      // TODO: refactor so that the order of arguments is (path, key, value)
         public static void write(String data, String path, String value)
                 throws IOException {
+            // Create a new empty file if it doesn't already exist
+            File fin = new File(path);
+            //noinspection ResultOfMethodCallIgnored
+            fin.createNewFile();
+
             FileInputStream file = new FileInputStream(path);
             BufferedReader reader = new BufferedReader(new InputStreamReader(file));
             String line = reader.readLine();
@@ -36,6 +43,5 @@ import java.io.InputStreamReader;
             writer.write(builder.toString());
             writer.flush();
             writer.close();
-
         }
     }

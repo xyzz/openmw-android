@@ -1,0 +1,340 @@
+cmake_minimum_required(VERSION 3.2.0)
+
+# TODO
+set(ARCH arm)
+
+set(LIBJPEG_TURBO_VERSION 1.5.3)
+set(LIBJPEG_TURBO_HASH SHA256=b24890e2bb46e12e72a79f7e965f409f4e16466d00e1dd15d93d73ee6b592523)
+
+set(LIBPNG_VERSION 1.6.34)
+set(LIBPNG_HASH SHA256=2f1e960d92ce3b3abd03d06dfec9637dfbd22febf107a536b44f7a47c60659f6)
+
+set(FREETYPE2_VERSION 2.9)
+set(FREETYPE2_HASH SHA256=bf380e4d7c4f3b5b1c1a7b2bf3abb967bda5e9ab480d0df656e0e08c5019c5e6)
+
+set(OPENAL_VERSION 1.18.2)
+set(OPENAL_HASH SHA256=9f8ac1e27fba15a59758a13f0c7f6540a0605b6c3a691def9d420570506d7e82)
+
+set(BOOST_VERSION 1.66.0)
+set(BOOST_HASH SHA256=5721818253e6a0989583192f96782c4a98eb6204965316df9f5ad75819225ca9)
+
+set(FFMPEG_VERSION 3.4.1)
+set(FFMPEG_HASH SHA256=f3443e20154a590ab8a9eef7bc951e8731425efc75b44ff4bee31d8a7a574a2c)
+
+# NOTE: sdl2 has to be 2.0.5, newer versions have refactored some Android-related stuff
+# which requires adapting our port.
+set(SDL2_VERSION 2.0.5)
+set(SDL2_HASH SHA256=442038cf55965969f2ff06d976031813de643af9c9edc9e331bd761c242e8785)
+
+set(BULLET_VERSION 2.86.1)
+set(BULLET_HASH SHA256=c058b2e4321ba6adaa656976c1a138c07b18fc03b29f5b82880d5d8228fbf059)
+
+set(MYGUI_VERSION 3.2.2)
+set(MYGUI_HASH SHA256=0a28d7ec8a47993cb68deb48b36331e28f12dd92580b709eaef21d599b67a78f)
+
+set(OSG_TAG android-support)
+
+set(OPENMW_TAG android)
+
+# End of configurable options
+
+project(openmw-android)
+
+include(ExternalProject)
+
+set(wrapper_command ${CMAKE_BINARY_DIR}/command_wrapper.sh)
+set(ndk_triple arm-linux-androideabi) # TODO
+set(download_dir ${CMAKE_SOURCE_DIR}/downloads/)
+set(prefix ${CMAKE_INSTALL_PREFIX})
+set(host ${ndk_triple})
+set(android_platform android-21) # TODO
+set(cpu armv7-a) # TODO
+set(app_abi armeabi-v7a) # TODO
+set(osg_plugins_dir ${prefix}/lib/osgPlugins-3.4.1) # TODO: extract version?
+
+ExternalProject_Add(libjpeg-turbo
+	URL https://sourceforge.net/projects/libjpeg-turbo/files/${LIBJPEG_TURBO_VERSION}/libjpeg-turbo-${LIBJPEG_TURBO_VERSION}.tar.gz/download
+	URL_HASH ${LIBJPEG_TURBO_HASH}
+	DOWNLOAD_DIR ${download_dir}
+
+	CONFIGURE_COMMAND ${wrapper_command} <SOURCE_DIR>/configure
+	--host=${ndk_triple}
+	--enable-static
+	--disable-shared
+	--prefix=${prefix}
+	--with-simd
+
+	BUILD_COMMAND ${wrapper_command} $(MAKE) PROGRAMS=
+
+	INSTALL_COMMAND ${wrapper_command} $(MAKE) install-libLTLIBRARIES install-data-am
+)
+
+ExternalProject_Add(libpng
+	URL http://prdownloads.sourceforge.net/libpng/libpng-${LIBPNG_VERSION}.tar.xz
+	URL_HASH ${LIBPNG_HASH}
+	DOWNLOAD_DIR ${download_dir}
+
+	CONFIGURE_COMMAND ${wrapper_command} <SOURCE_DIR>/configure
+	--host=${host}
+	--enable-static
+	--disable-shared
+	--prefix=${prefix}
+
+	BUILD_COMMAND ${wrapper_command} $(MAKE) check_PROGRAMS= bin_PROGRAMS=
+
+	INSTALL_COMMAND ${wrapper_command} $(MAKE) install check_PROGRAMS= bin_PROGRAMS=
+)
+
+ExternalProject_Add(freetype2
+	URL https://download.savannah.gnu.org/releases/freetype/freetype-${FREETYPE2_VERSION}.tar.gz
+	URL_HASH ${FREETYPE2_HASH}
+	DOWNLOAD_DIR ${download_dir}
+
+	CONFIGURE_COMMAND ${wrapper_command} <SOURCE_DIR>/configure
+	--host=${host}
+	--enable-static
+	--disable-shared
+	--with-png=no
+	--prefix=${prefix}
+
+	BUILD_COMMAND ${wrapper_command} $(MAKE)
+
+	INSTALL_COMMAND ${wrapper_command} $(MAKE) install
+)
+
+ExternalProject_Add(openal
+	URL http://kcat.strangesoft.net/openal-releases/openal-soft-${OPENAL_VERSION}.tar.bz2
+	URL_HASH ${OPENAL_HASH}
+	DOWNLOAD_DIR ${download_dir}
+
+	CONFIGURE_COMMAND ${wrapper_command} cmake <SOURCE_DIR>
+	-DCMAKE_TOOLCHAIN_FILE=${CMAKE_SOURCE_DIR}/toolchain/ndk/build/cmake/android.toolchain.cmake
+	-DCMAKE_INSTALL_PREFIX=${prefix}
+	-DCMAKE_FIND_ROOT_PATH=${prefix}
+	-DANDROID_PLATFORM=${android_platform}
+	-DANDROID_STL=c++_shared
+	-DALSOFT_EXAMPLES=OFF
+	-DALSOFT_TESTS=OFF
+	-DALSOFT_NO_CONFIG_UTIL=ON
+	-DALSOFT_BACKEND_OPENSL=ON
+	-DALSOFT_BACKEND_WAVE=OFF
+
+	BUILD_COMMAND ${wrapper_command} $(MAKE)
+
+	INSTALL_COMMAND ${wrapper_command} $(MAKE) install
+)
+
+string(REPLACE "." "_" BOOST_VERSION_UNDERSCORE ${BOOST_VERSION})
+ExternalProject_Add(boost
+	URL https://dl.bintray.com/boostorg/release/${BOOST_VERSION}/source/boost_${BOOST_VERSION_UNDERSCORE}.tar.bz2
+	URL_HASH ${BOOST_HASH}
+	DOWNLOAD_DIR ${download_dir}
+
+	BUILD_IN_SOURCE 1
+
+	CONFIGURE_COMMAND ${wrapper_command} <SOURCE_DIR>/bootstrap.sh
+	--prefix=${prefix}
+
+	BUILD_COMMAND ""
+
+	INSTALL_COMMAND ${wrapper_command} ./b2
+	-j4
+	--with-filesystem
+	--with-program_options
+	--with-system
+	toolset=clang-android
+	architecture=arm
+	variant=release
+	target-os=android
+	threading=multi
+	threadapi=pthread
+	link=static
+	runtime-link=static
+	install
+)
+
+ExternalProject_Add(ffmpeg
+	URL http://ffmpeg.org/releases/ffmpeg-3.4.1.tar.bz2
+	URL_HASH ${FFMPEG_HASH}
+	DOWNLOAD_DIR ${download_dir}
+
+	CONFIGURE_COMMAND ${wrapper_command} <SOURCE_DIR>/configure
+	--target-os=android
+	--enable-cross-compile
+	--cross-prefix=${host}-
+	--cc=${host}-clang
+	--arch=${ARCH}
+	--cpu=${cpu}
+	--enable-static
+	--disable-shared
+	--enable-version3
+	--disable-debug
+	--disable-doc
+	--prefix=${prefix}
+
+	BUILD_COMMAND ${wrapper_command} $(MAKE)
+
+	INSTALL_COMMAND ${wrapper_command} $(MAKE) install
+)
+
+ExternalProject_Add(sdl2
+	URL https://www.libsdl.org/release/SDL2-${SDL2_VERSION}.tar.gz
+	URL_HASH ${SDL2_HASH}
+	DOWNLOAD_DIR ${download_dir}
+
+	CONFIGURE_COMMAND ""
+
+	BUILD_COMMAND ${wrapper_command} ndk-build
+	NDK_PROJECT_PATH=.
+	APP_BUILD_SCRIPT=<SOURCE_DIR>/Android.mk
+	APP_PLATFORM=${android_platform}
+	APP_ABI=${app_abi}
+	-j4
+
+	INSTALL_COMMAND mkdir -p ${prefix}/lib/
+	COMMAND cp libs/${app_abi}/libSDL2.so ${prefix}/lib/
+	COMMAND cp -r <SOURCE_DIR>/include ${prefix}/
+)
+
+ExternalProject_Add(bullet
+	URL https://github.com/bulletphysics/bullet3/archive/${BULLET_VERSION}.tar.gz
+	URL_HASH ${BULLET_HASH}
+	DOWNLOAD_DIR ${download_dir}
+
+	CONFIGURE_COMMAND ${wrapper_command} cmake <SOURCE_DIR>
+	-DCMAKE_TOOLCHAIN_FILE=${CMAKE_SOURCE_DIR}/toolchain/ndk/build/cmake/android.toolchain.cmake
+	-DCMAKE_INSTALL_PREFIX=${prefix}
+	-DCMAKE_FIND_ROOT_PATH=${prefix}
+	-DANDROID_PLATFORM=${android_platform}
+	-DANDROID_STL=c++_shared
+	-DBUILD_BULLET2_DEMOS=OFF
+	-DBUILD_CPU_DEMOS=OFF
+	-DBUILD_UNIT_TESTS=OFF
+
+	BUILD_COMMAND ${wrapper_command} $(MAKE)
+
+	INSTALL_COMMAND $(MAKE) install
+)
+
+ExternalProject_Add(mygui
+	DEPENDS freetype2
+
+	URL https://github.com/MyGUI/mygui/archive/MyGUI${MYGUI_VERSION}.tar.gz
+	URL_HASH ${MYGUI_HASH}
+	DOWNLOAD_DIR ${download_dir}
+
+	CONFIGURE_COMMAND ${wrapper_command} cmake <SOURCE_DIR>
+	-DCMAKE_TOOLCHAIN_FILE=${CMAKE_SOURCE_DIR}/toolchain/ndk/build/cmake/android.toolchain.cmake
+	-DCMAKE_INSTALL_PREFIX=${prefix}
+	-DCMAKE_FIND_ROOT_PATH=${prefix}
+	-DANDROID_PLATFORM=${android_platform}
+	-DANDROID_STL=c++_shared
+	-DMYGUI_RENDERSYSTEM=ON
+	-DMYGUI_BUILD_DEMOS=OFF
+	-DMYGUI_BUILD_TOOLS=OFF
+	-DMYGUI_BUILD_PLUGINS=OFF
+	-DFREETYPE_FT2BUILD_INCLUDE_DIR=${prefix}/include/freetype2/
+	-DCMAKE_C_FLAGS="-DMYGUI_DONT_REPLACE_NULLPTR"
+	-DCMAKE_CXX_FLAGS="-DMYGUI_DONT_REPLACE_NULLPTR"
+	-DMYGUI_STATIC=ON
+
+	BUILD_COMMAND ${wrapper_command} $(MAKE)
+
+	INSTALL_COMMAND ${wrapper_command} $(MAKE) install
+)
+
+ExternalProject_Add(osg
+	DEPENDS libjpeg-turbo libpng
+
+	GIT_REPOSITORY https://github.com/xyzz/osg.git
+	GIT_TAG ${OSG_TAG}
+
+	CONFIGURE_COMMAND ${wrapper_command} cmake <SOURCE_DIR>
+	-DCMAKE_TOOLCHAIN_FILE=${CMAKE_SOURCE_DIR}/toolchain/ndk/build/cmake/android.toolchain.cmake
+	-DCMAKE_INSTALL_PREFIX=${prefix}
+	-DCMAKE_FIND_ROOT_PATH=${prefix}
+	-DANDROID_PLATFORM=${android_platform}
+	-DANDROID_STL=c++_shared
+	-DOPENGL_PROFILE="GLES1"
+	-DDYNAMIC_OPENTHREADS=OFF
+	-DDYNAMIC_OPENSCENEGRAPH=OFF
+	-DBUILD_OSG_PLUGIN_OSG=ON
+	-DBUILD_OSG_PLUGIN_DDS=ON
+	-DBUILD_OSG_PLUGIN_TGA=ON
+	-DBUILD_OSG_PLUGIN_BMP=ON
+	-DBUILD_OSG_PLUGIN_JPEG=ON
+	-DBUILD_OSG_PLUGIN_PNG=ON
+	-DJPEG_INCLUDE_DIR=${prefix}/include/
+	-DPNG_INCLUDE_DIR=${prefix}/include/
+	-DOSG_CPP_EXCEPTIONS_AVAILABLE=TRUE
+	-DOSG_GL1_AVAILABLE=OFF
+	-DOSG_GL2_AVAILABLE=OFF
+	-DOSG_GL3_AVAILABLE=OFF
+	-DOSG_GLES1_AVAILABLE=ON
+	-DOSG_GLES2_AVAILABLE=OFF
+	-DOSG_GL_LIBRARY_STATIC=OFF
+	-DOSG_GL_DISPLAYLISTS_AVAILABLE=OFF
+	-DOSG_GL_MATRICES_AVAILABLE=ON
+	-DOSG_GL_VERTEX_FUNCS_AVAILABLE=ON
+	-DOSG_GL_VERTEX_ARRAY_FUNCS_AVAILABLE=ON
+	-DOSG_GL_FIXED_FUNCTION_AVAILABLE=ON
+	-DDYNAMIC_OPENTHREADS=OFF
+	-DDYNAMIC_OPENSCENEGRAPH=OFF
+	-DBUILD_OSG_APPLICATIONS=OFF
+	-DBUILD_OSG_PLUGINS_BY_DEFAULT=OFF
+	-DBUILD_OSG_PLUGIN_OSG=ON
+	-DBUILD_OSG_PLUGIN_DDS=ON
+	-DBUILD_OSG_PLUGIN_TGA=ON
+	-DBUILD_OSG_PLUGIN_BMP=ON
+	-DBUILD_OSG_PLUGIN_JPEG=ON
+	-DBUILD_OSG_PLUGIN_PNG=ON
+	-DBUILD_OSG_DEPRECATED_SERIALIZERS=OFF
+
+	BUILD_COMMAND ${wrapper_command} $(MAKE)
+
+	INSTALL_COMMAND mkdir -p <SOURCE_DIR>/3rdparty/build/libpng <SOURCE_DIR>/3rdparty/build/libjpeg
+	COMMAND $(MAKE) install
+)
+
+# TODO: git fix? and shallow?
+
+ExternalProject_Add(openmw
+	DEPENDS boost openal osg mygui ffmpeg sdl2 bullet
+
+	GIT_REPOSITORY https://github.com/xyzz/openmw.git
+	GIT_TAG ${OPENMW_TAG}
+
+	CONFIGURE_COMMAND ${wrapper_command} cmake <SOURCE_DIR>
+	-DCMAKE_TOOLCHAIN_FILE=${CMAKE_SOURCE_DIR}/toolchain/ndk/build/cmake/android.toolchain.cmake
+	-DCMAKE_INSTALL_PREFIX=${prefix}
+	-DCMAKE_FIND_ROOT_PATH=${prefix}
+	-DANDROID_PLATFORM=${android_platform}
+	-DANDROID_STL=c++_shared
+	-DCMAKE_C_FLAGS="-DMYGUI_DONT_REPLACE_NULLPTR"
+	-DCMAKE_CXX_FLAGS="-DMYGUI_DONT_REPLACE_NULLPTR"
+	-DBUILD_BSATOOL=0
+	-DBUILD_ESMTOOL=0
+	-DBUILD_LAUNCHER=0
+	-DBUILD_MWINIIMPORTER=0
+	-DBUILD_ESSIMPORTER=0
+	-DBUILD_OPENCS=0
+	-DBUILD_WIZARD=0
+	-DBUILD_MYGUI_PLUGIN=0
+	-DOPENAL_INCLUDE_DIR=${prefix}/include/AL/
+	-DBullet_INCLUDE_DIR=${prefix}/include/bullet/
+	-DOPENGL_ES=ON
+	-DOSG_PLUGINS_DIR=${osg_plugins_dir}
+	-DOSG_STATIC=TRUE
+	-DOSGDB_BMP_LIBRARY=${osg_plugins_dir}/libosgdb_bmp.a
+	-DOSGDB_DDS_LIBRARY=${osg_plugins_dir}/libosgdb_dds.a
+	-DOSGDB_JPEG_LIBRARY=${osg_plugins_dir}/libosgdb_jpeg.a
+	-DOSGDB_OSG_LIBRARY=${osg_plugins_dir}/libosgdb_osg.a
+	-DOSGDB_PNG_LIBRARY=${osg_plugins_dir}/libosgdb_png.a
+	-DOSGDB_TGA_LIBRARY=${osg_plugins_dir}/libosgdb_tga.a 
+	-DOSGDB_SERIALIZERS_OSG_LIBRARY=${osg_plugins_dir}/libosgdb_serializers_osg.a
+	-DMyGUI_LIBRARY=${prefix}/lib/libMyGUIEngineStatic.a
+
+	BUILD_COMMAND $(MAKE)
+
+	INSTALL_COMMAND ""
+)

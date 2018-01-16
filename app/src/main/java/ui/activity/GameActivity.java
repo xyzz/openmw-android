@@ -37,9 +37,10 @@ public class GameActivity extends SDLActivity implements ControlsHider {
     protected CursorVisibility cursorVisibility;
 
     static {
+        System.loadLibrary("c++_shared");
         System.loadLibrary("openal");
         System.loadLibrary("SDL2");
-        System.loadLibrary("GL");
+        System.loadLibrary("GLESv1_CM");
         System.loadLibrary("openmw");
     }
 
@@ -47,7 +48,7 @@ public class GameActivity extends SDLActivity implements ControlsHider {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         GameState.setGameState(true);
-        NativeListener.initJavaVm();
+//        NativeListener.initJavaVm();
         KeepScreenOn();
         parseCommandLineData();
         getPathToJni(ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH);

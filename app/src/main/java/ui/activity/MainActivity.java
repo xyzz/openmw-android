@@ -1,15 +1,18 @@
 package ui.activity;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -24,16 +27,24 @@ import com.libopenmw.openmw.FileChooser;
 import com.libopenmw.openmw.R;
 import com.melnykov.fab.FloatingActionButton;
 
+import java.io.File;
+import java.io.IOException;
+
 import constants.Constants;
+import file.utils.CopyFilesFromAssets;
 import plugins.bsa.BsaUtils;
 import ui.game.GameState;
 import ui.fragments.FragmentControls;
 import ui.fragments.FragmentPlugins;
 import ui.fragments.FragmentSettings;
 import permission.PermissionHelper;
+import ui.screen.ScreenResolutionHelper;
 import ui.screen.ScreenScaler;
 import file.ConfigsFileStorageHelper;
 import prefs.PreferencesHelper;
+
+import static file.ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH;
+import static file.ConfigsFileStorageHelper.OPENMW_CFG;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -44,11 +55,13 @@ public class MainActivity extends AppCompatActivity {
     private Menu menu;
     private boolean isSettingsEnabled = true;
     private static final int REQUEST_PATH = 1;
+    private SharedPreferences prefs;
     private SharedPreferences Settings;
     private TextListener listener;
     private enum TEXT_MODE {DATA_PATH, COMMAND_LINE}
     private static TEXT_MODE editTextMode;
     private ConfigsFileStorageHelper configsFileStorageHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         GameState.setGameState(false);
@@ -57,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
         isSettingsEnabled = true;
         setContentView(R.layout.main);
         PreferencesHelper.getPrefValues(this);
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
         Settings = this.getSharedPreferences(
                 Constants.APP_PREFERENCES, Context.MODE_PRIVATE);
         configsFileStorageHelper= new ConfigsFileStorageHelper(this,Settings);
@@ -118,12 +132,12 @@ public class MainActivity extends AppCompatActivity {
                         startGame();
                         return true;
 
-                    case R.id.plugins:
-                        showOverflowMenu(true);
-                        isSettingsEnabled = false;
-                        disableToolBarViews();
-                        MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new FragmentPlugins()).commit();
-                        return true;
+//                    case R.id.plugins:
+//                        showOverflowMenu(true);
+//                        isSettingsEnabled = false;
+//                        disableToolBarViews();
+//                        MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new FragmentPlugins()).commit();
+//                        return true;
                     case R.id.controls:
                         showOverflowMenu(false);
                         disableToolBarViews();
@@ -198,14 +212,61 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void deleteRecursive(File fileOrDirectory) {
+        if (fileOrDirectory.isDirectory())
+            for (File child : fileOrDirectory.listFiles())
+                deleteRecursive(child);
 
-    private void startGame() {
+        fileOrDirectory.delete();
+    }
 
+    private void runGame() {
         Intent intent = new Intent(MainActivity.this,
                 GameActivity.class);
         finish();
 
         MainActivity.this.startActivity(intent);
+    }
+
+    private void startGame() {
+        ProgressDialog dialog = ProgressDialog.show(
+                this, "", "Preparing for launch...", true);
+
+        Activity activity = this;
+
+        Thread th = new Thread(() -> {
+            try {
+                // wipe old config files
+                deleteRecursive(new File(CONFIGS_FILES_STORAGE_PATH));
+
+                // copy all assets
+                CopyFilesFromAssets copyFiles = new CopyFilesFromAssets(activity, CONFIGS_FILES_STORAGE_PATH);
+                copyFiles.copyFileOrDir("libopenmw");
+
+                // settings.cfg: resolution
+                ScreenResolutionHelper screenHelper = new ScreenResolutionHelper(activity);
+                screenHelper.writeScreenResolution();
+
+                // openmw.cfg: data, resources
+                // TODO: probably should just reuse ConfigsFileStorageHelper
+                file.Writer.write(
+                        CONFIGS_FILES_STORAGE_PATH + "/resources",
+                        OPENMW_CFG,
+                        "resources");
+                // TODO: it will crash if there's no value/invalid value provided
+                file.Writer.write(prefs.getString("data_files", ""), OPENMW_CFG, "data");
+
+                runOnUiThread(() -> {
+                    dialog.hide();
+                    runGame();
+                });
+            } catch (IOException e) {
+                Log.e("OpenMW-Launcher", "Failed to write config files.", e);
+
+                Toast.makeText(activity, "Something failed", Toast.LENGTH_LONG).show();
+            }
+        });
+        th.start();
     }
 
     private void setTexWatcher() {
@@ -290,28 +351,18 @@ public class MainActivity extends AppCompatActivity {
                     browseButton.setVisibility(Button.GONE);
                     path.setText(Constants.commandLineData);
                     break;
-                case R.id.action_browse_data_path:
-                    editTextMode = TEXT_MODE.DATA_PATH;
-                    enableToolbarViews();
-                    path.setText(Constants.APPLICATION_DATA_STORAGE_PATH);
-                    break;
-                case R.id.action_copy_files:
-                    configsFileStorageHelper.copyFiles();
-                    break;
 
                 case R.id.action_reset_screen_controls:
                     resetScreenControls();
                     break;
+
                 case R.id.action_show_screen_controls:
                     startControlsActivity();
                     break;
 
                 default:
                     break;
-
-
             }
-
 
         return super.onOptionsItemSelected(item);
     }

@@ -147,7 +147,6 @@ public class Constants {
 	public static String commandLineData = "";
 	public static final String SCREEN_WIDTH = "screen_width";
 	public static final String SCREEN_HEIGHT = "screen_height";
-	public static final String RESOLUTION = "resolution";
 
 	public static String APPLICATION_DATA_STORAGE_PATH ="";
 }
