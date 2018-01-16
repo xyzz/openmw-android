@@ -17,7 +17,7 @@ public class CursorVisibility {
     }
 
     public void runBackgroundTask() {
-        InitBackgroundTask();
+//        InitBackgroundTask();
     }
 
     //called from c++ code
@@ -28,7 +28,7 @@ public class CursorVisibility {
     }
 
     public void stopBackgroundTask() {
-        StopBackgroundTask();
+//        StopBackgroundTask();
     }
 
 }

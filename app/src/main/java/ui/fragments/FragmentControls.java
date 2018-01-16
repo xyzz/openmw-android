@@ -101,8 +101,7 @@ public class FragmentControls extends Fragment {
             public void run() {
 
                 try {
-                    file.Writer.write(progress, ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH
-                            + "/config/openmw/settings.cfg", key);
+                    file.Writer.write(progress, ConfigsFileStorageHelper.SETTINGS_CFG, key);
 
                 } catch (Exception e)
 

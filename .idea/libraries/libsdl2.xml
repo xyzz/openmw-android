@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="libsdl2">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/app/libs/libsdl2.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

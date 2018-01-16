@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="libdradroplistview">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/app/libs/libdradroplistview.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

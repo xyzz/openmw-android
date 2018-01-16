@@ -1,0 +1,7 @@
+# Tail: inserted as-is
+
+COMMAND_NAME="$1"
+
+shift
+
+${COMMAND_NAME} "$@"
