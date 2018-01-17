@@ -72,4 +72,13 @@ cp "$SRC/gamecontrollerdb.txt" "$DST/config/openmw/"
 cp "$DIR/../app/openmw-base.cfg" "$DST/config/openmw/openmw.cfg"
 cp "$DIR/../app/settings-base.cfg" "$DST/config/openmw/settings.cfg"
 
+echo "==> Making your debugging life easier"
+
+# copy unstripped libs to aid debugging
+rm -rf "./build/$ARCH/symbols" && mkdir -p "./build/$ARCH/symbols"
+cp "./build/$ARCH/openal-prefix/src/openal-build/libopenal.so" "./build/$ARCH/symbols/"
+cp "./build/$ARCH/sdl2-prefix/src/sdl2-build/obj/local/armeabi-v7a/libSDL2.so" "./build/$ARCH/symbols/"
+cp "./build/$ARCH/openmw-prefix/src/openmw-build/libopenmw.so" "./build/$ARCH/symbols/"
+cp "./build/$ARCH/gl4es-prefix/src/gl4es-build/obj/local/armeabi-v7a/libGL.so" "./build/$ARCH/symbols/"
+
 echo "==> Success"
