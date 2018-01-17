@@ -32,6 +32,9 @@ set(BULLET_HASH SHA256=c058b2e4321ba6adaa656976c1a138c07b18fc03b29f5b82880d5d822
 set(MYGUI_VERSION 3.2.2)
 set(MYGUI_HASH SHA256=0a28d7ec8a47993cb68deb48b36331e28f12dd92580b709eaef21d599b67a78f)
 
+set(GL4ES_VERSION 007ac02c2c39a9bf7bec4ac33406788678f76f30)
+set(GL4ES_HASH SHA256=c159f6a31bac9f56ba945bd9ecefd11c57d2f4a86144ce744d870c45bab428fb)
+
 set(OSG_TAG android-support)
 
 set(OPENMW_TAG android)
@@ -216,6 +219,27 @@ ExternalProject_Add(bullet
 	INSTALL_COMMAND $(MAKE) install
 )
 
+ExternalProject_Add(gl4es
+	URL https://github.com/ptitSeb/gl4es/archive/${GL4ES_VERSION}.tar.gz
+	URL_HASH ${GL4ES_HASH}
+	DOWNLOAD_DIR ${download_dir}
+
+	PATCH_COMMAND patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/gl4es-build-shared.patch
+
+	CONFIGURE_COMMAND ""
+
+	BUILD_COMMAND ${wrapper_command} ndk-build
+	NDK_PROJECT_PATH=.
+	APP_BUILD_SCRIPT=<SOURCE_DIR>/Android.mk
+	APP_PLATFORM=${android_platform}
+	APP_ABI=${app_abi}
+	-j4
+
+	INSTALL_COMMAND mkdir -p ${prefix}/lib/
+	COMMAND cp libs/${app_abi}/libGL.so ${prefix}/lib/
+	COMMAND cp -r <SOURCE_DIR>/include ${prefix}/
+)
+
 ExternalProject_Add(mygui
 	DEPENDS freetype2
 
@@ -244,7 +268,7 @@ ExternalProject_Add(mygui
 )
 
 ExternalProject_Add(osg
-	DEPENDS libjpeg-turbo libpng
+	DEPENDS libjpeg-turbo libpng gl4es
 
 	GIT_REPOSITORY https://github.com/xyzz/osg.git
 	GIT_TAG ${OSG_TAG}
@@ -255,7 +279,9 @@ ExternalProject_Add(osg
 	-DCMAKE_FIND_ROOT_PATH=${prefix}
 	-DANDROID_PLATFORM=${android_platform}
 	-DANDROID_STL=c++_shared
-	-DOPENGL_PROFILE="GLES1"
+	-DCMAKE_C_FLAGS="-I${prefix}/include/"
+	-DCMAKE_CXX_FLAGS="-I${prefix}/include/"
+	-DOPENGL_PROFILE="GL1"
 	-DDYNAMIC_OPENTHREADS=OFF
 	-DDYNAMIC_OPENSCENEGRAPH=OFF
 	-DBUILD_OSG_PLUGIN_OSG=ON
@@ -267,10 +293,10 @@ ExternalProject_Add(osg
 	-DJPEG_INCLUDE_DIR=${prefix}/include/
 	-DPNG_INCLUDE_DIR=${prefix}/include/
 	-DOSG_CPP_EXCEPTIONS_AVAILABLE=TRUE
-	-DOSG_GL1_AVAILABLE=OFF
+	-DOSG_GL1_AVAILABLE=ON
 	-DOSG_GL2_AVAILABLE=OFF
 	-DOSG_GL3_AVAILABLE=OFF
-	-DOSG_GLES1_AVAILABLE=ON
+	-DOSG_GLES1_AVAILABLE=OFF
 	-DOSG_GLES2_AVAILABLE=OFF
 	-DOSG_GL_LIBRARY_STATIC=OFF
 	-DOSG_GL_DISPLAYLISTS_AVAILABLE=OFF
@@ -322,7 +348,7 @@ ExternalProject_Add(openmw
 	-DBUILD_MYGUI_PLUGIN=0
 	-DOPENAL_INCLUDE_DIR=${prefix}/include/AL/
 	-DBullet_INCLUDE_DIR=${prefix}/include/bullet/
-	-DOPENGL_ES=ON
+	-DOPENGL_ES=OFF
 	-DOSG_PLUGINS_DIR=${osg_plugins_dir}
 	-DOSG_STATIC=TRUE
 	-DOSGDB_BMP_LIBRARY=${osg_plugins_dir}/libosgdb_bmp.a
