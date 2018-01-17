@@ -55,16 +55,42 @@ set(cpu armv7-a) # TODO
 set(app_abi armeabi-v7a) # TODO
 set(osg_plugins_dir ${prefix}/lib/osgPlugins-3.4.1) # TODO: extract version?
 
+set(COMMON_CMAKE_ARGS
+	-DCMAKE_TOOLCHAIN_FILE=${CMAKE_SOURCE_DIR}/toolchain/ndk/build/cmake/android.toolchain.cmake
+	-DCMAKE_INSTALL_PREFIX=${prefix}
+	-DCMAKE_FIND_ROOT_PATH=${prefix}
+	-DANDROID_PLATFORM=${android_platform}
+	-DANDROID_STL=c++_shared
+	-DCMAKE_C_FLAGS=-DMYGUI_DONT_REPLACE_NULLPTR\ -I${prefix}/include/
+	-DCMAKE_CXX_FLAGS=-DMYGUI_DONT_REPLACE_NULLPTR\ -I${prefix}/include/
+)
+
+set(COMMON_NDK_BUILD_FLAGS
+	NDK_PROJECT_PATH=.
+	APP_BUILD_SCRIPT=<SOURCE_DIR>/Android.mk
+	APP_PLATFORM=${android_platform}
+	APP_ABI=${app_abi}
+	-j4
+)
+
+# ffmpeg barks if we pass --host to its configure which isn't autoconf-based
+set(COMMON_AUTOCONF_FLAGS_NOHOST
+	--enable-static
+	--disable-shared
+	--prefix=${prefix}
+)
+set(COMMON_AUTOCONF_FLAGS
+	--host=${host}
+	${COMMON_AUTOCONF_FLAGS_NOHOST}
+)
+
 ExternalProject_Add(libjpeg-turbo
 	URL https://sourceforge.net/projects/libjpeg-turbo/files/${LIBJPEG_TURBO_VERSION}/libjpeg-turbo-${LIBJPEG_TURBO_VERSION}.tar.gz/download
 	URL_HASH ${LIBJPEG_TURBO_HASH}
 	DOWNLOAD_DIR ${download_dir}
 
 	CONFIGURE_COMMAND ${wrapper_command} <SOURCE_DIR>/configure
-	--host=${ndk_triple}
-	--enable-static
-	--disable-shared
-	--prefix=${prefix}
+	${COMMON_AUTOCONF_FLAGS}
 	--with-simd
 
 	BUILD_COMMAND ${wrapper_command} $(MAKE) PROGRAMS=
@@ -78,10 +104,7 @@ ExternalProject_Add(libpng
 	DOWNLOAD_DIR ${download_dir}
 
 	CONFIGURE_COMMAND ${wrapper_command} <SOURCE_DIR>/configure
-	--host=${host}
-	--enable-static
-	--disable-shared
-	--prefix=${prefix}
+	${COMMON_AUTOCONF_FLAGS}
 
 	BUILD_COMMAND ${wrapper_command} $(MAKE) check_PROGRAMS= bin_PROGRAMS=
 
@@ -94,11 +117,8 @@ ExternalProject_Add(freetype2
 	DOWNLOAD_DIR ${download_dir}
 
 	CONFIGURE_COMMAND ${wrapper_command} <SOURCE_DIR>/configure
-	--host=${host}
-	--enable-static
-	--disable-shared
+	${COMMON_AUTOCONF_FLAGS}
 	--with-png=no
-	--prefix=${prefix}
 
 	BUILD_COMMAND ${wrapper_command} $(MAKE)
 
@@ -111,11 +131,7 @@ ExternalProject_Add(openal
 	DOWNLOAD_DIR ${download_dir}
 
 	CONFIGURE_COMMAND ${wrapper_command} cmake <SOURCE_DIR>
-	-DCMAKE_TOOLCHAIN_FILE=${CMAKE_SOURCE_DIR}/toolchain/ndk/build/cmake/android.toolchain.cmake
-	-DCMAKE_INSTALL_PREFIX=${prefix}
-	-DCMAKE_FIND_ROOT_PATH=${prefix}
-	-DANDROID_PLATFORM=${android_platform}
-	-DANDROID_STL=c++_shared
+	${COMMON_CMAKE_ARGS}
 	-DALSOFT_EXAMPLES=OFF
 	-DALSOFT_TESTS=OFF
 	-DALSOFT_NO_CONFIG_UTIL=ON
@@ -146,7 +162,7 @@ ExternalProject_Add(boost
 	--with-program_options
 	--with-system
 	toolset=clang-android
-	architecture=arm
+	architecture=${ARCH}
 	variant=release
 	target-os=android
 	threading=multi
@@ -162,18 +178,16 @@ ExternalProject_Add(ffmpeg
 	DOWNLOAD_DIR ${download_dir}
 
 	CONFIGURE_COMMAND ${wrapper_command} <SOURCE_DIR>/configure
+	${COMMON_AUTOCONF_FLAGS_NOHOST}
 	--target-os=android
 	--enable-cross-compile
 	--cross-prefix=${host}-
 	--cc=${host}-clang
 	--arch=${ARCH}
 	--cpu=${cpu}
-	--enable-static
-	--disable-shared
 	--enable-version3
 	--disable-debug
 	--disable-doc
-	--prefix=${prefix}
 
 	BUILD_COMMAND ${wrapper_command} $(MAKE)
 
@@ -188,11 +202,7 @@ ExternalProject_Add(sdl2
 	CONFIGURE_COMMAND ""
 
 	BUILD_COMMAND ${wrapper_command} ndk-build
-	NDK_PROJECT_PATH=.
-	APP_BUILD_SCRIPT=<SOURCE_DIR>/Android.mk
-	APP_PLATFORM=${android_platform}
-	APP_ABI=${app_abi}
-	-j4
+	${COMMON_NDK_BUILD_FLAGS}
 
 	INSTALL_COMMAND mkdir -p ${prefix}/lib/
 	COMMAND cp libs/${app_abi}/libSDL2.so ${prefix}/lib/
@@ -205,11 +215,7 @@ ExternalProject_Add(bullet
 	DOWNLOAD_DIR ${download_dir}
 
 	CONFIGURE_COMMAND ${wrapper_command} cmake <SOURCE_DIR>
-	-DCMAKE_TOOLCHAIN_FILE=${CMAKE_SOURCE_DIR}/toolchain/ndk/build/cmake/android.toolchain.cmake
-	-DCMAKE_INSTALL_PREFIX=${prefix}
-	-DCMAKE_FIND_ROOT_PATH=${prefix}
-	-DANDROID_PLATFORM=${android_platform}
-	-DANDROID_STL=c++_shared
+	${COMMON_CMAKE_ARGS}
 	-DBUILD_BULLET2_DEMOS=OFF
 	-DBUILD_CPU_DEMOS=OFF
 	-DBUILD_UNIT_TESTS=OFF
@@ -229,11 +235,7 @@ ExternalProject_Add(gl4es
 	CONFIGURE_COMMAND ""
 
 	BUILD_COMMAND ${wrapper_command} ndk-build
-	NDK_PROJECT_PATH=.
-	APP_BUILD_SCRIPT=<SOURCE_DIR>/Android.mk
-	APP_PLATFORM=${android_platform}
-	APP_ABI=${app_abi}
-	-j4
+	${COMMON_NDK_BUILD_FLAGS}
 
 	INSTALL_COMMAND mkdir -p ${prefix}/lib/
 	COMMAND cp libs/${app_abi}/libGL.so ${prefix}/lib/
@@ -248,18 +250,13 @@ ExternalProject_Add(mygui
 	DOWNLOAD_DIR ${download_dir}
 
 	CONFIGURE_COMMAND ${wrapper_command} cmake <SOURCE_DIR>
-	-DCMAKE_TOOLCHAIN_FILE=${CMAKE_SOURCE_DIR}/toolchain/ndk/build/cmake/android.toolchain.cmake
-	-DCMAKE_INSTALL_PREFIX=${prefix}
-	-DCMAKE_FIND_ROOT_PATH=${prefix}
-	-DANDROID_PLATFORM=${android_platform}
-	-DANDROID_STL=c++_shared
+	${COMMON_CMAKE_ARGS}
 	-DMYGUI_RENDERSYSTEM=ON
 	-DMYGUI_BUILD_DEMOS=OFF
 	-DMYGUI_BUILD_TOOLS=OFF
 	-DMYGUI_BUILD_PLUGINS=OFF
 	-DFREETYPE_FT2BUILD_INCLUDE_DIR=${prefix}/include/freetype2/
-	-DCMAKE_C_FLAGS="-DMYGUI_DONT_REPLACE_NULLPTR"
-	-DCMAKE_CXX_FLAGS="-DMYGUI_DONT_REPLACE_NULLPTR"
+
 	-DMYGUI_STATIC=ON
 
 	BUILD_COMMAND ${wrapper_command} $(MAKE)
@@ -274,13 +271,7 @@ ExternalProject_Add(osg
 	GIT_TAG ${OSG_TAG}
 
 	CONFIGURE_COMMAND ${wrapper_command} cmake <SOURCE_DIR>
-	-DCMAKE_TOOLCHAIN_FILE=${CMAKE_SOURCE_DIR}/toolchain/ndk/build/cmake/android.toolchain.cmake
-	-DCMAKE_INSTALL_PREFIX=${prefix}
-	-DCMAKE_FIND_ROOT_PATH=${prefix}
-	-DANDROID_PLATFORM=${android_platform}
-	-DANDROID_STL=c++_shared
-	-DCMAKE_C_FLAGS="-I${prefix}/include/"
-	-DCMAKE_CXX_FLAGS="-I${prefix}/include/"
+	${COMMON_CMAKE_ARGS}
 	-DOPENGL_PROFILE="GL1"
 	-DDYNAMIC_OPENTHREADS=OFF
 	-DDYNAMIC_OPENSCENEGRAPH=OFF
@@ -322,8 +313,6 @@ ExternalProject_Add(osg
 	COMMAND $(MAKE) install
 )
 
-# TODO: git fix? and shallow?
-
 ExternalProject_Add(openmw
 	DEPENDS boost openal osg mygui ffmpeg sdl2 bullet
 
@@ -331,13 +320,7 @@ ExternalProject_Add(openmw
 	GIT_TAG ${OPENMW_TAG}
 
 	CONFIGURE_COMMAND ${wrapper_command} cmake <SOURCE_DIR>
-	-DCMAKE_TOOLCHAIN_FILE=${CMAKE_SOURCE_DIR}/toolchain/ndk/build/cmake/android.toolchain.cmake
-	-DCMAKE_INSTALL_PREFIX=${prefix}
-	-DCMAKE_FIND_ROOT_PATH=${prefix}
-	-DANDROID_PLATFORM=${android_platform}
-	-DANDROID_STL=c++_shared
-	-DCMAKE_C_FLAGS="-DMYGUI_DONT_REPLACE_NULLPTR"
-	-DCMAKE_CXX_FLAGS="-DMYGUI_DONT_REPLACE_NULLPTR"
+	${COMMON_CMAKE_ARGS}
 	-DBUILD_BSATOOL=0
 	-DBUILD_ESMTOOL=0
 	-DBUILD_LAUNCHER=0
