@@ -1,9 +1,13 @@
 
 package ui.activity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Process;
 import android.preference.PreferenceManager;
+import android.system.ErrnoException;
+import android.system.Os;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -36,10 +40,23 @@ public class GameActivity extends SDLActivity implements ControlsHider {
     private ScreenControls screenControls;
     protected CursorVisibility cursorVisibility;
 
-    static {
+    @Override
+    public void loadLibraries() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String graphicsLibrary = prefs.getString("pref_graphicsLibrary", "");
+
         System.loadLibrary("c++_shared");
         System.loadLibrary("openal");
         System.loadLibrary("SDL2");
+        if (graphicsLibrary.equals("gles2")) {
+            try {
+                Os.setenv("OPENMW_GLES_VERSION", "2", true);
+                Os.setenv("LIBGL_ES", "2", true);
+            } catch (ErrnoException e) {
+                Log.e("OpenMW", "Failed setting environment variables.");
+                e.printStackTrace();
+            }
+        }
         System.loadLibrary("GL");
         System.loadLibrary("openmw");
     }

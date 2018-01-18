@@ -37,18 +37,18 @@ popd
 echo "==> Installing shared libraries"
 
 rm -rf ../app/src/main/jniLibs/
-mkdir -p ../app/src/main/jniLibs/armeabi-v7a/
+mkdir -p ../app/src/main/jniLibs/$ABI/
 
 # libopenmw.so is a special case
-find build/$ARCH/ -iname "libopenmw.so" -exec cp "{}" ../app/src/main/jniLibs/armeabi-v7a/ \; # TODO
+find build/$ARCH/ -iname "libopenmw.so" -exec cp "{}" ../app/src/main/jniLibs/$ABI/ \;
 
 # copy over libs we compiled
-cp prefix/$ARCH/lib/{libopenal,libSDL2,libGL}.so ../app/src/main/jniLibs/armeabi-v7a/ # TODO
+cp prefix/$ARCH/lib/{libopenal,libSDL2,libGL}.so ../app/src/main/jniLibs/$ABI/
 
 # copy over libc++_shared
-cp ./toolchain/$ARCH/*/lib/armv7-a/libc++_shared.so ../app/src/main/jniLibs/armeabi-v7a/ # TODO
+cp ./toolchain/$ARCH/*/lib/armv7-a/libc++_shared.so ../app/src/main/jniLibs/$ABI/
 
-arm-linux-androideabi-strip ../app/src/main/jniLibs/armeabi-v7a/*.so # TODO
+arm-linux-androideabi-strip ../app/src/main/jniLibs/$ABI/*.so
 
 echo "==> Deploying resources"
 
@@ -77,9 +77,9 @@ echo "==> Making your debugging life easier"
 # copy unstripped libs to aid debugging
 rm -rf "./build/$ARCH/symbols" && mkdir -p "./build/$ARCH/symbols"
 cp "./build/$ARCH/openal-prefix/src/openal-build/libopenal.so" "./build/$ARCH/symbols/"
-cp "./build/$ARCH/sdl2-prefix/src/sdl2-build/obj/local/armeabi-v7a/libSDL2.so" "./build/$ARCH/symbols/"
+cp "./build/$ARCH/sdl2-prefix/src/sdl2-build/obj/local/$ABI/libSDL2.so" "./build/$ARCH/symbols/"
 cp "./build/$ARCH/openmw-prefix/src/openmw-build/libopenmw.so" "./build/$ARCH/symbols/"
-cp "./build/$ARCH/gl4es-prefix/src/gl4es-build/obj/local/armeabi-v7a/libGL.so" "./build/$ARCH/symbols/"
+cp "./build/$ARCH/gl4es-prefix/src/gl4es-build/obj/local/$ABI/libGL.so" "./build/$ARCH/symbols/"
 
 for file in ./build/$ARCH/symbols/*.so; do
 	PATH="$DIR/toolchain/ndk/prebuilt/linux-x86_64/bin/:$DIR/toolchain/arm/arm-linux-androideabi/bin/:$PATH" ./include/gdb-add-index $file

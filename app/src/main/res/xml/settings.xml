@@ -63,4 +63,17 @@
             android:entryValues="@array/resolution_array" />
     </PreferenceCategory>
 
+    <PreferenceCategory android:title="@string/pref_advanced">
+        <ListPreference
+            android:key="pref_graphicsLibrary"
+            android:title="@string/pref_graphicsLibrary"
+            android:dialogTitle="@string/pref_graphicsLibrary"
+            android:entries="@array/pref_graphicsLibrary_entries"
+            android:entryValues="@array/pref_graphicsLibrary_values"
+            android:defaultValue="@string/pref_graphicsLibrary_default"
+            android:summary="%s"
+        />
+
+    </PreferenceCategory>
+
 </PreferenceScreen>

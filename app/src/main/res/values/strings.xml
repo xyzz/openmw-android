@@ -30,4 +30,19 @@
     <string name="openDrawer">Navigation View Closed</string>
     <string name="data_files">Path to game data files</string>
 
+    <!-- Graphics library -->
+    <string name="pref_graphicsLibrary">Graphics library</string>
+    <string name="pref_graphicsLibrary_default">gles1</string>
+    <string name="pref_advanced">Advanced</string>
+
+    <string-array name="pref_graphicsLibrary_entries">
+        <item>GLESv1</item>
+        <item>GLESv2</item>
+    </string-array>
+
+    <string-array name="pref_graphicsLibrary_values">
+        <item>gles1</item>
+        <item>gles2</item>
+    </string-array>
+
 </resources>
