@@ -43,7 +43,7 @@ mkdir -p ../app/src/main/jniLibs/armeabi-v7a/
 find build/$ARCH/ -iname "libopenmw.so" -exec cp "{}" ../app/src/main/jniLibs/armeabi-v7a/ \; # TODO
 
 # copy over libs we compiled
-cp prefix/$ARCH/lib/{libopenal,libSDL2}.so ../app/src/main/jniLibs/armeabi-v7a/ # TODO
+cp prefix/$ARCH/lib/{libopenal,libSDL2,libGL}.so ../app/src/main/jniLibs/armeabi-v7a/ # TODO
 
 # copy over libc++_shared
 cp ./toolchain/$ARCH/*/lib/armv7-a/libc++_shared.so ../app/src/main/jniLibs/armeabi-v7a/ # TODO

@@ -1,0 +1,11 @@
+diff --git a/Android.mk b/Android.mk
+index ca2a7e4..f0cfbaf 100755
+--- a/Android.mk
++++ b/Android.mk
+@@ -68,5 +68,5 @@ LOCAL_CFLAGS += -g -std=c99 -funwind-tables -O3 -DBCMHOST -fvisibility=hidden -i
+ 
+ LOCAL_LDLIBS := -ldl -llog
+ 
+-include $(BUILD_STATIC_LIBRARY)
++include $(BUILD_SHARED_LIBRARY)
+ 

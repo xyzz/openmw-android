@@ -40,7 +40,7 @@ public class GameActivity extends SDLActivity implements ControlsHider {
         System.loadLibrary("c++_shared");
         System.loadLibrary("openal");
         System.loadLibrary("SDL2");
-        System.loadLibrary("GLESv1_CM");
+        System.loadLibrary("GL");
         System.loadLibrary("openmw");
     }
 
