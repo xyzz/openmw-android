@@ -15,16 +15,5 @@ public class SdlNativeKeys {
         SDLActivity.onNativeKeyUp(keyCode);
     }
 
-    public static void touchDown(final float x, final float y, final int eventAction, MotionEvent event) {
-        final int touchDevId = event.getDeviceId();
-        int i = event.getActionIndex();
-        final int pointerID = event.getPointerId(i);
-        final float pointerCount = event.getPressure(i);
-        SDLActivity.onNativeTouch(touchDevId, pointerID,
-                eventAction, x, y, pointerCount);
-
-
-    }
-
 
 }

@@ -1,7 +1,10 @@
 package ui.controls;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.support.v4.math.MathUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -9,112 +12,72 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 
+import org.libsdl.app.SDLActivity;
+
 public class Joystick extends View {
 
-    public static boolean isGameEnabled = false;
-    private float x1, x2, y1, y2;
-    private DirectionListener directionListener;
-    private Context context;
+    // Stick positions, [-1; 1]
+    private float posX, posY;
+    // left or right stick
+    private int stickId = 0;
+
+    private Paint paint = new Paint();
 
     public Joystick(Context context) {
         super(context);
-        this.context=context;
-        drawBackgroundColor();
     }
 
     public Joystick(Context context, AttributeSet attrs) {
         super(context, attrs);
-        this.context=context;
-        drawBackgroundColor();
     }
 
     public Joystick(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        this.context=context;
-        drawBackgroundColor();
+    }
+
+    public void setStick(int id) {
+        stickId = id;
+    }
+
+    @Override
+    public void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setColor(Color.RED);
+        canvas.drawRect(0, 0, getWidth() - 1, getHeight() - 1, paint);
+        paint.setColor(Color.GREEN);
+
+        float cx = (posX + 1.0f) * getWidth() / 2;
+        float cy = (posY + 1.0f) * getHeight() / 2;
+        float r = getWidth() / 5;
+        canvas.drawCircle(cx, cy, r, paint);
+    }
+
+    @Override
+    public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        setMeasuredDimension(widthMeasureSpec, heightMeasureSpec);
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (directionListener == null) {
-            directionListener = new DirectionListener(context,false);
-        }
-        playerMovement(event);
-        return true;
-    }
-
-    private void drawBackgroundColor() {
-        if (!isGameEnabled) {
-            this.setBackgroundColor(Color.GRAY);
-        }
-    }
-
-    private void playerMovement(MotionEvent event) {
-        int actionType = event.getAction();
-        switch (actionType) {
-            case (MotionEvent.ACTION_DOWN):
-                x1 = event.getX();
-                y1 = event.getY();
-                break;
-            case MotionEvent.ACTION_MOVE: {
-                x2 = event.getX();
-                y2 = event.getY();
-                onJoystickDirection(directionListener.getCurrentDirection(x1, y1, x2, y2));
-                x1 = x2;
-                y1 = y2;
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+            case MotionEvent.ACTION_MOVE:
+            {
+                posX = MathUtils.clamp(2 * event.getX() / getWidth() - 1.0f, -1, 1);
+                posY = MathUtils.clamp(2 * event.getY() / getHeight() - 1.0f, -1, 1);
                 break;
             }
             case MotionEvent.ACTION_UP: {
-                releaseKeys();
-                break;
-            }
-            default: {
-                releaseKeys();
+                posX = posY = 0;
                 break;
             }
         }
+
+        GamepadEmulator.updateStick(stickId, posX, posY);
+
+        invalidate();
+        return true;
     }
-
-    private void onJoystickDirection(DirectionListener.Direction currentDirection) {
-        releaseKeys();
-        switch (currentDirection) {
-            case LEFT:
-                SdlNativeKeys.keyDown(KeyEvent.KEYCODE_A);
-                break;
-            case RIGHT:
-                SdlNativeKeys.keyDown(KeyEvent.KEYCODE_D);
-                break;
-            case UP:
-                SdlNativeKeys.keyDown(KeyEvent.KEYCODE_W);
-                break;
-            case DOWN:
-                SdlNativeKeys.keyDown(KeyEvent.KEYCODE_S);
-                break;
-            case DOWN_LEFT:
-                SdlNativeKeys.keyDown(KeyEvent.KEYCODE_A);
-                SdlNativeKeys.keyDown(KeyEvent.KEYCODE_S);
-                break;
-            case DOWN_RIGHT:
-                SdlNativeKeys.keyDown(KeyEvent.KEYCODE_D);
-                SdlNativeKeys.keyDown(KeyEvent.KEYCODE_S);
-                break;
-            case UP_LEFT:
-                SdlNativeKeys.keyDown(KeyEvent.KEYCODE_A);
-                SdlNativeKeys.keyDown(KeyEvent.KEYCODE_W);
-                break;
-            case UP_RIGHT:
-                SdlNativeKeys.keyDown(KeyEvent.KEYCODE_D);
-                SdlNativeKeys.keyDown(KeyEvent.KEYCODE_W);
-                break;
-        }
-    }
-
-    private void releaseKeys() {
-        SdlNativeKeys.keyUp(KeyEvent.KEYCODE_W);
-        SdlNativeKeys.keyUp(KeyEvent.KEYCODE_S);
-        SdlNativeKeys.keyUp(KeyEvent.KEYCODE_A);
-        SdlNativeKeys.keyUp(KeyEvent.KEYCODE_D);
-    }
-
-
 }

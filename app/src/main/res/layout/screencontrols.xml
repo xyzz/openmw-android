@@ -19,12 +19,6 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" >
 
-        <ui.controls.TouchCameraSimulation
-            android:id="@+id/superTouch"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-             />
-
         <ImageButton
             android:id="@+id/buttonrun1"
             android:layout_width="50dip"
@@ -46,7 +40,16 @@
             android:src="@drawable/inventory" />
 
         <ui.controls.Joystick
-            android:id="@+id/joystick"
+            android:id="@+id/joystickLeft"
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true" />
+
+        <ui.controls.Joystick
+            android:id="@+id/joystickRight"
             android:layout_width="50dip"
             android:layout_height="50dip"
             android:layout_alignParentBottom="true"
