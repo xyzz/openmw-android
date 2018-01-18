@@ -81,4 +81,8 @@ cp "./build/$ARCH/sdl2-prefix/src/sdl2-build/obj/local/armeabi-v7a/libSDL2.so" "
 cp "./build/$ARCH/openmw-prefix/src/openmw-build/libopenmw.so" "./build/$ARCH/symbols/"
 cp "./build/$ARCH/gl4es-prefix/src/gl4es-build/obj/local/armeabi-v7a/libGL.so" "./build/$ARCH/symbols/"
 
+for file in ./build/$ARCH/symbols/*.so; do
+	PATH="$DIR/toolchain/ndk/prebuilt/linux-x86_64/bin/:$DIR/toolchain/arm/arm-linux-androideabi/bin/:$PATH" ./include/gdb-add-index $file
+done
+
 echo "==> Success"
