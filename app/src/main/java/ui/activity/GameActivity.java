@@ -70,8 +70,8 @@ public class GameActivity extends SDLActivity {
      }
 
     private void parseCommandLineData() {
-        CommandlineParser commandlineParser = new CommandlineParser(Constants.commandLineData);
-        commandlineParser.parseCommandLine();
+        String cmd = PreferenceManager.getDefaultSharedPreferences(this).getString("commandLine", "");
+        CommandlineParser commandlineParser = new CommandlineParser(cmd);
         commandLine(commandlineParser.getArgc(), commandlineParser.getArgv());
     }
 

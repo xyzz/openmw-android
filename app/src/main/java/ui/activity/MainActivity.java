@@ -347,13 +347,6 @@ public class MainActivity extends AppCompatActivity {
             }
         else
             switch (id) {
-                case R.id.action_command_line:
-                    editTextMode = TEXT_MODE.COMMAND_LINE;
-                    enableToolbarViews();
-                    browseButton.setVisibility(Button.GONE);
-                    path.setText(Constants.commandLineData);
-                    break;
-
                 case R.id.action_reset_screen_controls:
                     resetScreenControls();
                     break;

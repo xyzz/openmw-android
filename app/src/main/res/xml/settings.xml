@@ -10,6 +10,11 @@
             android:title="@string/data_files"
             />
 
+        <EditTextPreference
+            android:key="commandLine"
+            android:title="@string/pref_commandLine"
+            />
+
         <CheckBoxPreference
             android:key="hidecontrols"
             android:title="Hide onscreen buttons" />
