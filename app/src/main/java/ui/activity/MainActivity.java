@@ -237,7 +237,9 @@ public class MainActivity extends AppCompatActivity {
         Thread th = new Thread(() -> {
             try {
                 // wipe old config files
-                deleteRecursive(new File(CONFIGS_FILES_STORAGE_PATH));
+                deleteRecursive(new File(CONFIGS_FILES_STORAGE_PATH + "/config"));
+                deleteRecursive(new File(CONFIGS_FILES_STORAGE_PATH + "/openmw"));
+                deleteRecursive(new File(CONFIGS_FILES_STORAGE_PATH + "/resources"));
 
                 // copy all assets
                 CopyFilesFromAssets copyFiles = new CopyFilesFromAssets(activity, CONFIGS_FILES_STORAGE_PATH);
