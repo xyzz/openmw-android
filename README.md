@@ -22,6 +22,14 @@ To get an APK file you can install, open the `android-port` directory in Android
 
 Alternatively, if you do not have Android Studio installed or would rather not use it, run `./gradlew assembleDebug` from the root directory of this repository. The resulting APK, located at `./app/build/outputs/apk/debug/app-debug.apk`, can be transferred to the device and installed.
 
+## Notes for developers
+
+### Debugging native code
+
+You can debug native code with `ndk-gdb`. To use it, once you've built both libraries and the apk and installed the apk, `cd` to `app/src/main` and run `./gdb.sh`.
+
+This also automatically enables gdb to use unstripped libraries, so you get proper symbols, source code references, etc.
+
 ## Credits
 
 Original Java code written by sandstranger. Build scripts originally written by sandstranger and bwhaines.

@@ -6,3 +6,4 @@ local.properties
 *.iml
 obj
 assets
+.gdb_history

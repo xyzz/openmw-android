@@ -1,0 +1,5 @@
+shell mv jni fakeJni
+
+set solib-search-path ../../../buildscripts/build/arm/symbols/
+set history save on
+set breakpoint pending on

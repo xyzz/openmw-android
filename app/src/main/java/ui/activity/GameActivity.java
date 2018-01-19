@@ -1,9 +1,13 @@
 
 package ui.activity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Process;
 import android.preference.PreferenceManager;
+import android.system.ErrnoException;
+import android.system.Os;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -14,18 +18,15 @@ import com.libopenmw.openmw.R;
 import org.libsdl.app.SDLActivity;
 
 import constants.Constants;
-import cursor.ControlsHider;
-import cursor.CursorVisibility;
+import cursor.MouseCursor;
+import parser.CommandlineParser;
 import ui.game.GameState;
-import listener.NativeListener;
 import ui.screen.ScreenScaler;
-import ui.controls.Joystick;
 import ui.controls.QuickPanel;
 import ui.controls.ScreenControls;
-import ui.files.CommandlineParser;
 import file.ConfigsFileStorageHelper;
 
-public class GameActivity extends SDLActivity implements ControlsHider {
+public class GameActivity extends SDLActivity {
 
     public static native void getPathToJni(String path);
 
@@ -34,12 +35,25 @@ public class GameActivity extends SDLActivity implements ControlsHider {
     private FrameLayout controlsRootLayout;
     private boolean hideControls = false;
     private ScreenControls screenControls;
-    protected CursorVisibility cursorVisibility;
+    private MouseCursor cursor;
 
-    static {
+    @Override
+    public void loadLibraries() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String graphicsLibrary = prefs.getString("pref_graphicsLibrary", "");
+
         System.loadLibrary("c++_shared");
         System.loadLibrary("openal");
         System.loadLibrary("SDL2");
+        if (graphicsLibrary.equals("gles2")) {
+            try {
+                Os.setenv("OPENMW_GLES_VERSION", "2", true);
+                Os.setenv("LIBGL_ES", "2", true);
+            } catch (ErrnoException e) {
+                Log.e("OpenMW", "Failed setting environment variables.");
+                e.printStackTrace();
+            }
+        }
         System.loadLibrary("GL");
         System.loadLibrary("openmw");
     }
@@ -56,13 +70,12 @@ public class GameActivity extends SDLActivity implements ControlsHider {
      }
 
     private void parseCommandLineData() {
-        CommandlineParser commandlineParser = new CommandlineParser(Constants.commandLineData);
-        commandlineParser.parseCommandLine();
+        String cmd = PreferenceManager.getDefaultSharedPreferences(this).getString("commandLine", "");
+        CommandlineParser commandlineParser = new CommandlineParser(cmd);
         commandLine(commandlineParser.getArgc(), commandlineParser.getArgv());
     }
 
     private void showControls() {
-        Joystick.isGameEnabled = true;
         hideControls = PreferenceManager.getDefaultSharedPreferences(this).getBoolean(Constants.HIDE_CONTROLS, false);
         if (!hideControls) {
             screenControls = new ScreenControls(this);
@@ -71,9 +84,8 @@ public class GameActivity extends SDLActivity implements ControlsHider {
             panel.showQuickPanel(hideControls);
             QuickPanel.getInstance().f1.setVisibility(Button.VISIBLE);
             controlsRootLayout = (FrameLayout) findViewById(R.id.rootLayout);
-            cursorVisibility = new CursorVisibility(this);
-            cursorVisibility.runBackgroundTask();
         }
+        cursor = new MouseCursor(this);
     }
 
     public void hideControlsRootLayout(final boolean needHideControls) {
@@ -100,9 +112,6 @@ public class GameActivity extends SDLActivity implements ControlsHider {
 
     @Override
     public void onDestroy() {
-        if (!hideControls) {
-            cursorVisibility.stopBackgroundTask();
-        }
         finish();
         Process.killProcess(Process.myPid());
         super.onDestroy();

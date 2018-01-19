@@ -8,3 +8,4 @@ ANDROID_API="21"
 
 NDK_FILE="ndk.zip"
 ARCH="arm"
+ABI="armeabi-v7a"

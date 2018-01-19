@@ -3,11 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".MainActivity">
     <group android:id="@+id/main_menu_group">
-        <item
-            android:id="@+id/action_command_line"
-            android:orderInCategory="100"
-            android:title="Command line"
-            app:showAsAction="never" />
 
         <item
             android:id="@+id/action_show_screen_controls"
@@ -20,7 +15,6 @@
             android:orderInCategory="100"
             android:title="Reset on-screen controls"
             app:showAsAction="never" />
-
 
     </group>
 </menu>
