@@ -1,4 +1,4 @@
-package ui.files;
+package parser;
 
 import java.util.LinkedList;
 import java.util.List;

@@ -18,18 +18,15 @@ import com.libopenmw.openmw.R;
 import org.libsdl.app.SDLActivity;
 
 import constants.Constants;
-import cursor.ControlsHider;
-import cursor.CursorVisibility;
+import cursor.MouseCursor;
+import parser.CommandlineParser;
 import ui.game.GameState;
-import listener.NativeListener;
 import ui.screen.ScreenScaler;
-import ui.controls.Joystick;
 import ui.controls.QuickPanel;
 import ui.controls.ScreenControls;
-import ui.files.CommandlineParser;
 import file.ConfigsFileStorageHelper;
 
-public class GameActivity extends SDLActivity implements ControlsHider {
+public class GameActivity extends SDLActivity {
 
     public static native void getPathToJni(String path);
 
@@ -38,7 +35,7 @@ public class GameActivity extends SDLActivity implements ControlsHider {
     private FrameLayout controlsRootLayout;
     private boolean hideControls = false;
     private ScreenControls screenControls;
-    protected CursorVisibility cursorVisibility;
+    private MouseCursor cursor;
 
     @Override
     public void loadLibraries() {
@@ -87,9 +84,8 @@ public class GameActivity extends SDLActivity implements ControlsHider {
             panel.showQuickPanel(hideControls);
             QuickPanel.getInstance().f1.setVisibility(Button.VISIBLE);
             controlsRootLayout = (FrameLayout) findViewById(R.id.rootLayout);
-            cursorVisibility = new CursorVisibility(this);
-            cursorVisibility.runBackgroundTask();
         }
+        cursor = new MouseCursor(this);
     }
 
     public void hideControlsRootLayout(final boolean needHideControls) {
@@ -116,9 +112,6 @@ public class GameActivity extends SDLActivity implements ControlsHider {
 
     @Override
     public void onDestroy() {
-        if (!hideControls) {
-            cursorVisibility.stopBackgroundTask();
-        }
         finish();
         Process.killProcess(Process.myPid());
         super.onDestroy();

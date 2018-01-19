@@ -430,6 +430,9 @@ public class SDLActivity extends Activity {
                                                int naxes, int nhats, int nballs);
     public static native int nativeRemoveJoystick(int device_id);
     public static native String nativeGetHint(String name);
+    public static native int getMouseX();
+    public static native int getMouseY();
+    public static native int isMouseShown();
 
     /**
      * This method is called by SDL using JNI.
