@@ -61,8 +61,10 @@ set(COMMON_CMAKE_ARGS
 	-DCMAKE_FIND_ROOT_PATH=${prefix}
 	-DANDROID_PLATFORM=${android_platform}
 	-DANDROID_STL=c++_shared
-	-DCMAKE_C_FLAGS=-DMYGUI_DONT_REPLACE_NULLPTR\ -I${prefix}/include/
-	-DCMAKE_CXX_FLAGS=-DMYGUI_DONT_REPLACE_NULLPTR\ -I${prefix}/include/
+	-DANDROID_CPP_FEATURES=rtti\ exceptions
+	-DCMAKE_C_FLAGS=-DMYGUI_DONT_REPLACE_NULLPTR\ -I${prefix}/include/\ $ENV{CFLAGS}
+	-DCMAKE_CXX_FLAGS=-DMYGUI_DONT_REPLACE_NULLPTR\ -I${prefix}/include/\ $ENV{CXXFLAGS}
+	-DCMAKE_SHARED_LINKER_FLAGS=$ENV{LDFLAGS}
 )
 
 set(COMMON_NDK_BUILD_FLAGS
@@ -70,18 +72,25 @@ set(COMMON_NDK_BUILD_FLAGS
 	APP_BUILD_SCRIPT=<SOURCE_DIR>/Android.mk
 	APP_PLATFORM=${android_platform}
 	APP_ABI=${app_abi}
+	LOCAL_LDFLAGS=$ENV{LDFLAGS}
 	-j4
 )
 
-# ffmpeg barks if we pass --host to its configure which isn't autoconf-based
-set(COMMON_AUTOCONF_FLAGS_NOHOST
+set(COMMON_AUTOCONF_FLAGS
 	--enable-static
 	--disable-shared
 	--prefix=${prefix}
 )
+
+# ffmpeg doesn't like --host, so sandwich it between adding --host to the flags
+set(ffmpeg_configure_flags ${COMMON_AUTOCONF_FLAGS})
+if (${BUILD_TYPE} STREQUAL "debug")
+	set(ffmpeg_configure_flags ${ffmpeg_configure_flags} --disable-asm --disable-optimizations)
+endif()
+
 set(COMMON_AUTOCONF_FLAGS
 	--host=${host}
-	${COMMON_AUTOCONF_FLAGS_NOHOST}
+	${COMMON_AUTOCONF_FLAGS}
 )
 
 ExternalProject_Add(libjpeg-turbo
@@ -178,7 +187,7 @@ ExternalProject_Add(ffmpeg
 	DOWNLOAD_DIR ${download_dir}
 
 	CONFIGURE_COMMAND ${wrapper_command} <SOURCE_DIR>/configure
-	${COMMON_AUTOCONF_FLAGS_NOHOST}
+	${ffmpeg_configure_flags}
 	--target-os=android
 	--enable-cross-compile
 	--cross-prefix=${host}-
@@ -186,7 +195,6 @@ ExternalProject_Add(ffmpeg
 	--arch=${ARCH}
 	--cpu=${cpu}
 	--enable-version3
-	--disable-debug
 	--disable-doc
 
 	BUILD_COMMAND ${wrapper_command} $(MAKE)
