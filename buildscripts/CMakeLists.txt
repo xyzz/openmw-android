@@ -93,6 +93,10 @@ set(COMMON_AUTOCONF_FLAGS
 	${COMMON_AUTOCONF_FLAGS}
 )
 
+if (${ARCH} STREQUAL "arm")
+	set(ffmpeg_configure_flags ${ffmpeg_configure_flags} --enable-thumb)
+endif()
+
 ExternalProject_Add(libjpeg-turbo
 	URL https://sourceforge.net/projects/libjpeg-turbo/files/${LIBJPEG_TURBO_VERSION}/libjpeg-turbo-${LIBJPEG_TURBO_VERSION}.tar.gz/download
 	URL_HASH ${LIBJPEG_TURBO_HASH}
@@ -195,7 +199,25 @@ ExternalProject_Add(ffmpeg
 	--arch=${ARCH}
 	--cpu=${cpu}
 	--enable-version3
+	--disable-everything
 	--disable-doc
+	--disable-programs
+	--disable-autodetect
+	--disable-iconv
+	--enable-decoder=mp3
+	--enable-demuxer=mp3
+	--enable-decoder=bink
+	--enable-decoder=binkaudio_rdft
+	--enable-decoder=binkaudio_dct
+	--enable-demuxer=bink
+	--enable-demuxer=wav
+	--enable-decoder=pcm_*
+	--enable-decoder=vp8
+	--enable-decoder=vp9
+	--enable-decoder=opus
+	--enable-decoder=vorbis
+	--enable-demuxer=matroska
+	--enable-demuxer=ogg
 
 	BUILD_COMMAND ${wrapper_command} $(MAKE)
 
