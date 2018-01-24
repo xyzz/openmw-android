@@ -167,6 +167,8 @@ ExternalProject_Add(boost
 
 	BUILD_IN_SOURCE 1
 
+	PATCH_COMMAND patch -d <SOURCE_DIR> -p2 -t -N < ${CMAKE_SOURCE_DIR}/patches/boost-fix13172.diff
+
 	CONFIGURE_COMMAND ${wrapper_command} <SOURCE_DIR>/bootstrap.sh
 	--prefix=${prefix}
 
