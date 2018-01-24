@@ -1,8 +1,5 @@
 cmake_minimum_required(VERSION 3.2.0)
 
-# TODO
-set(ARCH arm)
-
 set(LIBJPEG_TURBO_VERSION 1.5.3)
 set(LIBJPEG_TURBO_HASH SHA256=b24890e2bb46e12e72a79f7e965f409f4e16466d00e1dd15d93d73ee6b592523)
 
@@ -46,19 +43,19 @@ project(openmw-android)
 include(ExternalProject)
 
 set(wrapper_command ${CMAKE_BINARY_DIR}/command_wrapper.sh)
-set(ndk_triple arm-linux-androideabi) # TODO
+set(ndk_triplet ${NDK_TRIPLET})
 set(download_dir ${CMAKE_SOURCE_DIR}/downloads/)
 set(prefix ${CMAKE_INSTALL_PREFIX})
-set(host ${ndk_triple})
-set(android_platform android-21) # TODO
-set(cpu armv7-a) # TODO
-set(app_abi armeabi-v7a) # TODO
-set(osg_plugins_dir ${prefix}/lib/osgPlugins-3.4.1) # TODO: extract version?
+set(host ${ndk_triplet})
+set(android_platform android-${ANDROID_API})
+set(app_abi ${ABI})
+set(osg_plugins_dir ${prefix}/lib/osgPlugins-3.4.1) # TODO: how can we extract the version dynamically?
 
 set(COMMON_CMAKE_ARGS
 	-DCMAKE_TOOLCHAIN_FILE=${CMAKE_SOURCE_DIR}/toolchain/ndk/build/cmake/android.toolchain.cmake
 	-DCMAKE_INSTALL_PREFIX=${prefix}
 	-DCMAKE_FIND_ROOT_PATH=${prefix}
+	-DANDROID_ABI=${app_abi}
 	-DANDROID_PLATFORM=${android_platform}
 	-DANDROID_STL=c++_shared
 	-DANDROID_CPP_FEATURES=rtti\ exceptions
@@ -85,7 +82,13 @@ set(COMMON_AUTOCONF_FLAGS
 # ffmpeg doesn't like --host, so sandwich it between adding --host to the flags
 set(ffmpeg_configure_flags ${COMMON_AUTOCONF_FLAGS})
 if (${BUILD_TYPE} STREQUAL "debug")
+	# ffmpeg fails to compile if we have asm enabled and optimizations disabled, so disable both
 	set(ffmpeg_configure_flags ${ffmpeg_configure_flags} --disable-asm --disable-optimizations)
+endif()
+
+if (${ARCH} STREQUAL "x86_64")
+	# ffmpeg fails to link with assembly optimizations on x86-64
+	set(ffmpeg_configure_flags ${ffmpeg_configure_flags} --disable-asm)
 endif()
 
 set(COMMON_AUTOCONF_FLAGS
@@ -175,7 +178,7 @@ ExternalProject_Add(boost
 	--with-program_options
 	--with-system
 	toolset=clang-android
-	architecture=${ARCH}
+	architecture=${BOOST_ARCH}
 	variant=release
 	target-os=android
 	threading=multi
@@ -186,7 +189,7 @@ ExternalProject_Add(boost
 )
 
 ExternalProject_Add(ffmpeg
-	URL http://ffmpeg.org/releases/ffmpeg-3.4.1.tar.bz2
+	URL http://ffmpeg.org/releases/ffmpeg-${FFMPEG_VERSION}.tar.bz2
 	URL_HASH ${FFMPEG_HASH}
 	DOWNLOAD_DIR ${download_dir}
 
@@ -197,8 +200,9 @@ ExternalProject_Add(ffmpeg
 	--cross-prefix=${host}-
 	--cc=${host}-clang
 	--arch=${ARCH}
-	--cpu=${cpu}
+	--cpu=${FFMPEG_CPU}
 	--enable-version3
+	--enable-pic
 	--disable-everything
 	--disable-doc
 	--disable-programs

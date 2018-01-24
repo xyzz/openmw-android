@@ -7,5 +7,20 @@ ANDROID_API="21"
 # End of configurable options
 
 NDK_FILE="ndk.zip"
-ARCH="arm"
-ABI="armeabi-v7a"
+
+if [[ $ARCH = "arm" ]]; then
+	ABI="armeabi-v7a"
+	NDK_TRIPLET="arm-linux-androideabi"
+	FFMPEG_CPU="armv7-a"
+	BOOST_ARCH="arm"
+	BOOST_ADDRESS_MODEL="32"
+elif [[ $ARCH = "x86_64" ]]; then
+	ABI="x86_64"
+	NDK_TRIPLET="x86_64-linux-android"
+	FFMPEG_CPU="intel"
+	BOOST_ARCH="x86"
+	BOOST_ADDRESS_MODEL="64"
+else
+	echo "Unknown architecture: $ARCH"
+	exit 1
+fi
