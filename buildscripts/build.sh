@@ -4,8 +4,7 @@ set -e
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd $DIR
 
-source ./include/version.sh
-
+export ARCH="arm"
 ASAN="false"
 BUILD_TYPE="release"
 CFLAGS="-fPIC"
@@ -13,8 +12,9 @@ CXXFLAGS="-fPIC -frtti -fexceptions"
 LDFLAGS="-Wl,--exclude-libs,libgcc.a -Wl,--exclude-libs,libatomic.a -Wl,--exclude-libs,libunwind.a"
 
 usage() {
-	echo "Usage: ./build.sh [--help] [--asan] [--debug|--release]"
+	echo "Usage: ./build.sh [--help] [--asan] [--arch arch] [--debug|--release]"
 	echo "	--help: print this message"
+	echo "	--arch: build for specified architecture [arm, x86_64] (default: arm)"
 	echo "	--asan: build with AddressSanitizer enabled"
 	echo "	--debug: produce a debug build without optimizations"
 	echo "	--release: produce a release build with optimizations (default)"
@@ -29,6 +29,10 @@ while [[ $# -gt 0 ]]; do
 		--help)
 			usage
 			shift
+			;;
+		--arch)
+			export ARCH="$2"
+			shift 2
 			;;
 		--asan)
 			ASAN=true
@@ -48,6 +52,13 @@ while [[ $# -gt 0 ]]; do
 			;;
 	esac
 done
+
+if [[ $ASAN = true && $ARCH != "arm" ]]; then
+	echo "AddressSanitizer is only supported on arm and aarch64 architectures"
+	exit 1
+fi
+
+source ./include/version.sh
 
 if [ $ASAN = true ]; then
 	CFLAGS="$CFLAGS -fsanitize=address"
@@ -94,12 +105,17 @@ echo "==> Build using $NCPU CPUs"
 mkdir -p build/$ARCH/
 mkdir -p prefix/$ARCH/
 
+# symlink lib64 -> lib so we don't get half the libs in one directory half in another
+mkdir -p prefix/$ARCH/lib
+ln -sf lib prefix/$ARCH/lib64
+
 # generate command_wrapper.sh
 cat include/command_wrapper_head.sh.in | \
 	DIR=$DIR \
 	ARCH=$ARCH \
 	ENV_CFLAGS=$CFLAGS \
 	ENV_CXXFLAGS=$CXXFLAGS \
+	NDK_TRIPLET=$NDK_TRIPLET \
 	ENV_LDFLAGS=$LDFLAGS \
 		envsubst > build/$ARCH/command_wrapper.sh
 cat include/command_wrapper_tail.sh.in >> build/$ARCH/command_wrapper.sh
@@ -111,14 +127,23 @@ pushd build/$ARCH/
 source ./command_wrapper.sh true
 
 # Build!
-cmake ../.. -DCMAKE_INSTALL_PREFIX=$DIR/prefix/$ARCH/ -DBUILD_TYPE=$BUILD_TYPE
+cmake ../.. \
+	-DCMAKE_INSTALL_PREFIX=$DIR/prefix/$ARCH/ \
+	-DARCH=$ARCH \
+	-DBUILD_TYPE=$BUILD_TYPE \
+	-DNDK_TRIPLET=$NDK_TRIPLET \
+	-DANDROID_API=$ANDROID_API \
+	-DABI=$ABI \
+	-DBOOST_ARCH=$BOOST_ARCH \
+	-DBOOST_ADDRESS_MODEL=$BOOST_ADDRESS_MODEL \
+	-DFFMPEG_CPU=$FFMPEG_CPU
 make -j$NCPU
 
 popd
 
 echo "==> Installing shared libraries"
 
-rm -rf ../app/src/main/jniLibs/
+rm -rf ../app/src/main/jniLibs/$ABI/
 mkdir -p ../app/src/main/jniLibs/$ABI/
 
 # libopenmw.so is a special case
@@ -128,9 +153,9 @@ find build/$ARCH/ -iname "libopenmw.so" -exec cp "{}" ../app/src/main/jniLibs/$A
 cp prefix/$ARCH/lib/{libopenal,libSDL2,libGL}.so ../app/src/main/jniLibs/$ABI/
 
 # copy over libc++_shared
-cp ./toolchain/$ARCH/*/lib/armv7-a/libc++_shared.so ../app/src/main/jniLibs/$ABI/
+find ./toolchain/$ARCH/ -iname "libc++_shared.so" -exec cp "{}" ../app/src/main/jniLibs/$ABI/ \;
 
-arm-linux-androideabi-strip ../app/src/main/jniLibs/$ABI/*.so
+$NDK_TRIPLET-strip ../app/src/main/jniLibs/$ABI/*.so
 
 echo "==> Deploying resources"
 
@@ -167,8 +192,10 @@ if [ $ASAN = true ]; then
 	cp "./toolchain/arm/lib64/clang/5.0/lib/linux/libclang_rt.asan-arm-android.so" "./build/$ARCH/symbols/"
 fi
 
-for file in ./build/$ARCH/symbols/*.so; do
-	PATH="$DIR/toolchain/ndk/prebuilt/linux-x86_64/bin/:$DIR/toolchain/arm/arm-linux-androideabi/bin/:$PATH" ./include/gdb-add-index $file
-done
+if [[ $ARCH = "arm" ]]; then
+	for file in ./build/$ARCH/symbols/*.so; do
+		PATH="$DIR/toolchain/ndk/prebuilt/linux-x86_64/bin/:$DIR/toolchain/$ARCH/$NDK_TRIPLET/bin/:$PATH" ./include/gdb-add-index $file
+	done
+fi
 
 echo "==> Success"
