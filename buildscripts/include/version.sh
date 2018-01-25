@@ -20,6 +20,12 @@ elif [[ $ARCH = "x86_64" ]]; then
 	FFMPEG_CPU="intel"
 	BOOST_ARCH="x86"
 	BOOST_ADDRESS_MODEL="64"
+elif [[ $ARCH = "x86" ]]; then
+	ABI="x86"
+	NDK_TRIPLET="i686-linux-android"
+	FFMPEG_CPU="intel"
+	BOOST_ARCH="x86"
+	BOOST_ADDRESS_MODEL="32"
 else
 	echo "Unknown architecture: $ARCH"
 	exit 1

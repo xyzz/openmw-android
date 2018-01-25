@@ -14,7 +14,7 @@ LDFLAGS="-Wl,--exclude-libs,libgcc.a -Wl,--exclude-libs,libatomic.a -Wl,--exclud
 usage() {
 	echo "Usage: ./build.sh [--help] [--asan] [--arch arch] [--debug|--release]"
 	echo "	--help: print this message"
-	echo "	--arch: build for specified architecture [arm, x86_64] (default: arm)"
+	echo "	--arch: build for specified architecture [arm, x86_64, x86] (default: arm)"
 	echo "	--asan: build with AddressSanitizer enabled"
 	echo "	--debug: produce a debug build without optimizations"
 	echo "	--release: produce a release build with optimizations (default)"

@@ -86,7 +86,7 @@ if (${BUILD_TYPE} STREQUAL "debug")
 	set(ffmpeg_configure_flags ${ffmpeg_configure_flags} --disable-asm --disable-optimizations)
 endif()
 
-if (${ARCH} STREQUAL "x86_64")
+if ((${ARCH} STREQUAL "x86_64") OR (${ARCH} STREQUAL "x86"))
 	# ffmpeg fails to link with assembly optimizations on x86-64
 	set(ffmpeg_configure_flags ${ffmpeg_configure_flags} --disable-asm)
 endif()
@@ -100,6 +100,12 @@ if (${ARCH} STREQUAL "arm")
 	set(ffmpeg_configure_flags ${ffmpeg_configure_flags} --enable-thumb)
 endif()
 
+# on x86 enabling simd results in text relocations, which are banned on Android
+set(libjpeg_turbo_flags "")
+if (${ARCH} STREQUAL "x86")
+	set(libjpeg_turbo_flags ${libjpeg_turbo_flags} --without-simd)
+endif()
+
 ExternalProject_Add(libjpeg-turbo
 	URL https://sourceforge.net/projects/libjpeg-turbo/files/${LIBJPEG_TURBO_VERSION}/libjpeg-turbo-${LIBJPEG_TURBO_VERSION}.tar.gz/download
 	URL_HASH ${LIBJPEG_TURBO_HASH}
@@ -107,7 +113,7 @@ ExternalProject_Add(libjpeg-turbo
 
 	CONFIGURE_COMMAND ${wrapper_command} <SOURCE_DIR>/configure
 	${COMMON_AUTOCONF_FLAGS}
-	--with-simd
+	${libjpeg_turbo_flags}
 
 	BUILD_COMMAND ${wrapper_command} $(MAKE) PROGRAMS=
 
