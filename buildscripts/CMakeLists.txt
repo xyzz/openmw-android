@@ -32,7 +32,7 @@ set(MYGUI_HASH SHA256=0a28d7ec8a47993cb68deb48b36331e28f12dd92580b709eaef21d599b
 set(GL4ES_VERSION dd8cc4e7a379a7c479edefc63e5fa40be3eba7ff)
 set(GL4ES_HASH SHA256=fc75caec65cffdb8d434e3a3dc9eea3dc4081661c2751354025d528b3bab670e)
 
-set(OSG_TAG android-support)
+set(OSG_TAG master)
 
 set(OPENMW_TAG android)
 
@@ -307,7 +307,7 @@ ExternalProject_Add(mygui
 ExternalProject_Add(osg
 	DEPENDS libjpeg-turbo libpng gl4es
 
-	GIT_REPOSITORY https://github.com/xyzz/osg.git
+	GIT_REPOSITORY https://github.com/OpenMW/osg.git
 	GIT_TAG ${OSG_TAG}
 
 	CONFIGURE_COMMAND ${wrapper_command} cmake <SOURCE_DIR>
