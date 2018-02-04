@@ -1,24 +1,30 @@
 
 package ui.activity;
 
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Process;
 import android.preference.PreferenceManager;
+import android.support.v7.app.AlertDialog;
 import android.system.ErrnoException;
 import android.system.Os;
+import android.text.InputType;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 
 import com.libopenmw.openmw.R;
 
 import org.libsdl.app.SDLActivity;
+import org.libsdl.app.SDLInputConnection;
 
 import constants.Constants;
 import cursor.MouseCursor;
@@ -174,7 +180,9 @@ public class GameActivity extends SDLActivity {
                 numPointersDown = Math.max(0, numPointersDown - 1);
                 if (numPointersDown == 0) {
                     // everything's up, do the action
-                    if (!isMoving && SDLActivity.isMouseShown() != 0) {
+                    if (maxPointersDown == 3) {
+                        showVirtualInput();
+                    } else if (!isMoving && SDLActivity.isMouseShown() != 0) {
                         // only send clicks if we didn't move
                         int mouseX = SDLActivity.getMouseX();
                         int mouseY = SDLActivity.getMouseY();
@@ -224,6 +232,22 @@ public class GameActivity extends SDLActivity {
         }
 
         return true;
+    }
+
+    private void showVirtualInput() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Virtual input");
+
+        final EditText input = new EditText(this);
+        builder.setView(input);
+
+        builder.setPositiveButton("OK", (dialog, which) -> {
+            String text = input.getText().toString();
+            SDLInputConnection.nativeCommitText(text, 0);
+        });
+        builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
+
+        builder.show();
     }
 
 }

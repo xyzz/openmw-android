@@ -168,6 +168,10 @@ public class ScreenControls {
 			buttonDiary.setOnTouchListener(new ButtonTouchListener(
 					KeyEvent.KEYCODE_J,false));
 
+			final ImageButton buttonBackspace = a.findViewById(R.id.buttonBackspace);
+			buttonBackspace.setOnTouchListener(new ButtonTouchListener(
+					KeyEvent.KEYCODE_DEL,false));
+
 			final ImageButton buttonUse = (ImageButton) a
 					.findViewById(R.id.buttonUse);
 
@@ -205,6 +209,7 @@ public class ScreenControls {
 				AlphaView.setAlphaForView(buttonSave,0.5f);
 				AlphaView.setAlphaForView(buttonPause,0.5f);
 				AlphaView.setAlphaForView(buttonDiary,0.5f);
+				AlphaView.setAlphaForView(buttonBackspace,0.5f);
 				AlphaView.setAlphaForView(buttonChangePerson,0.5f);
 				AlphaView.setAlphaForView(buttonWait,0.5f);
 				AlphaView.setAlphaForView(buttonConsole,0.5f);
@@ -221,6 +226,8 @@ public class ScreenControls {
 						buttonWeapon, 880, 95, 70, 70));
 				buttonDiary.setLayoutParams(ControlsParams.coordinates(
 						buttonDiary, 414, 0, 70, 70));
+				buttonBackspace.setLayoutParams(ControlsParams.coordinates(
+						buttonDiary, 500, 0, 70, 70));
 				buttonPause.setLayoutParams(ControlsParams.coordinates(
 						buttonPause, 950, 0, 60, 60));
 				buttonLoad.setLayoutParams(ControlsParams.coordinates(
