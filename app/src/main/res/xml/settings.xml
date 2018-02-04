@@ -53,14 +53,14 @@
             android:key="pref_uiScaling"
             android:title="@string/pref_uiScaling"
             android:dialogTitle="@string/pref_uiScaling"
-            android:inputType="number"
+            android:inputType="numberDecimal"
             />
 
         <EditTextPreference
             android:key="pref_touchpadSensitivity"
             android:title="@string/pref_touchpadSensitivity"
             android:dialogTitle="@string/pref_touchpadSensitivity"
-            android:inputType="number"
+            android:inputType="numberDecimal"
             />
     </PreferenceCategory>
 
