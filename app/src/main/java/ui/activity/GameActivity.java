@@ -3,11 +3,14 @@ package ui.activity;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Process;
 import android.preference.PreferenceManager;
 import android.system.ErrnoException;
 import android.system.Os;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -30,6 +33,14 @@ import static utils.Utils.hideAndroidControls;
 
 public class GameActivity extends SDLActivity {
 
+    private int numPointersDown;
+    private int maxPointersDown;
+    private int mouseDeadzone;
+    private float startX;
+    private float startY;
+    private boolean isMoving;
+    private double mouseScalingFactor;
+
     public static native void getPathToJni(String path);
 
     public static native void commandLine(int argc, String[] argv);
@@ -38,10 +49,11 @@ public class GameActivity extends SDLActivity {
     private boolean hideControls = false;
     private ScreenControls screenControls;
     private MouseCursor cursor;
+    private SharedPreferences prefs;
 
     @Override
     public void loadLibraries() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String graphicsLibrary = prefs.getString("pref_graphicsLibrary", "");
 
         System.loadLibrary("c++_shared");
@@ -69,6 +81,16 @@ public class GameActivity extends SDLActivity {
         parseCommandLineData();
         getPathToJni(ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH);
         showControls();
+
+        DisplayMetrics dm = getContext().getResources().getDisplayMetrics();
+        int minRes = Math.min(dm.widthPixels, dm.heightPixels);
+        mouseDeadzone = minRes / 40; // fairly arbitrary
+
+        try {
+            mouseScalingFactor = Float.parseFloat(prefs.getString("pref_touchpadSensitivity", "1.8"));
+        } catch (NumberFormatException e) {
+            mouseScalingFactor = 1.8;
+        }
      }
 
     private void parseCommandLineData() {
@@ -131,6 +153,77 @@ public class GameActivity extends SDLActivity {
             ScreenScaler.textScaler(QuickPanel.getInstance().f1, 4);
             QuickPanel.getInstance().f1.setVisibility(Button.GONE);
         }
+    }
+
+
+    // Touch events
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        switch (event.getActionMasked()) {
+            case MotionEvent.ACTION_DOWN:
+            case MotionEvent.ACTION_POINTER_DOWN:
+                if (numPointersDown == 0) {
+                    startX = event.getX();
+                    startY = event.getY();
+                }
+                ++numPointersDown;
+                maxPointersDown = Math.max(numPointersDown, maxPointersDown);
+                break;
+            case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_POINTER_UP:
+                numPointersDown = Math.max(0, numPointersDown - 1);
+                if (numPointersDown == 0) {
+                    // everything's up, do the action
+                    if (!isMoving && SDLActivity.isMouseShown() != 0) {
+                        // only send clicks if we didn't move
+                        int mouseX = SDLActivity.getMouseX();
+                        int mouseY = SDLActivity.getMouseY();
+                        int mouseButton = 0;
+
+                        if (maxPointersDown == 1)
+                            mouseButton = 1;
+                        else if (maxPointersDown == 2)
+                            mouseButton = 2;
+
+                        if (mouseButton != 0) {
+                            SDLActivity.onNativeMouse(mouseButton, MotionEvent.ACTION_DOWN, mouseX, mouseY);
+                            final Handler handler = new Handler();
+                            handler.postDelayed(() -> SDLActivity.onNativeMouse(0, MotionEvent.ACTION_UP, mouseX, mouseY), 100);
+                        }
+                    }
+
+                    maxPointersDown = 0;
+                    isMoving = false;
+                }
+                break;
+            case MotionEvent.ACTION_MOVE:
+                if (maxPointersDown == 1) {
+                    float diffX = event.getX() - startX;
+                    float diffY = event.getY() - startY;
+                    double distance = Math.sqrt(diffX * diffX + diffY * diffY);
+
+                    if (distance > mouseDeadzone) {
+                        isMoving = true;
+                        startX = event.getX();
+                        startY = event.getY();
+                    } else if (isMoving) {
+                        int mouseX = SDLActivity.getMouseX();
+                        int mouseY = SDLActivity.getMouseY();
+
+                        long newMouseX = Math.round(mouseX + diffX * mouseScalingFactor);
+                        long newMouseY = Math.round(mouseY + diffY * mouseScalingFactor);
+
+                        if (SDLActivity.isMouseShown() != 0)
+                            SDLActivity.onNativeMouse(0, MotionEvent.ACTION_MOVE, newMouseX, newMouseY);
+
+                        startX = event.getX();
+                        startY = event.getY();
+                    }
+                }
+                break;
+        }
+
+        return true;
     }
 
 }

@@ -1034,7 +1034,7 @@ class SDLMain implements Runnable {
     Because of this, that's where we set up the SDL thread
 */
 class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
-    View.OnKeyListener, View.OnTouchListener, SensorEventListener  {
+    View.OnKeyListener, SensorEventListener  {
 
     // Sensors
     protected static SensorManager mSensorManager;
@@ -1052,7 +1052,6 @@ class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
         setFocusableInTouchMode(true);
         requestFocus();
         setOnKeyListener(this);
-        setOnTouchListener(this);
 
         mDisplay = ((WindowManager)context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
         mSensorManager = (SensorManager)context.getSystemService(Context.SENSOR_SERVICE);
@@ -1075,7 +1074,6 @@ class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
         setFocusableInTouchMode(true);
         requestFocus();
         setOnKeyListener(this);
-        setOnTouchListener(this);
         enableSensor(Sensor.TYPE_ACCELEROMETER, false);
     }
 
@@ -1282,35 +1280,6 @@ class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
 
         return false;
     }
-
-    // Touch events
-    @Override
-    public boolean onTouch(View v, MotionEvent event) {
-        /* Ref: http://developer.android.com/training/gestures/multi.html */
-        final int touchDevId = event.getDeviceId();
-        final int pointerCount = event.getPointerCount();
-        int action = event.getActionMasked();
-        int pointerFingerId;
-        int mouseButton;
-        int i = -1;
-        float x,y,p;
-
-        // !!! FIXME: dump this SDK check after 2.0.4 ships and require API14.
-        if (event.getSource() == InputDevice.SOURCE_MOUSE && SDLActivity.mSeparateMouseAndTouch) {
-            if (Build.VERSION.SDK_INT < 14) {
-                mouseButton = 1; // all mouse buttons are the left button
-            } else {
-                try {
-                    mouseButton = (Integer) event.getClass().getMethod("getButtonState").invoke(event);
-                } catch(Exception e) {
-                    mouseButton = 1;    // oh well.
-                }
-            }
-            SDLActivity.onNativeMouse(mouseButton, action, event.getX(0), event.getY(0));
-        }
-
-        return true;
-   }
 
     // Sensor events
     public void enableSensor(int sensortype, boolean enabled) {
