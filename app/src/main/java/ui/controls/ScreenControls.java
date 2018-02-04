@@ -177,11 +177,9 @@ public class ScreenControls {
 			final ImageButton buttonPause = (ImageButton) a
 					.findViewById(R.id.buttonpause);
 
-			buttonPause.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View v) {
-				}
-			});
+			buttonPause.setOnTouchListener(new ButtonTouchListener(
+					KeyEvent.KEYCODE_ESCAPE,false));
+
 			if (true || controlsFlag == -1 || controlsFlag == 1) {
 				joystickLeft.setLayoutParams(ControlsParams.coordinates(joystickLeft,
 						75, 400, 250, 250));
