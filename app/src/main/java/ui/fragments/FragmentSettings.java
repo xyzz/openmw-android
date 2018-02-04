@@ -57,16 +57,6 @@ public class FragmentSettings extends PreferenceFragment implements OnSharedPref
                 return true;
             }
         });
-        ListPreference mipmappingList = (ListPreference) findPreference(Constants.MIPMAPPING);
-
-        mipmappingList.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(final Preference preference, final Object newValue) {
-                String mipmapping = newValue.toString();
-                saveMipMappingOptions(mipmapping);
-                return true;
-            }
-        });
     }
 
     @Override

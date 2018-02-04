@@ -48,24 +48,12 @@
     </PreferenceCategory>
 
 
-    <PreferenceCategory
-        android:key="categ2"
-        android:title="Screen Settings">
-        <ListPreference
-            android:key="mipmapping"
-            android:summary="Mipmapping options"
-            android:title="Mipmapping"
-            android:dialogTitle="Mipmapping"
-            android:entries="@array/mipmapping_array"
-            android:entryValues="@array/mipmapping_array" />
-
-        <ListPreference
-            android:key="resolution"
-            android:summary="Screen resolution"
-            android:title="Resolution"
-            android:dialogTitle="Screen resolution"
-            android:entries="@array/resolution_entry"
-            android:entryValues="@array/resolution_array" />
+    <PreferenceCategory android:title="@string/pref_ui">
+        <EditTextPreference
+            android:key="pref_uiScaling"
+            android:title="@string/pref_uiScaling"
+            android:dialogTitle="@string/pref_uiScaling"
+            />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/pref_advanced">

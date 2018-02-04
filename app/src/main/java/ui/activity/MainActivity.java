@@ -45,6 +45,7 @@ import prefs.PreferencesHelper;
 
 import static file.ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH;
 import static file.ConfigsFileStorageHelper.OPENMW_CFG;
+import static file.ConfigsFileStorageHelper.SETTINGS_CFG;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -257,6 +258,8 @@ public class MainActivity extends AppCompatActivity {
                         "resources");
                 // TODO: it will crash if there's no value/invalid value provided
                 file.Writer.write(prefs.getString("data_files", ""), OPENMW_CFG, "data");
+
+                file.Writer.write(prefs.getString("pref_uiScaling", "1.0"), SETTINGS_CFG, "scaling factor");
 
                 runOnUiThread(() -> {
                     dialog.hide();

@@ -35,6 +35,8 @@
     <string name="pref_graphicsLibrary_default">gles1</string>
     <string name="pref_advanced">Advanced</string>
     <string name="pref_commandLine">Custom command line arguments</string>
+    <string name="pref_ui">Screen</string>
+    <string name="pref_uiScaling">UI scaling factor</string>
 
     <string-array name="pref_graphicsLibrary_entries">
         <item>GLESv1</item>
