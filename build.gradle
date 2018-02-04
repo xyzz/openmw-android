@@ -18,3 +18,9 @@ allprojects {
         google()
     }
 }
+
+apply plugin: 'idea'
+
+idea.module {
+    excludeDirs += file('buildscripts/')
+}
