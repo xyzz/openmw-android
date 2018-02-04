@@ -46,6 +46,7 @@ import prefs.PreferencesHelper;
 import static file.ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH;
 import static file.ConfigsFileStorageHelper.OPENMW_CFG;
 import static file.ConfigsFileStorageHelper.SETTINGS_CFG;
+import static utils.Utils.hideAndroidControls;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -234,6 +235,9 @@ public class MainActivity extends AppCompatActivity {
                 this, "", "Preparing for launch...", true);
 
         Activity activity = this;
+
+        // hide the controls so that ScreenResolutionHelper can get the right resolution
+        hideAndroidControls(this);
 
         Thread th = new Thread(() -> {
             try {

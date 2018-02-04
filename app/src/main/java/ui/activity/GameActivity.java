@@ -26,6 +26,8 @@ import ui.controls.QuickPanel;
 import ui.controls.ScreenControls;
 import file.ConfigsFileStorageHelper;
 
+import static utils.Utils.hideAndroidControls;
+
 public class GameActivity extends SDLActivity {
 
     public static native void getPathToJni(String path);
@@ -120,6 +122,10 @@ public class GameActivity extends SDLActivity {
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
+        if (hasFocus) {
+            hideAndroidControls(this);
+        }
+
         if (!hideControls) {
             ScreenScaler.textScaler(QuickPanel.getInstance().showPanel, 4);
             ScreenScaler.textScaler(QuickPanel.getInstance().f1, 4);
