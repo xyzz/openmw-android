@@ -20,6 +20,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 
 import com.libopenmw.openmw.R;
 
@@ -76,6 +77,10 @@ public class GameActivity extends SDLActivity {
         }
         System.loadLibrary("GL");
         System.loadLibrary("openmw");
+    }
+
+    public RelativeLayout getLayout() {
+        return (RelativeLayout) mLayout;
     }
 
     @Override

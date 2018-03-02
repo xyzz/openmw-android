@@ -357,12 +357,6 @@
             android:text="opacity+"
             android:visibility="gone" />
 
-        <ImageView
-            android:id="@+id/mouseCursor"
-            android:layout_width="30dip"
-            android:layout_height="30dip"
-            android:scaleType="fitCenter"
-            android:src="@drawable/pointer_arrow" />
     </RelativeLayout>
 
 </FrameLayout>
