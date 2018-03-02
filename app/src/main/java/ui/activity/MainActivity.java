@@ -382,6 +382,11 @@ public class MainActivity extends AppCompatActivity {
                     startControlsActivity();
                     break;
 
+                case R.id.action_reset_config:
+                    resetUserConfig();
+                    Toast.makeText(this, getString(R.string.config_was_reset), Toast.LENGTH_SHORT).show();
+                    break;
+
                 default:
                     break;
             }

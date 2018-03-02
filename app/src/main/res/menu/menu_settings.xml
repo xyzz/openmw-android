@@ -6,15 +6,24 @@
 
         <item
             android:id="@+id/action_show_screen_controls"
-            android:title="Show on-screen controls"
-            android:orderInCategory="100"
-             app:showAsAction="never" />
+            android:title="@string/action_show_screen_controls"
+            android:orderInCategory="0"
+            app:showAsAction="never"
+            />
 
         <item
             android:id="@+id/action_reset_screen_controls"
-            android:orderInCategory="100"
-            android:title="Reset on-screen controls"
-            app:showAsAction="never" />
+            android:orderInCategory="1"
+            android:title="@string/action_reset_screen_controls"
+            app:showAsAction="never"
+            />
+
+        <item
+            android:id="@+id/action_reset_config"
+            android:orderInCategory="2"
+            android:title="@string/action_reset_config"
+            app:showAsAction="never"
+            />
 
     </group>
 </menu>
