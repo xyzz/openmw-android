@@ -2,11 +2,18 @@
 <resources>
     <string name="app_name">OpenMW</string>
 
-    <string-array name="encoding_entry">
+    <string-array name="pref_encoding_entries">
+        <item>Central and Eastern European (win1250)</item>
+        <item>Cyrillic (win1251)</item>
+        <item>Latin (win1252)</item>
+    </string-array>
+
+    <string-array name="pref_encoding_values">
         <item>win1250</item>
         <item>win1251</item>
         <item>win1252</item>
     </string-array>
+
     <string-array name="mipmapping_array">
         <item>trilinear</item>
         <item>bilinear</item>
@@ -42,6 +49,9 @@
     <string name="action_reset_screen_controls">Reset on-screen controls</string>
     <string name="action_show_screen_controls">Configure on-screen controls</string>
     <string name="config_was_reset">Configuration was reset to default values</string>
+    <string name="pref_lang">Language settings</string>
+    <string name="pref_encoding">Game language</string>
+    <string name="pref_encoding_default">win1252</string>
 
     <string-array name="pref_graphicsLibrary_entries">
         <item>GLESv1</item>

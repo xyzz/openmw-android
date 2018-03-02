@@ -28,22 +28,16 @@
     </PreferenceCategory>
 
 
-    <PreferenceCategory
-        android:key="categ1anguage"
-        android:title="Language settings">
+    <PreferenceCategory android:title="@string/pref_lang">
         <ListPreference
-            android:key="encoding"
-            android:summary="Game language"
-            android:title="Encoding"
-            android:dialogTitle="Game language"
-            android:entries="@array/encoding_entry"
-            android:entryValues="@array/encoding_entry" />
-
-        <CheckBoxPreference
-            android:key="subtitiles"
-            android:summary="Show subtitles"
-            android:title="Subtitles" />
-
+            android:key="pref_encoding"
+            android:summary="%s"
+            android:title="@string/pref_encoding"
+            android:dialogTitle="@string/pref_encoding"
+            android:entries="@array/pref_encoding_entries"
+            android:entryValues="@array/pref_encoding_values"
+            android:defaultValue="@string/pref_encoding_default"
+            />
 
     </PreferenceCategory>
 
