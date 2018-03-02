@@ -50,6 +50,7 @@ import static utils.Utils.hideAndroidControls;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = "OpenMW-Launcher";
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
     public TextView path;
@@ -230,6 +231,18 @@ public class MainActivity extends AppCompatActivity {
         MainActivity.this.startActivity(intent);
     }
 
+    /**
+     * Resets $base/config to default values. This contains user-modifiable openmw.cfg and settings.cfg
+     * (and we also write some values to both on startup such as screen res or some options)
+     */
+    private void resetUserConfig() {
+        // Wipe out the old version
+        deleteRecursive(new File(CONFIGS_FILES_STORAGE_PATH + "/config"));
+        // and copy in the default values
+        CopyFilesFromAssets copyFiles = new CopyFilesFromAssets(this, CONFIGS_FILES_STORAGE_PATH);
+        copyFiles.copyFileOrDir("libopenmw/config");
+    }
+
     private void startGame() {
         ProgressDialog dialog = ProgressDialog.show(
                 this, "", "Preparing for launch...", true);
@@ -241,14 +254,21 @@ public class MainActivity extends AppCompatActivity {
 
         Thread th = new Thread(() -> {
             try {
-                // wipe old config files
-                deleteRecursive(new File(CONFIGS_FILES_STORAGE_PATH + "/config"));
+                File openmwCfg = new File(OPENMW_CFG);
+                File settingsCfg = new File(SETTINGS_CFG);
+                if (!openmwCfg.exists() || !settingsCfg.exists()) {
+                    Log.i(TAG, "Config files don't exist, re-creating them.");
+                    resetUserConfig();
+                }
+
+                // wipe old "wipeable" (see ConfigsFileStorageHelper) config files just to be safe
                 deleteRecursive(new File(CONFIGS_FILES_STORAGE_PATH + "/openmw"));
                 deleteRecursive(new File(CONFIGS_FILES_STORAGE_PATH + "/resources"));
 
                 // copy all assets
                 CopyFilesFromAssets copyFiles = new CopyFilesFromAssets(activity, CONFIGS_FILES_STORAGE_PATH);
-                copyFiles.copyFileOrDir("libopenmw");
+                copyFiles.copyFileOrDir("libopenmw/openmw");
+                copyFiles.copyFileOrDir("libopenmw/resources");
 
                 // settings.cfg: resolution
                 ScreenResolutionHelper screenHelper = new ScreenResolutionHelper(activity);
@@ -270,7 +290,7 @@ public class MainActivity extends AppCompatActivity {
                     runGame();
                 });
             } catch (IOException e) {
-                Log.e("OpenMW-Launcher", "Failed to write config files.", e);
+                Log.e(TAG, "Failed to write config files.", e);
 
                 Toast.makeText(activity, "Something failed", Toast.LENGTH_LONG).show();
             }
