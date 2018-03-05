@@ -28,10 +28,10 @@ open class OscElement(
         private val defaultX: Int,
         private val defaultY: Int,
         private val defaultSize: Int = 50,
-        protected val defaultOpacity: Float = 0.5f
+        private val defaultOpacity: Float = 0.5f
 ) {
 
-    var opacity = defaultOpacity
+    private var opacity = defaultOpacity
     var size = defaultSize
     var x = defaultX
     var y = defaultY
@@ -159,8 +159,25 @@ class OscImageButton(
     override fun makeView(ctx: Context) {
         val v = ImageView(ctx)
         v.setImageResource(imageSrc)
-        v.alpha = defaultOpacity
         v.setOnTouchListener(ButtonTouchListener(keyCode, needMouse))
+        v.tag = this
+
+        view = v
+    }
+
+}
+
+class OscJoystick(
+        uniqueId: String,
+        defaultX: Int,
+        defaultY: Int,
+        defaultSize: Int,
+        private val stick: Int
+) : OscElement(uniqueId, defaultX, defaultY, defaultSize) {
+
+    override fun makeView(ctx: Context) {
+        val v = Joystick(ctx)
+        v.setStick(stick)
         v.tag = this
 
         view = v
@@ -170,7 +187,15 @@ class OscImageButton(
 
 class Osc {
     private val elements = arrayOf(
-            OscImageButton("pause", R.drawable.pause, 950, 0, 60, KeyEvent.KEYCODE_ESCAPE)
+        OscImageButton("run", R.drawable.run, 65, 330, 50, 115),
+        OscImageButton("inventory", R.drawable.inventory, 950, 95, 50, 2, true),
+        OscImageButton("pause", R.drawable.pause, 950, 0, 50, KeyEvent.KEYCODE_ESCAPE),
+        OscImageButton("console", R.drawable.ontarget, 140, 0, 50, 132),
+        OscImageButton("changePerson", R.drawable.backup, 212, 0, 50, KeyEvent.KEYCODE_TAB),
+        OscImageButton("wait", R.drawable.wait, 274, 0, 50, KeyEvent.KEYCODE_T),
+
+        OscJoystick("joystickLeft", 75, 400, 250, 0),
+        OscJoystick("joystickRight", 650, 400, 250, 1)
     )
 
     fun placeElements(target: RelativeLayout) {
