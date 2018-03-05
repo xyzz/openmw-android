@@ -30,6 +30,7 @@ import org.libsdl.app.SDLInputConnection;
 import constants.Constants;
 import cursor.MouseCursor;
 import parser.CommandlineParser;
+import ui.controls.Osc;
 import ui.game.GameState;
 import ui.screen.ScreenScaler;
 import ui.controls.QuickPanel;
@@ -113,12 +114,9 @@ public class GameActivity extends SDLActivity {
     private void showControls() {
         hideControls = PreferenceManager.getDefaultSharedPreferences(this).getBoolean(Constants.HIDE_CONTROLS, false);
         if (!hideControls) {
-            screenControls = new ScreenControls(this);
-            screenControls.showControls(hideControls);
-            QuickPanel panel = new QuickPanel(this);
-            panel.showQuickPanel(hideControls);
-            QuickPanel.getInstance().f1.setVisibility(Button.VISIBLE);
-            controlsRootLayout = (FrameLayout) findViewById(R.id.rootLayout);
+            RelativeLayout layout = getLayout();
+            Osc osc = new Osc();
+            osc.placeElements(layout);
         }
         cursor = new MouseCursor(this);
     }
@@ -160,9 +158,9 @@ public class GameActivity extends SDLActivity {
         }
 
         if (!hideControls) {
-            ScreenScaler.textScaler(QuickPanel.getInstance().showPanel, 4);
-            ScreenScaler.textScaler(QuickPanel.getInstance().f1, 4);
-            QuickPanel.getInstance().f1.setVisibility(Button.GONE);
+//            ScreenScaler.textScaler(QuickPanel.getInstance().showPanel, 4);
+//            ScreenScaler.textScaler(QuickPanel.getInstance().f1, 4);
+//            QuickPanel.getInstance().f1.setVisibility(Button.GONE);
         }
     }
 

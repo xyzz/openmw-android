@@ -1,0 +1,101 @@
+package ui.activity
+
+import com.libopenmw.openmw.R
+
+import android.app.Activity
+import android.graphics.Color
+import android.os.Bundle
+import android.view.MotionEvent
+import android.view.View
+import android.widget.RelativeLayout
+
+import ui.controls.Osc
+import ui.controls.OscElement
+import ui.controls.VIRTUAL_SCREEN_HEIGHT
+import ui.controls.VIRTUAL_SCREEN_WIDTH
+
+class ConfigureCallback(activity: Activity) : View.OnTouchListener {
+
+    var currentView: View? = null
+    private var layout: RelativeLayout = activity.findViewById(R.id.controlsContainer)
+    private var relativeX: Float = 0.0f
+    private var relativeY: Float = 0.0f
+
+    override fun onTouch(v: View, event: MotionEvent): Boolean {
+        when (event.actionMasked) {
+            MotionEvent.ACTION_DOWN -> {
+                currentView?.setBackgroundColor(Color.TRANSPARENT)
+                currentView = v
+                v.setBackgroundColor(Color.RED)
+                relativeX = event.x
+                relativeY = event.y
+            }
+            MotionEvent.ACTION_MOVE -> if (currentView != null) {
+                val view = currentView!!
+                val layoutPosition = IntArray(2)
+                layout.getLocationOnScreen(layoutPosition)
+                // https://stackoverflow.com/q/1410885 - have to use rawX/rawY
+                val x = (event.rawX - relativeX - layoutPosition[0]).toInt()
+                val y = (event.rawY - relativeY - layoutPosition[1]).toInt()
+
+                val el = view.tag as OscElement
+                el.changePosition(x * VIRTUAL_SCREEN_WIDTH / layout.width, y * VIRTUAL_SCREEN_HEIGHT / layout.height)
+                el.updateView()
+            }
+        }
+
+        return true
+    }
+
+}
+
+class ConfigureControls : Activity() {
+
+    private var callback: ConfigureCallback? = null
+    private var osc = Osc()
+
+    public override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.configure_controls)
+
+        val cb = ConfigureCallback(this)
+        callback = cb
+
+        osc.placeConfigurableElements(findViewById(R.id.controlsContainer), cb)
+    }
+
+    private fun changeOpacity(delta: Float) {
+        val view = callback?.currentView ?: return
+        val el =  view.tag as OscElement
+        el.changeOpacity(delta)
+        el.updateView()
+    }
+
+    private fun changeSize(delta: Int) {
+        val view = callback?.currentView ?: return
+        val el =  view.tag as OscElement
+        el.changeSize(delta)
+        el.updateView()
+    }
+
+    fun clickOpacityPlus(v: View) {
+        changeOpacity(0.1f)
+    }
+
+    fun clickOpacityMinus(v: View) {
+        changeOpacity(-0.1f)
+    }
+
+    fun clickSizePlus(v: View) {
+        changeSize(5)
+    }
+
+    fun clickSizeMinus(v: View) {
+        changeSize(-5)
+    }
+
+    fun clickResetControls(v: View) {
+        osc.resetElements(applicationContext)
+    }
+
+}

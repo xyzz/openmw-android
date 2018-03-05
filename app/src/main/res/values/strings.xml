@@ -52,6 +52,11 @@
     <string name="pref_lang">Language settings</string>
     <string name="pref_encoding">Game language</string>
     <string name="pref_encoding_default">win1252</string>
+    <string name="btn_opacityPlus">Alpha+</string>
+    <string name="btn_opacityMinus">Alpha-</string>
+    <string name="btn_sizePlus">Size+</string>
+    <string name="btn_sizeMinus">Size-</string>
+    <string name="btn_resetControlsLayout">Reset to defaults</string>
 
     <string-array name="pref_graphicsLibrary_entries">
         <item>GLESv1</item>
