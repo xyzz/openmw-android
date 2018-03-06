@@ -5,7 +5,9 @@ import android.graphics.Color
 import android.preference.PreferenceManager
 import android.util.TypedValue
 import android.view.KeyEvent
+import android.view.MotionEvent
 import android.view.View
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import com.libopenmw.openmw.R
@@ -67,6 +69,7 @@ open class OscElement(
     fun placeConfigurable(target: RelativeLayout, listener: View.OnTouchListener) {
         place(target)
         view?.setOnTouchListener(listener)
+        view?.visibility = View.VISIBLE
     }
 
     fun changeOpacity(delta: Float) {
@@ -184,8 +187,63 @@ class OscJoystick(
 
 }
 
+open class OscHiddenButton(
+    uniqueId: String,
+    defaultX: Int,
+    defaultY: Int,
+    private val title: String,
+    private val keyCode: Int
+) : OscElement(uniqueId, defaultX, defaultY) {
+
+    override fun makeView(ctx: Context) {
+        val v = Button(ctx)
+        v.tag = this
+        v.setOnTouchListener(ButtonTouchListener(keyCode, false))
+        v.text = title
+        v.visibility = View.GONE
+
+        view = v
+    }
+
+}
+
+
+class ToggleTouchListener(private val buttons: ArrayList<OscHiddenButton>): View.OnTouchListener {
+
+    private var shown = false
+
+    override fun onTouch(v: View?, event: MotionEvent): Boolean {
+        if (event.action != MotionEvent.ACTION_UP)
+            return false
+
+        for (button in buttons)
+            button.view?.visibility = if (shown) View.GONE else View.VISIBLE
+
+        shown = !shown
+
+        return true
+    }
+
+}
+
+class OscHiddenToggle(
+    uniqueId: String,
+    defaultX: Int,
+    defaultY: Int,
+    title: String,
+    private val buttons: ArrayList<OscHiddenButton>
+) : OscHiddenButton(uniqueId, defaultX, defaultY, title, 0) {
+
+    override fun makeView(ctx: Context) {
+        super.makeView(ctx)
+        view?.setOnTouchListener(ToggleTouchListener(buttons))
+        view?.visibility = View.VISIBLE
+    }
+
+}
+
 class Osc {
-    private val elements = arrayOf(
+    private var elements = arrayListOf(
         OscImageButton("run", R.drawable.run, 65, 330, 115),
         OscImageButton("inventory", R.drawable.inventory, 950, 95, 2, true),
         OscImageButton("console", R.drawable.ontarget, 140, 0, 132),
@@ -211,6 +269,30 @@ class Osc {
         OscJoystick("joystickLeft", 75, 400, 170, 0),
         OscJoystick("joystickRight", 650, 400, 170, 1)
     )
+
+    init {
+        val fnButtons = ArrayList<OscHiddenButton>()
+
+        // Fn buttons: F1, F3, F4, F10, F11 are the only ones we care about
+        arrayOf(1, 3, 4, 10, 11).forEachIndexed{ i, el ->
+            val code = 130 + el
+            fnButtons.add(OscHiddenButton("f$el", 70, 70 * (i + 1), "F$el", code))
+        }
+        val fn = OscHiddenToggle("fn", 70, 0, "FN", fnButtons)
+
+        // Quick buttons: 0 to 9
+        val quickButtons = ArrayList<OscHiddenButton>()
+        for (i in 0..9) {
+            val code = KeyEvent.KEYCODE_0 + i
+            quickButtons.add(OscHiddenButton("qp$i", 0, 70 * (i + 1), "$i", code))
+        }
+        val qp = OscHiddenToggle("qp", 0, 0, "QP", quickButtons)
+
+        elements.addAll(fnButtons)
+        elements.add(fn)
+        elements.addAll(quickButtons)
+        elements.add(qp)
+    }
 
     fun placeElements(target: RelativeLayout) {
         for (element in elements) {
