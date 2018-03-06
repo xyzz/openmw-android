@@ -263,9 +263,6 @@ class Osc {
         OscImageButton("backspace", R.drawable.del, 500, 0, KeyEvent.KEYCODE_DEL),
         OscImageButton("use", R.drawable.use, 940, 368, KeyEvent.KEYCODE_SPACE),
 
-        // TODO: Quick panel
-        // TODO: fn keys
-
         OscJoystick("joystickLeft", 75, 400, 170, 0),
         OscJoystick("joystickRight", 650, 400, 170, 1)
     )
