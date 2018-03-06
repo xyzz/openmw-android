@@ -151,10 +151,9 @@ class OscImageButton(
         private val imageSrc: Int,
         defaultX: Int,
         defaultY: Int,
-        defaultSize: Int,
         private val keyCode: Int,
         private val needMouse: Boolean = false
-) : OscElement(uniqueId, defaultX, defaultY, defaultSize) {
+) : OscElement(uniqueId, defaultX, defaultY) {
 
     override fun makeView(ctx: Context) {
         val v = ImageView(ctx)
@@ -187,15 +186,30 @@ class OscJoystick(
 
 class Osc {
     private val elements = arrayOf(
-        OscImageButton("run", R.drawable.run, 65, 330, 50, 115),
-        OscImageButton("inventory", R.drawable.inventory, 950, 95, 50, 2, true),
-        OscImageButton("pause", R.drawable.pause, 950, 0, 50, KeyEvent.KEYCODE_ESCAPE),
-        OscImageButton("console", R.drawable.ontarget, 140, 0, 50, 132),
-        OscImageButton("changePerson", R.drawable.backup, 212, 0, 50, KeyEvent.KEYCODE_TAB),
-        OscImageButton("wait", R.drawable.wait, 274, 0, 50, KeyEvent.KEYCODE_T),
+        OscImageButton("run", R.drawable.run, 65, 330, 115),
+        OscImageButton("inventory", R.drawable.inventory, 950, 95, 2, true),
+        OscImageButton("console", R.drawable.ontarget, 140, 0, 132),
+        OscImageButton("changePerson", R.drawable.backup, 212, 0, KeyEvent.KEYCODE_TAB),
+        OscImageButton("wait", R.drawable.wait, 274, 0, KeyEvent.KEYCODE_T),
+        OscImageButton("pause", R.drawable.pause, 950, 0, KeyEvent.KEYCODE_ESCAPE),
+        // TODO: replace load/save icons with more intuitive
+        OscImageButton("quickLoad", R.drawable.load, 860, 0, 139),
+        OscImageButton("quickSave", R.drawable.save, 780, 0, 135),
+        OscImageButton("weapon", R.drawable.broadsword1, 880, 95, KeyEvent.KEYCODE_F),
+        OscImageButton("jump", R.drawable.jump, 920, 195, KeyEvent.KEYCODE_E),
+        OscImageButton("fire", R.drawable.crossbow, 790, 300, 1, true),
+        OscImageButton("magic", R.drawable.starsattelites, 940, 480, KeyEvent.KEYCODE_R),
+        // TODO: use https://openmw.readthedocs.io/en/master/reference/modding/settings/input.html#toggle-sneak
+        OscImageButton("crouch", R.drawable.c, 940, 670, 113),
+        OscImageButton("diary", R.drawable.di, 414, 0, KeyEvent.KEYCODE_J),
+        OscImageButton("backspace", R.drawable.del, 500, 0, KeyEvent.KEYCODE_DEL),
+        OscImageButton("use", R.drawable.use, 940, 368, KeyEvent.KEYCODE_SPACE),
 
-        OscJoystick("joystickLeft", 75, 400, 250, 0),
-        OscJoystick("joystickRight", 650, 400, 250, 1)
+        // TODO: Quick panel
+        // TODO: fn keys
+
+        OscJoystick("joystickLeft", 75, 400, 170, 0),
+        OscJoystick("joystickRight", 650, 400, 170, 1)
     )
 
     fun placeElements(target: RelativeLayout) {
