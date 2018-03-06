@@ -2,7 +2,7 @@
     package="com.libopenmw.openmw"
     android:installLocation="auto"
     android:versionCode="1"
-    android:versionName="0.40">
+    android:versionName="0.43">
 
     <!-- Allow writing to external storage -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
