@@ -1,6 +1,5 @@
 package cursor;
 
-import android.app.Activity;
 import android.content.res.Resources;
 import android.util.TypedValue;
 import android.view.Choreographer;

@@ -1,7 +1,6 @@
 
 package ui.activity;
 
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,19 +9,12 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.system.ErrnoException;
 import android.system.Os;
-import android.text.InputType;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.MotionEvent;
-import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
-
-import com.libopenmw.openmw.R;
 
 import org.libsdl.app.SDLActivity;
 import org.libsdl.app.SDLInputConnection;
@@ -32,9 +24,6 @@ import cursor.MouseCursor;
 import parser.CommandlineParser;
 import ui.controls.Osc;
 import ui.game.GameState;
-import ui.screen.ScreenScaler;
-import ui.controls.QuickPanel;
-import ui.controls.ScreenControls;
 import file.ConfigsFileStorageHelper;
 
 import static utils.Utils.hideAndroidControls;
@@ -53,9 +42,7 @@ public class GameActivity extends SDLActivity {
 
     public static native void commandLine(int argc, String[] argv);
 
-    private FrameLayout controlsRootLayout;
     private boolean hideControls = false;
-    private ScreenControls screenControls;
     private MouseCursor cursor;
     private SharedPreferences prefs;
 
@@ -121,21 +108,6 @@ public class GameActivity extends SDLActivity {
         cursor = new MouseCursor(this);
     }
 
-    public void hideControlsRootLayout(final boolean needHideControls) {
-        if (!hideControls) {
-            GameActivity.this.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    if (needHideControls) {
-                        controlsRootLayout.setVisibility(View.GONE);
-                    } else {
-                        controlsRootLayout.setVisibility(View.VISIBLE);
-                    }
-                }
-            });
-        }
-    }
-
     private void KeepScreenOn() {
         boolean needKeepScreenOn = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("screen_keeper", false);
         if (needKeepScreenOn) {
@@ -155,12 +127,6 @@ public class GameActivity extends SDLActivity {
     public void onWindowFocusChanged(boolean hasFocus) {
         if (hasFocus) {
             hideAndroidControls(this);
-        }
-
-        if (!hideControls) {
-//            ScreenScaler.textScaler(QuickPanel.getInstance().showPanel, 4);
-//            ScreenScaler.textScaler(QuickPanel.getInstance().f1, 4);
-//            QuickPanel.getInstance().f1.setVisibility(Button.GONE);
         }
     }
 

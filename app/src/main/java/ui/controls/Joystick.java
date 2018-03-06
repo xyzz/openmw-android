@@ -6,13 +6,8 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.v4.math.MathUtils;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.GestureDetector;
-import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
-
-import org.libsdl.app.SDLActivity;
 
 public class Joystick extends View {
 
