@@ -8,6 +8,7 @@ import ui.controls.QuickPanel;
 import ui.controls.ScreenControls;
 import android.os.Bundle;
 import android.os.Process;
+import android.util.Log;
 import android.view.WindowManager;
 
 public class GameActivity extends SDLActivity {
@@ -50,9 +51,8 @@ public class GameActivity extends SDLActivity {
 	}
 
 	private void parseCommandLine() {
-		argv = MainActivity.commandLineData.split(" --");
+		argv= MainActivity.commandLineData.split("+");
 		argc = argv.length;
-
 	}
 
 	@Override
