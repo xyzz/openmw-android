@@ -1,39 +1,51 @@
 cmake_minimum_required(VERSION 3.2.0)
 
+# https://github.com/libjpeg-turbo/libjpeg-turbo/releases
 set(LIBJPEG_TURBO_VERSION 1.5.3)
 set(LIBJPEG_TURBO_HASH SHA256=b24890e2bb46e12e72a79f7e965f409f4e16466d00e1dd15d93d73ee6b592523)
 
+# http://www.libpng.org/pub/png/libpng.html
 set(LIBPNG_VERSION 1.6.34)
 set(LIBPNG_HASH SHA256=2f1e960d92ce3b3abd03d06dfec9637dfbd22febf107a536b44f7a47c60659f6)
 
+# https://www.freetype.org/index.html#news
 set(FREETYPE2_VERSION 2.9)
 set(FREETYPE2_HASH SHA256=bf380e4d7c4f3b5b1c1a7b2bf3abb967bda5e9ab480d0df656e0e08c5019c5e6)
 
+# http://kcat.strangesoft.net/openal.html
 set(OPENAL_VERSION 1.18.2)
 set(OPENAL_HASH SHA256=9f8ac1e27fba15a59758a13f0c7f6540a0605b6c3a691def9d420570506d7e82)
 
+# http://www.boost.org/users/download/
 set(BOOST_VERSION 1.66.0)
 set(BOOST_HASH SHA256=5721818253e6a0989583192f96782c4a98eb6204965316df9f5ad75819225ca9)
 
+# https://www.ffmpeg.org/download.html
 set(FFMPEG_VERSION 3.4.1)
 set(FFMPEG_HASH SHA256=f3443e20154a590ab8a9eef7bc951e8731425efc75b44ff4bee31d8a7a574a2c)
 
+# https://www.libsdl.org/download-2.0.php
 # NOTE: sdl2 has to be 2.0.5, newer versions have refactored some Android-related stuff
 # which requires adapting our port.
 set(SDL2_VERSION 2.0.5)
 set(SDL2_HASH SHA256=442038cf55965969f2ff06d976031813de643af9c9edc9e331bd761c242e8785)
 
+# https://github.com/bulletphysics/bullet3/releases
 set(BULLET_VERSION 2.86.1)
 set(BULLET_HASH SHA256=c058b2e4321ba6adaa656976c1a138c07b18fc03b29f5b82880d5d8228fbf059)
 
+# https://github.com/MyGUI/mygui/releases
 set(MYGUI_VERSION 3.2.2)
 set(MYGUI_HASH SHA256=0a28d7ec8a47993cb68deb48b36331e28f12dd92580b709eaef21d599b67a78f)
 
+# https://github.com/ptitSeb/gl4es
 set(GL4ES_VERSION dd8cc4e7a379a7c479edefc63e5fa40be3eba7ff)
 set(GL4ES_HASH SHA256=fc75caec65cffdb8d434e3a3dc9eea3dc4081661c2751354025d528b3bab670e)
 
+# https://github.com/openmw/osg
 set(OSG_TAG master)
 
+# https://github.com/xyzz/openmw/tree/android
 set(OPENMW_TAG android)
 
 # End of configurable options
