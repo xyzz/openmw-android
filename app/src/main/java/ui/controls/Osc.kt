@@ -11,6 +11,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import com.libopenmw.openmw.R
+import ui.activity.GameActivity
 
 const val VIRTUAL_SCREEN_WIDTH = 1024
 const val VIRTUAL_SCREEN_HEIGHT = 768
@@ -169,6 +170,30 @@ class OscImageButton(
 
 }
 
+class OscKeyboardButton(
+    uniqueId: String,
+    private val imageSrc: Int,
+    defaultX: Int,
+    defaultY: Int
+) : OscElement(uniqueId, defaultX, defaultY) {
+
+    override fun makeView(ctx: Context) {
+        val v = ImageView(ctx)
+        v.setImageResource(imageSrc)
+        v.setOnTouchListener(View.OnTouchListener { _, motionEvent ->
+            if (motionEvent.action == MotionEvent.ACTION_UP) {
+                val a = ctx as GameActivity
+                a.showVirtualInput()
+            }
+            return@OnTouchListener true
+        })
+        v.tag = this
+
+        view = v
+    }
+
+}
+
 class OscJoystick(
         uniqueId: String,
         defaultX: Int,
@@ -261,6 +286,7 @@ class Osc {
         OscImageButton("crouch", R.drawable.c, 940, 670, 113),
         OscImageButton("diary", R.drawable.di, 414, 0, KeyEvent.KEYCODE_J),
         OscImageButton("backspace", R.drawable.del, 500, 0, KeyEvent.KEYCODE_DEL),
+        OscKeyboardButton("keyboard", R.drawable.keyboard, 586, 0),
         OscImageButton("use", R.drawable.use, 940, 368, KeyEvent.KEYCODE_SPACE),
 
         OscJoystick("joystickLeft", 75, 400, 170, 0),

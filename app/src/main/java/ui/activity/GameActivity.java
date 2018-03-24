@@ -158,9 +158,7 @@ public class GameActivity extends SDLActivity {
                 numPointersDown = Math.max(0, numPointersDown - 1);
                 if (numPointersDown == 0) {
                     // everything's up, do the action
-                    if (maxPointersDown == 3) {
-                        showVirtualInput();
-                    } else if (!isMoving && SDLActivity.isMouseShown() != 0) {
+                    if (!isMoving && SDLActivity.isMouseShown() != 0) {
                         // only send clicks if we didn't move
                         int mouseX = SDLActivity.getMouseX();
                         int mouseY = SDLActivity.getMouseY();
@@ -212,7 +210,7 @@ public class GameActivity extends SDLActivity {
         return true;
     }
 
-    private void showVirtualInput() {
+    public void showVirtualInput() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Virtual input");
 
