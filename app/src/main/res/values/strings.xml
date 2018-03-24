@@ -57,6 +57,7 @@
     <string name="btn_sizePlus">Size+</string>
     <string name="btn_sizeMinus">Size-</string>
     <string name="btn_resetControlsLayout">Reset to defaults</string>
+    <string name="pref_physicsFPS">Physics FPS</string>
 
     <string-array name="pref_graphicsLibrary_entries">
         <item>GLESv1</item>
@@ -67,5 +68,13 @@
         <item>gles1</item>
         <item>gles2</item>
     </string-array>
+
+    <string-array name="pref_physicsFPS_entries">
+        <item>15</item>
+        <item>30</item>
+        <item>60</item>
+    </string-array>
+
+    <string name="pref_physicsFPS_default">60</string>
 
 </resources>

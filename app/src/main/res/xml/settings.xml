@@ -69,6 +69,16 @@
             android:summary="%s"
         />
 
+        <ListPreference
+            android:key="pref_physicsFPS"
+            android:title="@string/pref_physicsFPS"
+            android:dialogTitle="@string/pref_physicsFPS"
+            android:entries="@array/pref_physicsFPS_entries"
+            android:entryValues="@array/pref_physicsFPS_entries"
+            android:defaultValue="@string/pref_physicsFPS_default"
+            android:summary="%s"
+        />
+
     </PreferenceCategory>
 
 </PreferenceScreen>

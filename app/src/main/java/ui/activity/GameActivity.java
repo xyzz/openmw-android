@@ -50,6 +50,15 @@ public class GameActivity extends SDLActivity {
     public void loadLibraries() {
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String graphicsLibrary = prefs.getString("pref_graphicsLibrary", "");
+        String physicsFPS = prefs.getString("pref_physicsFPS", "");
+        if (!physicsFPS.isEmpty()) {
+            try {
+                Os.setenv("OPENMW_PHYSICS_FPS", physicsFPS, true);
+            } catch (ErrnoException e) {
+                Log.e("OpenMW", "Failed setting environment variables.");
+                e.printStackTrace();
+            }
+        }
 
         System.loadLibrary("c++_shared");
         System.loadLibrary("openal");
