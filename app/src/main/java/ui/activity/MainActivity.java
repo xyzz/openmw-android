@@ -376,10 +376,6 @@ public class MainActivity extends AppCompatActivity {
             }
         else
             switch (id) {
-                case R.id.action_reset_screen_controls:
-                    resetScreenControls();
-                    break;
-
                 case R.id.action_show_screen_controls:
                     startControlsActivity();
                     break;
@@ -394,16 +390,6 @@ public class MainActivity extends AppCompatActivity {
             }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    private void resetScreenControls() {
-        PreferencesHelper.setPreferences(
-                Constants.APP_PREFERENCES_RESET_CONTROLS, 1,
-                this);
-        Toast toast = Toast.makeText(this.
-                        getApplicationContext(),
-                "Reset on-screen controls", Toast.LENGTH_LONG);
-        toast.show();
     }
 
     private void startControlsActivity() {

@@ -12,13 +12,6 @@
             />
 
         <item
-            android:id="@+id/action_reset_screen_controls"
-            android:orderInCategory="1"
-            android:title="@string/action_reset_screen_controls"
-            app:showAsAction="never"
-            />
-
-        <item
             android:id="@+id/action_reset_config"
             android:orderInCategory="2"
             android:title="@string/action_reset_config"
