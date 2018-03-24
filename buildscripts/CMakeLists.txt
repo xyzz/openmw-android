@@ -21,8 +21,8 @@ set(BOOST_VERSION 1.66.0)
 set(BOOST_HASH SHA256=5721818253e6a0989583192f96782c4a98eb6204965316df9f5ad75819225ca9)
 
 # https://www.ffmpeg.org/download.html
-set(FFMPEG_VERSION 3.4.1)
-set(FFMPEG_HASH SHA256=f3443e20154a590ab8a9eef7bc951e8731425efc75b44ff4bee31d8a7a574a2c)
+set(FFMPEG_VERSION 3.4.2)
+set(FFMPEG_HASH SHA256=eb0370bf223809b9ebb359fed5318f826ac038ce77933b3afd55ab1a0a21785a)
 
 # https://www.libsdl.org/download-2.0.php
 # NOTE: sdl2 has to be 2.0.5, newer versions have refactored some Android-related stuff
