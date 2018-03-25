@@ -17,7 +17,6 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 
 import org.libsdl.app.SDLActivity;
-import org.libsdl.app.SDLInputConnection;
 
 import constants.Constants;
 import cursor.MouseCursor;
@@ -74,6 +73,10 @@ public class GameActivity extends SDLActivity {
         }
         System.loadLibrary("GL");
         System.loadLibrary("openmw");
+    }
+
+    protected String getMainSharedObject() {
+        return "libopenmw.so";
     }
 
     public RelativeLayout getLayout() {
@@ -219,7 +222,7 @@ public class GameActivity extends SDLActivity {
 
         builder.setPositiveButton("OK", (dialog, which) -> {
             String text = input.getText().toString();
-            SDLInputConnection.nativeCommitText(text, 0);
+            SDLActivity.nativeCommitText(text, 0);
         });
         builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
 

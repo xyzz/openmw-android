@@ -25,10 +25,8 @@ set(FFMPEG_VERSION 3.4.2)
 set(FFMPEG_HASH SHA256=eb0370bf223809b9ebb359fed5318f826ac038ce77933b3afd55ab1a0a21785a)
 
 # https://www.libsdl.org/download-2.0.php
-# NOTE: sdl2 has to be 2.0.5, newer versions have refactored some Android-related stuff
-# which requires adapting our port.
-set(SDL2_VERSION 2.0.5)
-set(SDL2_HASH SHA256=442038cf55965969f2ff06d976031813de643af9c9edc9e331bd761c242e8785)
+set(SDL2_VERSION 2.0.8)
+set(SDL2_HASH SHA256=edc77c57308661d576e843344d8638e025a7818bff73f8fbfab09c3c5fd092ec)
 
 # https://github.com/bulletphysics/bullet3/releases
 set(BULLET_VERSION 2.86.1)
