@@ -89,7 +89,6 @@ public class GameActivity extends SDLActivity {
         GameState.setGameState(true);
 //        NativeListener.initJavaVm();
         KeepScreenOn();
-        parseCommandLineData();
         getPathToJni(ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH);
         showControls();
 
@@ -103,12 +102,6 @@ public class GameActivity extends SDLActivity {
             mouseScalingFactor = 1.8;
         }
      }
-
-    private void parseCommandLineData() {
-        String cmd = PreferenceManager.getDefaultSharedPreferences(this).getString("commandLine", "");
-        CommandlineParser commandlineParser = new CommandlineParser(cmd);
-        commandLine(commandlineParser.getArgc(), commandlineParser.getArgv());
-    }
 
     private void showControls() {
         hideControls = PreferenceManager.getDefaultSharedPreferences(this).getBoolean(Constants.HIDE_CONTROLS, false);
@@ -227,6 +220,12 @@ public class GameActivity extends SDLActivity {
         builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
 
         builder.show();
+    }
+
+    protected String[] getArguments() {
+        String cmd = PreferenceManager.getDefaultSharedPreferences(this).getString("commandLine", "");
+        CommandlineParser commandlineParser = new CommandlineParser(cmd);
+        return commandlineParser.getArgv();
     }
 
 }
