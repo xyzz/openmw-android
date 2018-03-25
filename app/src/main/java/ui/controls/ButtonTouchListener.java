@@ -69,7 +69,7 @@ public class ButtonTouchListener implements OnTouchListener {
                 SDLActivity.onNativeMouse(keyCode, MotionEvent.ACTION_DOWN, SDLActivity.getMouseX(), SDLActivity.getMouseY());
                 break;
             case MOUSE_UP:
-                SDLActivity.onNativeMouse(keyCode, MotionEvent.ACTION_UP, SDLActivity.getMouseX(), SDLActivity.getMouseY());
+                SDLActivity.onNativeMouse(0, MotionEvent.ACTION_UP, SDLActivity.getMouseX(), SDLActivity.getMouseY());
                 break;
         }
     }
