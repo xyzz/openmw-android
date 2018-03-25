@@ -39,8 +39,8 @@ set(MYGUI_VERSION 3.2.2)
 set(MYGUI_HASH SHA256=0a28d7ec8a47993cb68deb48b36331e28f12dd92580b709eaef21d599b67a78f)
 
 # https://github.com/ptitSeb/gl4es
-set(GL4ES_VERSION dd8cc4e7a379a7c479edefc63e5fa40be3eba7ff)
-set(GL4ES_HASH SHA256=fc75caec65cffdb8d434e3a3dc9eea3dc4081661c2751354025d528b3bab670e)
+set(GL4ES_VERSION 6144e2527674541660853d49283af122acdb8cc0)
+set(GL4ES_HASH SHA256=d1cbb4a38e272b26c38168cf8dd900dfd7941b30e9fc02fdc219e1fc65d81d39)
 
 # https://github.com/openmw/osg
 set(OSG_TAG master)
