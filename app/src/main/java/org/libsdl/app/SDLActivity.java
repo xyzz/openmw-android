@@ -704,25 +704,25 @@ public class SDLActivity extends Activity {
 
         @Override
         public void run() {
-            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(w, h + HEIGHT_PADDING);
-            params.leftMargin = x;
-            params.topMargin = y;
-
-            if (mTextEdit == null) {
-                mTextEdit = new DummyEdit(SDL.getContext());
-
-                mLayout.addView(mTextEdit, params);
-            } else {
-                mTextEdit.setLayoutParams(params);
-            }
-
-            mTextEdit.setVisibility(View.VISIBLE);
-            mTextEdit.requestFocus();
-
-            InputMethodManager imm = (InputMethodManager) SDL.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.showSoftInput(mTextEdit, 0);
-
-            mScreenKeyboardShown = true;
+//            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(w, h + HEIGHT_PADDING);
+//            params.leftMargin = x;
+//            params.topMargin = y;
+//
+//            if (mTextEdit == null) {
+//                mTextEdit = new DummyEdit(SDL.getContext());
+//
+//                mLayout.addView(mTextEdit, params);
+//            } else {
+//                mTextEdit.setLayoutParams(params);
+//            }
+//
+//            mTextEdit.setVisibility(View.VISIBLE);
+//            mTextEdit.requestFocus();
+//
+//            InputMethodManager imm = (InputMethodManager) SDL.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+//            imm.showSoftInput(mTextEdit, 0);
+//
+//            mScreenKeyboardShown = true;
         }
     }
 
