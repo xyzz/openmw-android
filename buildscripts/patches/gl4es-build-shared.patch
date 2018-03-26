@@ -1,24 +1,11 @@
 diff --git a/Android.mk b/Android.mk
-index 88352f8..b1f76a2 100755
+index ca2a7e4..f0cfbaf 100755
 --- a/Android.mk
 +++ b/Android.mk
-@@ -70,5 +70,5 @@ LOCAL_CFLAGS += -DNOX11
+@@ -68,5 +68,5 @@ LOCAL_CFLAGS += -g -std=c99 -funwind-tables -O3 -DBCMHOST -fvisibility=hidden -i
  
  LOCAL_LDLIBS := -ldl -llog
  
 -include $(BUILD_STATIC_LIBRARY)
 +include $(BUILD_SHARED_LIBRARY)
  
-diff --git a/src/gl/list.c b/src/gl/list.c
-index b7a77b4..a1812ba 100755
---- a/src/gl/list.c
-+++ b/src/gl/list.c
-@@ -1434,7 +1434,7 @@ void draw_renderlist(renderlist_t *list) {
- 
- // gl function wrappers
- 
--inline void rlVertexCommon(renderlist_t *list, int idx) {
-+static inline void rlVertexCommon(renderlist_t *list, int idx) {
-     if(list->use_glstate) {
-         resize_renderlist(list);
-         if (!list->vert)    list->vert = glstate->merger_master;
