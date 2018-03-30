@@ -282,7 +282,6 @@ class Osc {
         OscImageButton("jump", R.drawable.jump, 920, 195, KeyEvent.KEYCODE_E),
         OscImageButton("fire", R.drawable.crossbow, 790, 300, 1, true),
         OscImageButton("magic", R.drawable.starsattelites, 940, 480, KeyEvent.KEYCODE_R),
-        // TODO: use https://openmw.readthedocs.io/en/master/reference/modding/settings/input.html#toggle-sneak
         OscImageButton("crouch", R.drawable.c, 940, 670, 113),
         OscImageButton("diary", R.drawable.di, 414, 0, KeyEvent.KEYCODE_J),
         OscImageButton("backspace", R.drawable.del, 500, 0, KeyEvent.KEYCODE_DEL),
