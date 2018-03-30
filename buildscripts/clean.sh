@@ -3,6 +3,9 @@
 set -e
 cd "$(dirname ${BASH_SOURCE[0]})"
 
+# Always clean old jniLibs
+rm -rf ../app/src/main/jniLibs/
+
 # Clean a single thing
 if [[ $1 == "--build" ]]; then
 	rm -rf build
