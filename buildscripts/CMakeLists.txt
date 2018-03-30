@@ -197,6 +197,7 @@ ExternalProject_Add(boost
 	--with-system
 	toolset=clang-android
 	architecture=${BOOST_ARCH}
+	address-model=${BOOST_ADDRESS_MODEL}
 	variant=release
 	target-os=android
 	threading=multi
