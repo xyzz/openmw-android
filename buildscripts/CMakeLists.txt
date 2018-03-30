@@ -40,8 +40,9 @@ set(MYGUI_HASH SHA256=0a28d7ec8a47993cb68deb48b36331e28f12dd92580b709eaef21d599b
 set(GL4ES_VERSION 79dbf255e8d924afaa9799c525d692324cf25425)
 set(GL4ES_HASH SHA256=a51098e547f4ff0404ca2f7c1adef58d03adeb828a29906d4c2db10c455f44da)
 
-# https://github.com/openmw/osg
-set(OSG_TAG master)
+# https://github.com/openscenegraph/OpenSceneGraph
+set(OSG_VERSION 3.5.10)
+set(OSG_HASH SHA256=344e76b92eecd10a324e7920c6a0fa7521de69a9cd5c75f5386756b4510781be)
 
 # https://github.com/xyzz/openmw/tree/android
 set(OPENMW_TAG android)
@@ -59,7 +60,7 @@ set(prefix ${CMAKE_INSTALL_PREFIX})
 set(host ${ndk_triplet})
 set(android_platform android-${ANDROID_API})
 set(app_abi ${ABI})
-set(osg_plugins_dir ${prefix}/lib/osgPlugins-3.4.1) # TODO: how can we extract the version dynamically?
+set(osg_plugins_dir ${prefix}/lib/osgPlugins-${OSG_VERSION})
 
 set(COMMON_CMAKE_ARGS
 	-DCMAKE_TOOLCHAIN_FILE=${CMAKE_SOURCE_DIR}/toolchain/ndk/build/cmake/android.toolchain.cmake
@@ -320,8 +321,9 @@ ExternalProject_Add(mygui
 ExternalProject_Add(osg
 	DEPENDS libjpeg-turbo libpng gl4es
 
-	GIT_REPOSITORY https://github.com/OpenMW/osg.git
-	GIT_TAG ${OSG_TAG}
+	URL https://github.com/openscenegraph/OpenSceneGraph/archive/OpenSceneGraph-${OSG_VERSION}.tar.gz
+	URL_HASH ${OSG_HASH}
+	DOWNLOAD_DIR ${download_dir}
 
 	CONFIGURE_COMMAND ${wrapper_command} cmake <SOURCE_DIR>
 	${COMMON_CMAKE_ARGS}
