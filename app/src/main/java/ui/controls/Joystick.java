@@ -12,13 +12,13 @@ import android.view.View;
 public class Joystick extends View {
 
     // Initial touch position
-    private float initialX, initialY;
+    protected float initialX, initialY;
     // Current touch position
-    private float currentX, currentY;
+    protected float currentX, currentY;
     // Whether the finger is down
-    private Boolean down = false;
+    protected Boolean down = false;
     // left or right stick
-    private int stickId = 0;
+    protected int stickId = 0;
 
     private Paint paint = new Paint();
 
@@ -85,7 +85,7 @@ public class Joystick extends View {
         return true;
     }
 
-    private void updateStick() {
+    protected void updateStick() {
         if (down) {
             // GamepadEmulator takes values on a scale [-1; 1] so convert our values
             float w = getWidth() / 3;
