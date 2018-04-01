@@ -11,8 +11,12 @@ import android.view.View;
 
 public class Joystick extends View {
 
-    // Stick positions, [-1; 1]
-    private float posX, posY;
+    // Initial touch position
+    private float initialX, initialY;
+    // Current touch position
+    private float currentX, currentY;
+    // Whether the finger is down
+    private Boolean down = false;
     // left or right stick
     private int stickId = 0;
 
@@ -43,10 +47,13 @@ public class Joystick extends View {
         canvas.drawRect(0, 0, getWidth() - 1, getHeight() - 1, paint);
         paint.setColor(Color.GREEN);
 
-        float cx = (posX + 1.0f) * getWidth() / 2;
-        float cy = (posY + 1.0f) * getHeight() / 2;
-        float r = getWidth() / 5;
-        canvas.drawCircle(cx, cy, r, paint);
+        // Draw circle for initial touch
+        if (down) {
+            canvas.drawCircle(initialX, initialY, getWidth() / 10, paint);
+        }
+
+        // Draw circle for current stick position
+        canvas.drawCircle(currentX, currentY, getWidth() / 5, paint);
     }
 
     @Override
@@ -57,22 +64,36 @@ public class Joystick extends View {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-            case MotionEvent.ACTION_MOVE:
-            {
-                posX = MathUtils.clamp(2 * event.getX() / getWidth() - 1.0f, -1, 1);
-                posY = MathUtils.clamp(2 * event.getY() / getHeight() - 1.0f, -1, 1);
+            case MotionEvent.ACTION_DOWN: {
+                initialX = event.getX();
+                initialY = event.getY();
+                down = true;
+            }
+            case MotionEvent.ACTION_MOVE: {
+                currentX = event.getX();
+                currentY = event.getY();
                 break;
             }
             case MotionEvent.ACTION_UP: {
-                posX = posY = 0;
+                down = false;
                 break;
             }
         }
 
-        GamepadEmulator.updateStick(stickId, posX, posY);
-
+        updateStick();
         invalidate();
         return true;
+    }
+
+    private void updateStick() {
+        if (down) {
+            // GamepadEmulator takes values on a scale [-1; 1] so convert our values
+            float w = getWidth() / 3;
+            float dx = MathUtils.clamp((currentX - initialX) / w, -1, 1);
+            float dy = MathUtils.clamp((currentY - initialY) / w, -1, 1);
+            GamepadEmulator.updateStick(stickId, dx, dy);
+        } else {
+            GamepadEmulator.updateStick(stickId, 0, 0);
+        }
     }
 }
