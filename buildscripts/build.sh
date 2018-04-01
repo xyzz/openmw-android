@@ -6,6 +6,7 @@ cd $DIR
 
 export ARCH="arm"
 ASAN="false"
+LTO="false"
 BUILD_TYPE="release"
 CFLAGS="-fPIC"
 CXXFLAGS="-fPIC -frtti -fexceptions"
@@ -36,6 +37,10 @@ while [[ $# -gt 0 ]]; do
 			;;
 		--asan)
 			ASAN=true
+			shift
+			;;
+		--lto)
+			LTO=true
 			shift
 			;;
 		--debug)
@@ -72,6 +77,18 @@ if [ $BUILD_TYPE = "release" ]; then
 else
 	CFLAGS="$CFLAGS -O0 -g"
 	CXXFLAGS="$CXXFLAGS -O0 -g"
+fi
+
+if [[ $LTO = "true" ]]; then
+	CFLAGS="$CFLAGS -flto"
+	CXXFLAGS="$CXXFLAGS -flto"
+	# emulated-tls should not be needed in ndk r18 https://github.com/android-ndk/ndk/issues/498#issuecomment-327825754
+	LDFLAGS="$LDFLAGS -flto -Wl,-plugin-opt=-emulated-tls"
+fi
+
+if [[ $ARCH = "arm" ]]; then
+	CFLAGS="$CFLAGS -mthumb"
+	CXXFLAGS="$CXXFLAGS -mthumb"
 fi
 
 # https://github.com/android-ndk/ndk/issues/105 to be fixed in r17
