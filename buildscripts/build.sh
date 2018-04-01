@@ -67,8 +67,8 @@ if [ $ASAN = true ]; then
 fi
 
 if [ $BUILD_TYPE = "release" ]; then
-	CFLAGS="$CFLAGS -O2"
-	CXXFLAGS="$CXXFLAGS -O2"
+	CFLAGS="$CFLAGS -O3"
+	CXXFLAGS="$CXXFLAGS -O3"
 else
 	CFLAGS="$CFLAGS -O0 -g"
 	CXXFLAGS="$CXXFLAGS -O0 -g"
