@@ -9,6 +9,8 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+import org.libsdl.app.SDLActivity;
+
 public class Joystick extends View {
 
     // Initial touch position
@@ -63,7 +65,9 @@ public class Joystick extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        switch (event.getAction()) {
+        int action = event.getActionMasked();
+
+        switch (action) {
             case MotionEvent.ACTION_DOWN: {
                 initialX = event.getX();
                 initialY = event.getY();
@@ -86,14 +90,5 @@ public class Joystick extends View {
     }
 
     protected void updateStick() {
-        if (down) {
-            // GamepadEmulator takes values on a scale [-1; 1] so convert our values
-            float w = getWidth() / 3;
-            float dx = MathUtils.clamp((currentX - initialX) / w, -1, 1);
-            float dy = MathUtils.clamp((currentY - initialY) / w, -1, 1);
-            GamepadEmulator.updateStick(stickId, dx, dy);
-        } else {
-            GamepadEmulator.updateStick(stickId, 0, 0);
-        }
     }
 }

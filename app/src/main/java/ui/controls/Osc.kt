@@ -194,24 +194,6 @@ class OscKeyboardButton(
 
 }
 
-class OscJoystick(
-    uniqueId: String,
-    defaultX: Int,
-    defaultY: Int,
-    defaultSize: Int,
-    private val stick: Int
-) : OscElement(uniqueId, defaultX, defaultY, defaultSize) {
-
-    override fun makeView(ctx: Context) {
-        val v = Joystick(ctx)
-        v.setStick(stick)
-        v.tag = this
-
-        view = v
-    }
-
-}
-
 class OscJoystickLeft(
     uniqueId: String,
     defaultX: Int,
@@ -222,6 +204,24 @@ class OscJoystickLeft(
 
     override fun makeView(ctx: Context) {
         val v = JoystickLeft(ctx)
+        v.setStick(stick)
+        v.tag = this
+
+        view = v
+    }
+
+}
+
+class OscJoystickRight(
+    uniqueId: String,
+    defaultX: Int,
+    defaultY: Int,
+    defaultSize: Int,
+    private val stick: Int
+) : OscElement(uniqueId, defaultX, defaultY, defaultSize) {
+
+    override fun makeView(ctx: Context) {
+        val v = JoystickRight(ctx)
         v.setStick(stick)
         v.tag = this
 
@@ -307,7 +307,7 @@ class Osc {
         OscImageButton("use", R.drawable.use, 940, 368, KeyEvent.KEYCODE_SPACE),
 
         OscJoystickLeft("joystickLeft", 75, 400, 170, 0),
-        OscJoystick("joystickRight", 650, 400, 170, 1)
+        OscJoystickRight("joystickRight", 600, 400, 170, 1)
     )
 
     init {
