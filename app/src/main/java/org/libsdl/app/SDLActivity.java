@@ -538,6 +538,7 @@ public class SDLActivity extends Activity {
     public static native int getMouseY();
     public static native int isMouseShown();
     public static native void sendRelativeMouseMotion(int x, int y);
+    public static native void sendMouseButton(int state, int button);
 
 
     /**
