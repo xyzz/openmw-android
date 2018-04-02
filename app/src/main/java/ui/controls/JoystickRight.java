@@ -3,13 +3,15 @@ package ui.controls;
 import android.content.Context;
 import android.os.Handler;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 
 import org.libsdl.app.SDLActivity;
 
-public class JoystickRight extends Joystick {
+public class JoystickRight extends Joystick implements Runnable {
 
     private float startX, startY, curX, curY;
+    private boolean isHolding = false;
 
     public JoystickRight(Context context) {
         super(context);
@@ -28,6 +30,11 @@ public class JoystickRight extends Joystick {
             case MotionEvent.ACTION_DOWN:
                 startX = curX = event.getX();
                 startY = curY = event.getY();
+
+                // Start the hold timer
+                isHolding = false;
+                getHandler().postDelayed(this, 100);
+
                 break;
             case MotionEvent.ACTION_MOVE:
                 float newX = event.getX();
@@ -47,12 +54,17 @@ public class JoystickRight extends Joystick {
                 float diffX = event.getX() - startX;
                 float diffY = event.getY() - startY;
 
-                // Simulate a click if finger didn't move much
-                double distance = Math.sqrt(diffX * diffX + diffY * diffY);
-                if (distance < getWidth() / 50) {
-                    SDLActivity.sendMouseButton(1, 1);
-                    final Handler handler = new Handler();
-                    handler.postDelayed(() -> SDLActivity.sendMouseButton(0, 1), 100);
+                getHandler().removeCallbacks(this);
+                if (isHolding) {
+                    SDLActivity.sendMouseButton(0, 1);
+                } else {
+                    // Simulate a short click if finger didn't move much
+                    double distance = Math.sqrt(diffX * diffX + diffY * diffY);
+                    if (distance < getWidth() / 50) {
+                        SDLActivity.sendMouseButton(1, 1);
+                        final Handler handler = new Handler();
+                        handler.postDelayed(() -> SDLActivity.sendMouseButton(0, 1), 100);
+                    }
                 }
 
                 break;
@@ -61,4 +73,15 @@ public class JoystickRight extends Joystick {
         return super.onTouchEvent(event);
     }
 
+    @Override
+    public void run() {
+        float diffX = curX - startX;
+        float diffY = curY - startY;
+        double distance = Math.sqrt(diffX * diffX + diffY * diffY);
+        if (distance < getWidth() / 50) {
+            isHolding = true;
+            // Press left
+            SDLActivity.sendMouseButton(1, 1);
+        }
+    }
 }
