@@ -156,8 +156,9 @@ class OscImageButton(
         defaultX: Int,
         defaultY: Int,
         private val keyCode: Int,
-        private val needMouse: Boolean = false
-) : OscElement(uniqueId, defaultX, defaultY) {
+        private val needMouse: Boolean = false,
+        defaultSize: Int = 50
+) : OscElement(uniqueId, defaultX, defaultY, defaultSize) {
 
     override fun makeView(ctx: Context) {
         val v = ImageView(ctx)
@@ -298,7 +299,7 @@ class Osc {
         OscImageButton("quickSave", R.drawable.save, 780, 0, 135),
         OscImageButton("weapon", R.drawable.broadsword1, 880, 95, KeyEvent.KEYCODE_F),
         OscImageButton("jump", R.drawable.jump, 920, 195, KeyEvent.KEYCODE_E),
-        OscImageButton("fire", R.drawable.crossbow, 790, 300, 1, true),
+        OscImageButton("fire", R.drawable.crossbow, 720, 300, 1, true, 90),
         OscImageButton("magic", R.drawable.starsattelites, 940, 480, KeyEvent.KEYCODE_R),
         OscImageButton("crouch", R.drawable.c, 940, 670, 113),
         OscImageButton("diary", R.drawable.di, 414, 0, KeyEvent.KEYCODE_J),
@@ -307,7 +308,7 @@ class Osc {
         OscImageButton("use", R.drawable.use, 940, 368, KeyEvent.KEYCODE_SPACE),
 
         OscJoystickLeft("joystickLeft", 75, 400, 170, 0),
-        OscJoystickRight("joystickRight", 600, 400, 170, 1)
+        OscJoystickRight("joystickRight", 650, 400, 170, 1)
     )
 
     init {
