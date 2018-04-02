@@ -288,7 +288,7 @@ class OscHiddenToggle(
 class Osc {
     private var elements = arrayListOf(
         OscImageButton("run", R.drawable.run, 65, 330, 115),
-        OscImageButton("inventory", R.drawable.inventory, 950, 95, 2, true),
+        OscImageButton("inventory", R.drawable.inventory, 950, 95, 3, true),
         OscImageButton("console", R.drawable.ontarget, 140, 0, 132),
         OscImageButton("changePerson", R.drawable.backup, 212, 0, KeyEvent.KEYCODE_TAB),
         OscImageButton("wait", R.drawable.wait, 274, 0, KeyEvent.KEYCODE_T),
