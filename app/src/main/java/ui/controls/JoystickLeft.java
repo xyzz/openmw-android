@@ -24,7 +24,14 @@ public class JoystickLeft extends Joystick {
             float w = getWidth() / 3;
             float diffX = currentX - initialX;
             float diffY = currentY - initialY;
-            float dx = MathUtils.clamp(diffX / w + 0.3f * Math.signum(diffX), -1, 1) / 4;
+
+            if (Math.abs(diffX) > Math.abs(diffY)) {
+                diffY = 0;
+            } else {
+                diffX = 0;
+            }
+
+            float dx = MathUtils.clamp(diffX / w + 0.3f * Math.signum(diffX), -1, 1);
             float dy = MathUtils.clamp(diffY / w + 0.3f * Math.signum(diffY), -1, 1);
             GamepadEmulator.updateStick(stickId, dx, dy);
         } else {
