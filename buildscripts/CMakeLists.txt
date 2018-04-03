@@ -208,6 +208,9 @@ ExternalProject_Add(boost
 	link=static
 	runtime-link=static
 	install
+	COMMAND ${host}-ranlib ${prefix}/lib/libboost_filesystem.a
+	COMMAND ${host}-ranlib ${prefix}/lib/libboost_program_options.a
+	COMMAND ${host}-ranlib ${prefix}/lib/libboost_system.a
 )
 
 ExternalProject_Add(ffmpeg
