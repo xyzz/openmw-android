@@ -5,6 +5,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd $DIR
 
 export ARCH="arm"
+export CCACHE="false"
 ASAN="false"
 LTO="false"
 BUILD_TYPE="release"
@@ -17,6 +18,8 @@ usage() {
 	echo "	--help: print this message"
 	echo "	--arch: build for specified architecture [arm, arm64, x86_64, x86] (default: arm)"
 	echo "	--asan: build with AddressSanitizer enabled"
+	echo "	--lto: use LTO for linking"
+	echo "	--ccache: use ccache to speed up repeated builds"
 	echo "	--debug: produce a debug build without optimizations"
 	echo "	--release: produce a release build with optimizations (default)"
 	exit 0
@@ -41,6 +44,10 @@ while [[ $# -gt 0 ]]; do
 			;;
 		--lto)
 			LTO=true
+			shift
+			;;
+		--ccache)
+			export CCACHE="true"
 			shift
 			;;
 		--debug)

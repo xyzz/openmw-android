@@ -2,6 +2,8 @@
 
 set -e
 
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
 source ./include/version.sh
 
 if [[ ! -d toolchain ]]; then
@@ -11,6 +13,21 @@ if [[ ! -d toolchain ]]; then
 	echo "(Extracting, this will take a while...)"
 	unzip -q downloads/ndk.zip -d toolchain/
 	mv toolchain/android-ndk-* toolchain/ndk/
+
+	if [[ $CCACHE = "true" ]]; then
+		echo "==> Patching common toolchain for ccache support"
+
+		pushd toolchain/ndk/toolchains/llvm/prebuilt/linux-x86_64/bin
+
+		mv "clang" "clangX"
+		mv "clang++" "clangX++"
+		cp "$DIR/../patches/clang-ccache.sh" "clang"
+		cp "$DIR/../patches/clang++-ccache.sh" "clang++"
+		chmod +x "clang"
+		chmod +x "clang++"
+
+		popd
+	fi
 fi
 
 pushd toolchain
@@ -34,6 +51,16 @@ if [[ ! -d $ARCH ]]; then
 
 	# copy over gas-preprocessor for ffmpeg
 	cp ../patches/gas-preprocessor.pl $ARCH/bin/
+
+	if [[ $CCACHE = "true" ]]; then
+		echo "==> Patching '$ARCH' toolchain for ccache support"
+		pushd $ARCH/bin/
+
+		sed -i "s|\`dirname \$0\`/clang|ccache \\0|" "arm-linux-androideabi-clang"
+		sed -i "s|\`dirname \$0\`/clang|ccache \\0|" "arm-linux-androideabi-clang++"
+
+		popd
+	fi
 fi
 
 popd
