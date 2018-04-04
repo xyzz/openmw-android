@@ -29,8 +29,8 @@ set(SDL2_VERSION 2.0.8)
 set(SDL2_HASH SHA256=edc77c57308661d576e843344d8638e025a7818bff73f8fbfab09c3c5fd092ec)
 
 # https://github.com/bulletphysics/bullet3/releases
-set(BULLET_VERSION 2.86.1)
-set(BULLET_HASH SHA256=c058b2e4321ba6adaa656976c1a138c07b18fc03b29f5b82880d5d8228fbf059)
+set(BULLET_VERSION 2.87)
+set(BULLET_HASH SHA256=438c151c48840fe3f902ec260d9496f8beb26dba4b17769a4a53212903935f95)
 
 # https://github.com/MyGUI/mygui/releases
 set(MYGUI_VERSION 3.2.2)
@@ -273,11 +273,14 @@ ExternalProject_Add(bullet
 	URL_HASH ${BULLET_HASH}
 	DOWNLOAD_DIR ${download_dir}
 
+	PATCH_COMMAND patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/bullet-fix-cmake.patch
+
 	CONFIGURE_COMMAND ${wrapper_command} cmake <SOURCE_DIR>
 	${COMMON_CMAKE_ARGS}
 	-DBUILD_BULLET2_DEMOS=OFF
 	-DBUILD_CPU_DEMOS=OFF
 	-DBUILD_UNIT_TESTS=OFF
+	-DBUILD_EXTRAS=OFF
 
 	BUILD_COMMAND ${wrapper_command} $(MAKE)
 

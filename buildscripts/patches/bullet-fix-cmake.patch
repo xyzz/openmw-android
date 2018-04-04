@@ -1,0 +1,12 @@
+diff -ur a/build3/cmake/FindPythonLibs.cmake b/build3/cmake/FindPythonLibs.cmake
+--- a/build3/cmake/FindPythonLibs.cmake
++++ b/build3/cmake/FindPythonLibs.cmake
+@@ -112,7 +112,7 @@
+ 
+   message(STATUS "Looking for versions: ${_PYTHON_VERSIONS}")
+ 
+-  FIND_FILE(_FIND_LIB_PYTHON_PY FindLibPython.py PATHS ${CMAKE_MODULE_PATH} ${CMAKE_ROOT}/Modules)
++  FIND_FILE(_FIND_LIB_PYTHON_PY FindLibPython.py PATHS ${CMAKE_MODULE_PATH} ${CMAKE_ROOT}/Modules CMAKE_FIND_ROOT_PATH_BOTH)
+ 
+   if(NOT _FIND_LIB_PYTHON_PY)
+     message(FATAL_ERROR "Could not find required file 'FindLibPython.py'")
