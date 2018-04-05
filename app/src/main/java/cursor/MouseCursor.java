@@ -23,7 +23,7 @@ public class MouseCursor implements Choreographer.FrameCallback {
         cursor.setImageResource(R.drawable.pointer_arrow);
         Resources r = activity.getResources();
         int px = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30, r.getDisplayMetrics());
-        cursor.setLayoutParams(new RelativeLayout.LayoutParams(px, px));
+        cursor.setLayoutParams(new RelativeLayout.LayoutParams((int) Math.round(px / 1.5), px));
 
         RelativeLayout layout = activity.getLayout();
         layout.addView(cursor);
