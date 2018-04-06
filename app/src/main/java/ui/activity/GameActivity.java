@@ -53,6 +53,7 @@ public class GameActivity extends SDLActivity {
         if (!physicsFPS.isEmpty()) {
             try {
                 Os.setenv("OPENMW_PHYSICS_FPS", physicsFPS, true);
+                Os.setenv("OSG_TEXT_SHADER_TECHNIQUE", "NO_TEXT_SHADER", true);
             } catch (ErrnoException e) {
                 Log.e("OpenMW", "Failed setting environment variables.");
                 e.printStackTrace();
