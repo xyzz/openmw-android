@@ -56,8 +56,8 @@ if [[ ! -d $ARCH ]]; then
 		echo "==> Patching '$ARCH' toolchain for ccache support"
 		pushd $ARCH/bin/
 
-		sed -i "s|\`dirname \$0\`/clang|ccache \\0|" "arm-linux-androideabi-clang"
-		sed -i "s|\`dirname \$0\`/clang|ccache \\0|" "arm-linux-androideabi-clang++"
+		sed -i "s|\`dirname \$0\`/clang|ccache \\0|" "$NDK_TRIPLET-clang"
+		sed -i "s|\`dirname \$0\`/clang|ccache \\0|" "$NDK_TRIPLET-clang++"
 
 		popd
 	fi
