@@ -77,7 +77,17 @@
             android:entryValues="@array/pref_physicsFPS_entries"
             android:defaultValue="@string/pref_physicsFPS_default"
             android:summary="%s"
-        />
+            />
+
+        <ListPreference
+            android:key="pref_allowCapsuleShape"
+            android:title="@string/pref_allowCapsuleShape"
+            android:dialogTitle="@string/pref_allowCapsuleShape"
+            android:entries="@array/pref_allowCapsuleShape_entries"
+            android:entryValues="@array/pref_allowCapsuleShape_values"
+            android:defaultValue="@string/pref_allowCapsuleShape_default"
+            android:summary="%s"
+            />
 
     </PreferenceCategory>
 

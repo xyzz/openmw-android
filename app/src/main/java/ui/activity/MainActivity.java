@@ -287,6 +287,8 @@ public class MainActivity extends AppCompatActivity {
 
                 file.Writer.write(prefs.getString("pref_uiScaling", "1.0"), SETTINGS_CFG, "scaling factor");
 
+                file.Writer.write(prefs.getString("pref_allowCapsuleShape", "true"), SETTINGS_CFG, "allow capsule shape");
+
                 runOnUiThread(() -> {
                     dialog.hide();
                     runGame();
