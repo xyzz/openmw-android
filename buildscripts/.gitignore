@@ -2,3 +2,4 @@ build
 downloads
 prefix
 toolchain
+tmp_script.sh
