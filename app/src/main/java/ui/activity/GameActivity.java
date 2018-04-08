@@ -207,22 +207,6 @@ public class GameActivity extends SDLActivity {
         return true;
     }
 
-    public void showVirtualInput() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Virtual input");
-
-        final EditText input = new EditText(this);
-        builder.setView(input);
-
-        builder.setPositiveButton("OK", (dialog, which) -> {
-            String text = input.getText().toString();
-            SDLActivity.nativeCommitText(text, 0);
-        });
-        builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
-
-        builder.show();
-    }
-
     protected String[] getArguments() {
         String cmd = PreferenceManager.getDefaultSharedPreferences(this).getString("commandLine", "");
         CommandlineParser commandlineParser = new CommandlineParser(cmd);

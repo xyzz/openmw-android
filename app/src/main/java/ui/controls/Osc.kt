@@ -175,7 +175,8 @@ class OscKeyboardButton(
     uniqueId: String,
     private val imageSrc: Int,
     defaultX: Int,
-    defaultY: Int
+    defaultY: Int,
+    private val osc: Osc
 ) : OscElement(uniqueId, defaultX, defaultY) {
 
     override fun makeView(ctx: Context) {
@@ -183,8 +184,7 @@ class OscKeyboardButton(
         v.setImageResource(imageSrc)
         v.setOnTouchListener(View.OnTouchListener { _, motionEvent ->
             if (motionEvent.action == MotionEvent.ACTION_UP) {
-                val a = ctx as GameActivity
-                a.showVirtualInput()
+                osc.toggleKeyboard()
             }
             return@OnTouchListener true
         })
@@ -287,10 +287,13 @@ class OscHiddenToggle(
 }
 
 class Osc {
+    private var osk = Osk()
+    private var keyboardVisible = false
+    private var keyboardButton = OscKeyboardButton("keyboard", R.drawable.keyboard, 586, 0, this)
+
     private var elements = arrayListOf(
         OscImageButton("run", R.drawable.run, 65, 330, 115),
         OscImageButton("inventory", R.drawable.inventory, 950, 95, 3, true),
-        OscImageButton("console", R.drawable.ontarget, 140, 0, 132),
         OscImageButton("changePerson", R.drawable.backup, 212, 0, KeyEvent.KEYCODE_TAB),
         OscImageButton("wait", R.drawable.wait, 274, 0, KeyEvent.KEYCODE_T),
         OscImageButton("pause", R.drawable.pause, 950, 0, KeyEvent.KEYCODE_ESCAPE),
@@ -303,8 +306,7 @@ class Osc {
         OscImageButton("magic", R.drawable.starsattelites, 940, 480, KeyEvent.KEYCODE_R),
         OscImageButton("crouch", R.drawable.c, 940, 670, 113),
         OscImageButton("diary", R.drawable.di, 414, 0, KeyEvent.KEYCODE_J),
-        OscImageButton("backspace", R.drawable.del, 500, 0, KeyEvent.KEYCODE_DEL),
-        OscKeyboardButton("keyboard", R.drawable.keyboard, 586, 0),
+        keyboardButton,
         OscImageButton("use", R.drawable.use, 940, 368, KeyEvent.KEYCODE_SPACE),
 
         OscJoystickLeft("joystickLeft", 75, 400, 170, 0),
@@ -339,6 +341,20 @@ class Osc {
         for (element in elements) {
             element.place(target)
             element.loadPrefs(target.context)
+        }
+        osk.placeElements(target)
+    }
+
+    fun toggleKeyboard() {
+        osk.toggle()
+        keyboardVisible = !keyboardVisible
+        for (element in elements) {
+            if (element == keyboardButton)
+                continue
+            // TODO: this kinda screws up the state for hidden toggles (i.e. open toggle => click keyboard twice)
+            if (!keyboardVisible && element is OscHiddenButton && element !is OscHiddenToggle)
+                continue
+            element.view?.visibility = if (keyboardVisible) View.GONE else View.VISIBLE
         }
     }
 
