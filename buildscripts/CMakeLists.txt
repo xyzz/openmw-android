@@ -196,6 +196,7 @@ ExternalProject_Add(boost
 	--with-filesystem
 	--with-program_options
 	--with-system
+	--ignore-site-config
 	toolset=clang-android
 	architecture=${BOOST_ARCH}
 	address-model=${BOOST_ADDRESS_MODEL}
