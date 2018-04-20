@@ -11,7 +11,9 @@ class GamepadEmulator {
 
         if (!registered) {
             registered = true;
-            SDLControllerManager.nativeAddJoystick(deviceId, "Virtual", "Virtual", 0, -1,
+            SDLControllerManager.nativeAddJoystick(deviceId, "Virtual", "Virtual",
+                    0xbad, 0xf00d,
+                    false, 0xFFFFFFFF,
                     4, 0, 0);
         }
 
