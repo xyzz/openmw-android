@@ -23,7 +23,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.libopenmw.openmw.FileChooser;
 import com.libopenmw.openmw.R;
 import com.melnykov.fab.FloatingActionButton;
 
@@ -32,10 +31,8 @@ import java.io.IOException;
 
 import constants.Constants;
 import file.utils.CopyFilesFromAssets;
-import plugins.bsa.BsaUtils;
 import ui.game.GameState;
 import ui.fragments.FragmentControls;
-import ui.fragments.FragmentPlugins;
 import ui.fragments.FragmentSettings;
 import permission.PermissionHelper;
 import ui.screen.ScreenResolutionHelper;
@@ -84,13 +81,6 @@ public class MainActivity extends AppCompatActivity {
         browseButton = (Button) findViewById(R.id.buttonBrowse);
 
         disableToolBarViews();
-        browseButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FileChooser.isDirMode = true;
-                getFolder();
-            }
-        });
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
@@ -106,9 +96,6 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 GameState.setGameState(true);
-                if (FragmentPlugins.getInstance()!=null){
-                    FragmentPlugins.getInstance().savePluginsDataToDisk();
-                }
                 startGame();
             }
 
@@ -186,11 +173,6 @@ public class MainActivity extends AppCompatActivity {
 
         actionBarDrawerToggle.syncState();
 
-    }
-
-    public void getFolder() {
-        Intent intent = new Intent(this, FileChooser.class);
-        startActivityForResult(intent, REQUEST_PATH);
     }
 
     @Override
@@ -347,32 +329,6 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
         if (!isSettingsEnabled)
             switch (id) {
-                case R.id.action_enable:
-                    if (FragmentPlugins.getInstance()!=null) {
-                        FragmentPlugins.getInstance().enableMods();
-                    }
-                    break;
-                case R.id.action_disable:
-                    if (FragmentPlugins.getInstance()!=null) {
-                        FragmentPlugins.getInstance().disableMods();
-                    }
-                    break;
-                case R.id.action_importMods:
-                    if (FragmentPlugins.getInstance()!=null) {
-                        FragmentPlugins.getInstance().importMods();
-                    }
-                    break;
-                case R.id.action_export:
-                    if (FragmentPlugins.getInstance()!=null) {
-                        FragmentPlugins.getInstance().exportMods();
-                    }
-                    break;
-                case R.id.action_enableBsa:
-                    BsaUtils.setSaveAllBsaFilesValue(MainActivity.this,true);
-                    break;
-                case R.id.action_disableBsa:
-                    BsaUtils.setSaveAllBsaFilesValue(MainActivity.this,false);
-                    break;
                 default:
                     break;
             }
