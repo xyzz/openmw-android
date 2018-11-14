@@ -3,6 +3,9 @@ sudo: false
 notifications:
   email: false
 
+before_install:
+  - yes | sdkmanager "platforms;android-27"
+
 script: ./CI/travis.sh
 
 android:
