@@ -3,7 +3,6 @@ package ui.controls;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
-import android.view.animation.Animation;
 
 import org.libsdl.app.SDLActivity;
 
@@ -43,7 +42,6 @@ public class ButtonTouchListener implements OnTouchListener {
     }
 
     private void onTouchDown(View v) {
-        ScaleSimulation.onTouchDown(v);
         if (!needEmulateMouse) {
             eventMovement(Movement.KEY_DOWN);
         } else {
@@ -52,7 +50,6 @@ public class ButtonTouchListener implements OnTouchListener {
     }
 
     private void onTouchUp(View v) {
-        ScaleSimulation.onTouchUp(v);
         if (!needEmulateMouse) {
             eventMovement(Movement.KEY_UP);
         } else {
@@ -63,16 +60,16 @@ public class ButtonTouchListener implements OnTouchListener {
     protected void eventMovement(Movement event) {
         switch (event) {
             case KEY_DOWN:
-                SdlNativeKeys.keyDown(keyCode);
+                SDLActivity.onNativeKeyDown(keyCode);
                 break;
             case KEY_UP:
-                SdlNativeKeys.keyUp(keyCode);
+                SDLActivity.onNativeKeyUp(keyCode);
                 break;
             case MOUSE_DOWN:
-                SDLActivity.onNativeMouse(keyCode, MotionEvent.ACTION_DOWN, SDLActivity.getMouseX(), SDLActivity.getMouseY());
+                SDLActivity.sendMouseButton(1, keyCode);
                 break;
             case MOUSE_UP:
-                SDLActivity.onNativeMouse(keyCode, MotionEvent.ACTION_UP, SDLActivity.getMouseX(), SDLActivity.getMouseY());
+                SDLActivity.sendMouseButton(0, keyCode);
                 break;
         }
     }

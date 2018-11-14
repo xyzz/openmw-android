@@ -1,39 +1,50 @@
 cmake_minimum_required(VERSION 3.2.0)
 
+# https://github.com/libjpeg-turbo/libjpeg-turbo/releases
 set(LIBJPEG_TURBO_VERSION 1.5.3)
 set(LIBJPEG_TURBO_HASH SHA256=b24890e2bb46e12e72a79f7e965f409f4e16466d00e1dd15d93d73ee6b592523)
 
+# http://www.libpng.org/pub/png/libpng.html
 set(LIBPNG_VERSION 1.6.34)
 set(LIBPNG_HASH SHA256=2f1e960d92ce3b3abd03d06dfec9637dfbd22febf107a536b44f7a47c60659f6)
 
+# https://www.freetype.org/index.html#news
 set(FREETYPE2_VERSION 2.9)
 set(FREETYPE2_HASH SHA256=bf380e4d7c4f3b5b1c1a7b2bf3abb967bda5e9ab480d0df656e0e08c5019c5e6)
 
+# http://kcat.strangesoft.net/openal.html
 set(OPENAL_VERSION 1.18.2)
 set(OPENAL_HASH SHA256=9f8ac1e27fba15a59758a13f0c7f6540a0605b6c3a691def9d420570506d7e82)
 
-set(BOOST_VERSION 1.66.0)
-set(BOOST_HASH SHA256=5721818253e6a0989583192f96782c4a98eb6204965316df9f5ad75819225ca9)
+# http://www.boost.org/users/download/
+set(BOOST_VERSION 1.67.0)
+set(BOOST_HASH SHA256=2684c972994ee57fc5632e03bf044746f6eb45d4920c343937a465fd67a5adba)
 
-set(FFMPEG_VERSION 3.4.1)
-set(FFMPEG_HASH SHA256=f3443e20154a590ab8a9eef7bc951e8731425efc75b44ff4bee31d8a7a574a2c)
+# https://www.ffmpeg.org/download.html
+set(FFMPEG_VERSION 4.0)
+set(FFMPEG_HASH SHA256=318a39d906c9107d49766c63787798dd078d2a36e6670a9dfeda3c55be4573b8)
 
-# NOTE: sdl2 has to be 2.0.5, newer versions have refactored some Android-related stuff
-# which requires adapting our port.
-set(SDL2_VERSION 2.0.5)
-set(SDL2_HASH SHA256=442038cf55965969f2ff06d976031813de643af9c9edc9e331bd761c242e8785)
+# https://www.libsdl.org/download-2.0.php
+set(SDL2_VERSION 2.0.8)
+set(SDL2_HASH SHA256=edc77c57308661d576e843344d8638e025a7818bff73f8fbfab09c3c5fd092ec)
 
-set(BULLET_VERSION 2.86.1)
-set(BULLET_HASH SHA256=c058b2e4321ba6adaa656976c1a138c07b18fc03b29f5b82880d5d8228fbf059)
+# https://github.com/bulletphysics/bullet3/releases
+set(BULLET_VERSION 2.87)
+set(BULLET_HASH SHA256=438c151c48840fe3f902ec260d9496f8beb26dba4b17769a4a53212903935f95)
 
+# https://github.com/MyGUI/mygui/releases
 set(MYGUI_VERSION 3.2.2)
 set(MYGUI_HASH SHA256=0a28d7ec8a47993cb68deb48b36331e28f12dd92580b709eaef21d599b67a78f)
 
-set(GL4ES_VERSION dd8cc4e7a379a7c479edefc63e5fa40be3eba7ff)
-set(GL4ES_HASH SHA256=fc75caec65cffdb8d434e3a3dc9eea3dc4081661c2751354025d528b3bab670e)
+# https://github.com/ptitSeb/gl4es
+set(GL4ES_VERSION 509d3843b2fe273eec85a8242a7ddab62be8bad0)
+set(GL4ES_HASH SHA256=8f928c965818da1d6bc5d11541548e0864eb05574d79b3e3f36df3b4f1f1f199)
 
-set(OSG_TAG android-support)
+# https://github.com/openscenegraph/OpenSceneGraph/releases
+set(OSG_VERSION 3.6.0)
+set(OSG_HASH SHA256=6f57134ea74a39f1c7b24c285e6278cf906c47f6c681573b86d12173a466efed)
 
+# https://github.com/xyzz/openmw/tree/android
 set(OPENMW_TAG android)
 
 # End of configurable options
@@ -49,7 +60,7 @@ set(prefix ${CMAKE_INSTALL_PREFIX})
 set(host ${ndk_triplet})
 set(android_platform android-${ANDROID_API})
 set(app_abi ${ABI})
-set(osg_plugins_dir ${prefix}/lib/osgPlugins-3.4.1) # TODO: how can we extract the version dynamically?
+set(osg_plugins_dir ${prefix}/lib/osgPlugins-${OSG_VERSION})
 
 set(COMMON_CMAKE_ARGS
 	-DCMAKE_TOOLCHAIN_FILE=${CMAKE_SOURCE_DIR}/toolchain/ndk/build/cmake/android.toolchain.cmake
@@ -185,8 +196,12 @@ ExternalProject_Add(boost
 	--with-filesystem
 	--with-program_options
 	--with-system
+	--ignore-site-config
 	toolset=clang-android
 	architecture=${BOOST_ARCH}
+	address-model=${BOOST_ADDRESS_MODEL}
+	cflags=$ENV{CFLAGS}
+	cxxflags=$ENV{CXXFLAGS}
 	variant=release
 	target-os=android
 	threading=multi
@@ -194,6 +209,9 @@ ExternalProject_Add(boost
 	link=static
 	runtime-link=static
 	install
+	COMMAND ${host}-ranlib ${prefix}/lib/libboost_filesystem.a
+	COMMAND ${host}-ranlib ${prefix}/lib/libboost_program_options.a
+	COMMAND ${host}-ranlib ${prefix}/lib/libboost_system.a
 )
 
 ExternalProject_Add(ffmpeg
@@ -241,6 +259,9 @@ ExternalProject_Add(sdl2
 	URL_HASH ${SDL2_HASH}
 	DOWNLOAD_DIR ${download_dir}
 
+	PATCH_COMMAND patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/sdl2-android-gamepad.patch
+	COMMAND cp ${CMAKE_SOURCE_DIR}/patches/sdl2-SDL_gamecontrollerdb.h <SOURCE_DIR>/src/joystick/SDL_gamecontrollerdb.h
+
 	CONFIGURE_COMMAND ""
 
 	BUILD_COMMAND ${wrapper_command} ndk-build
@@ -256,11 +277,14 @@ ExternalProject_Add(bullet
 	URL_HASH ${BULLET_HASH}
 	DOWNLOAD_DIR ${download_dir}
 
+	PATCH_COMMAND patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/bullet-fix-cmake.patch
+
 	CONFIGURE_COMMAND ${wrapper_command} cmake <SOURCE_DIR>
 	${COMMON_CMAKE_ARGS}
 	-DBUILD_BULLET2_DEMOS=OFF
 	-DBUILD_CPU_DEMOS=OFF
 	-DBUILD_UNIT_TESTS=OFF
+	-DBUILD_EXTRAS=OFF
 
 	BUILD_COMMAND ${wrapper_command} $(MAKE)
 
@@ -309,8 +333,9 @@ ExternalProject_Add(mygui
 ExternalProject_Add(osg
 	DEPENDS libjpeg-turbo libpng gl4es
 
-	GIT_REPOSITORY https://github.com/xyzz/osg.git
-	GIT_TAG ${OSG_TAG}
+	URL https://github.com/openscenegraph/OpenSceneGraph/archive/OpenSceneGraph-${OSG_VERSION}.tar.gz
+	URL_HASH ${OSG_HASH}
+	DOWNLOAD_DIR ${download_dir}
 
 	CONFIGURE_COMMAND ${wrapper_command} cmake <SOURCE_DIR>
 	${COMMON_CMAKE_ARGS}

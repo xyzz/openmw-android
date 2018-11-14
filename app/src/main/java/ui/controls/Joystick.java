@@ -6,9 +6,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.v4.math.MathUtils;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.GestureDetector;
-import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -16,10 +13,14 @@ import org.libsdl.app.SDLActivity;
 
 public class Joystick extends View {
 
-    // Stick positions, [-1; 1]
-    private float posX, posY;
+    // Initial touch position
+    protected float initialX, initialY;
+    // Current touch position
+    protected float currentX = -1, currentY = -1;
+    // Whether the finger is down
+    protected Boolean down = false;
     // left or right stick
-    private int stickId = 0;
+    protected int stickId = 0;
 
     private Paint paint = new Paint();
 
@@ -48,10 +49,17 @@ public class Joystick extends View {
         canvas.drawRect(0, 0, getWidth() - 1, getHeight() - 1, paint);
         paint.setColor(Color.GREEN);
 
-        float cx = (posX + 1.0f) * getWidth() / 2;
-        float cy = (posY + 1.0f) * getHeight() / 2;
-        float r = getWidth() / 5;
-        canvas.drawCircle(cx, cy, r, paint);
+        // Draw circle for initial touch
+        if (down) {
+            canvas.drawCircle(initialX, initialY, getWidth() / 10, paint);
+        }
+
+        if (currentX < 0 || currentY < 0) {
+            currentX = currentY = getWidth() / 2;
+        }
+
+        // Draw circle for current stick position
+        canvas.drawCircle(currentX, currentY, getWidth() / 5, paint);
     }
 
     @Override
@@ -61,23 +69,31 @@ public class Joystick extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-            case MotionEvent.ACTION_MOVE:
-            {
-                posX = MathUtils.clamp(2 * event.getX() / getWidth() - 1.0f, -1, 1);
-                posY = MathUtils.clamp(2 * event.getY() / getHeight() - 1.0f, -1, 1);
+        int action = event.getActionMasked();
+
+        switch (action) {
+            case MotionEvent.ACTION_DOWN: {
+                initialX = event.getX();
+                initialY = event.getY();
+                down = true;
+            }
+            case MotionEvent.ACTION_MOVE: {
+                currentX = event.getX();
+                currentY = event.getY();
                 break;
             }
             case MotionEvent.ACTION_UP: {
-                posX = posY = 0;
+                down = false;
+                currentX = currentY = -1;
                 break;
             }
         }
 
-        GamepadEmulator.updateStick(stickId, posX, posY);
-
+        updateStick();
         invalidate();
         return true;
+    }
+
+    protected void updateStick() {
     }
 }

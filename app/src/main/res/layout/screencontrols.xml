@@ -298,6 +298,16 @@
             android:src="@drawable/di" />
 
         <ImageButton
+            android:id="@+id/buttonBackspace"
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:background="@null"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/del" />
+
+        <ImageButton
             android:id="@+id/buttonUse"
             android:layout_width="50dip"
             android:layout_height="50dip"
@@ -347,12 +357,6 @@
             android:text="opacity+"
             android:visibility="gone" />
 
-        <ImageView
-            android:id="@+id/mouseCursor"
-            android:layout_width="30dip"
-            android:layout_height="30dip"
-            android:scaleType="fitCenter"
-            android:src="@drawable/pointer_arrow" />
     </RelativeLayout>
 
 </FrameLayout>

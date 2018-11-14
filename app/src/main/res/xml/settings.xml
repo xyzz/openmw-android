@@ -28,44 +28,34 @@
     </PreferenceCategory>
 
 
-    <PreferenceCategory
-        android:key="categ1anguage"
-        android:title="Language settings">
+    <PreferenceCategory android:title="@string/pref_lang">
         <ListPreference
-            android:key="encoding"
-            android:summary="Game language"
-            android:title="Encoding"
-            android:dialogTitle="Game language"
-            android:entries="@array/encoding_entry"
-            android:entryValues="@array/encoding_entry" />
-
-        <CheckBoxPreference
-            android:key="subtitiles"
-            android:summary="Show subtitles"
-            android:title="Subtitles" />
-
+            android:key="pref_encoding"
+            android:summary="%s"
+            android:title="@string/pref_encoding"
+            android:dialogTitle="@string/pref_encoding"
+            android:entries="@array/pref_encoding_entries"
+            android:entryValues="@array/pref_encoding_values"
+            android:defaultValue="@string/pref_encoding_default"
+            />
 
     </PreferenceCategory>
 
 
-    <PreferenceCategory
-        android:key="categ2"
-        android:title="Screen Settings">
-        <ListPreference
-            android:key="mipmapping"
-            android:summary="Mipmapping options"
-            android:title="Mipmapping"
-            android:dialogTitle="Mipmapping"
-            android:entries="@array/mipmapping_array"
-            android:entryValues="@array/mipmapping_array" />
+    <PreferenceCategory android:title="@string/pref_ui">
+        <EditTextPreference
+            android:key="pref_uiScaling"
+            android:title="@string/pref_uiScaling"
+            android:dialogTitle="@string/pref_uiScaling"
+            android:inputType="numberDecimal"
+            />
 
-        <ListPreference
-            android:key="resolution"
-            android:summary="Screen resolution"
-            android:title="Resolution"
-            android:dialogTitle="Screen resolution"
-            android:entries="@array/resolution_entry"
-            android:entryValues="@array/resolution_array" />
+        <EditTextPreference
+            android:key="pref_touchpadSensitivity"
+            android:title="@string/pref_touchpadSensitivity"
+            android:dialogTitle="@string/pref_touchpadSensitivity"
+            android:inputType="numberDecimal"
+            />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/pref_advanced">
@@ -78,6 +68,26 @@
             android:defaultValue="@string/pref_graphicsLibrary_default"
             android:summary="%s"
         />
+
+        <ListPreference
+            android:key="pref_physicsFPS"
+            android:title="@string/pref_physicsFPS"
+            android:dialogTitle="@string/pref_physicsFPS"
+            android:entries="@array/pref_physicsFPS_entries"
+            android:entryValues="@array/pref_physicsFPS_entries"
+            android:defaultValue="@string/pref_physicsFPS_default"
+            android:summary="%s"
+            />
+
+        <ListPreference
+            android:key="pref_allowCapsuleShape"
+            android:title="@string/pref_allowCapsuleShape"
+            android:dialogTitle="@string/pref_allowCapsuleShape"
+            android:entries="@array/pref_allowCapsuleShape_entries"
+            android:entryValues="@array/pref_allowCapsuleShape_values"
+            android:defaultValue="@string/pref_allowCapsuleShape_default"
+            android:summary="%s"
+            />
 
     </PreferenceCategory>
 

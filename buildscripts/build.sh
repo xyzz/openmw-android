@@ -5,7 +5,9 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd $DIR
 
 export ARCH="arm"
+export CCACHE="false"
 ASAN="false"
+LTO="false"
 BUILD_TYPE="release"
 CFLAGS="-fPIC"
 CXXFLAGS="-fPIC -frtti -fexceptions"
@@ -16,6 +18,8 @@ usage() {
 	echo "	--help: print this message"
 	echo "	--arch: build for specified architecture [arm, arm64, x86_64, x86] (default: arm)"
 	echo "	--asan: build with AddressSanitizer enabled"
+	echo "	--lto: use LTO for linking"
+	echo "	--ccache: use ccache to speed up repeated builds"
 	echo "	--debug: produce a debug build without optimizations"
 	echo "	--release: produce a release build with optimizations (default)"
 	exit 0
@@ -36,6 +40,14 @@ while [[ $# -gt 0 ]]; do
 			;;
 		--asan)
 			ASAN=true
+			shift
+			;;
+		--lto)
+			LTO=true
+			shift
+			;;
+		--ccache)
+			export CCACHE="true"
 			shift
 			;;
 		--debug)
@@ -67,11 +79,23 @@ if [ $ASAN = true ]; then
 fi
 
 if [ $BUILD_TYPE = "release" ]; then
-	CFLAGS="$CFLAGS -O2"
-	CXXFLAGS="$CXXFLAGS -O2"
+	CFLAGS="$CFLAGS -O3"
+	CXXFLAGS="$CXXFLAGS -O3"
 else
 	CFLAGS="$CFLAGS -O0 -g"
 	CXXFLAGS="$CXXFLAGS -O0 -g"
+fi
+
+if [[ $LTO = "true" ]]; then
+	CFLAGS="$CFLAGS -flto"
+	CXXFLAGS="$CXXFLAGS -flto"
+	# emulated-tls should not be needed in ndk r18 https://github.com/android-ndk/ndk/issues/498#issuecomment-327825754
+	LDFLAGS="$LDFLAGS -flto -Wl,-plugin-opt=-emulated-tls -fuse-ld=gold"
+fi
+
+if [[ $ARCH = "arm" ]]; then
+	CFLAGS="$CFLAGS -mthumb"
+	CXXFLAGS="$CXXFLAGS -mthumb"
 fi
 
 # https://github.com/android-ndk/ndk/issues/105 to be fixed in r17
@@ -157,27 +181,29 @@ find ./toolchain/$ARCH/ -iname "libc++_shared.so" -exec cp "{}" ../app/src/main/
 
 $NDK_TRIPLET-strip ../app/src/main/jniLibs/$ABI/*.so
 
-echo "==> Deploying resources"
+if [[ $ARCH = "arm" ]]; then
+	echo "==> Deploying resources"
 
-DST=$DIR/../app/src/main/assets/libopenmw/
-SRC=build/$ARCH/openmw-prefix/src/openmw-build/
+	DST=$DIR/../app/src/main/assets/libopenmw/
+	SRC=build/$ARCH/openmw-prefix/src/openmw-build/
 
-rm -rf "$DST" && mkdir -p "$DST"
+	rm -rf "$DST" && mkdir -p "$DST"
 
-# resources
-cp -r "$SRC/resources" "$DST"
+	# resources
+	cp -r "$SRC/resources" "$DST"
 
-# global config
-mkdir -p "$DST/openmw/"
-cp "$SRC/settings-default.cfg" "$DST/openmw/"
-cp "$SRC/gamecontrollerdb.txt" "$DST/openmw/"
+	# global config
+	mkdir -p "$DST/openmw/"
+	cp "$SRC/settings-default.cfg" "$DST/openmw/"
+	cp "$SRC/gamecontrollerdb.txt" "$DST/openmw/"
 
-# local config
-mkdir -p "$DST/config/openmw/"
-# TODO: do we really need this twice?
-cp "$SRC/gamecontrollerdb.txt" "$DST/config/openmw/"
-cp "$DIR/../app/openmw-base.cfg" "$DST/config/openmw/openmw.cfg"
-cp "$DIR/../app/settings-base.cfg" "$DST/config/openmw/settings.cfg"
+	# local config
+	mkdir -p "$DST/config/openmw/"
+	# TODO: do we really need this twice?
+	cp "$SRC/gamecontrollerdb.txt" "$DST/config/openmw/"
+	cp "$DIR/../app/openmw-base.cfg" "$DST/config/openmw/openmw.cfg"
+	cp "$DIR/../app/settings-base.cfg" "$DST/config/openmw/settings.cfg"
+fi
 
 echo "==> Making your debugging life easier"
 

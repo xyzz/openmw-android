@@ -1,6 +1,6 @@
 package ui.controls;
 
-import org.libsdl.app.SDLActivity;
+import org.libsdl.app.SDLControllerManager;
 
 class GamepadEmulator {
 
@@ -11,12 +11,14 @@ class GamepadEmulator {
 
         if (!registered) {
             registered = true;
-            SDLActivity.nativeAddJoystick(deviceId, "Virtual", 0, -1,
+            SDLControllerManager.nativeAddJoystick(deviceId, "Virtual", "Virtual",
+                    0xbad, 0xf00d,
+                    false, 0xFFFFFFFF,
                     4, 0, 0);
         }
 
-        SDLActivity.onNativeJoy(deviceId, stickId * 2    , x);
-        SDLActivity.onNativeJoy(deviceId, stickId * 2 + 1, y);
+        SDLControllerManager.onNativeJoy(deviceId, stickId * 2    , x);
+        SDLControllerManager.onNativeJoy(deviceId, stickId * 2 + 1, y);
     }
 
 }

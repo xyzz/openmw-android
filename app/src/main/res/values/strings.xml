@@ -2,11 +2,18 @@
 <resources>
     <string name="app_name">OpenMW</string>
 
-    <string-array name="encoding_entry">
+    <string-array name="pref_encoding_entries">
+        <item>Central and Eastern European (win1250)</item>
+        <item>Cyrillic (win1251)</item>
+        <item>Latin (win1252)</item>
+    </string-array>
+
+    <string-array name="pref_encoding_values">
         <item>win1250</item>
         <item>win1251</item>
         <item>win1252</item>
     </string-array>
+
     <string-array name="mipmapping_array">
         <item>trilinear</item>
         <item>bilinear</item>
@@ -35,6 +42,22 @@
     <string name="pref_graphicsLibrary_default">gles1</string>
     <string name="pref_advanced">Advanced</string>
     <string name="pref_commandLine">Custom command line arguments</string>
+    <string name="pref_ui">User interface</string>
+    <string name="pref_uiScaling">GUI scaling factor</string>
+    <string name="pref_touchpadSensitivity">Virtual touchpad sensitivity</string>
+    <string name="action_reset_config">Reset configuration files</string>
+    <string name="action_reset_screen_controls">Reset on-screen controls</string>
+    <string name="action_show_screen_controls">Configure on-screen controls</string>
+    <string name="config_was_reset">Configuration was reset to default values</string>
+    <string name="pref_lang">Language settings</string>
+    <string name="pref_encoding">Game language</string>
+    <string name="pref_encoding_default">win1252</string>
+    <string name="btn_opacityPlus">Alpha+</string>
+    <string name="btn_opacityMinus">Alpha-</string>
+    <string name="btn_sizePlus">Size+</string>
+    <string name="btn_sizeMinus">Size-</string>
+    <string name="btn_resetControlsLayout">Reset to defaults</string>
+    <string name="pref_physicsFPS">Physics FPS</string>
 
     <string-array name="pref_graphicsLibrary_entries">
         <item>GLESv1</item>
@@ -45,5 +68,27 @@
         <item>gles1</item>
         <item>gles2</item>
     </string-array>
+
+    <string-array name="pref_physicsFPS_entries">
+        <item>15</item>
+        <item>30</item>
+        <item>60</item>
+    </string-array>
+
+    <string name="pref_physicsFPS_default">60</string>
+
+    <string name="pref_allowCapsuleShape">Force a simple collision box for actors</string>
+    <!-- Oops. This has inverted true/false between entries and values -->
+    <string-array name="pref_allowCapsuleShape_entries">
+        <item>Yes</item>
+        <item>No</item>
+    </string-array>
+
+    <string-array name="pref_allowCapsuleShape_values">
+        <item>false</item>
+        <item>true</item>
+    </string-array>
+
+    <string name="pref_allowCapsuleShape_default">true</string>
 
 </resources>

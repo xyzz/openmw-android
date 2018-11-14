@@ -23,7 +23,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.libopenmw.openmw.FileChooser;
 import com.libopenmw.openmw.R;
 import com.melnykov.fab.FloatingActionButton;
 
@@ -32,10 +31,8 @@ import java.io.IOException;
 
 import constants.Constants;
 import file.utils.CopyFilesFromAssets;
-import plugins.bsa.BsaUtils;
 import ui.game.GameState;
 import ui.fragments.FragmentControls;
-import ui.fragments.FragmentPlugins;
 import ui.fragments.FragmentSettings;
 import permission.PermissionHelper;
 import ui.screen.ScreenResolutionHelper;
@@ -45,9 +42,12 @@ import prefs.PreferencesHelper;
 
 import static file.ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH;
 import static file.ConfigsFileStorageHelper.OPENMW_CFG;
+import static file.ConfigsFileStorageHelper.SETTINGS_CFG;
+import static utils.Utils.hideAndroidControls;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = "OpenMW-Launcher";
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
     public TextView path;
@@ -81,13 +81,6 @@ public class MainActivity extends AppCompatActivity {
         browseButton = (Button) findViewById(R.id.buttonBrowse);
 
         disableToolBarViews();
-        browseButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FileChooser.isDirMode = true;
-                getFolder();
-            }
-        });
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
@@ -103,9 +96,6 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 GameState.setGameState(true);
-                if (FragmentPlugins.getInstance()!=null){
-                    FragmentPlugins.getInstance().savePluginsDataToDisk();
-                }
                 startGame();
             }
 
@@ -185,11 +175,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void getFolder() {
-        Intent intent = new Intent(this, FileChooser.class);
-        startActivityForResult(intent, REQUEST_PATH);
-    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_PATH) {
@@ -228,22 +213,44 @@ public class MainActivity extends AppCompatActivity {
         MainActivity.this.startActivity(intent);
     }
 
+    /**
+     * Resets $base/config to default values. This contains user-modifiable openmw.cfg and settings.cfg
+     * (and we also write some values to both on startup such as screen res or some options)
+     */
+    private void resetUserConfig() {
+        // Wipe out the old version
+        deleteRecursive(new File(CONFIGS_FILES_STORAGE_PATH + "/config"));
+        // and copy in the default values
+        CopyFilesFromAssets copyFiles = new CopyFilesFromAssets(this, CONFIGS_FILES_STORAGE_PATH);
+        copyFiles.copyFileOrDir("libopenmw/config");
+    }
+
     private void startGame() {
         ProgressDialog dialog = ProgressDialog.show(
                 this, "", "Preparing for launch...", true);
 
         Activity activity = this;
 
+        // hide the controls so that ScreenResolutionHelper can get the right resolution
+        hideAndroidControls(this);
+
         Thread th = new Thread(() -> {
             try {
-                // wipe old config files
-                deleteRecursive(new File(CONFIGS_FILES_STORAGE_PATH + "/config"));
+                File openmwCfg = new File(OPENMW_CFG);
+                File settingsCfg = new File(SETTINGS_CFG);
+                if (!openmwCfg.exists() || !settingsCfg.exists()) {
+                    Log.i(TAG, "Config files don't exist, re-creating them.");
+                    resetUserConfig();
+                }
+
+                // wipe old "wipeable" (see ConfigsFileStorageHelper) config files just to be safe
                 deleteRecursive(new File(CONFIGS_FILES_STORAGE_PATH + "/openmw"));
                 deleteRecursive(new File(CONFIGS_FILES_STORAGE_PATH + "/resources"));
 
                 // copy all assets
                 CopyFilesFromAssets copyFiles = new CopyFilesFromAssets(activity, CONFIGS_FILES_STORAGE_PATH);
-                copyFiles.copyFileOrDir("libopenmw");
+                copyFiles.copyFileOrDir("libopenmw/openmw");
+                copyFiles.copyFileOrDir("libopenmw/resources");
 
                 // settings.cfg: resolution
                 ScreenResolutionHelper screenHelper = new ScreenResolutionHelper(activity);
@@ -258,12 +265,18 @@ public class MainActivity extends AppCompatActivity {
                 // TODO: it will crash if there's no value/invalid value provided
                 file.Writer.write(prefs.getString("data_files", ""), OPENMW_CFG, "data");
 
+                file.Writer.write(prefs.getString("pref_encoding", "win1252"), OPENMW_CFG, "encoding");
+
+                file.Writer.write(prefs.getString("pref_uiScaling", "1.0"), SETTINGS_CFG, "scaling factor");
+
+                file.Writer.write(prefs.getString("pref_allowCapsuleShape", "true"), SETTINGS_CFG, "allow capsule shape");
+
                 runOnUiThread(() -> {
                     dialog.hide();
                     runGame();
                 });
             } catch (IOException e) {
-                Log.e("OpenMW-Launcher", "Failed to write config files.", e);
+                Log.e(TAG, "Failed to write config files.", e);
 
                 Toast.makeText(activity, "Something failed", Toast.LENGTH_LONG).show();
             }
@@ -316,43 +329,18 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
         if (!isSettingsEnabled)
             switch (id) {
-                case R.id.action_enable:
-                    if (FragmentPlugins.getInstance()!=null) {
-                        FragmentPlugins.getInstance().enableMods();
-                    }
-                    break;
-                case R.id.action_disable:
-                    if (FragmentPlugins.getInstance()!=null) {
-                        FragmentPlugins.getInstance().disableMods();
-                    }
-                    break;
-                case R.id.action_importMods:
-                    if (FragmentPlugins.getInstance()!=null) {
-                        FragmentPlugins.getInstance().importMods();
-                    }
-                    break;
-                case R.id.action_export:
-                    if (FragmentPlugins.getInstance()!=null) {
-                        FragmentPlugins.getInstance().exportMods();
-                    }
-                    break;
-                case R.id.action_enableBsa:
-                    BsaUtils.setSaveAllBsaFilesValue(MainActivity.this,true);
-                    break;
-                case R.id.action_disableBsa:
-                    BsaUtils.setSaveAllBsaFilesValue(MainActivity.this,false);
-                    break;
                 default:
                     break;
             }
         else
             switch (id) {
-                case R.id.action_reset_screen_controls:
-                    resetScreenControls();
-                    break;
-
                 case R.id.action_show_screen_controls:
                     startControlsActivity();
+                    break;
+
+                case R.id.action_reset_config:
+                    resetUserConfig();
+                    Toast.makeText(this, getString(R.string.config_was_reset), Toast.LENGTH_SHORT).show();
                     break;
 
                 default:
@@ -360,16 +348,6 @@ public class MainActivity extends AppCompatActivity {
             }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    private void resetScreenControls() {
-        PreferencesHelper.setPreferences(
-                Constants.APP_PREFERENCES_RESET_CONTROLS, 1,
-                this);
-        Toast toast = Toast.makeText(this.
-                        getApplicationContext(),
-                "Reset on-screen controls", Toast.LENGTH_LONG);
-        toast.show();
     }
 
     private void startControlsActivity() {

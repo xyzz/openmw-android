@@ -1,6 +1,7 @@
 package ui.screen;
 
 import android.app.Activity;
+import android.view.View;
 
 import java.io.IOException;
 
