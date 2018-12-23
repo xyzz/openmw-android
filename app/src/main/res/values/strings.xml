@@ -40,6 +40,8 @@
     <!-- Graphics library -->
     <string name="pref_graphicsLibrary">Graphics library</string>
     <string name="pref_graphicsLibrary_default">gles1</string>
+    <string name="pref_osg">OpenSceneGraph version</string>
+    <string name="pref_osg_default">mainline</string>
     <string name="pref_advanced">Advanced</string>
     <string name="pref_commandLine">Custom command line arguments</string>
     <string name="pref_ui">User interface</string>
@@ -67,6 +69,16 @@
     <string-array name="pref_graphicsLibrary_values">
         <item>gles1</item>
         <item>gles2</item>
+    </string-array>
+
+    <string-array name="pref_osg_entries">
+        <item>Mainline</item>
+        <item>OpenMW Fork</item>
+    </string-array>
+
+    <string-array name="pref_osg_values">
+        <item>mainline</item>
+        <item>fork</item>
     </string-array>
 
     <string-array name="pref_physicsFPS_entries">

@@ -41,8 +41,12 @@ set(GL4ES_VERSION 509d3843b2fe273eec85a8242a7ddab62be8bad0)
 set(GL4ES_HASH SHA256=8f928c965818da1d6bc5d11541548e0864eb05574d79b3e3f36df3b4f1f1f199)
 
 # https://github.com/openscenegraph/OpenSceneGraph/releases
-set(OSG_VERSION 3.6.3)
-set(OSG_HASH SHA256=51bbc79aa73ca602cd1518e4e25bd71d41a10abd296e18093a8acfebd3c62696)
+set(OSG_MAINLINE_VERSION 3.6.3)
+set(OSG_MAINLINE_HASH SHA256=51bbc79aa73ca602cd1518e4e25bd71d41a10abd296e18093a8acfebd3c62696)
+
+# https://github.com/OpenMW/osg/commits/master
+set(OSG_FORK_VERSION ecedf3232c2f1b3b6a2f06f77ea37a9afb6a93f5)
+set(OSG_FORK_HASH SHA256=254f0ce0e236aa80700877ee8664430c1f491be78ea1118bcd53178260edb4b5)
 
 # https://github.com/xyzz/openmw/tree/android
 set(OPENMW_TAG android)
@@ -60,12 +64,11 @@ set(prefix ${CMAKE_INSTALL_PREFIX})
 set(host ${ndk_triplet})
 set(android_platform android-${ANDROID_API})
 set(app_abi ${ABI})
-set(osg_plugins_dir ${prefix}/lib/osgPlugins-${OSG_VERSION})
+set(osg_mainline_plugins_dir ${prefix}/osg_mainline/lib/osgPlugins-${OSG_MAINLINE_VERSION})
+set(osg_fork_plugins_dir ${prefix}/osg_fork/lib/osgPlugins-3.7.0)
 
-set(COMMON_CMAKE_ARGS
+set(COMMON_CMAKE_ARGS_NO_PREFIX
 	-DCMAKE_TOOLCHAIN_FILE=${CMAKE_SOURCE_DIR}/toolchain/ndk/build/cmake/android.toolchain.cmake
-	-DCMAKE_INSTALL_PREFIX=${prefix}
-	-DCMAKE_FIND_ROOT_PATH=${prefix}
 	-DANDROID_ABI=${app_abi}
 	-DANDROID_PLATFORM=${android_platform}
 	-DANDROID_STL=c++_shared
@@ -73,6 +76,12 @@ set(COMMON_CMAKE_ARGS
 	-DCMAKE_C_FLAGS=-DMYGUI_DONT_REPLACE_NULLPTR\ -I${prefix}/include/\ $ENV{CFLAGS}
 	-DCMAKE_CXX_FLAGS=-DMYGUI_DONT_REPLACE_NULLPTR\ -I${prefix}/include/\ $ENV{CXXFLAGS}
 	-DCMAKE_SHARED_LINKER_FLAGS=$ENV{LDFLAGS}
+)
+
+set(COMMON_CMAKE_ARGS
+	${COMMON_CMAKE_ARGS_NO_PREFIX}
+	-DCMAKE_INSTALL_PREFIX=${prefix}
+	-DCMAKE_FIND_ROOT_PATH=${prefix}
 )
 
 set(COMMON_NDK_BUILD_FLAGS
@@ -330,15 +339,7 @@ ExternalProject_Add(mygui
 	INSTALL_COMMAND ${wrapper_command} $(MAKE) install
 )
 
-ExternalProject_Add(osg
-	DEPENDS libjpeg-turbo libpng gl4es
-
-	URL https://github.com/openscenegraph/OpenSceneGraph/archive/OpenSceneGraph-${OSG_VERSION}.tar.gz
-	URL_HASH ${OSG_HASH}
-	DOWNLOAD_DIR ${download_dir}
-
-	CONFIGURE_COMMAND ${wrapper_command} cmake <SOURCE_DIR>
-	${COMMON_CMAKE_ARGS}
+set(OSG_COMMON
 	-DOPENGL_PROFILE="GL1"
 	-DDYNAMIC_OPENTHREADS=OFF
 	-DDYNAMIC_OPENSCENEGRAPH=OFF
@@ -373,6 +374,19 @@ ExternalProject_Add(osg
 	-DBUILD_OSG_PLUGIN_JPEG=ON
 	-DBUILD_OSG_PLUGIN_PNG=ON
 	-DBUILD_OSG_DEPRECATED_SERIALIZERS=OFF
+)
+
+ExternalProject_Add(osg_mainline
+	DEPENDS libjpeg-turbo libpng gl4es
+
+	URL https://github.com/openscenegraph/OpenSceneGraph/archive/OpenSceneGraph-${OSG_MAINLINE_VERSION}.tar.gz
+	URL_HASH ${OSG_MAINLINE_HASH}
+	DOWNLOAD_DIR ${download_dir}
+
+	CONFIGURE_COMMAND ${wrapper_command} cmake <SOURCE_DIR>
+	${COMMON_CMAKE_ARGS_NO_PREFIX}
+	-DCMAKE_INSTALL_PREFIX=${prefix}/osg_mainline
+	${OSG_COMMON}
 
 	BUILD_COMMAND ${wrapper_command} $(MAKE)
 
@@ -380,14 +394,25 @@ ExternalProject_Add(osg
 	COMMAND $(MAKE) install
 )
 
-ExternalProject_Add(openmw
-	DEPENDS boost openal osg mygui ffmpeg sdl2 bullet
+ExternalProject_Add(osg_fork
+	DEPENDS libjpeg-turbo libpng gl4es
 
-	GIT_REPOSITORY https://github.com/xyzz/openmw.git
-	GIT_TAG ${OPENMW_TAG}
+	URL https://github.com/OpenMW/osg/archive/${OSG_FORK_VERSION}.tar.gz
+	URL_HASH ${OSG_FORK_HASH}
+	DOWNLOAD_DIR ${download_dir}
 
 	CONFIGURE_COMMAND ${wrapper_command} cmake <SOURCE_DIR>
-	${COMMON_CMAKE_ARGS}
+	${COMMON_CMAKE_ARGS_NO_PREFIX}
+	-DCMAKE_INSTALL_PREFIX=${prefix}/osg_fork
+	${OSG_COMMON}
+
+	BUILD_COMMAND ${wrapper_command} $(MAKE)
+
+	INSTALL_COMMAND mkdir -p <SOURCE_DIR>/3rdparty/build/libpng <SOURCE_DIR>/3rdparty/build/libjpeg
+	COMMAND $(MAKE) install
+)
+
+set(OPENMW_COMMON
 	-DBUILD_BSATOOL=0
 	-DBUILD_ESMTOOL=0
 	-DBUILD_LAUNCHER=0
@@ -399,16 +424,52 @@ ExternalProject_Add(openmw
 	-DOPENAL_INCLUDE_DIR=${prefix}/include/AL/
 	-DBullet_INCLUDE_DIR=${prefix}/include/bullet/
 	-DOPENGL_ES=OFF
-	-DOSG_PLUGINS_DIR=${osg_plugins_dir}
 	-DOSG_STATIC=TRUE
-	-DOSGDB_BMP_LIBRARY=${osg_plugins_dir}/libosgdb_bmp.a
-	-DOSGDB_DDS_LIBRARY=${osg_plugins_dir}/libosgdb_dds.a
-	-DOSGDB_JPEG_LIBRARY=${osg_plugins_dir}/libosgdb_jpeg.a
-	-DOSGDB_OSG_LIBRARY=${osg_plugins_dir}/libosgdb_osg.a
-	-DOSGDB_PNG_LIBRARY=${osg_plugins_dir}/libosgdb_png.a
-	-DOSGDB_TGA_LIBRARY=${osg_plugins_dir}/libosgdb_tga.a 
-	-DOSGDB_SERIALIZERS_OSG_LIBRARY=${osg_plugins_dir}/libosgdb_serializers_osg.a
 	-DMyGUI_LIBRARY=${prefix}/lib/libMyGUIEngineStatic.a
+)
+
+ExternalProject_Add(openmw_osg_mainline
+	DEPENDS boost openal osg_mainline mygui ffmpeg sdl2 bullet
+
+	GIT_REPOSITORY https://github.com/xyzz/openmw.git
+	GIT_TAG ${OPENMW_TAG}
+
+	CONFIGURE_COMMAND ${wrapper_command} cmake <SOURCE_DIR>
+	${COMMON_CMAKE_ARGS}
+	${OPENMW_COMMON}
+	-DOSG_PLUGINS_DIR=${osg_mainline_plugins_dir}
+	-DOSGDB_BMP_LIBRARY=${osg_mainline_plugins_dir}/libosgdb_bmp.a
+	-DOSGDB_DDS_LIBRARY=${osg_mainline_plugins_dir}/libosgdb_dds.a
+	-DOSGDB_JPEG_LIBRARY=${osg_mainline_plugins_dir}/libosgdb_jpeg.a
+	-DOSGDB_OSG_LIBRARY=${osg_mainline_plugins_dir}/libosgdb_osg.a
+	-DOSGDB_PNG_LIBRARY=${osg_mainline_plugins_dir}/libosgdb_png.a
+	-DOSGDB_TGA_LIBRARY=${osg_mainline_plugins_dir}/libosgdb_tga.a
+	-DOSGDB_SERIALIZERS_OSG_LIBRARY=${osg_mainline_plugins_dir}/libosgdb_serializers_osg.a
+	-DOPENMW_DEPENDENCIES_DIR=${prefix}/osg_mainline
+
+	BUILD_COMMAND $(MAKE)
+
+	INSTALL_COMMAND ""
+)
+
+ExternalProject_Add(openmw_osg_fork
+	DEPENDS boost openal osg_fork mygui ffmpeg sdl2 bullet
+
+	GIT_REPOSITORY https://github.com/xyzz/openmw.git
+	GIT_TAG ${OPENMW_TAG}
+
+	CONFIGURE_COMMAND ${wrapper_command} cmake <SOURCE_DIR>
+	${COMMON_CMAKE_ARGS}
+	${OPENMW_COMMON}
+	-DOSG_PLUGINS_DIR=${osg_fork_plugins_dir}
+	-DOSGDB_BMP_LIBRARY=${osg_fork_plugins_dir}/libosgdb_bmp.a
+	-DOSGDB_DDS_LIBRARY=${osg_fork_plugins_dir}/libosgdb_dds.a
+	-DOSGDB_JPEG_LIBRARY=${osg_fork_plugins_dir}/libosgdb_jpeg.a
+	-DOSGDB_OSG_LIBRARY=${osg_fork_plugins_dir}/libosgdb_osg.a
+	-DOSGDB_PNG_LIBRARY=${osg_fork_plugins_dir}/libosgdb_png.a
+	-DOSGDB_TGA_LIBRARY=${osg_fork_plugins_dir}/libosgdb_tga.a
+	-DOSGDB_SERIALIZERS_OSG_LIBRARY=${osg_fork_plugins_dir}/libosgdb_serializers_osg.a
+	-DOPENMW_DEPENDENCIES_DIR=${prefix}/osg_fork
 
 	BUILD_COMMAND $(MAKE)
 

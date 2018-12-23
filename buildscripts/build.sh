@@ -171,7 +171,8 @@ rm -rf ../app/src/main/jniLibs/$ABI/
 mkdir -p ../app/src/main/jniLibs/$ABI/
 
 # libopenmw.so is a special case
-find build/$ARCH/ -iname "libopenmw.so" -exec cp "{}" ../app/src/main/jniLibs/$ABI/ \;
+find build/$ARCH/openmw_osg_mainline-prefix/ -iname "libopenmw.so" -exec cp "{}" ../app/src/main/jniLibs/$ABI/libopenmw_osg_mainline.so \;
+find build/$ARCH/openmw_osg_fork-prefix/ -iname "libopenmw.so" -exec cp "{}" ../app/src/main/jniLibs/$ABI/libopenmw_osg_fork.so \;
 
 # copy over libs we compiled
 cp prefix/$ARCH/lib/{libopenal,libSDL2,libGL}.so ../app/src/main/jniLibs/$ABI/
@@ -185,7 +186,7 @@ if [[ $ARCH = "arm" ]]; then
 	echo "==> Deploying resources"
 
 	DST=$DIR/../app/src/main/assets/libopenmw/
-	SRC=build/$ARCH/openmw-prefix/src/openmw-build/
+	SRC=build/$ARCH/openmw_osg_mainline-prefix/src/openmw_osg_mainline-build/
 
 	rm -rf "$DST" && mkdir -p "$DST"
 
@@ -211,7 +212,8 @@ echo "==> Making your debugging life easier"
 rm -rf "./build/$ARCH/symbols" && mkdir -p "./build/$ARCH/symbols"
 cp "./build/$ARCH/openal-prefix/src/openal-build/libopenal.so" "./build/$ARCH/symbols/"
 cp "./build/$ARCH/sdl2-prefix/src/sdl2-build/obj/local/$ABI/libSDL2.so" "./build/$ARCH/symbols/"
-cp "./build/$ARCH/openmw-prefix/src/openmw-build/libopenmw.so" "./build/$ARCH/symbols/"
+cp "./build/$ARCH/openmw_osg_mainline-prefix/src/openmw_osg_mainline-build/libopenmw.so" "./build/$ARCH/symbols/libopenmw_osg_mainline.so"
+cp "./build/$ARCH/openmw_osg_fork-prefix/src/openmw_osg_fork-build/libopenmw.so" "./build/$ARCH/symbols/libopenmw_osg_fork.so"
 cp "./build/$ARCH/gl4es-prefix/src/gl4es-build/obj/local/$ABI/libGL.so" "./build/$ARCH/symbols/"
 
 if [ $ASAN = true ]; then
@@ -219,9 +221,7 @@ if [ $ASAN = true ]; then
 fi
 
 if [[ $ARCH = "arm" ]]; then
-	for file in ./build/$ARCH/symbols/*.so; do
-		PATH="$DIR/toolchain/ndk/prebuilt/linux-x86_64/bin/:$DIR/toolchain/$ARCH/$NDK_TRIPLET/bin/:$PATH" ./include/gdb-add-index $file
-	done
+	PATH="$DIR/toolchain/ndk/prebuilt/linux-x86_64/bin/:$DIR/toolchain/$ARCH/$NDK_TRIPLET/bin/:$PATH" ./include/gdb-add-index ./build/$ARCH/symbols/*.so
 fi
 
 echo "==> Success"
