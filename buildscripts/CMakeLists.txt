@@ -5,24 +5,24 @@ set(LIBJPEG_TURBO_VERSION 1.5.3)
 set(LIBJPEG_TURBO_HASH SHA256=b24890e2bb46e12e72a79f7e965f409f4e16466d00e1dd15d93d73ee6b592523)
 
 # http://www.libpng.org/pub/png/libpng.html
-set(LIBPNG_VERSION 1.6.34)
-set(LIBPNG_HASH SHA256=2f1e960d92ce3b3abd03d06dfec9637dfbd22febf107a536b44f7a47c60659f6)
+set(LIBPNG_VERSION 1.6.36)
+set(LIBPNG_HASH SHA256=eceb924c1fa6b79172fdfd008d335f0e59172a86a66481e09d4089df872aa319)
 
 # https://www.freetype.org/index.html#news
-set(FREETYPE2_VERSION 2.9)
-set(FREETYPE2_HASH SHA256=bf380e4d7c4f3b5b1c1a7b2bf3abb967bda5e9ab480d0df656e0e08c5019c5e6)
+set(FREETYPE2_VERSION 2.9.1)
+set(FREETYPE2_HASH SHA256=ec391504e55498adceb30baceebd147a6e963f636eb617424bcfc47a169898ce)
 
 # http://kcat.strangesoft.net/openal.html
-set(OPENAL_VERSION 1.18.2)
-set(OPENAL_HASH SHA256=9f8ac1e27fba15a59758a13f0c7f6540a0605b6c3a691def9d420570506d7e82)
+set(OPENAL_VERSION 1.19.1)
+set(OPENAL_HASH SHA256=5c2f87ff5188b95e0dc4769719a9d89ce435b8322b4478b95dd4b427fe84b2e9)
 
 # http://www.boost.org/users/download/
-set(BOOST_VERSION 1.67.0)
-set(BOOST_HASH SHA256=2684c972994ee57fc5632e03bf044746f6eb45d4920c343937a465fd67a5adba)
+set(BOOST_VERSION 1.69.0)
+set(BOOST_HASH SHA256=8f32d4617390d1c2d16f26a27ab60d97807b35440d45891fa340fc2648b04406)
 
 # https://www.ffmpeg.org/download.html
-set(FFMPEG_VERSION 4.0)
-set(FFMPEG_HASH SHA256=318a39d906c9107d49766c63787798dd078d2a36e6670a9dfeda3c55be4573b8)
+set(FFMPEG_VERSION 4.1)
+set(FFMPEG_HASH SHA256=b684fb43244a5c4caae652af9022ed5d85ce15210835bce054a33fb26033a1a5)
 
 # https://www.libsdl.org/download-2.0.php
 set(SDL2_VERSION 2.0.8)
@@ -172,6 +172,8 @@ ExternalProject_Add(openal
 	URL_HASH ${OPENAL_HASH}
 	DOWNLOAD_DIR ${download_dir}
 
+	PATCH_COMMAND patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openal-unset-compiler.patch
+
 	CONFIGURE_COMMAND ${wrapper_command} cmake <SOURCE_DIR>
 	${COMMON_CMAKE_ARGS}
 	-DALSOFT_EXAMPLES=OFF
@@ -192,8 +194,6 @@ ExternalProject_Add(boost
 	DOWNLOAD_DIR ${download_dir}
 
 	BUILD_IN_SOURCE 1
-
-	PATCH_COMMAND patch -d <SOURCE_DIR> -p2 -t -N < ${CMAKE_SOURCE_DIR}/patches/boost-fix13172.diff
 
 	CONFIGURE_COMMAND ${wrapper_command} <SOURCE_DIR>/bootstrap.sh
 	--prefix=${prefix}
