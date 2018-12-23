@@ -41,8 +41,8 @@ set(GL4ES_VERSION 509d3843b2fe273eec85a8242a7ddab62be8bad0)
 set(GL4ES_HASH SHA256=8f928c965818da1d6bc5d11541548e0864eb05574d79b3e3f36df3b4f1f1f199)
 
 # https://github.com/openscenegraph/OpenSceneGraph/releases
-set(OSG_VERSION 3.6.0)
-set(OSG_HASH SHA256=6f57134ea74a39f1c7b24c285e6278cf906c47f6c681573b86d12173a466efed)
+set(OSG_VERSION 3.6.3)
+set(OSG_HASH SHA256=51bbc79aa73ca602cd1518e4e25bd71d41a10abd296e18093a8acfebd3c62696)
 
 # https://github.com/xyzz/openmw/tree/android
 set(OPENMW_TAG android)
