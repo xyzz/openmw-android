@@ -24,7 +24,7 @@ echo "" > tmp_script.sh
 append "#!/bin/bash"
 append "set -e"
 append "sudo apt -y update"
-append "sudo apt -y dist-upgrade"
+append "sudo DEBIAN_FRONTEND=noninteractive apt-get upgrade -yq"
 append "sudo apt -y install build-essential htop python unzip"
 append "sudo mount -t tmpfs -o size=64G tmpfs /mnt"
 append "wget https://cmake.org/files/v$CMAKE_VERSION/cmake-$CMAKE_VERSION.0-Linux-x86_64.tar.gz"

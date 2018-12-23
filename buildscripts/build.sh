@@ -132,6 +132,9 @@ mkdir -p prefix/$ARCH/
 # symlink lib64 -> lib so we don't get half the libs in one directory half in another
 mkdir -p prefix/$ARCH/lib
 ln -sf lib prefix/$ARCH/lib64
+mkdir -p prefix/$ARCH/osg_{fork,mainline}/lib
+ln -sf lib prefix/$ARCH/osg_fork/lib64
+ln -sf lib prefix/$ARCH/osg_mainline/lib64
 
 # generate command_wrapper.sh
 cat include/command_wrapper_head.sh.in | \
