@@ -98,9 +98,6 @@ if [[ $ARCH = "arm" ]]; then
 	CXXFLAGS="$CXXFLAGS -mthumb"
 fi
 
-# https://github.com/android-ndk/ndk/issues/105 to be fixed in r17
-LDFLAGS="$LDFLAGS -stdlib=libc++ -L$DIR/toolchain/ndk/sources/cxx-stl/llvm-libc++/libs/$ABI/"
-
 echo ""
 echo "================================================================================"
 echo ""
