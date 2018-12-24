@@ -99,6 +99,16 @@
             android:summary="%s"
             />
 
+        <ListPreference
+            android:key="pref_preload"
+            android:title="@string/pref_preload"
+            android:dialogTitle="@string/pref_preload"
+            android:entries="@array/pref_preload_entries"
+            android:entryValues="@array/pref_preload_values"
+            android:defaultValue="@string/pref_preload_default"
+            android:summary="%s"
+            />
+
     </PreferenceCategory>
 
 </PreferenceScreen>
