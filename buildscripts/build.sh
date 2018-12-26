@@ -221,7 +221,7 @@ if [ $ASAN = true ]; then
 	cp ./toolchain/$ARCH/lib64/clang/*/lib/linux/libclang_rt.asan-$ASAN_ARCH-android.so "./build/$ARCH/symbols/"
 	cp ./toolchain/$ARCH/lib64/clang/*/lib/linux/libclang_rt.asan-$ASAN_ARCH-android.so "../app/src/main/jniLibs/$ABI/"
 	mkdir -p ../app/wrap/res/lib/$ABI/
-	cp "include/asan-wrapper-$ASAN_ARCH.sh" "../app/wrap/res/lib/$ABI/wrap.sh"
+	sed "s/@ASAN_ARCH@/$ASAN_ARCH/g" < include/asan-wrapper.sh > "../app/wrap/res/lib/$ABI/wrap.sh"
 	chmod +x "../app/wrap/res/lib/$ABI/wrap.sh"
 fi
 
