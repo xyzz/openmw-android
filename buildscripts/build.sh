@@ -11,7 +11,7 @@ LTO="false"
 BUILD_TYPE="release"
 CFLAGS="-fPIC"
 CXXFLAGS="-fPIC -frtti -fexceptions"
-LDFLAGS="-Wl,--exclude-libs,libgcc.a -Wl,--exclude-libs,libatomic.a -Wl,--exclude-libs,libunwind.a"
+LDFLAGS="-Wl,--exclude-libs,libgcc.a -Wl,--exclude-libs,libatomic.a -Wl,--exclude-libs,libunwind.a -nostdlib++"
 
 usage() {
 	echo "Usage: ./build.sh [--help] [--asan] [--arch arch] [--debug|--release]"
