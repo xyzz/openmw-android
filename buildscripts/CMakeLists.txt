@@ -48,8 +48,9 @@ set(OSG_MAINLINE_HASH SHA256=762c6601f32a761c7a0556766097558f453f23b983dd75bcf90
 set(OSG_FORK_VERSION ecedf3232c2f1b3b6a2f06f77ea37a9afb6a93f5)
 set(OSG_FORK_HASH SHA256=254f0ce0e236aa80700877ee8664430c1f491be78ea1118bcd53178260edb4b5)
 
-# https://github.com/xyzz/openmw/tree/android
-set(OPENMW_TAG android)
+# https://github.com/OpenMW/openmw/commits/master
+set(OPENMW_VERSION f18f2d39e55bb759154dd3b68213c2f6b05aea6b)
+set(OPENMW_HASH SHA256=1761f252fb172ba7ed83d0eb6ff75d988f452dff5a037f699a8df9587c6d33f5)
 
 # End of configurable options
 
@@ -428,11 +429,19 @@ set(OPENMW_COMMON
 	-DMyGUI_LIBRARY=${prefix}/lib/libMyGUIEngineStatic.a
 )
 
+set(OPENMW_PATCH
+	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw-revert-ui-dimensions.patch &&
+		patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw-add-simpler-collisions-option.patch
+)
+
 ExternalProject_Add(openmw_osg_mainline
 	DEPENDS boost openal osg_mainline mygui ffmpeg sdl2 bullet
 
-	GIT_REPOSITORY https://github.com/xyzz/openmw.git
-	GIT_TAG ${OPENMW_TAG}
+	URL https://github.com/OpenMW/openmw/archive/${OPENMW_VERSION}.tar.gz
+	URL_HASH ${OPENMW_HASH}
+	DOWNLOAD_DIR ${download_dir}
+
+	PATCH_COMMAND ${OPENMW_PATCH}
 
 	CONFIGURE_COMMAND ${wrapper_command} cmake <SOURCE_DIR>
 	${COMMON_CMAKE_ARGS}
@@ -455,8 +464,11 @@ ExternalProject_Add(openmw_osg_mainline
 ExternalProject_Add(openmw_osg_fork
 	DEPENDS boost openal osg_fork mygui ffmpeg sdl2 bullet
 
-	GIT_REPOSITORY https://github.com/xyzz/openmw.git
-	GIT_TAG ${OPENMW_TAG}
+	URL https://github.com/OpenMW/openmw/archive/${OPENMW_VERSION}.tar.gz
+	URL_HASH ${OPENMW_HASH}
+	DOWNLOAD_DIR ${download_dir}
+
+	PATCH_COMMAND ${OPENMW_PATCH}
 
 	CONFIGURE_COMMAND ${wrapper_command} cmake <SOURCE_DIR>
 	${COMMON_CMAKE_ARGS}
