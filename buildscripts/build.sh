@@ -181,8 +181,6 @@ cp prefix/$ARCH/lib/{libopenal,libSDL2,libGL}.so ../app/src/main/jniLibs/$ABI/
 # copy over libc++_shared
 find ./toolchain/$ARCH/ -iname "libc++_shared.so" -exec cp "{}" ../app/src/main/jniLibs/$ABI/ \;
 
-$NDK_TRIPLET-strip ../app/src/main/jniLibs/$ABI/*.so
-
 if [[ $ARCH = "arm" ]]; then
 	echo "==> Deploying resources"
 
@@ -216,6 +214,7 @@ cp "./build/$ARCH/sdl2-prefix/src/sdl2-build/obj/local/$ABI/libSDL2.so" "./build
 cp "./build/$ARCH/openmw_osg_mainline-prefix/src/openmw_osg_mainline-build/libopenmw.so" "./build/$ARCH/symbols/libopenmw_osg_mainline.so"
 cp "./build/$ARCH/openmw_osg_fork-prefix/src/openmw_osg_fork-build/libopenmw.so" "./build/$ARCH/symbols/libopenmw_osg_fork.so"
 cp "./build/$ARCH/gl4es-prefix/src/gl4es-build/obj/local/$ABI/libGL.so" "./build/$ARCH/symbols/"
+cp "../app/src/main/jniLibs/$ABI/libc++_shared.so" "./build/$ARCH/symbols/"
 
 if [ $ASAN = true ]; then
 	cp ./toolchain/$ARCH/lib64/clang/*/lib/linux/libclang_rt.asan-$ASAN_ARCH-android.so "./build/$ARCH/symbols/"
@@ -225,8 +224,9 @@ if [ $ASAN = true ]; then
 	chmod +x "../app/wrap/res/lib/$ABI/wrap.sh"
 fi
 
-if [[ $ARCH = "arm" ]]; then
-	PATH="$DIR/toolchain/ndk/prebuilt/linux-x86_64/bin/:$DIR/toolchain/$ARCH/$NDK_TRIPLET/bin/:$PATH" ./include/gdb-add-index ./build/$ARCH/symbols/*.so
-fi
+PATH="$DIR/toolchain/ndk/prebuilt/linux-x86_64/bin/:$DIR/toolchain/$ARCH/$NDK_TRIPLET/bin/:$PATH" ./include/gdb-add-index ./build/$ARCH/symbols/*.so
+
+# gradle should do it, but just in case...
+$NDK_TRIPLET-strip ../app/src/main/jniLibs/$ABI/*.so
 
 echo "==> Success"
