@@ -26,7 +26,7 @@ Alternatively, if you do not have Android Studio installed or would rather not u
 
 ### Debugging native code
 
-You can debug native code with `ndk-gdb`. To use it, once you've built both libraries and the apk and installed the apk, `cd` to `app/src/main` and run `./gdb.sh`.
+You can debug native code with `ndk-gdb`. To use it, once you've built both libraries and the apk and installed the apk, run the application and let it stay on the main menu. Then `cd` to `app/src/main` and run `./gdb.sh [arch]`. The `arch` variable has to match the library your device will be using (one of `arm`, `arm64`, `x86_64`, `x86`; `arm` is the default).
 
 This also automatically enables gdb to use unstripped libraries, so you get proper symbols, source code references, etc.
 
