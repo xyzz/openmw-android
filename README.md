@@ -30,6 +30,27 @@ You can debug native code with `ndk-gdb`. To use it, once you've built both libr
 
 This also automatically enables gdb to use unstripped libraries, so you get proper symbols, source code references, etc.
 
+### Running Address Sanitizer
+
+To compile everything with ASAN:
+
+```
+# Clean previous build
+./clean.sh
+# Build with ASAN enabled & debug symbols
+./build.sh --ccache --asan --debug
+# Or: ./build.sh --ccache --asan --debug --arch arm64
+```
+
+Then open Android Studio and compile and install the project.
+
+To get symbolized output:
+
+```
+adb logcat | ./tool/asan_symbolize.py --demangle -s ./build/arm/symbols/
+# Or: adb logcat | ./tool/asan_symbolize.py --demangle -s ./build/arm64/symbols/
+```
+
 ## Credits
 
 Original Java code written by sandstranger. Build scripts originally written by sandstranger and bwhaines.

@@ -65,7 +65,7 @@ while [[ $# -gt 0 ]]; do
 	esac
 done
 
-if [[ $ASAN = true && $ARCH != "arm" ]]; then
+if [[ $ASAN = true && $ARCH != "arm" && $ARCH != "arm64" ]]; then
 	echo "AddressSanitizer is only supported on arm and aarch64 architectures"
 	exit 1
 fi
@@ -73,9 +73,9 @@ fi
 source ./include/version.sh
 
 if [ $ASAN = true ]; then
-	CFLAGS="$CFLAGS -fsanitize=address"
-	CXXFLAGS="$CXXFLAGS -fsanitize=address"
-	LDFLAGS="$LDFLAGS -fsanitize=address"
+	CFLAGS="$CFLAGS -fsanitize=address -fno-omit-frame-pointer"
+	CXXFLAGS="$CXXFLAGS -fsanitize=address -fno-omit-frame-pointer"
+	LDFLAGS="$LDFLAGS -fsanitize=address -fno-omit-frame-pointer"
 fi
 
 if [ $BUILD_TYPE = "release" ]; then
@@ -167,6 +167,7 @@ popd
 
 echo "==> Installing shared libraries"
 
+rm -rf ../app/wrap/
 rm -rf ../app/src/main/jniLibs/$ABI/
 mkdir -p ../app/src/main/jniLibs/$ABI/
 
@@ -217,7 +218,11 @@ cp "./build/$ARCH/openmw_osg_fork-prefix/src/openmw_osg_fork-build/libopenmw.so"
 cp "./build/$ARCH/gl4es-prefix/src/gl4es-build/obj/local/$ABI/libGL.so" "./build/$ARCH/symbols/"
 
 if [ $ASAN = true ]; then
-	cp "./toolchain/arm/lib64/clang/5.0/lib/linux/libclang_rt.asan-arm-android.so" "./build/$ARCH/symbols/"
+	cp ./toolchain/$ARCH/lib64/clang/*/lib/linux/libclang_rt.asan-$ASAN_ARCH-android.so "./build/$ARCH/symbols/"
+	cp ./toolchain/$ARCH/lib64/clang/*/lib/linux/libclang_rt.asan-$ASAN_ARCH-android.so "../app/src/main/jniLibs/$ABI/"
+	mkdir -p ../app/wrap/res/lib/$ABI/
+	cp "include/asan-wrapper-$ASAN_ARCH.sh" "../app/wrap/res/lib/$ABI/wrap.sh"
+	chmod +x "../app/wrap/res/lib/$ABI/wrap.sh"
 fi
 
 if [[ $ARCH = "arm" ]]; then

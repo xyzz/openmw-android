@@ -17,6 +17,7 @@ append() {
 }
 
 rm -rf ../app/src/main/jniLibs/
+rm -rf ../app/wrap/
 
 echo "==> Build on $1 using $2 as the key..."
 

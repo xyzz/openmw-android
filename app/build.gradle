@@ -4,6 +4,17 @@ apply plugin: 'kotlin-android'
 android {
     compileSdkVersion 27
 
+    sourceSets {
+        main {
+            resources {
+                srcDir {
+                    // To include the wrap.sh script required by ASAN
+                    "wrap/res"
+                }
+            }
+        }
+    }
+
     defaultConfig {
         applicationId "com.libopenmw.openmw"
         minSdkVersion 21
