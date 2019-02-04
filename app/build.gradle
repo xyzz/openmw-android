@@ -5,6 +5,17 @@ android {
     compileSdkVersion 27
     buildToolsVersion "27.0.3"
 
+    sourceSets {
+        main {
+            resources {
+                srcDir {
+                    // To include the wrap.sh script required by ASAN
+                    "wrap/res"
+                }
+            }
+        }
+    }
+
     defaultConfig {
         applicationId "com.libopenmw.openmw"
         minSdkVersion 21

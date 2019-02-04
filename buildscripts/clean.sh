@@ -5,6 +5,7 @@ cd "$(dirname ${BASH_SOURCE[0]})"
 
 # Always clean old jniLibs
 rm -rf ../app/src/main/jniLibs/
+rm -rf ../app/wrap/
 
 # Clean a single thing
 if [[ $1 == "--build" ]]; then

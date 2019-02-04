@@ -1,0 +1,44 @@
+diff --git a/apps/openmw/mwphysics/actor.cpp b/apps/openmw/mwphysics/actor.cpp
+index b55c20455a..abe1a95d0d 100644
+--- a/apps/openmw/mwphysics/actor.cpp
++++ b/apps/openmw/mwphysics/actor.cpp
+@@ -7,6 +7,7 @@
+ #include <components/sceneutil/positionattitudetransform.hpp>
+ #include <components/resource/bulletshape.hpp>
+ #include <components/debug/debuglog.hpp>
++#include <components/settings/settings.hpp>
+ 
+ #include "../mwworld/class.hpp"
+ 
+@@ -24,6 +25,8 @@ Actor::Actor(const MWWorld::Ptr& ptr, osg::ref_ptr<const Resource::BulletShape>
+   , mExternalCollisionMode(true)
+   , mCollisionWorld(world)
+ {
++    static bool allowCapsuleShape = Settings::Manager::getBool("allow capsule shape", "Game");
++
+     mPtr = ptr;
+ 
+     mHalfExtents = shape->mCollisionBoxHalfExtents;
+@@ -55,7 +58,7 @@ Actor::Actor(const MWWorld::Ptr& ptr, osg::ref_ptr<const Resource::BulletShape>
+     }
+ 
+     // Use capsule shape only if base is square (nonuniform scaling apparently doesn't work on it)
+-    if (std::abs(mHalfExtents.x()-mHalfExtents.y())<mHalfExtents.x()*0.05 && mHalfExtents.z() >= mHalfExtents.x())
++    if (allowCapsuleShape && std::abs(mHalfExtents.x()-mHalfExtents.y())<mHalfExtents.x()*0.05 && mHalfExtents.z() >= mHalfExtents.x())
+     {
+         mShape.reset(new btCapsuleShapeZ(mHalfExtents.x(), 2*mHalfExtents.z() - 2*mHalfExtents.x()));
+         mRotationallyInvariant = true;
+diff --git a/files/settings-default.cfg b/files/settings-default.cfg
+index 6c2505f4e0..2d6d0d99e3 100644
+--- a/files/settings-default.cfg
++++ b/files/settings-default.cfg
+@@ -242,6 +242,9 @@ strength influences hand to hand = 0
+ # Render holstered weapons (with quivers and scabbards), requires modded assets
+ weapon sheathing = false
+ 
++# Let the game use more complex and slower bounding capsule for actors. Disabling forces a simple bounding box.
++allow capsule shape = true
++
+ [General]
+ 
+ # Anisotropy reduces distortion in textures at low angles (e.g. 0 to 16).

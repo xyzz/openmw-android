@@ -271,6 +271,8 @@ public class MainActivity extends AppCompatActivity {
 
                 file.Writer.write(prefs.getString("pref_allowCapsuleShape", "true"), SETTINGS_CFG, "allow capsule shape");
 
+                file.Writer.write(prefs.getString("pref_preload", "false"), SETTINGS_CFG, "preload enabled");
+
                 runOnUiThread(() -> {
                     dialog.hide();
                     runGame();

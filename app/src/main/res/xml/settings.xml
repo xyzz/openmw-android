@@ -70,6 +70,16 @@
         />
 
         <ListPreference
+            android:key="pref_osg"
+            android:title="@string/pref_osg"
+            android:dialogTitle="@string/pref_osg"
+            android:entries="@array/pref_osg_entries"
+            android:entryValues="@array/pref_osg_values"
+            android:defaultValue="@string/pref_osg_default"
+            android:summary="%s"
+            />
+
+        <ListPreference
             android:key="pref_physicsFPS"
             android:title="@string/pref_physicsFPS"
             android:dialogTitle="@string/pref_physicsFPS"
@@ -86,6 +96,16 @@
             android:entries="@array/pref_allowCapsuleShape_entries"
             android:entryValues="@array/pref_allowCapsuleShape_values"
             android:defaultValue="@string/pref_allowCapsuleShape_default"
+            android:summary="%s"
+            />
+
+        <ListPreference
+            android:key="pref_preload"
+            android:title="@string/pref_preload"
+            android:dialogTitle="@string/pref_preload"
+            android:entries="@array/pref_preload_entries"
+            android:entryValues="@array/pref_preload_values"
+            android:defaultValue="@string/pref_preload_default"
             android:summary="%s"
             />
 

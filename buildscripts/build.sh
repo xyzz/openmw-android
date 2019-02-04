@@ -11,7 +11,7 @@ LTO="false"
 BUILD_TYPE="release"
 CFLAGS="-fPIC"
 CXXFLAGS="-fPIC -frtti -fexceptions"
-LDFLAGS="-Wl,--exclude-libs,libgcc.a -Wl,--exclude-libs,libatomic.a -Wl,--exclude-libs,libunwind.a"
+LDFLAGS="-Wl,--exclude-libs,libgcc.a -Wl,--exclude-libs,libatomic.a -Wl,--exclude-libs,libunwind.a -nostdlib++"
 
 usage() {
 	echo "Usage: ./build.sh [--help] [--asan] [--arch arch] [--debug|--release]"
@@ -65,7 +65,7 @@ while [[ $# -gt 0 ]]; do
 	esac
 done
 
-if [[ $ASAN = true && $ARCH != "arm" ]]; then
+if [[ $ASAN = true && $ARCH != "arm" && $ARCH != "arm64" ]]; then
 	echo "AddressSanitizer is only supported on arm and aarch64 architectures"
 	exit 1
 fi
@@ -73,9 +73,9 @@ fi
 source ./include/version.sh
 
 if [ $ASAN = true ]; then
-	CFLAGS="$CFLAGS -fsanitize=address"
-	CXXFLAGS="$CXXFLAGS -fsanitize=address"
-	LDFLAGS="$LDFLAGS -fsanitize=address"
+	CFLAGS="$CFLAGS -fsanitize=address -fno-omit-frame-pointer"
+	CXXFLAGS="$CXXFLAGS -fsanitize=address -fno-omit-frame-pointer"
+	LDFLAGS="$LDFLAGS -fsanitize=address -fno-omit-frame-pointer"
 fi
 
 if [ $BUILD_TYPE = "release" ]; then
@@ -97,9 +97,6 @@ if [[ $ARCH = "arm" ]]; then
 	CFLAGS="$CFLAGS -mthumb"
 	CXXFLAGS="$CXXFLAGS -mthumb"
 fi
-
-# https://github.com/android-ndk/ndk/issues/105 to be fixed in r17
-LDFLAGS="$LDFLAGS -stdlib=libc++ -L$DIR/toolchain/ndk/sources/cxx-stl/llvm-libc++/libs/$ABI/"
 
 echo ""
 echo "================================================================================"
@@ -132,6 +129,9 @@ mkdir -p prefix/$ARCH/
 # symlink lib64 -> lib so we don't get half the libs in one directory half in another
 mkdir -p prefix/$ARCH/lib
 ln -sf lib prefix/$ARCH/lib64
+mkdir -p prefix/$ARCH/osg_{fork,mainline}/lib
+ln -sf lib prefix/$ARCH/osg_fork/lib64
+ln -sf lib prefix/$ARCH/osg_mainline/lib64
 
 # generate command_wrapper.sh
 cat include/command_wrapper_head.sh.in | \
@@ -167,11 +167,13 @@ popd
 
 echo "==> Installing shared libraries"
 
+rm -rf ../app/wrap/
 rm -rf ../app/src/main/jniLibs/$ABI/
 mkdir -p ../app/src/main/jniLibs/$ABI/
 
 # libopenmw.so is a special case
-find build/$ARCH/ -iname "libopenmw.so" -exec cp "{}" ../app/src/main/jniLibs/$ABI/ \;
+find build/$ARCH/openmw_osg_mainline-prefix/ -iname "libopenmw.so" -exec cp "{}" ../app/src/main/jniLibs/$ABI/libopenmw_osg_mainline.so \;
+find build/$ARCH/openmw_osg_fork-prefix/ -iname "libopenmw.so" -exec cp "{}" ../app/src/main/jniLibs/$ABI/libopenmw_osg_fork.so \;
 
 # copy over libs we compiled
 cp prefix/$ARCH/lib/{libopenal,libSDL2,libGL}.so ../app/src/main/jniLibs/$ABI/
@@ -179,13 +181,11 @@ cp prefix/$ARCH/lib/{libopenal,libSDL2,libGL}.so ../app/src/main/jniLibs/$ABI/
 # copy over libc++_shared
 find ./toolchain/$ARCH/ -iname "libc++_shared.so" -exec cp "{}" ../app/src/main/jniLibs/$ABI/ \;
 
-$NDK_TRIPLET-strip ../app/src/main/jniLibs/$ABI/*.so
-
 if [[ $ARCH = "arm" ]]; then
 	echo "==> Deploying resources"
 
 	DST=$DIR/../app/src/main/assets/libopenmw/
-	SRC=build/$ARCH/openmw-prefix/src/openmw-build/
+	SRC=build/$ARCH/openmw_osg_mainline-prefix/src/openmw_osg_mainline-build/
 
 	rm -rf "$DST" && mkdir -p "$DST"
 
@@ -211,17 +211,22 @@ echo "==> Making your debugging life easier"
 rm -rf "./build/$ARCH/symbols" && mkdir -p "./build/$ARCH/symbols"
 cp "./build/$ARCH/openal-prefix/src/openal-build/libopenal.so" "./build/$ARCH/symbols/"
 cp "./build/$ARCH/sdl2-prefix/src/sdl2-build/obj/local/$ABI/libSDL2.so" "./build/$ARCH/symbols/"
-cp "./build/$ARCH/openmw-prefix/src/openmw-build/libopenmw.so" "./build/$ARCH/symbols/"
+cp "./build/$ARCH/openmw_osg_mainline-prefix/src/openmw_osg_mainline-build/libopenmw.so" "./build/$ARCH/symbols/libopenmw_osg_mainline.so"
+cp "./build/$ARCH/openmw_osg_fork-prefix/src/openmw_osg_fork-build/libopenmw.so" "./build/$ARCH/symbols/libopenmw_osg_fork.so"
 cp "./build/$ARCH/gl4es-prefix/src/gl4es-build/obj/local/$ABI/libGL.so" "./build/$ARCH/symbols/"
+cp "../app/src/main/jniLibs/$ABI/libc++_shared.so" "./build/$ARCH/symbols/"
 
 if [ $ASAN = true ]; then
-	cp "./toolchain/arm/lib64/clang/5.0/lib/linux/libclang_rt.asan-arm-android.so" "./build/$ARCH/symbols/"
+	cp ./toolchain/$ARCH/lib64/clang/*/lib/linux/libclang_rt.asan-$ASAN_ARCH-android.so "./build/$ARCH/symbols/"
+	cp ./toolchain/$ARCH/lib64/clang/*/lib/linux/libclang_rt.asan-$ASAN_ARCH-android.so "../app/src/main/jniLibs/$ABI/"
+	mkdir -p ../app/wrap/res/lib/$ABI/
+	sed "s/@ASAN_ARCH@/$ASAN_ARCH/g" < include/asan-wrapper.sh > "../app/wrap/res/lib/$ABI/wrap.sh"
+	chmod +x "../app/wrap/res/lib/$ABI/wrap.sh"
 fi
 
-if [[ $ARCH = "arm" ]]; then
-	for file in ./build/$ARCH/symbols/*.so; do
-		PATH="$DIR/toolchain/ndk/prebuilt/linux-x86_64/bin/:$DIR/toolchain/$ARCH/$NDK_TRIPLET/bin/:$PATH" ./include/gdb-add-index $file
-	done
-fi
+PATH="$DIR/toolchain/ndk/prebuilt/linux-x86_64/bin/:$DIR/toolchain/$ARCH/$NDK_TRIPLET/bin/:$PATH" ./include/gdb-add-index ./build/$ARCH/symbols/*.so
+
+# gradle should do it, but just in case...
+$NDK_TRIPLET-strip ../app/src/main/jniLibs/$ABI/*.so
 
 echo "==> Success"

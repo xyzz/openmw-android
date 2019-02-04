@@ -45,6 +45,10 @@ public class GameActivity extends SDLActivity {
     private MouseCursor cursor;
     private SharedPreferences prefs;
 
+    String getOpenmwLibName() {
+        return "openmw_osg_" + prefs.getString("pref_osg", "");
+    }
+
     @Override
     public void loadLibraries() {
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -73,11 +77,11 @@ public class GameActivity extends SDLActivity {
             }
         }
         System.loadLibrary("GL");
-        System.loadLibrary("openmw");
+        System.loadLibrary(getOpenmwLibName());
     }
 
     protected String getMainSharedObject() {
-        return "libopenmw.so";
+        return "lib" + getOpenmwLibName() + ".so";
     }
 
     public RelativeLayout getLayout() {

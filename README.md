@@ -26,9 +26,30 @@ Alternatively, if you do not have Android Studio installed or would rather not u
 
 ### Debugging native code
 
-You can debug native code with `ndk-gdb`. To use it, once you've built both libraries and the apk and installed the apk, `cd` to `app/src/main` and run `./gdb.sh`.
+You can debug native code with `ndk-gdb`. To use it, once you've built both libraries and the apk and installed the apk, run the application and let it stay on the main menu. Then `cd` to `app/src/main` and run `./gdb.sh [arch]`. The `arch` variable has to match the library your device will be using (one of `arm`, `arm64`, `x86_64`, `x86`; `arm` is the default).
 
 This also automatically enables gdb to use unstripped libraries, so you get proper symbols, source code references, etc.
+
+### Running Address Sanitizer
+
+To compile everything with ASAN:
+
+```
+# Clean previous build
+./clean.sh
+# Build with ASAN enabled & debug symbols
+./build.sh --ccache --asan --debug
+# Or: ./build.sh --ccache --asan --debug --arch arm64
+```
+
+Then open Android Studio and compile and install the project.
+
+To get symbolized output:
+
+```
+adb logcat | ./tool/asan_symbolize.py --demangle -s ./build/arm/symbols/
+# Or: adb logcat | ./tool/asan_symbolize.py --demangle -s ./build/arm64/symbols/
+```
 
 ## Credits
 

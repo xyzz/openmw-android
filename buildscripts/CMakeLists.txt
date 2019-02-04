@@ -5,24 +5,24 @@ set(LIBJPEG_TURBO_VERSION 1.5.3)
 set(LIBJPEG_TURBO_HASH SHA256=b24890e2bb46e12e72a79f7e965f409f4e16466d00e1dd15d93d73ee6b592523)
 
 # http://www.libpng.org/pub/png/libpng.html
-set(LIBPNG_VERSION 1.6.34)
-set(LIBPNG_HASH SHA256=2f1e960d92ce3b3abd03d06dfec9637dfbd22febf107a536b44f7a47c60659f6)
+set(LIBPNG_VERSION 1.6.36)
+set(LIBPNG_HASH SHA256=eceb924c1fa6b79172fdfd008d335f0e59172a86a66481e09d4089df872aa319)
 
 # https://www.freetype.org/index.html#news
-set(FREETYPE2_VERSION 2.9)
-set(FREETYPE2_HASH SHA256=bf380e4d7c4f3b5b1c1a7b2bf3abb967bda5e9ab480d0df656e0e08c5019c5e6)
+set(FREETYPE2_VERSION 2.9.1)
+set(FREETYPE2_HASH SHA256=ec391504e55498adceb30baceebd147a6e963f636eb617424bcfc47a169898ce)
 
 # http://kcat.strangesoft.net/openal.html
-set(OPENAL_VERSION 1.18.2)
-set(OPENAL_HASH SHA256=9f8ac1e27fba15a59758a13f0c7f6540a0605b6c3a691def9d420570506d7e82)
+set(OPENAL_VERSION 1.19.1)
+set(OPENAL_HASH SHA256=5c2f87ff5188b95e0dc4769719a9d89ce435b8322b4478b95dd4b427fe84b2e9)
 
 # http://www.boost.org/users/download/
-set(BOOST_VERSION 1.67.0)
-set(BOOST_HASH SHA256=2684c972994ee57fc5632e03bf044746f6eb45d4920c343937a465fd67a5adba)
+set(BOOST_VERSION 1.69.0)
+set(BOOST_HASH SHA256=8f32d4617390d1c2d16f26a27ab60d97807b35440d45891fa340fc2648b04406)
 
 # https://www.ffmpeg.org/download.html
-set(FFMPEG_VERSION 4.0)
-set(FFMPEG_HASH SHA256=318a39d906c9107d49766c63787798dd078d2a36e6670a9dfeda3c55be4573b8)
+set(FFMPEG_VERSION 4.1)
+set(FFMPEG_HASH SHA256=b684fb43244a5c4caae652af9022ed5d85ce15210835bce054a33fb26033a1a5)
 
 # https://www.libsdl.org/download-2.0.php
 set(SDL2_VERSION 2.0.8)
@@ -37,15 +37,20 @@ set(MYGUI_VERSION 3.2.2)
 set(MYGUI_HASH SHA256=0a28d7ec8a47993cb68deb48b36331e28f12dd92580b709eaef21d599b67a78f)
 
 # https://github.com/ptitSeb/gl4es
-set(GL4ES_VERSION 509d3843b2fe273eec85a8242a7ddab62be8bad0)
-set(GL4ES_HASH SHA256=8f928c965818da1d6bc5d11541548e0864eb05574d79b3e3f36df3b4f1f1f199)
+set(GL4ES_VERSION 0f0e118c3f8c28282857b7ef507c3b209f7f6317)
+set(GL4ES_HASH SHA256=98e3cddaccd2eea24eedea9238f318139b2fabb4939ab3ca401f1bd27221f312)
 
 # https://github.com/openscenegraph/OpenSceneGraph/releases
-set(OSG_VERSION 3.6.0)
-set(OSG_HASH SHA256=6f57134ea74a39f1c7b24c285e6278cf906c47f6c681573b86d12173a466efed)
+set(OSG_MAINLINE_VERSION 3.6.2)
+set(OSG_MAINLINE_HASH SHA256=762c6601f32a761c7a0556766097558f453f23b983dd75bcf90f922e2d077a34)
 
-# https://github.com/xyzz/openmw/tree/android
-set(OPENMW_TAG android)
+# https://github.com/OpenMW/osg/commits/master
+set(OSG_FORK_VERSION ecedf3232c2f1b3b6a2f06f77ea37a9afb6a93f5)
+set(OSG_FORK_HASH SHA256=254f0ce0e236aa80700877ee8664430c1f491be78ea1118bcd53178260edb4b5)
+
+# https://github.com/OpenMW/openmw/commits/master
+set(OPENMW_VERSION 8834ee95bea9d04fad3a786ada6eb9a3f0d8a16b)
+set(OPENMW_HASH SHA256=418b82c6c8011e9d56a760ed19a1b96cf774ff00b640ab105342e07a2b94b3a4)
 
 # End of configurable options
 
@@ -60,12 +65,11 @@ set(prefix ${CMAKE_INSTALL_PREFIX})
 set(host ${ndk_triplet})
 set(android_platform android-${ANDROID_API})
 set(app_abi ${ABI})
-set(osg_plugins_dir ${prefix}/lib/osgPlugins-${OSG_VERSION})
+set(osg_mainline_plugins_dir ${prefix}/osg_mainline/lib/osgPlugins-${OSG_MAINLINE_VERSION})
+set(osg_fork_plugins_dir ${prefix}/osg_fork/lib/osgPlugins-3.7.0)
 
-set(COMMON_CMAKE_ARGS
+set(COMMON_CMAKE_ARGS_NO_PREFIX
 	-DCMAKE_TOOLCHAIN_FILE=${CMAKE_SOURCE_DIR}/toolchain/ndk/build/cmake/android.toolchain.cmake
-	-DCMAKE_INSTALL_PREFIX=${prefix}
-	-DCMAKE_FIND_ROOT_PATH=${prefix}
 	-DANDROID_ABI=${app_abi}
 	-DANDROID_PLATFORM=${android_platform}
 	-DANDROID_STL=c++_shared
@@ -73,6 +77,12 @@ set(COMMON_CMAKE_ARGS
 	-DCMAKE_C_FLAGS=-DMYGUI_DONT_REPLACE_NULLPTR\ -I${prefix}/include/\ $ENV{CFLAGS}
 	-DCMAKE_CXX_FLAGS=-DMYGUI_DONT_REPLACE_NULLPTR\ -I${prefix}/include/\ $ENV{CXXFLAGS}
 	-DCMAKE_SHARED_LINKER_FLAGS=$ENV{LDFLAGS}
+)
+
+set(COMMON_CMAKE_ARGS
+	${COMMON_CMAKE_ARGS_NO_PREFIX}
+	-DCMAKE_INSTALL_PREFIX=${prefix}
+	-DCMAKE_FIND_ROOT_PATH=${prefix}
 )
 
 set(COMMON_NDK_BUILD_FLAGS
@@ -163,6 +173,8 @@ ExternalProject_Add(openal
 	URL_HASH ${OPENAL_HASH}
 	DOWNLOAD_DIR ${download_dir}
 
+	PATCH_COMMAND patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openal-unset-compiler.patch
+
 	CONFIGURE_COMMAND ${wrapper_command} cmake <SOURCE_DIR>
 	${COMMON_CMAKE_ARGS}
 	-DALSOFT_EXAMPLES=OFF
@@ -183,8 +195,6 @@ ExternalProject_Add(boost
 	DOWNLOAD_DIR ${download_dir}
 
 	BUILD_IN_SOURCE 1
-
-	PATCH_COMMAND patch -d <SOURCE_DIR> -p2 -t -N < ${CMAKE_SOURCE_DIR}/patches/boost-fix13172.diff
 
 	CONFIGURE_COMMAND ${wrapper_command} <SOURCE_DIR>/bootstrap.sh
 	--prefix=${prefix}
@@ -330,15 +340,7 @@ ExternalProject_Add(mygui
 	INSTALL_COMMAND ${wrapper_command} $(MAKE) install
 )
 
-ExternalProject_Add(osg
-	DEPENDS libjpeg-turbo libpng gl4es
-
-	URL https://github.com/openscenegraph/OpenSceneGraph/archive/OpenSceneGraph-${OSG_VERSION}.tar.gz
-	URL_HASH ${OSG_HASH}
-	DOWNLOAD_DIR ${download_dir}
-
-	CONFIGURE_COMMAND ${wrapper_command} cmake <SOURCE_DIR>
-	${COMMON_CMAKE_ARGS}
+set(OSG_COMMON
 	-DOPENGL_PROFILE="GL1"
 	-DDYNAMIC_OPENTHREADS=OFF
 	-DDYNAMIC_OPENSCENEGRAPH=OFF
@@ -373,6 +375,19 @@ ExternalProject_Add(osg
 	-DBUILD_OSG_PLUGIN_JPEG=ON
 	-DBUILD_OSG_PLUGIN_PNG=ON
 	-DBUILD_OSG_DEPRECATED_SERIALIZERS=OFF
+)
+
+ExternalProject_Add(osg_mainline
+	DEPENDS libjpeg-turbo libpng gl4es
+
+	URL https://github.com/openscenegraph/OpenSceneGraph/archive/OpenSceneGraph-${OSG_MAINLINE_VERSION}.tar.gz
+	URL_HASH ${OSG_MAINLINE_HASH}
+	DOWNLOAD_DIR ${download_dir}
+
+	CONFIGURE_COMMAND ${wrapper_command} cmake <SOURCE_DIR>
+	${COMMON_CMAKE_ARGS_NO_PREFIX}
+	-DCMAKE_INSTALL_PREFIX=${prefix}/osg_mainline
+	${OSG_COMMON}
 
 	BUILD_COMMAND ${wrapper_command} $(MAKE)
 
@@ -380,14 +395,25 @@ ExternalProject_Add(osg
 	COMMAND $(MAKE) install
 )
 
-ExternalProject_Add(openmw
-	DEPENDS boost openal osg mygui ffmpeg sdl2 bullet
+ExternalProject_Add(osg_fork
+	DEPENDS libjpeg-turbo libpng gl4es
 
-	GIT_REPOSITORY https://github.com/xyzz/openmw.git
-	GIT_TAG ${OPENMW_TAG}
+	URL https://github.com/OpenMW/osg/archive/${OSG_FORK_VERSION}.tar.gz
+	URL_HASH ${OSG_FORK_HASH}
+	DOWNLOAD_DIR ${download_dir}
 
 	CONFIGURE_COMMAND ${wrapper_command} cmake <SOURCE_DIR>
-	${COMMON_CMAKE_ARGS}
+	${COMMON_CMAKE_ARGS_NO_PREFIX}
+	-DCMAKE_INSTALL_PREFIX=${prefix}/osg_fork
+	${OSG_COMMON}
+
+	BUILD_COMMAND ${wrapper_command} $(MAKE)
+
+	INSTALL_COMMAND mkdir -p <SOURCE_DIR>/3rdparty/build/libpng <SOURCE_DIR>/3rdparty/build/libjpeg
+	COMMAND $(MAKE) install
+)
+
+set(OPENMW_COMMON
 	-DBUILD_BSATOOL=0
 	-DBUILD_ESMTOOL=0
 	-DBUILD_LAUNCHER=0
@@ -399,16 +425,63 @@ ExternalProject_Add(openmw
 	-DOPENAL_INCLUDE_DIR=${prefix}/include/AL/
 	-DBullet_INCLUDE_DIR=${prefix}/include/bullet/
 	-DOPENGL_ES=OFF
-	-DOSG_PLUGINS_DIR=${osg_plugins_dir}
 	-DOSG_STATIC=TRUE
-	-DOSGDB_BMP_LIBRARY=${osg_plugins_dir}/libosgdb_bmp.a
-	-DOSGDB_DDS_LIBRARY=${osg_plugins_dir}/libosgdb_dds.a
-	-DOSGDB_JPEG_LIBRARY=${osg_plugins_dir}/libosgdb_jpeg.a
-	-DOSGDB_OSG_LIBRARY=${osg_plugins_dir}/libosgdb_osg.a
-	-DOSGDB_PNG_LIBRARY=${osg_plugins_dir}/libosgdb_png.a
-	-DOSGDB_TGA_LIBRARY=${osg_plugins_dir}/libosgdb_tga.a 
-	-DOSGDB_SERIALIZERS_OSG_LIBRARY=${osg_plugins_dir}/libosgdb_serializers_osg.a
 	-DMyGUI_LIBRARY=${prefix}/lib/libMyGUIEngineStatic.a
+)
+
+set(OPENMW_PATCH
+	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw-revert-ui-dimensions.patch &&
+		patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw-add-simpler-collisions-option.patch
+)
+
+ExternalProject_Add(openmw_osg_mainline
+	DEPENDS boost openal osg_mainline mygui ffmpeg sdl2 bullet
+
+	URL https://github.com/OpenMW/openmw/archive/${OPENMW_VERSION}.tar.gz
+	URL_HASH ${OPENMW_HASH}
+	DOWNLOAD_DIR ${download_dir}
+
+	PATCH_COMMAND ${OPENMW_PATCH}
+
+	CONFIGURE_COMMAND ${wrapper_command} cmake <SOURCE_DIR>
+	${COMMON_CMAKE_ARGS}
+	${OPENMW_COMMON}
+	-DOSG_PLUGINS_DIR=${osg_mainline_plugins_dir}
+	-DOSGDB_BMP_LIBRARY=${osg_mainline_plugins_dir}/libosgdb_bmp.a
+	-DOSGDB_DDS_LIBRARY=${osg_mainline_plugins_dir}/libosgdb_dds.a
+	-DOSGDB_JPEG_LIBRARY=${osg_mainline_plugins_dir}/libosgdb_jpeg.a
+	-DOSGDB_OSG_LIBRARY=${osg_mainline_plugins_dir}/libosgdb_osg.a
+	-DOSGDB_PNG_LIBRARY=${osg_mainline_plugins_dir}/libosgdb_png.a
+	-DOSGDB_TGA_LIBRARY=${osg_mainline_plugins_dir}/libosgdb_tga.a
+	-DOSGDB_SERIALIZERS_OSG_LIBRARY=${osg_mainline_plugins_dir}/libosgdb_serializers_osg.a
+	-DOPENMW_DEPENDENCIES_DIR=${prefix}/osg_mainline
+
+	BUILD_COMMAND $(MAKE)
+
+	INSTALL_COMMAND ""
+)
+
+ExternalProject_Add(openmw_osg_fork
+	DEPENDS boost openal osg_fork mygui ffmpeg sdl2 bullet
+
+	URL https://github.com/OpenMW/openmw/archive/${OPENMW_VERSION}.tar.gz
+	URL_HASH ${OPENMW_HASH}
+	DOWNLOAD_DIR ${download_dir}
+
+	PATCH_COMMAND ${OPENMW_PATCH}
+
+	CONFIGURE_COMMAND ${wrapper_command} cmake <SOURCE_DIR>
+	${COMMON_CMAKE_ARGS}
+	${OPENMW_COMMON}
+	-DOSG_PLUGINS_DIR=${osg_fork_plugins_dir}
+	-DOSGDB_BMP_LIBRARY=${osg_fork_plugins_dir}/libosgdb_bmp.a
+	-DOSGDB_DDS_LIBRARY=${osg_fork_plugins_dir}/libosgdb_dds.a
+	-DOSGDB_JPEG_LIBRARY=${osg_fork_plugins_dir}/libosgdb_jpeg.a
+	-DOSGDB_OSG_LIBRARY=${osg_fork_plugins_dir}/libosgdb_osg.a
+	-DOSGDB_PNG_LIBRARY=${osg_fork_plugins_dir}/libosgdb_png.a
+	-DOSGDB_TGA_LIBRARY=${osg_fork_plugins_dir}/libosgdb_tga.a
+	-DOSGDB_SERIALIZERS_OSG_LIBRARY=${osg_fork_plugins_dir}/libosgdb_serializers_osg.a
+	-DOPENMW_DEPENDENCIES_DIR=${prefix}/osg_fork
 
 	BUILD_COMMAND $(MAKE)
 
