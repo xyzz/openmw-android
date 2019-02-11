@@ -377,12 +377,22 @@ set(OSG_COMMON
 	-DBUILD_OSG_DEPRECATED_SERIALIZERS=OFF
 )
 
+set(OSG_PATCH
+	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/osg/0001-Replace-Atomic-impl-with-std-atomic.patch &&
+	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/osg/0002-BufferObject-make-numClients-atomic.patch &&
+	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/osg/0003-Array-make-possible-to-use-thread-safely-with-setTex.patch &&
+	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/osg/0004-IncrementalCompileOperation-wrap-some-stuff-in-atomi.patch &&
+	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/osg/0005-CullSettings-make-inheritanceMask-atomic-to-silence-.patch
+)
+
 ExternalProject_Add(osg_mainline
 	DEPENDS libjpeg-turbo libpng gl4es
 
 	URL https://github.com/openscenegraph/OpenSceneGraph/archive/OpenSceneGraph-${OSG_MAINLINE_VERSION}.tar.gz
 	URL_HASH ${OSG_MAINLINE_HASH}
 	DOWNLOAD_DIR ${download_dir}
+
+	PATCH_COMMAND ${OSG_PATCH}
 
 	CONFIGURE_COMMAND ${wrapper_command} cmake <SOURCE_DIR>
 	${COMMON_CMAKE_ARGS_NO_PREFIX}
@@ -431,7 +441,11 @@ set(OPENMW_COMMON
 
 set(OPENMW_PATCH
 	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw-revert-ui-dimensions.patch &&
-		patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw-add-simpler-collisions-option.patch
+	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw-add-simpler-collisions-option.patch &&
+	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/0001-loadingscreen-disable-for-now.patch &&
+	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/0002-scenemanager-disable-state-share-inc-compile.patch &&
+	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/0003-globalmap-fix-race-vs-savegame-load.patch &&
+	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/0004-getUVBuffer-pre-set-array-binding-to-avoid-thread-ra.patch
 )
 
 ExternalProject_Add(openmw_osg_mainline

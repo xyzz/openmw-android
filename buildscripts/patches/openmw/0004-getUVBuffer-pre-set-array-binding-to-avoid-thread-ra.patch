@@ -1,0 +1,24 @@
+From 8a071b2ef2fe6157d5f9a694f4fa4290ee874716 Mon Sep 17 00:00:00 2001
+From: Ilya Zhuravlev <whatever@xyz.is>
+Date: Sun, 10 Feb 2019 19:31:34 -0500
+Subject: [PATCH 4/4] getUVBuffer: pre-set array binding to avoid thread race
+
+---
+ components/terrain/buffercache.cpp | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/components/terrain/buffercache.cpp b/components/terrain/buffercache.cpp
+index 1734686de..ce5d2edd7 100644
+--- a/components/terrain/buffercache.cpp
++++ b/components/terrain/buffercache.cpp
+@@ -202,6 +202,7 @@ namespace Terrain
+ 
+         // Assign a VBO here to enable state sharing between different Geometries.
+         uvs->setVertexBufferObject(new osg::VertexBufferObject);
++        uvs->setBinding(osg::Array::BIND_PER_VERTEX);
+ 
+         mUvBufferMap[numVerts] = uvs;
+         return uvs;
+-- 
+2.19.2
+

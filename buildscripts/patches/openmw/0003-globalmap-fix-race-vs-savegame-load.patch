@@ -1,0 +1,25 @@
+From 864a22f03d6fb0440a07ebef25f4ab177f558eb2 Mon Sep 17 00:00:00 2001
+From: Ilya Zhuravlev <whatever@xyz.is>
+Date: Sun, 10 Feb 2019 19:16:45 -0500
+Subject: [PATCH 3/4] globalmap: fix race vs savegame load
+
+---
+ apps/openmw/mwrender/globalmap.cpp | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/apps/openmw/mwrender/globalmap.cpp b/apps/openmw/mwrender/globalmap.cpp
+index d1b6cd239..aacc6fc5a 100644
+--- a/apps/openmw/mwrender/globalmap.cpp
++++ b/apps/openmw/mwrender/globalmap.cpp
+@@ -267,6 +267,8 @@ namespace MWRender
+ 
+         mWorkItem = new CreateMapWorkItem(mWidth, mHeight, mMinX, mMinY, mMaxX, mMaxY, mCellSize, esmStore.get<ESM::Land>());
+         mWorkQueue->addWorkItem(mWorkItem);
++        // This kinda makes the whole multithreaded map stuff pointless, but it gets read of race between savegame loading and map render
++        mWorkItem->waitTillDone();
+     }
+ 
+     void GlobalMap::worldPosToImageSpace(float x, float z, float& imageX, float& imageY)
+-- 
+2.19.2
+

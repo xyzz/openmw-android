@@ -1,0 +1,25 @@
+From 80d183e9bbcd8dbb3bbd129b1551fff61da0bc01 Mon Sep 17 00:00:00 2001
+From: Ilya Zhuravlev <whatever@xyz.is>
+Date: Sun, 10 Feb 2019 19:11:34 -0500
+Subject: [PATCH 1/4] loadingscreen: disable for now
+
+---
+ apps/openmw/mwgui/loadingscreen.cpp | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/apps/openmw/mwgui/loadingscreen.cpp b/apps/openmw/mwgui/loadingscreen.cpp
+index a9480f261..091ed7c78 100644
+--- a/apps/openmw/mwgui/loadingscreen.cpp
++++ b/apps/openmw/mwgui/loadingscreen.cpp
+@@ -293,6 +293,8 @@ namespace MWGui
+ 
+     void LoadingScreen::setupCopyFramebufferToTextureCallback()
+     {
++        return;
++
+         // Copy the current framebuffer onto a texture and display that texture as the background image
+         // Note, we could also set the camera to disable clearing and have the background image transparent,
+         // but then we get shaking effects on buffer swaps.
+-- 
+2.19.2
+
