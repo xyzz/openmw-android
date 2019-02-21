@@ -223,6 +223,7 @@ ExternalProject_Add(boost
 	COMMAND ${host}-ranlib ${prefix}/lib/libboost_filesystem.a
 	COMMAND ${host}-ranlib ${prefix}/lib/libboost_program_options.a
 	COMMAND ${host}-ranlib ${prefix}/lib/libboost_system.a
+	COMMAND ${host}-ranlib ${prefix}/lib/libboost_iostreams.a
 )
 
 ExternalProject_Add(ffmpeg
