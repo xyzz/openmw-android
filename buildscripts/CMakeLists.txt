@@ -37,8 +37,8 @@ set(MYGUI_VERSION 3.2.2)
 set(MYGUI_HASH SHA256=0a28d7ec8a47993cb68deb48b36331e28f12dd92580b709eaef21d599b67a78f)
 
 # https://github.com/ptitSeb/gl4es
-set(GL4ES_VERSION d80c5efdd02de7a70745454b37c7b704c1f67a12)
-set(GL4ES_HASH SHA256=072746d9eb2943300d984c712b546b3ad51930d1d3f529bd11760ca0c49ce7ff)
+set(GL4ES_VERSION ec6642351553dbb1dc284bafc55fee39687781ee)
+set(GL4ES_HASH SHA256=63b76b5c032652cc3f4a29f53c7b73661f0748880b2fe529d7f2443362990585)
 
 # https://github.com/openscenegraph/OpenSceneGraph/releases
 set(OSG_MAINLINE_VERSION 3.6.2)
@@ -309,7 +309,6 @@ ExternalProject_Add(gl4es
 	DOWNLOAD_DIR ${download_dir}
 
 	PATCH_COMMAND patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/gl4es-build-shared.patch
-	COMMAND patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/gl4es-fix-build.patch
 
 	CONFIGURE_COMMAND ""
 
