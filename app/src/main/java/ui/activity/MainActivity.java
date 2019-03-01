@@ -23,9 +23,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.ndk.CrashlyticsNdk;
 import com.libopenmw.openmw.R;
 import com.melnykov.fab.FloatingActionButton;
 
+import io.fabric.sdk.android.Fabric;
 import java.io.File;
 import java.io.IOException;
 
@@ -66,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         GameState.setGameState(false);
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics(), new CrashlyticsNdk());
         PermissionHelper.getWriteExternalStoragePermission(MainActivity.this);
         isSettingsEnabled = true;
         setContentView(R.layout.main);
