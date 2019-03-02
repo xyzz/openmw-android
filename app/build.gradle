@@ -11,6 +11,14 @@ apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 apply plugin: 'kotlin-android'
 
+ext {
+    versionFile = new File(project.rootDir, 'app/src/main/assets/libopenmw/resources/version')
+    calculateVersion = {
+        stream = new FileInputStream(versionFile)
+        return stream.readLines()[0]
+    }
+}
+
 android {
     compileSdkVersion 27
 
@@ -29,6 +37,7 @@ android {
         applicationId "com.libopenmw.openmw"
         minSdkVersion 21
         targetSdkVersion 27
+        versionName calculateVersion()
     }
 
     lintOptions {
