@@ -29,6 +29,8 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ApplicationInfo;
 
+import ui.activity.MainActivity;
+
 /**
     SDL Activity
 */
@@ -207,8 +209,13 @@ public class SDLActivity extends Activity {
 
         // Set up the surface
         mSurface = new SDLSurface(getApplication());
+                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                params.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
+             mSurface.setLayoutParams(params);
 
         mLayout = new RelativeLayout(this);
+        mLayout.setBackgroundColor(Color.BLACK);
         mLayout.addView(mSurface);
 
         setContentView(mLayout);
@@ -758,6 +765,10 @@ public class SDLActivity extends Activity {
         return SDLActivity.mSurface.getNativeSurface();
     }
 
+    public static SurfaceView getSurface() {
+        return SDLActivity.mSurface;
+    }
+
     // Input
 
     /**
@@ -1120,9 +1131,18 @@ class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
     // Keep track of the surface size to normalize touch events
     protected static float mWidth, mHeight;
 
+    private int fixedWidth = 0;
+    private int fixedHeight = 0;
+
     // Startup
     public SDLSurface(Context context) {
         super(context);
+        fixedWidth = MainActivity.resolutionX;
+        fixedHeight = MainActivity.resolutionY;
+
+        if (fixedWidth > 0) {
+            getHolder().setFixedSize(fixedWidth, fixedHeight);
+        }
         getHolder().addCallback(this);
 
         setFocusable(true);
@@ -1141,6 +1161,28 @@ class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
         // Some arbitrary defaults to avoid a potential division by zero
         mWidth = 1.0f;
         mHeight = 1.0f;
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        int widthSize = MeasureSpec.getSize(widthMeasureSpec);
+        int heightSize = MeasureSpec.getSize(heightMeasureSpec);
+
+        if (fixedWidth > 0) {
+            float myAspect = 1.0f * fixedWidth / fixedHeight;
+            float resultWidth = widthSize;
+            float resultHeight = resultWidth / myAspect;
+            if (resultHeight > heightSize) {
+                resultHeight = heightSize;
+                resultWidth = resultHeight * myAspect;
+            }
+
+            mWidth = resultWidth;
+            mHeight = resultHeight;
+            setMeasuredDimension((int) resultWidth, (int) resultHeight);
+        } else {
+            setMeasuredDimension(widthSize, heightSize);
+        }
     }
 
     public void handlePause() {

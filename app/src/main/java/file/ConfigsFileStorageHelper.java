@@ -11,7 +11,6 @@ import com.libopenmw.openmw.BuildConfig;
 
 import constants.Constants;
 import file.utils.CopyFilesFromAssets;
-import ui.screen.ScreenResolutionHelper;
 
 /**
  * Created by sandstranger on 07.01.16.
@@ -87,9 +86,6 @@ public class ConfigsFileStorageHelper {
 
                     file.Writer.write("" + Settings.getFloat(Constants.CAMERA_MULTIPLISER, 2.0f), SETTINGS_CFG, Constants.CAMERA_MULTIPLISER);
                     file.Writer.write("" + Settings.getFloat(Constants.TOUCH_SENSITIVITY, 0.01f), SETTINGS_CFG, Constants.TOUCH_SENSITIVITY);
-
-                    ScreenResolutionHelper screenHelper = new ScreenResolutionHelper(activity);
-//                    screenHelper.writeScreenResolution(PreferenceManager.getDefaultSharedPreferences(activity).getString(Constants.RESOLUTION, "normalResolution"));
 
 
                 } catch (Exception e) {

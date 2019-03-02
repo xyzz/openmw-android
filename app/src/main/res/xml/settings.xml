@@ -56,6 +56,13 @@
             android:dialogTitle="@string/pref_touchpadSensitivity"
             android:inputType="numberDecimal"
             />
+
+        <EditTextPreference
+            android:key="pref_customResolution"
+            android:title="@string/pref_customResolution"
+            android:dialogTitle="@string/pref_customResolution"
+            android:hint="640x480"
+            />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/pref_advanced">

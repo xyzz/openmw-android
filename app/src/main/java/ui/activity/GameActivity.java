@@ -116,6 +116,7 @@ public class GameActivity extends SDLActivity {
             Osc osc = new Osc();
             osc.placeElements(layout);
             getWindow().getDecorView().setOnSystemUiVisibilityChangeListener(visibility -> osc.relayout());
+            layout.post(() -> osc.relayout());
         }
         cursor = new MouseCursor(this);
     }
