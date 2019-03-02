@@ -1,11 +1,11 @@
 diff --git a/apps/openmw/mwphysics/actor.cpp b/apps/openmw/mwphysics/actor.cpp
-index b55c20455a..abe1a95d0d 100644
+index 632d32c26..6b5c115d4 100644
 --- a/apps/openmw/mwphysics/actor.cpp
 +++ b/apps/openmw/mwphysics/actor.cpp
-@@ -7,6 +7,7 @@
- #include <components/sceneutil/positionattitudetransform.hpp>
+@@ -8,6 +8,7 @@
  #include <components/resource/bulletshape.hpp>
  #include <components/debug/debuglog.hpp>
+ #include <components/misc/convert.hpp>
 +#include <components/settings/settings.hpp>
  
  #include "../mwworld/class.hpp"
@@ -29,7 +29,7 @@ index b55c20455a..abe1a95d0d 100644
          mShape.reset(new btCapsuleShapeZ(mHalfExtents.x(), 2*mHalfExtents.z() - 2*mHalfExtents.x()));
          mRotationallyInvariant = true;
 diff --git a/files/settings-default.cfg b/files/settings-default.cfg
-index 6c2505f4e0..2d6d0d99e3 100644
+index db3d7e75b..3e08bbb0e 100644
 --- a/files/settings-default.cfg
 +++ b/files/settings-default.cfg
 @@ -242,6 +242,9 @@ strength influences hand to hand = 0
@@ -39,6 +39,6 @@ index 6c2505f4e0..2d6d0d99e3 100644
 +# Let the game use more complex and slower bounding capsule for actors. Disabling forces a simple bounding box.
 +allow capsule shape = true
 +
- [General]
+ # Allow non-standard ammunition solely to bypass normal weapon resistance or weakness
+ only appropriate ammunition bypasses resistance = false
  
- # Anisotropy reduces distortion in textures at low angles (e.g. 0 to 16).
