@@ -96,9 +96,8 @@ open class OscElement(
         val px: Float = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, size.toFloat(), v.context.resources.displayMetrics)
         val params = RelativeLayout.LayoutParams(px.toInt(), px.toInt())
 
-        // TODO: this doesn't take soft keys into account
-        val realScreenWidth = v.context.resources.displayMetrics.widthPixels
-        val realScreenHeight = v.context.resources.displayMetrics.heightPixels
+        val realScreenWidth = (v.parent as View).width
+        val realScreenHeight = (v.parent as View).height
         val realX = x * realScreenWidth / VIRTUAL_SCREEN_WIDTH
         val realY = y * realScreenHeight / VIRTUAL_SCREEN_HEIGHT
 
@@ -368,6 +367,12 @@ class Osc {
     fun resetElements(ctx: Context) {
         for (element in elements) {
             element.resetPrefs(ctx)
+        }
+    }
+
+    fun relayout() {
+        for (element in elements) {
+            element.updateView()
         }
     }
 

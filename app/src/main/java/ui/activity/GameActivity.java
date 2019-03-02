@@ -12,6 +12,7 @@ import android.system.Os;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -114,6 +115,7 @@ public class GameActivity extends SDLActivity {
             RelativeLayout layout = getLayout();
             Osc osc = new Osc();
             osc.placeElements(layout);
+            getWindow().getDecorView().setOnSystemUiVisibilityChangeListener(visibility -> osc.relayout());
         }
         cursor = new MouseCursor(this);
     }

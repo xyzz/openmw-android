@@ -114,5 +114,6 @@
         <item>false</item>
     </string-array>
     <string name="pref_preload_default">false</string>
+    <string name="btn_back">Back</string>
 
 </resources>
