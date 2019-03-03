@@ -29,8 +29,12 @@ import com.libopenmw.openmw.R;
 import com.melnykov.fab.FloatingActionButton;
 
 import io.fabric.sdk.android.Fabric;
+
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 import constants.Constants;
 import file.utils.CopyFilesFromAssets;
@@ -211,7 +215,28 @@ public class MainActivity extends AppCompatActivity {
         fileOrDirectory.delete();
     }
 
+    private void logConfig() {
+        try {
+            File openmwCfg = new File(OPENMW_CFG);
+            if (openmwCfg.exists()) {
+                BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(openmwCfg)));
+                String line;
+                Crashlytics.log("openmw.cfg");
+                Crashlytics.log("--------------------------------------------------------------------------------");
+                while ((line = reader.readLine()) != null) {
+                    // Don't log fallback lines, they are mostly useless
+                    if (!line.contains("fallback="))
+                        Crashlytics.log(line);
+                }
+                Crashlytics.log("--------------------------------------------------------------------------------");
+            }
+        } catch (Exception e) {
+            // not a big deal if we can't log the contents
+        }
+    }
+
     private void runGame() {
+        logConfig();
         Intent intent = new Intent(MainActivity.this,
                 GameActivity.class);
         finish();
