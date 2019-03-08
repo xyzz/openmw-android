@@ -11,7 +11,7 @@ script: ./CI/travis.sh
 android:
   components:
     - tools
-    - build-tools-26.0.2
+    - build-tools-27.0.3
     - platform-tools
     - tools
     - android-27
