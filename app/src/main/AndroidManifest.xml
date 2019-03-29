@@ -54,11 +54,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
-
-        <meta-data
-            android:name="io.fabric.ApiKey"
-            android:value="f88fafa8fb5677ac16dd43aaf73f988cd6095b06" />
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
