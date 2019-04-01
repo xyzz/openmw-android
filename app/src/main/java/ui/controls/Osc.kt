@@ -342,6 +342,8 @@ class Osc {
             element.loadPrefs(target.context)
         }
         osk.placeElements(target)
+
+        target.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ -> relayout() }
     }
 
     fun toggleKeyboard() {
@@ -362,6 +364,8 @@ class Osc {
             element.placeConfigurable(target, listener)
             element.loadPrefs(target.context)
         }
+
+        target.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ -> relayout() }
     }
 
     fun resetElements(ctx: Context) {
@@ -370,7 +374,7 @@ class Osc {
         }
     }
 
-    fun relayout() {
+    private fun relayout() {
         for (element in elements) {
             element.updateView()
         }

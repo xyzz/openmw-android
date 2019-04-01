@@ -66,10 +66,6 @@ class ConfigureControls : Activity() {
 
         val container: RelativeLayout = findViewById(R.id.controlsContainer)
         osc.placeConfigurableElements(container, cb)
-        window.decorView.setOnSystemUiVisibilityChangeListener {
-            osc.relayout()
-        }
-        container.post { osc.relayout() }
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
