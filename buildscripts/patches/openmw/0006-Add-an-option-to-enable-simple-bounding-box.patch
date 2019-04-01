@@ -1,5 +1,15 @@
+From 3b848d7c0a20dafa3625a3c0ba0f23de62a08a12 Mon Sep 17 00:00:00 2001
+From: Ilya Zhuravlev <whatever@xyz.is>
+Date: Mon, 1 Apr 2019 13:32:49 -0400
+Subject: [PATCH 6/8] Add an option to enable simple bounding box
+
+---
+ apps/openmw/mwphysics/actor.cpp | 5 ++++-
+ files/settings-default.cfg      | 3 +++
+ 2 files changed, 7 insertions(+), 1 deletion(-)
+
 diff --git a/apps/openmw/mwphysics/actor.cpp b/apps/openmw/mwphysics/actor.cpp
-index 632d32c26..6b5c115d4 100644
+index 0f8814aca..5bcf01508 100644
 --- a/apps/openmw/mwphysics/actor.cpp
 +++ b/apps/openmw/mwphysics/actor.cpp
 @@ -8,6 +8,7 @@
@@ -29,10 +39,10 @@ index 632d32c26..6b5c115d4 100644
          mShape.reset(new btCapsuleShapeZ(mHalfExtents.x(), 2*mHalfExtents.z() - 2*mHalfExtents.x()));
          mRotationallyInvariant = true;
 diff --git a/files/settings-default.cfg b/files/settings-default.cfg
-index db3d7e75b..3e08bbb0e 100644
+index 6e7f31b4f..9293b6117 100644
 --- a/files/settings-default.cfg
 +++ b/files/settings-default.cfg
-@@ -242,6 +242,9 @@ strength influences hand to hand = 0
+@@ -258,6 +258,9 @@ strength influences hand to hand = 0
  # Render holstered weapons (with quivers and scabbards), requires modded assets
  weapon sheathing = false
  
@@ -42,3 +52,6 @@ index db3d7e75b..3e08bbb0e 100644
  # Allow non-standard ammunition solely to bypass normal weapon resistance or weakness
  only appropriate ammunition bypasses resistance = false
  
+-- 
+2.19.2
+

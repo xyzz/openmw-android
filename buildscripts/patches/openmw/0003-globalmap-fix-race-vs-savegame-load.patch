@@ -1,14 +1,14 @@
-From 864a22f03d6fb0440a07ebef25f4ab177f558eb2 Mon Sep 17 00:00:00 2001
+From 31b2da5fa1bb9eace51beb53c053358965c52eaf Mon Sep 17 00:00:00 2001
 From: Ilya Zhuravlev <whatever@xyz.is>
 Date: Sun, 10 Feb 2019 19:16:45 -0500
-Subject: [PATCH 3/4] globalmap: fix race vs savegame load
+Subject: [PATCH 3/8] globalmap: fix race vs savegame load
 
 ---
  apps/openmw/mwrender/globalmap.cpp | 2 ++
  1 file changed, 2 insertions(+)
 
 diff --git a/apps/openmw/mwrender/globalmap.cpp b/apps/openmw/mwrender/globalmap.cpp
-index d1b6cd239..aacc6fc5a 100644
+index 57137d415..e4a7facc8 100644
 --- a/apps/openmw/mwrender/globalmap.cpp
 +++ b/apps/openmw/mwrender/globalmap.cpp
 @@ -267,6 +267,8 @@ namespace MWRender

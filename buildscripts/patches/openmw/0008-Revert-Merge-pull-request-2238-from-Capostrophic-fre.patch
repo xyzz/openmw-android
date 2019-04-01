@@ -1,0 +1,26 @@
+From 4f7acff35ec600280b083b5cc1edcea31e74222d Mon Sep 17 00:00:00 2001
+From: Ilya Zhuravlev <whatever@xyz.is>
+Date: Mon, 1 Apr 2019 14:01:14 -0400
+Subject: [PATCH 8/8] Revert "Merge pull request #2238 from
+ Capostrophic/freetype"
+
+This reverts commit 1f3813a2301edc17c132f07d360d8f00fe596c4d.
+---
+ CMakeLists.txt | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index bf489d99c..6aff462a8 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -262,7 +262,6 @@ include_directories(SYSTEM ${OPENSCENEGRAPH_INCLUDE_DIRS})
+ set(USED_OSG_PLUGINS
+                     osgdb_bmp
+                     osgdb_dds
+-                    osgdb_freetype
+                     osgdb_jpeg
+                     osgdb_osg
+                     osgdb_png
+-- 
+2.19.2
+

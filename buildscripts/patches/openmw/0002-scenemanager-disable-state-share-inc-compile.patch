@@ -1,17 +1,17 @@
-From f5c92393f41d6873ea34245207dd28466e6ebf13 Mon Sep 17 00:00:00 2001
+From 8c70bbf13ebe03ae333b6de67201e4d4c163017c Mon Sep 17 00:00:00 2001
 From: Ilya Zhuravlev <whatever@xyz.is>
 Date: Sun, 10 Feb 2019 19:12:00 -0500
-Subject: [PATCH 2/4] scenemanager: disable state share / inc compile
+Subject: [PATCH 2/8] scenemanager: disable state share / inc compile
 
 ---
  components/resource/scenemanager.cpp | 4 ++++
  1 file changed, 4 insertions(+)
 
 diff --git a/components/resource/scenemanager.cpp b/components/resource/scenemanager.cpp
-index 328a10cd1..ee68751a3 100644
+index 61a40ee4b..dda385c73 100644
 --- a/components/resource/scenemanager.cpp
 +++ b/components/resource/scenemanager.cpp
-@@ -526,9 +526,11 @@ namespace Resource
+@@ -515,9 +515,11 @@ namespace Resource
              // share state
              // do this before optimizing so the optimizer will be able to combine nodes more aggressively
              // note, because StateSets will be shared at this point, StateSets can not be modified inside the optimizer
@@ -23,17 +23,18 @@ index 328a10cd1..ee68751a3 100644
  
              if (canOptimize(normalized))
              {
-@@ -540,8 +542,10 @@ namespace Resource
+@@ -529,9 +531,11 @@ namespace Resource
                  optimizer.optimize(loaded, options);
              }
  
 +            #if 0
              if (mIncrementalCompileOperation)
                  mIncrementalCompileOperation->add(loaded);
+             else
 +            #endif
+                 loaded->getBound();
  
              mCache->addEntryToObjectCache(normalized, loaded);
-             return loaded;
 -- 
 2.19.2
 

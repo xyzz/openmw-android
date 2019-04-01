@@ -1,3 +1,12 @@
+From c5101e4c9ad30ec501a50e1866084f36dd1f2607 Mon Sep 17 00:00:00 2001
+From: Ilya Zhuravlev <whatever@xyz.is>
+Date: Mon, 1 Apr 2019 13:33:12 -0400
+Subject: [PATCH 7/8] android: Fix red sky after shadows merge
+
+---
+ components/sceneutil/shadow.cpp | 1 +
+ 1 file changed, 1 insertion(+)
+
 diff --git a/components/sceneutil/shadow.cpp b/components/sceneutil/shadow.cpp
 index a69fd8090..aa94e14d0 100644
 --- a/components/sceneutil/shadow.cpp
@@ -10,3 +19,6 @@ index a69fd8090..aa94e14d0 100644
          int numberOfShadowMapsPerLight = Settings::Manager::getInt("number of shadow maps", "Shadows");
          int baseShadowTextureUnit = 8 - numberOfShadowMapsPerLight;
          
+-- 
+2.19.2
+
