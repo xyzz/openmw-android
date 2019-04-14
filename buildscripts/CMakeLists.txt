@@ -67,6 +67,7 @@ set(android_platform android-${ANDROID_API})
 set(app_abi ${ABI})
 set(osg_mainline_plugins_dir ${prefix}/osg_mainline/lib/osgPlugins-${OSG_MAINLINE_VERSION})
 set(osg_fork_plugins_dir ${prefix}/osg_fork/lib/osgPlugins-3.7.0)
+set(bullet_double -DUSE_DOUBLE_PRECISION=OFF)
 
 set(COMMON_CMAKE_ARGS_NO_PREFIX
 	-DCMAKE_TOOLCHAIN_FILE=${CMAKE_SOURCE_DIR}/toolchain/ndk/build/cmake/android.toolchain.cmake
@@ -119,6 +120,11 @@ set(COMMON_AUTOCONF_FLAGS
 
 if (${ARCH} STREQUAL "arm")
 	set(ffmpeg_configure_flags ${ffmpeg_configure_flags} --enable-thumb)
+endif()
+
+# check if we should be using double precision bullet or not
+if ((${ARCH} STREQUAL "x86_64") OR (${ARCH} STREQUAL "arm64"))
+	set(bullet_double -DUSE_DOUBLE_PRECISION=ON)
 endif()
 
 # on x86 enabling simd results in text relocations, which are banned on Android
@@ -293,6 +299,7 @@ ExternalProject_Add(bullet
 
 	CONFIGURE_COMMAND ${wrapper_command} cmake <SOURCE_DIR>
 	${COMMON_CMAKE_ARGS}
+	${bullet_double}
 	-DBUILD_BULLET2_DEMOS=OFF
 	-DBUILD_CPU_DEMOS=OFF
 	-DBUILD_UNIT_TESTS=OFF
@@ -433,6 +440,11 @@ set(OPENMW_COMMON
 	-DOSG_STATIC=TRUE
 	-DMyGUI_LIBRARY=${prefix}/lib/libMyGUIEngineStatic.a
 )
+
+# tell openmw's cmake that we are using bullet double precision
+if ((${ARCH} STREQUAL "x86_64") OR (${ARCH} STREQUAL "arm64"))
+	set(OPENMW_COMMON ${OPENMW_COMMON} -DBULLET_USE_DOUBLE_PRECISION=ON)
+endif()
 
 set(OPENMW_PATCH
 	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/0001-loadingscreen-disable-for-now.patch &&
