@@ -375,7 +375,7 @@ class Osc {
         }
     }
 
-    private fun relayout(l: Int, t: Int, r: Int, b: Int, ol: Int, or: Int, ot: Int, ob: Int) {
+    private fun relayout(l: Int, t: Int, r: Int, b: Int, ol: Int, ot: Int, or: Int, ob: Int) {
         // don't do anything if layout didn't change
         if (l == ol && t == ot && r == or && b == ob)
             return
