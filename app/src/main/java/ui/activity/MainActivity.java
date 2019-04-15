@@ -23,12 +23,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.crashlytics.android.Crashlytics;
-import com.crashlytics.android.ndk.CrashlyticsNdk;
 import com.libopenmw.openmw.R;
 import com.melnykov.fab.FloatingActionButton;
-
-import io.fabric.sdk.android.Fabric;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -75,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         GameState.setGameState(false);
         super.onCreate(savedInstanceState);
-        Fabric.with(this, new Crashlytics(), new CrashlyticsNdk());
+        // Fabric.with(this, new Crashlytics(), new CrashlyticsNdk());
         PermissionHelper.getWriteExternalStoragePermission(MainActivity.this);
         isSettingsEnabled = true;
         setContentView(R.layout.main);
@@ -221,6 +217,8 @@ public class MainActivity extends AppCompatActivity {
             if (openmwCfg.exists()) {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(openmwCfg)));
                 String line;
+                /**
+                // This isn't FOSS
                 Crashlytics.log("openmw.cfg");
                 Crashlytics.log("--------------------------------------------------------------------------------");
                 while ((line = reader.readLine()) != null) {
@@ -229,6 +227,7 @@ public class MainActivity extends AppCompatActivity {
                         Crashlytics.log(line);
                 }
                 Crashlytics.log("--------------------------------------------------------------------------------");
+                */
             }
         } catch (Exception e) {
             // not a big deal if we can't log the contents
@@ -335,7 +334,7 @@ public class MainActivity extends AppCompatActivity {
                 });
             } catch (IOException e) {
                 Log.e(TAG, "Failed to write config files.", e);
-                Crashlytics.logException(e);
+                // Crashlytics.logException(e);
             }
         });
         th.start();
