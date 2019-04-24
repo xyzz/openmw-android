@@ -8,9 +8,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -45,9 +42,6 @@ import static utils.Utils.hideAndroidControls;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "OpenMW-Launcher";
-    private DrawerLayout drawerLayout;
-    private Menu menu;
-    private boolean isSettingsEnabled = true;
     private SharedPreferences prefs;
 
     public static int resolutionX = 0;
@@ -58,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Fabric.with(this, new Crashlytics(), new CrashlyticsNdk());
         PermissionHelper.getWriteExternalStoragePermission(MainActivity.this);
-        isSettingsEnabled = true;
         setContentView(R.layout.main);
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -208,35 +201,29 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        this.menu = menu;
         menu.clear();
         MenuInflater inflater = getMenuInflater();
-        if (isSettingsEnabled)
-            inflater.inflate(R.menu.menu_settings, menu);
-        else
-            inflater.inflate(R.menu.menu_plugins, menu);
+        inflater.inflate(R.menu.menu_settings, menu);
         return super.onPrepareOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (isSettingsEnabled) {
-            switch (id) {
-                case R.id.action_reset_config:
-                    resetUserConfig();
-                    Toast.makeText(this, getString(R.string.config_was_reset), Toast.LENGTH_SHORT).show();
-                    break;
+        switch (id) {
+            case R.id.action_reset_config:
+                resetUserConfig();
+                Toast.makeText(this, getString(R.string.config_was_reset), Toast.LENGTH_SHORT).show();
+                break;
 
-                case R.id.action_about:
-                    new AlertDialog.Builder(this)
-                            .setTitle(getString(R.string.about_title))
-                            .setMessage(R.string.about_contents)
-                            .show();
+            case R.id.action_about:
+                new AlertDialog.Builder(this)
+                        .setTitle(getString(R.string.about_title))
+                        .setMessage(R.string.about_contents)
+                        .show();
 
-                default:
-                    break;
-            }
+            default:
+                break;
         }
 
         return super.onOptionsItemSelected(item);
