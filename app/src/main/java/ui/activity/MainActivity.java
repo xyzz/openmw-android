@@ -40,7 +40,6 @@ import constants.Constants;
 import file.utils.CopyFilesFromAssets;
 import ui.fragments.FragmentSettings;
 import permission.PermissionHelper;
-import ui.screen.ScreenScaler;
 import file.ConfigsFileStorageHelper;
 
 import static file.ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH;
@@ -76,12 +75,6 @@ public class MainActivity extends AppCompatActivity {
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         Settings = this.getSharedPreferences(
                 Constants.APP_PREFERENCES, Context.MODE_PRIVATE);
-        LinearLayout layout = (LinearLayout) findViewById(R.id.toolbarLayout);
-        layout.setVisibility(LinearLayout.VISIBLE);
-        path = (TextView) findViewById(R.id.path);
-        browseButton = (Button) findViewById(R.id.buttonBrowse);
-
-        disableToolBarViews();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
@@ -129,7 +122,6 @@ public class MainActivity extends AppCompatActivity {
 //                        MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new FragmentPlugins()).commit();
 //                        return true;
                     case R.id.settings:
-                        disableToolBarViews();
                         showOverflowMenu(true);
                         isSettingsEnabled = true;
                         MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new FragmentSettings()).commit();
@@ -352,17 +344,6 @@ public class MainActivity extends AppCompatActivity {
                 ConfigureControls.class);
         this.startActivity(intent);
 
-    }
-
-    private void disableToolBarViews() {
-        browseButton.setVisibility(Button.GONE);
-        path.setVisibility(EditText.GONE);
-    }
-
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        ScreenScaler.textScaler(path, 3f);
-        ScreenScaler.textScaler(browseButton, 4.8f);
     }
 }
 
