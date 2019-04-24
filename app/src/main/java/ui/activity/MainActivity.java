@@ -60,65 +60,15 @@ public class MainActivity extends AppCompatActivity {
         isSettingsEnabled = true;
         setContentView(R.layout.main);
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        Toolbar toolbar = findViewById(R.id.toolbar);
 
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         getFragmentManager().beginTransaction()
                 .replace(R.id.content_frame, new FragmentSettings()).commit();
 
-        initializeNavigationView(toolbar);
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(v -> startGame());
-    }
-
-
-    private void initializeNavigationView(Toolbar toolbar) {
-        NavigationView navigationView = findViewById(R.id.navigation_drawer);
-
-        navigationView.setNavigationItemSelectedListener(menuItem -> {
-
-            if (menuItem.isChecked()) menuItem.setChecked(false);
-            else menuItem.setChecked(true);
-
-            drawerLayout.closeDrawers();
-
-            switch (menuItem.getItemId()) {
-                case R.id.start_game:
-                    startGame();
-                    return true;
-
-                case R.id.settings:
-                    showOverflowMenu(true);
-                    isSettingsEnabled = true;
-                    MainActivity.this.getFragmentManager().beginTransaction().replace(R.id.content_frame, new FragmentSettings()).commit();
-
-                    return true;
-
-                default:
-                    return true;
-            }
-        });
-
-        drawerLayout = findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.openDrawer, R.string.closeDrawer) {
-
-            @Override
-            public void onDrawerClosed(View drawerView) {
-                super.onDrawerClosed(drawerView);
-            }
-
-            @Override
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-            }
-        };
-
-        drawerLayout.setDrawerListener(actionBarDrawerToggle);
-
-        actionBarDrawerToggle.syncState();
-
     }
 
     private void deleteRecursive(File fileOrDirectory) {
@@ -253,12 +203,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         th.start();
-    }
-
-    public void showOverflowMenu(boolean showMenu) {
-        if (menu == null)
-            return;
-        menu.setGroupVisible(R.id.main_menu_group, showMenu);
     }
 
     @Override
