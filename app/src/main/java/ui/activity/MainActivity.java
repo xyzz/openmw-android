@@ -63,7 +63,6 @@ public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_PATH = 1;
     private SharedPreferences prefs;
     private SharedPreferences Settings;
-    private TextListener listener;
     private enum TEXT_MODE {DATA_PATH, COMMAND_LINE}
     private static TEXT_MODE editTextMode;
 
