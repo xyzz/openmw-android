@@ -181,29 +181,27 @@ cp prefix/$ARCH/lib/{libopenal,libSDL2,libGL}.so ../app/src/main/jniLibs/$ABI/
 # copy over libc++_shared
 find ./toolchain/$ARCH/ -iname "libc++_shared.so" -exec cp "{}" ../app/src/main/jniLibs/$ABI/ \;
 
-if [[ $ARCH = "arm" ]]; then
-	echo "==> Deploying resources"
+echo "==> Deploying resources"
 
-	DST=$DIR/../app/src/main/assets/libopenmw/
-	SRC=build/$ARCH/openmw_osg_mainline-prefix/src/openmw_osg_mainline-build/
+DST=$DIR/../app/src/main/assets/libopenmw/
+SRC=build/$ARCH/openmw_osg_mainline-prefix/src/openmw_osg_mainline-build/
 
-	rm -rf "$DST" && mkdir -p "$DST"
+rm -rf "$DST" && mkdir -p "$DST"
 
-	# resources
-	cp -r "$SRC/resources" "$DST"
+# resources
+cp -r "$SRC/resources" "$DST"
 
-	# global config
-	mkdir -p "$DST/openmw/"
-	cp "$SRC/settings-default.cfg" "$DST/openmw/"
-	cp "$SRC/gamecontrollerdb.txt" "$DST/openmw/"
+# global config
+mkdir -p "$DST/openmw/"
+cp "$SRC/settings-default.cfg" "$DST/openmw/"
+cp "$SRC/gamecontrollerdb.txt" "$DST/openmw/"
 
-	# local config
-	mkdir -p "$DST/config/openmw/"
-	# TODO: do we really need this twice?
-	cp "$SRC/gamecontrollerdb.txt" "$DST/config/openmw/"
-	cp "$DIR/../app/openmw-base.cfg" "$DST/config/openmw/openmw.cfg"
-	cp "$DIR/../app/settings-base.cfg" "$DST/config/openmw/settings.cfg"
-fi
+# local config
+mkdir -p "$DST/config/openmw/"
+# TODO: do we really need this twice?
+cp "$SRC/gamecontrollerdb.txt" "$DST/config/openmw/"
+cp "$DIR/../app/openmw-base.cfg" "$DST/config/openmw/openmw.cfg"
+cp "$DIR/../app/settings-base.cfg" "$DST/config/openmw/settings.cfg"
 
 echo "==> Making your debugging life easier"
 
