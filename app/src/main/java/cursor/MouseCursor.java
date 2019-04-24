@@ -1,10 +1,10 @@
 package cursor;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.util.TypedValue;
 import android.view.Choreographer;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.libopenmw.openmw.R;
@@ -14,19 +14,45 @@ import org.libsdl.app.SDLActivity;
 import ui.activity.GameActivity;
 import ui.activity.MainActivity;
 
+/**
+ * An image view which doesn't downsize itself when moved to the border of a RelativeLayout
+ * (not sure if original behavior is intended)
+ */
+class FixedSizeImageView extends android.support.v7.widget.AppCompatImageView {
+
+    private int measuredWidth;
+    private int measuredHeight;
+
+    public FixedSizeImageView(Context context, int measuredWidth, int measuredHeight) {
+        super(context);
+        this.measuredWidth = measuredWidth;
+        this.measuredHeight = measuredHeight;
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        setMeasuredDimension(measuredWidth, measuredHeight);
+    }
+}
+
 public class MouseCursor implements Choreographer.FrameCallback {
 
     private Choreographer choreographer;
-    private ImageView cursor;
+    private FixedSizeImageView cursor;
+    private RelativeLayout layout;
 
     public MouseCursor(GameActivity activity) {
-        cursor = new ImageView(activity);
-        cursor.setImageResource(R.drawable.pointer_arrow);
         Resources r = activity.getResources();
-        int px = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30, r.getDisplayMetrics());
-        cursor.setLayoutParams(new RelativeLayout.LayoutParams((int) Math.round(px / 1.5), px));
 
-        RelativeLayout layout = activity.getLayout();
+        int height = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30, r.getDisplayMetrics());
+        int width = (int) Math.round(height / 1.5);
+
+        cursor = new FixedSizeImageView(activity, width, height);
+        cursor.setImageResource(R.drawable.pointer_arrow);
+
+        cursor.setLayoutParams(new RelativeLayout.LayoutParams(width, height));
+
+        layout = activity.getLayout();
         layout.addView(cursor);
 
         choreographer = Choreographer.getInstance();
@@ -48,8 +74,12 @@ public class MouseCursor implements Choreographer.FrameCallback {
             int mouseX = SDLActivity.getMouseX();
             int mouseY = SDLActivity.getMouseY();
 
-            cursor.setX(mouseX * translateX + surface.getLeft());
-            cursor.setY(mouseY * translateY + surface.getTop());
+            // calling setX/setY here results in a bug cropping part of the mouse cursor
+            // changing LayoutParams works as expected...
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) cursor.getLayoutParams();
+            params.leftMargin = (int) (mouseX * translateX + surface.getLeft());
+            params.topMargin = (int) (mouseY * translateY + surface.getTop());
+            cursor.setLayoutParams(params);
         }
 
         choreographer.postFrameCallback(this);
