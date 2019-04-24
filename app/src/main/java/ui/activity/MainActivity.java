@@ -182,28 +182,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_PATH) {
-            if (resultCode == Activity.RESULT_OK) {
-                String curDir = data.getStringExtra("GetDir");
-
-                switch (editTextMode) {
-                    case DATA_PATH:
-                        Constants.APPLICATION_DATA_STORAGE_PATH = curDir;
-                        break;
-                }
-                setTexWatcher();
-                path.setVisibility(EditText.VISIBLE);
-                browseButton.setVisibility(Button.VISIBLE);
-                path.setText(curDir);
-
-            }
-        }
-        super.onActivityResult(requestCode, resultCode, data);
-
-    }
-
     private void deleteRecursive(File fileOrDirectory) {
         if (fileOrDirectory.isDirectory())
             for (File child : fileOrDirectory.listFiles())
@@ -338,28 +316,6 @@ public class MainActivity extends AppCompatActivity {
         th.start();
     }
 
-    private void setTexWatcher() {
-        switch (editTextMode) {
-            case COMMAND_LINE:
-                removeTextlistener();
-                listener = new TextListener(this
-                        , "", "", Constants.COMMAND_LINE,
-                        Constants.commandLineData, Settings, "commandLine");
-                path.addTextChangedListener(listener);
-                break;
-            case DATA_PATH:
-                removeTextlistener();
-                listener = new TextListener(this,
-                        "", "data", Constants.DATA_PATH, Constants.APPLICATION_DATA_STORAGE_PATH, Settings,
-                        "data");
-                path.addTextChangedListener(listener);
-                break;
-            default:
-                break;
-        }
-    }
-
-
     public void showOverflowMenu(boolean showMenu) {
         if (menu == null)
             return;
@@ -411,12 +367,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void enableToolbarViews() {
-        path.setVisibility(EditText.VISIBLE);
-        browseButton.setVisibility(Button.VISIBLE);
-        setTexWatcher();
-    }
-
     private void disableToolBarViews() {
         browseButton.setVisibility(Button.GONE);
         path.setVisibility(EditText.GONE);
@@ -427,14 +377,6 @@ public class MainActivity extends AppCompatActivity {
         ScreenScaler.textScaler(path, 3f);
         ScreenScaler.textScaler(browseButton, 4.8f);
     }
-
-    private void removeTextlistener() {
-        if (listener != null)
-            path.removeTextChangedListener(listener);
-
-
-    }
-
 }
 
 
