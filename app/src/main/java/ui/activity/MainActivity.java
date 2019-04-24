@@ -1,6 +1,7 @@
 package ui.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -222,14 +223,16 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
         if (isSettingsEnabled) {
             switch (id) {
-                case R.id.action_show_screen_controls:
-                    startControlsActivity();
-                    break;
-
                 case R.id.action_reset_config:
                     resetUserConfig();
                     Toast.makeText(this, getString(R.string.config_was_reset), Toast.LENGTH_SHORT).show();
                     break;
+
+                case R.id.action_about:
+                    new AlertDialog.Builder(this)
+                            .setTitle(getString(R.string.about_title))
+                            .setMessage(R.string.about_contents)
+                            .show();
 
                 default:
                     break;
@@ -237,11 +240,5 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    private void startControlsActivity() {
-        Intent intent = new Intent(this,
-                ConfigureControls.class);
-        this.startActivity(intent);
     }
 }
