@@ -66,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
     private TextListener listener;
     private enum TEXT_MODE {DATA_PATH, COMMAND_LINE}
     private static TEXT_MODE editTextMode;
-    private ConfigsFileStorageHelper configsFileStorageHelper;
 
     public static int resolutionX = 0;
     public static int resolutionY = 0;
@@ -83,8 +82,6 @@ public class MainActivity extends AppCompatActivity {
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         Settings = this.getSharedPreferences(
                 Constants.APP_PREFERENCES, Context.MODE_PRIVATE);
-        configsFileStorageHelper= new ConfigsFileStorageHelper(this,Settings);
-        configsFileStorageHelper.checkAppFirstTimeRun();
         LinearLayout layout = (LinearLayout) findViewById(R.id.toolbarLayout);
         layout.setVisibility(LinearLayout.VISIBLE);
         path = (TextView) findViewById(R.id.path);
