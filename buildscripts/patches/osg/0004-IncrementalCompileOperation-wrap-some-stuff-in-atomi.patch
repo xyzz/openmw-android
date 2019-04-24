@@ -1,0 +1,40 @@
+From f25d67c91a7d6c816d6be0fafcef636c61354937 Mon Sep 17 00:00:00 2001
+From: Ilya Zhuravlev <whatever@xyz.is>
+Date: Sun, 10 Feb 2019 19:30:55 -0500
+Subject: [PATCH 4/5] IncrementalCompileOperation: wrap some stuff in atomic<>
+ to pacify tsan
+
+---
+ include/osgUtil/IncrementalCompileOperation | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/include/osgUtil/IncrementalCompileOperation b/include/osgUtil/IncrementalCompileOperation
+index 25f141976..a4ffa3356 100644
+--- a/include/osgUtil/IncrementalCompileOperation
++++ b/include/osgUtil/IncrementalCompileOperation
+@@ -14,6 +14,8 @@
+ #ifndef OSGUTIL_INCREMENTALCOMPILEOPERATOR
+ #define OSGUTIL_INCREMENTALCOMPILEOPERATOR
+ 
++#include <atomic>
++
+ #include <osgUtil/GLObjectsVisitor>
+ #include <osg/Geometry>
+ 
+@@ -305,11 +307,11 @@ class OSGUTIL_EXPORT IncrementalCompileOperation : public osg::GraphicsOperation
+ 
+         double                              _targetFrameRate;
+         double                              _minimumTimeAvailableForGLCompileAndDeletePerFrame;
+-        unsigned int                        _maximumNumOfObjectsToCompilePerFrame;
++        std::atomic<unsigned>                        _maximumNumOfObjectsToCompilePerFrame;
+         double                              _flushTimeRatio;
+         double                              _conservativeTimeRatio;
+ 
+-        unsigned int                        _currentFrameNumber;
++        std::atomic<unsigned>                        _currentFrameNumber;
+         unsigned int                        _compileAllTillFrameNumber;
+ 
+         osg::ref_ptr<osg::Geometry>         _forceTextureDownloadGeometry;
+-- 
+2.19.2
+

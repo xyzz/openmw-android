@@ -8,3 +8,5 @@ obj
 assets
 .gdb_history
 app/wrap
+fabric.properties
+captures

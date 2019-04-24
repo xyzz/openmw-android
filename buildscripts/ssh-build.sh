@@ -53,6 +53,11 @@ echo "==> Retrieving the resources"
 scp -r -i $PEM ubuntu@$REMOTE:/mnt/android-port/app/src/main/assets/libopenmw ../app/src/main/assets/
 
 echo "==> Retrieving the symbols"
+rm -f symbols.7z
 scp -r -i $PEM ubuntu@$REMOTE:/mnt/android-port/buildscripts/symbols.7z .
+
+echo "==> Extracting the symbols"
+rm -rf symbols
+7z x symbols.7z
 
 echo "==> All OK!"

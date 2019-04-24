@@ -9,7 +9,7 @@ rm -rf ../app/wrap/
 
 # Clean a single thing
 if [[ $1 == "--build" ]]; then
-	rm -rf build
+	rm -rf build symbols
 	exit 0
 fi
 
@@ -24,7 +24,7 @@ if [[ $1 == "--prefix" ]]; then
 fi
 
 # Generic clean, good most of the time
-rm -rf toolchain prefix build
+rm -rf toolchain prefix build symbols
 
 # Clean everything, including downloads
 if [[ $1 == "--all" ]]; then

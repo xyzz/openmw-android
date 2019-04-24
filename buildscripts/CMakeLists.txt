@@ -9,8 +9,8 @@ set(LIBPNG_VERSION 1.6.36)
 set(LIBPNG_HASH SHA256=eceb924c1fa6b79172fdfd008d335f0e59172a86a66481e09d4089df872aa319)
 
 # https://www.freetype.org/index.html#news
-set(FREETYPE2_VERSION 2.9.1)
-set(FREETYPE2_HASH SHA256=ec391504e55498adceb30baceebd147a6e963f636eb617424bcfc47a169898ce)
+set(FREETYPE2_VERSION 2.10.0)
+set(FREETYPE2_HASH SHA256=955e17244e9b38adb0c98df66abb50467312e6bb70eac07e49ce6bd1a20e809a)
 
 # http://kcat.strangesoft.net/openal.html
 set(OPENAL_VERSION 1.19.1)
@@ -21,24 +21,24 @@ set(BOOST_VERSION 1.69.0)
 set(BOOST_HASH SHA256=8f32d4617390d1c2d16f26a27ab60d97807b35440d45891fa340fc2648b04406)
 
 # https://www.ffmpeg.org/download.html
-set(FFMPEG_VERSION 4.1)
-set(FFMPEG_HASH SHA256=b684fb43244a5c4caae652af9022ed5d85ce15210835bce054a33fb26033a1a5)
+set(FFMPEG_VERSION 4.1.3)
+set(FFMPEG_HASH SHA256=29a679685bd7bc29158110f367edf67b31b451f2176f9d79d0f342b9e22d6a2a)
 
 # https://www.libsdl.org/download-2.0.php
 set(SDL2_VERSION 2.0.8)
 set(SDL2_HASH SHA256=edc77c57308661d576e843344d8638e025a7818bff73f8fbfab09c3c5fd092ec)
 
 # https://github.com/bulletphysics/bullet3/releases
-set(BULLET_VERSION 2.87)
-set(BULLET_HASH SHA256=438c151c48840fe3f902ec260d9496f8beb26dba4b17769a4a53212903935f95)
+set(BULLET_VERSION 2.88)
+set(BULLET_HASH SHA256=21c135775527754fc2929db1db5144e92ad0218ae72840a9f162acb467a7bbf9)
 
 # https://github.com/MyGUI/mygui/releases
 set(MYGUI_VERSION 3.2.2)
 set(MYGUI_HASH SHA256=0a28d7ec8a47993cb68deb48b36331e28f12dd92580b709eaef21d599b67a78f)
 
 # https://github.com/ptitSeb/gl4es
-set(GL4ES_VERSION 0f0e118c3f8c28282857b7ef507c3b209f7f6317)
-set(GL4ES_HASH SHA256=98e3cddaccd2eea24eedea9238f318139b2fabb4939ab3ca401f1bd27221f312)
+set(GL4ES_VERSION 9faa54451f28037a2150d2da32df721038ac741e)
+set(GL4ES_HASH SHA256=8866654d345150188b6c33738a576f5de2326132cd3ab3e206e94c87c675deb0)
 
 # https://github.com/openscenegraph/OpenSceneGraph/releases
 set(OSG_MAINLINE_VERSION 3.6.2)
@@ -49,8 +49,8 @@ set(OSG_FORK_VERSION ecedf3232c2f1b3b6a2f06f77ea37a9afb6a93f5)
 set(OSG_FORK_HASH SHA256=254f0ce0e236aa80700877ee8664430c1f491be78ea1118bcd53178260edb4b5)
 
 # https://github.com/OpenMW/openmw/commits/master
-set(OPENMW_VERSION 8834ee95bea9d04fad3a786ada6eb9a3f0d8a16b)
-set(OPENMW_HASH SHA256=418b82c6c8011e9d56a760ed19a1b96cf774ff00b640ab105342e07a2b94b3a4)
+set(OPENMW_VERSION 2cc359a20561f691222b36d250cda69459a6b1fb)
+set(OPENMW_HASH SHA256=3fc1b28cc44d4bcbf6049c6b965813ddd75f21a4687b72c8342c02c85d8bd63a)
 
 # End of configurable options
 
@@ -206,6 +206,7 @@ ExternalProject_Add(boost
 	--with-filesystem
 	--with-program_options
 	--with-system
+	--with-iostreams
 	--ignore-site-config
 	toolset=clang-android
 	architecture=${BOOST_ARCH}
@@ -222,6 +223,7 @@ ExternalProject_Add(boost
 	COMMAND ${host}-ranlib ${prefix}/lib/libboost_filesystem.a
 	COMMAND ${host}-ranlib ${prefix}/lib/libboost_program_options.a
 	COMMAND ${host}-ranlib ${prefix}/lib/libboost_system.a
+	COMMAND ${host}-ranlib ${prefix}/lib/libboost_iostreams.a
 )
 
 ExternalProject_Add(ffmpeg
@@ -364,17 +366,17 @@ set(OSG_COMMON
 	-DOSG_GL_VERTEX_FUNCS_AVAILABLE=ON
 	-DOSG_GL_VERTEX_ARRAY_FUNCS_AVAILABLE=ON
 	-DOSG_GL_FIXED_FUNCTION_AVAILABLE=ON
-	-DDYNAMIC_OPENTHREADS=OFF
-	-DDYNAMIC_OPENSCENEGRAPH=OFF
 	-DBUILD_OSG_APPLICATIONS=OFF
 	-DBUILD_OSG_PLUGINS_BY_DEFAULT=OFF
-	-DBUILD_OSG_PLUGIN_OSG=ON
-	-DBUILD_OSG_PLUGIN_DDS=ON
-	-DBUILD_OSG_PLUGIN_TGA=ON
-	-DBUILD_OSG_PLUGIN_BMP=ON
-	-DBUILD_OSG_PLUGIN_JPEG=ON
-	-DBUILD_OSG_PLUGIN_PNG=ON
 	-DBUILD_OSG_DEPRECATED_SERIALIZERS=OFF
+)
+
+set(OSG_PATCH
+	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/osg/0001-Replace-Atomic-impl-with-std-atomic.patch &&
+	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/osg/0002-BufferObject-make-numClients-atomic.patch &&
+	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/osg/0003-Array-make-possible-to-use-thread-safely-with-setTex.patch &&
+	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/osg/0004-IncrementalCompileOperation-wrap-some-stuff-in-atomi.patch &&
+	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/osg/0005-CullSettings-make-inheritanceMask-atomic-to-silence-.patch
 )
 
 ExternalProject_Add(osg_mainline
@@ -383,6 +385,8 @@ ExternalProject_Add(osg_mainline
 	URL https://github.com/openscenegraph/OpenSceneGraph/archive/OpenSceneGraph-${OSG_MAINLINE_VERSION}.tar.gz
 	URL_HASH ${OSG_MAINLINE_HASH}
 	DOWNLOAD_DIR ${download_dir}
+
+	PATCH_COMMAND ${OSG_PATCH}
 
 	CONFIGURE_COMMAND ${wrapper_command} cmake <SOURCE_DIR>
 	${COMMON_CMAKE_ARGS_NO_PREFIX}
@@ -415,6 +419,7 @@ ExternalProject_Add(osg_fork
 
 set(OPENMW_COMMON
 	-DBUILD_BSATOOL=0
+	-DBUILD_NIFTEST=0
 	-DBUILD_ESMTOOL=0
 	-DBUILD_LAUNCHER=0
 	-DBUILD_MWINIIMPORTER=0
@@ -430,8 +435,14 @@ set(OPENMW_COMMON
 )
 
 set(OPENMW_PATCH
-	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw-revert-ui-dimensions.patch &&
-		patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw-add-simpler-collisions-option.patch
+	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/0001-loadingscreen-disable-for-now.patch &&
+	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/0002-scenemanager-disable-state-share-inc-compile.patch &&
+	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/0003-globalmap-fix-race-vs-savegame-load.patch &&
+	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/0004-getUVBuffer-pre-set-array-binding-to-avoid-thread-ra.patch &&
+	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/0005-android-Revert-UI-dimensions.patch &&
+	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/0006-Add-an-option-to-enable-simple-bounding-box.patch &&
+	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/0007-android-Fix-red-sky-after-shadows-merge.patch &&
+	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/0008-Revert-Merge-pull-request-2238-from-Capostrophic-fre.patch
 )
 
 ExternalProject_Add(openmw_osg_mainline

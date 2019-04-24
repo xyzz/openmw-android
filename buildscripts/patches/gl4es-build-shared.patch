@@ -1,13 +1,8 @@
 diff --git a/Android.mk b/Android.mk
-index 88b53fd..58ecef6 100755
+index f7004d3..44ab5b9 100755
 --- a/Android.mk
 +++ b/Android.mk
-@@ -77,9 +77,9 @@ LOCAL_CFLAGS += -g -std=c99 -funwind-tables -O3 -DBCMHOST -fvisibility=hidden -i
- LOCAL_CFLAGS += -DNOX11
- LOCAL_CFLAGS += -DNO_GBM
- #LOCAL_CFLAGS += -DNO_INIT_CONSTRUCTOR
--LOCAL_CFLAGS += -DDEFAULT_ES=2
-+#LOCAL_CFLAGS += -DDEFAULT_ES=2
+@@ -82,5 +82,5 @@ LOCAL_CFLAGS += -DNO_GBM
  
  LOCAL_LDLIBS := -ldl -llog
  

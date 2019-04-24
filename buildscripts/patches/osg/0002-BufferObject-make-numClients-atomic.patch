@@ -1,0 +1,34 @@
+From 6245c7c8c9ff785ad7ab3a5b207adc63aea6f3f0 Mon Sep 17 00:00:00 2001
+From: Ilya Zhuravlev <whatever@xyz.is>
+Date: Sun, 10 Feb 2019 16:01:06 -0500
+Subject: [PATCH 2/5] BufferObject: make numClients atomic
+
+This is just to silence tsan in openmw, it is not the right way to do this.
+---
+ include/osg/BufferObject | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/include/osg/BufferObject b/include/osg/BufferObject
+index 3ec365544..cc4128aac 100644
+--- a/include/osg/BufferObject
++++ b/include/osg/BufferObject
+@@ -22,6 +22,7 @@
+ #include <osg/FrameStamp>
+ #include <osg/GLObjects>
+ 
++#include <atomic>
+ #include <iosfwd>
+ #include <list>
+ #include <map>
+@@ -590,7 +591,7 @@ protected:
+         osg::ref_ptr<BufferObject>      _bufferObject;
+         osg::ref_ptr<ModifiedCallback>  _modifiedCallback;
+ 
+-        unsigned int _numClients;
++        std::atomic<unsigned> _numClients;
+ };
+ 
+ 
+-- 
+2.19.2
+

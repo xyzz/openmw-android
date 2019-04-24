@@ -7,7 +7,8 @@ class GamepadEmulator {
     private static Boolean registered = false;
 
     static void updateStick(int stickId, float x, float y) {
-        int deviceId = 1;
+        // random device ID to make sure it doesn't conflict with anything
+        int deviceId = 1384510555;
 
         if (!registered) {
             registered = true;

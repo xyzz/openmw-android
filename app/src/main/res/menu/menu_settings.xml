@@ -5,16 +5,14 @@
     <group android:id="@+id/main_menu_group">
 
         <item
-            android:id="@+id/action_show_screen_controls"
-            android:title="@string/action_show_screen_controls"
-            android:orderInCategory="0"
+            android:id="@+id/action_reset_config"
+            android:title="@string/action_reset_config"
             app:showAsAction="never"
             />
 
         <item
-            android:id="@+id/action_reset_config"
-            android:orderInCategory="2"
-            android:title="@string/action_reset_config"
+            android:id="@+id/action_about"
+            android:title="@string/action_about"
             app:showAsAction="never"
             />
 

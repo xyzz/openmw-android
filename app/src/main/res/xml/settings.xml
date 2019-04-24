@@ -1,34 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory
         android:key="genereal_settings"
-        android:title="General settings">
+        android:title="Game setup">
 
         <EditTextPreference
             android:key="data_files"
             android:title="@string/data_files"
             />
 
-        <EditTextPreference
-            android:key="commandLine"
-            android:title="@string/pref_commandLine"
+        <Preference
+            android:title="@string/mods"
+            android:key="pref_mods"
             />
 
-        <CheckBoxPreference
-            android:key="hidecontrols"
-            android:title="Hide onscreen buttons" />
-
-        <CheckBoxPreference
-            android:key="screen_keeper"
-            android:summary="Keep screen always on"
-            android:title="Screen" />
-
-
-    </PreferenceCategory>
-
-
-    <PreferenceCategory android:title="@string/pref_lang">
         <ListPreference
             android:key="pref_encoding"
             android:summary="%s"
@@ -38,11 +23,15 @@
             android:entryValues="@array/pref_encoding_values"
             android:defaultValue="@string/pref_encoding_default"
             />
-
     </PreferenceCategory>
 
 
     <PreferenceCategory android:title="@string/pref_ui">
+        <Preference
+            android:title="@string/action_show_screen_controls"
+            android:key="pref_controls"
+            />
+
         <EditTextPreference
             android:key="pref_uiScaling"
             android:title="@string/pref_uiScaling"
@@ -50,15 +39,36 @@
             android:inputType="numberDecimal"
             />
 
+        <CheckBoxPreference
+            android:key="hidecontrols"
+            android:title="Hide onscreen buttons" />
+
         <EditTextPreference
             android:key="pref_touchpadSensitivity"
             android:title="@string/pref_touchpadSensitivity"
             android:dialogTitle="@string/pref_touchpadSensitivity"
             android:inputType="numberDecimal"
             />
+
+        <EditTextPreference
+            android:key="pref_customResolution"
+            android:title="@string/pref_customResolution"
+            android:dialogTitle="@string/pref_customResolution"
+            android:hint="640x480"
+            />
+
+        <CheckBoxPreference
+            android:key="screen_keeper"
+            android:summary="Keep screen always on"
+            android:title="Screen" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/pref_advanced">
+        <EditTextPreference
+            android:key="commandLine"
+            android:title="@string/pref_commandLine"
+            />
+
         <ListPreference
             android:key="pref_graphicsLibrary"
             android:title="@string/pref_graphicsLibrary"
