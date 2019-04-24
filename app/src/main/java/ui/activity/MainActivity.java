@@ -2,7 +2,6 @@ package ui.activity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -17,10 +16,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
@@ -36,7 +31,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import constants.Constants;
 import file.utils.CopyFilesFromAssets;
 import ui.fragments.FragmentSettings;
 import permission.PermissionHelper;
@@ -52,15 +46,9 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "OpenMW-Launcher";
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
-    public TextView path;
-    public Button browseButton;
     private Menu menu;
     private boolean isSettingsEnabled = true;
-    private static final int REQUEST_PATH = 1;
     private SharedPreferences prefs;
-    private SharedPreferences Settings;
-    private enum TEXT_MODE {DATA_PATH, COMMAND_LINE}
-    private static TEXT_MODE editTextMode;
 
     public static int resolutionX = 0;
     public static int resolutionY = 0;
@@ -73,9 +61,6 @@ public class MainActivity extends AppCompatActivity {
         isSettingsEnabled = true;
         setContentView(R.layout.main);
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        Settings = this.getSharedPreferences(
-                Constants.APP_PREFERENCES, Context.MODE_PRIVATE);
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         setSupportActionBar(toolbar);
@@ -110,33 +95,19 @@ public class MainActivity extends AppCompatActivity {
                 drawerLayout.closeDrawers();
 
                 switch (menuItem.getItemId()) {
-
                     case R.id.start_game:
                         startGame();
                         return true;
 
-//                    case R.id.plugins:
-//                        showOverflowMenu(true);
-//                        isSettingsEnabled = false;
-//                        disableToolBarViews();
-//                        MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new FragmentPlugins()).commit();
-//                        return true;
                     case R.id.settings:
                         showOverflowMenu(true);
                         isSettingsEnabled = true;
                         MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new FragmentSettings()).commit();
 
                         return true;
-/*                    case R.id.textureDecoder:
-                        showOverflowMenu(false);
-                        disableToolBarViews();
-                        MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new DDSDecoderFragment()).commit();
-                        return true;*/
 
                     default:
-
                         return true;
-
                 }
             }
         });
@@ -346,6 +317,3 @@ public class MainActivity extends AppCompatActivity {
 
     }
 }
-
-
-
