@@ -44,7 +44,6 @@ import static utils.Utils.hideAndroidControls;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "OpenMW-Launcher";
-    private NavigationView navigationView;
     private DrawerLayout drawerLayout;
     private Menu menu;
     private boolean isSettingsEnabled = true;
@@ -61,58 +60,48 @@ public class MainActivity extends AppCompatActivity {
         isSettingsEnabled = true;
         setContentView(R.layout.main);
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
 
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.content_frame, new FragmentSettings()).commit();
 
         initializeNavigationView(toolbar);
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                startGame();
-            }
-
-        });
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(v -> startGame());
     }
 
 
     private void initializeNavigationView(Toolbar toolbar) {
-        navigationView = (NavigationView) findViewById(R.id.navigation_drawer);
+        NavigationView navigationView = findViewById(R.id.navigation_drawer);
 
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+        navigationView.setNavigationItemSelectedListener(menuItem -> {
 
-            @Override
-            public boolean onNavigationItemSelected(MenuItem menuItem) {
+            if (menuItem.isChecked()) menuItem.setChecked(false);
+            else menuItem.setChecked(true);
 
-                if (menuItem.isChecked()) menuItem.setChecked(false);
-                else menuItem.setChecked(true);
+            drawerLayout.closeDrawers();
 
-                drawerLayout.closeDrawers();
+            switch (menuItem.getItemId()) {
+                case R.id.start_game:
+                    startGame();
+                    return true;
 
-                switch (menuItem.getItemId()) {
-                    case R.id.start_game:
-                        startGame();
-                        return true;
+                case R.id.settings:
+                    showOverflowMenu(true);
+                    isSettingsEnabled = true;
+                    MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new FragmentSettings()).commit();
 
-                    case R.id.settings:
-                        showOverflowMenu(true);
-                        isSettingsEnabled = true;
-                        MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new FragmentSettings()).commit();
+                    return true;
 
-                        return true;
-
-                    default:
-                        return true;
-                }
+                default:
+                    return true;
             }
         });
 
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerLayout = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.openDrawer, R.string.closeDrawer) {
 
             @Override
@@ -287,12 +276,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (!isSettingsEnabled)
-            switch (id) {
-                default:
-                    break;
-            }
-        else
+        if (isSettingsEnabled) {
             switch (id) {
                 case R.id.action_show_screen_controls:
                     startControlsActivity();
@@ -306,6 +290,7 @@ public class MainActivity extends AppCompatActivity {
                 default:
                     break;
             }
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -314,6 +299,5 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this,
                 ConfigureControls.class);
         this.startActivity(intent);
-
     }
 }
