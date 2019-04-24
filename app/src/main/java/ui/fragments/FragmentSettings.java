@@ -1,14 +1,18 @@
 package ui.fragments;
 
+import android.app.AlertDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.preference.Preference;
+import android.preference.PreferenceFragment;
 import android.preference.PreferenceGroup;
 
-import com.github.machinarius.preferencefragment.PreferenceFragment;
 import com.libopenmw.openmw.R;
+
+import ui.activity.ConfigureControls;
 
 public class FragmentSettings extends PreferenceFragment implements OnSharedPreferenceChangeListener {
 
@@ -18,6 +22,17 @@ public class FragmentSettings extends PreferenceFragment implements OnSharedPref
 
         addPreferencesFromResource(R.xml.settings);
         getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
+
+        findPreference("pref_controls").setOnPreferenceClickListener((Preference pref) -> {
+            Intent intent = new Intent(getActivity(), ConfigureControls.class);
+            this.startActivity(intent);
+            return true;
+        });
+
+        findPreference("pref_mods").setOnPreferenceClickListener((Preference pref) -> {
+            new AlertDialog.Builder(getActivity()).setTitle("Mods").setMessage("Placeholder").show();
+            return true;
+        });
     }
 
     @Override

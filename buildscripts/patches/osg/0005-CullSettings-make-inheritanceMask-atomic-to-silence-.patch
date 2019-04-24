@@ -1,0 +1,47 @@
+From e9e0ab48eab9f6b896d7ea1b6d602f8c8e001974 Mon Sep 17 00:00:00 2001
+From: Ilya Zhuravlev <whatever@xyz.is>
+Date: Sun, 10 Feb 2019 20:00:38 -0500
+Subject: [PATCH 5/5] CullSettings: make inheritanceMask atomic to silence tsan
+
+---
+ include/osg/CullSettings | 3 ++-
+ src/osg/CullSettings.cpp | 2 +-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/include/osg/CullSettings b/include/osg/CullSettings
+index c61fe9138..6c72ef667 100644
+--- a/include/osg/CullSettings
++++ b/include/osg/CullSettings
+@@ -14,6 +14,7 @@
+ #ifndef OSG_CULLSETTINGS
+ #define OSG_CULLSETTINGS 1
+ 
++#include <atomic>
+ #include <iosfwd>
+ #include <osg/Matrix>
+ #include <osg/ClearNode>
+@@ -248,7 +249,7 @@ class OSG_EXPORT CullSettings
+ 
+     protected:
+ 
+-        InheritanceMask                             _inheritanceMask;
++        std::atomic<InheritanceMask>                _inheritanceMask;
+         InheritanceMaskActionOnAttributeSetting     _inheritanceMaskActionOnAttributeSetting;
+ 
+         ComputeNearFarMode                          _computeNearFar;
+diff --git a/src/osg/CullSettings.cpp b/src/osg/CullSettings.cpp
+index 800ada83c..5265dbd05 100644
+--- a/src/osg/CullSettings.cpp
++++ b/src/osg/CullSettings.cpp
+@@ -52,7 +52,7 @@ void CullSettings::setDefaults()
+ 
+ void CullSettings::setCullSettings(const CullSettings& rhs)
+ {
+-    _inheritanceMask = rhs._inheritanceMask;
++    _inheritanceMask = rhs._inheritanceMask.load();
+     _inheritanceMaskActionOnAttributeSetting = rhs._inheritanceMaskActionOnAttributeSetting;
+ 
+     _computeNearFar = rhs._computeNearFar;
+-- 
+2.19.2
+

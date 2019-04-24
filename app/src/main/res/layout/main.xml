@@ -1,6 +1,5 @@
-<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -26,16 +25,15 @@
 
                 />
 
-            <com.melnykov.fab.FloatingActionButton
+            <android.support.design.widget.FloatingActionButton
                 android:id="@+id/fab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|right"
                 android:layout_margin="16dp"
                 android:src="@android:drawable/ic_media_play"
-                fab:fab_colorNormal="#2196F3"
-                fab:fab_colorPressed="#1976D2"
-                fab:fab_colorRipple="@color/switch_thumb_normal_material_dark" />
+                app:backgroundTint="#2196F3"
+                app:rippleColor="#FFFFFF" />
 
             <View
                 android:layout_width="match_parent"
@@ -44,11 +42,4 @@
         </FrameLayout>
     </LinearLayout>
 
-    <android.support.design.widget.NavigationView
-        android:id="@+id/navigation_drawer"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        app:menu="@menu/drawer" />
-
-</android.support.v4.widget.DrawerLayout>
+</LinearLayout>

@@ -8,34 +8,6 @@
     android:minHeight="?attr/actionBarSize"
     local:popupTheme="@style/ThemeOverlay.AppCompat.Light"
     local:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/toolbarLayout"
-        android:visibility="gone"
-         android:orientation="horizontal">
-        <EditText
-            android:id="@+id/path"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_weight="1"
-            android:visibility="gone"
-            android:textColor="@android:color/black"
-            android:gravity="left|center"
-            android:background="@drawable/card_backround"
-            android:inputType="text" />
-        <Button
-            android:textColor="@android:color/black"
-            android:id="@+id/buttonBrowse"
-            android:theme="@style/ThemeOverlay.AppCompat.Light"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone"
-            android:layout_weight="5"
-            android:gravity="center"
-            android:text="Browse" />
-
-    </LinearLayout>
 
 </android.support.v7.widget.Toolbar>
 

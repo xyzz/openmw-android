@@ -13,13 +13,16 @@ import ui.controls.Osc
 import ui.controls.OscElement
 import ui.controls.VIRTUAL_SCREEN_HEIGHT
 import ui.controls.VIRTUAL_SCREEN_WIDTH
+import utils.Utils.hideAndroidControls
 
 class ConfigureCallback(activity: Activity) : View.OnTouchListener {
 
     var currentView: View? = null
     private var layout: RelativeLayout = activity.findViewById(R.id.controlsContainer)
-    private var relativeX: Float = 0.0f
-    private var relativeY: Float = 0.0f
+    private var origX: Float = 0.0f
+    private var origY: Float = 0.0f
+    private var startX: Float = 0.0f
+    private var startY: Float = 0.0f
 
     override fun onTouch(v: View, event: MotionEvent): Boolean {
         when (event.actionMasked) {
@@ -27,16 +30,15 @@ class ConfigureCallback(activity: Activity) : View.OnTouchListener {
                 currentView?.setBackgroundColor(Color.TRANSPARENT)
                 currentView = v
                 v.setBackgroundColor(Color.RED)
-                relativeX = event.x
-                relativeY = event.y
+                origX = v.x
+                origY = v.y
+                startX = event.rawX
+                startY = event.rawY
             }
             MotionEvent.ACTION_MOVE -> if (currentView != null) {
                 val view = currentView!!
-                val layoutPosition = IntArray(2)
-                layout.getLocationOnScreen(layoutPosition)
-                // https://stackoverflow.com/q/1410885 - have to use rawX/rawY
-                val x = (event.rawX - relativeX - layoutPosition[0]).toInt()
-                val y = (event.rawY - relativeY - layoutPosition[1]).toInt()
+                val x = ((event.rawX - startX) + origX).toInt()
+                val y = ((event.rawY - startY) + origY).toInt()
 
                 val el = view.tag as OscElement
                 el.changePosition(x * VIRTUAL_SCREEN_WIDTH / layout.width, y * VIRTUAL_SCREEN_HEIGHT / layout.height)
@@ -56,12 +58,20 @@ class ConfigureControls : Activity() {
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.configure_controls)
 
         val cb = ConfigureCallback(this)
         callback = cb
 
-        osc.placeConfigurableElements(findViewById(R.id.controlsContainer), cb)
+        val container: RelativeLayout = findViewById(R.id.controlsContainer)
+        osc.placeConfigurableElements(container, cb)
+    }
+
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        if (hasFocus) {
+            hideAndroidControls(this)
+        }
     }
 
     private fun changeOpacity(delta: Float) {
@@ -96,6 +106,10 @@ class ConfigureControls : Activity() {
 
     fun clickResetControls(v: View) {
         osc.resetElements(applicationContext)
+    }
+
+    fun clickBack(v: View) {
+        finish()
     }
 
 }

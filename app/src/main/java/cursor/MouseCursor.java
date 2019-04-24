@@ -12,6 +12,7 @@ import com.libopenmw.openmw.R;
 import org.libsdl.app.SDLActivity;
 
 import ui.activity.GameActivity;
+import ui.activity.MainActivity;
 
 public class MouseCursor implements Choreographer.FrameCallback {
 
@@ -39,11 +40,16 @@ public class MouseCursor implements Choreographer.FrameCallback {
         } else {
             cursor.setVisibility(View.VISIBLE);
 
+            View surface = SDLActivity.getSurface();
+
+            float translateX = 1.0f * surface.getWidth() / MainActivity.resolutionX;
+            float translateY = 1.0f * surface.getHeight() / MainActivity.resolutionY;
+
             int mouseX = SDLActivity.getMouseX();
             int mouseY = SDLActivity.getMouseY();
 
-            cursor.setX(mouseX);
-            cursor.setY(mouseY);
+            cursor.setX(mouseX * translateX + surface.getLeft());
+            cursor.setY(mouseY * translateY + surface.getTop());
         }
 
         choreographer.postFrameCallback(this);

@@ -3,6 +3,7 @@ package ui.controls
 import android.content.Context
 import android.graphics.Color
 import android.preference.PreferenceManager
+import android.util.Log
 import android.util.TypedValue
 import android.view.KeyEvent
 import android.view.MotionEvent
@@ -96,9 +97,8 @@ open class OscElement(
         val px: Float = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, size.toFloat(), v.context.resources.displayMetrics)
         val params = RelativeLayout.LayoutParams(px.toInt(), px.toInt())
 
-        // TODO: this doesn't take soft keys into account
-        val realScreenWidth = v.context.resources.displayMetrics.widthPixels
-        val realScreenHeight = v.context.resources.displayMetrics.heightPixels
+        val realScreenWidth = (v.parent as View).width
+        val realScreenHeight = (v.parent as View).height
         val realX = x * realScreenWidth / VIRTUAL_SCREEN_WIDTH
         val realY = y * realScreenHeight / VIRTUAL_SCREEN_HEIGHT
 
@@ -343,6 +343,8 @@ class Osc {
             element.loadPrefs(target.context)
         }
         osk.placeElements(target)
+
+        target.addOnLayoutChangeListener { v, l, t, r, b, ol, ot, or, ob -> relayout(l, t, r, b, ol, ot, or, ob) }
     }
 
     fun toggleKeyboard() {
@@ -363,11 +365,22 @@ class Osc {
             element.placeConfigurable(target, listener)
             element.loadPrefs(target.context)
         }
+
+        target.addOnLayoutChangeListener { v, l, t, r, b, ol, ot, or, ob -> relayout(l, t, r, b, ol, ot, or, ob) }
     }
 
     fun resetElements(ctx: Context) {
         for (element in elements) {
             element.resetPrefs(ctx)
+        }
+    }
+
+    private fun relayout(l: Int, t: Int, r: Int, b: Int, ol: Int, ot: Int, or: Int, ob: Int) {
+        // don't do anything if layout didn't change
+        if (l == ol && t == ot && r == or && b == ob)
+            return
+        for (element in elements) {
+            element.updateView()
         }
     }
 

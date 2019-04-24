@@ -1,0 +1,271 @@
+From e382015913fb2d7f0edc669409252028b719cf97 Mon Sep 17 00:00:00 2001
+From: Ilya Zhuravlev <whatever@xyz.is>
+Date: Sun, 10 Feb 2019 15:28:36 -0500
+Subject: [PATCH 1/5] Replace Atomic impl with std::atomic
+
+---
+ include/OpenThreads/Atomic        | 169 ++----------------------------
+ src/OpenThreads/common/Atomic.cpp |   2 +
+ 2 files changed, 11 insertions(+), 160 deletions(-)
+
+diff --git a/include/OpenThreads/Atomic b/include/OpenThreads/Atomic
+index ba6723354..da8db7227 100644
+--- a/include/OpenThreads/Atomic
++++ b/include/OpenThreads/Atomic
+@@ -17,21 +17,7 @@
+ #include <OpenThreads/Config>
+ #include <OpenThreads/Exports>
+ 
+-#if defined(_OPENTHREADS_ATOMIC_USE_BSD_ATOMIC)
+-# include <libkern/OSAtomic.h>
+-# define _OPENTHREADS_ATOMIC_USE_LIBRARY_ROUTINES
+-#elif defined(_OPENTHREADS_ATOMIC_USE_GCC_BUILTINS) && defined(__i386__)
+-# define _OPENTHREADS_ATOMIC_USE_LIBRARY_ROUTINES
+-#elif defined(_OPENTHREADS_ATOMIC_USE_WIN32_INTERLOCKED)
+-# define _OPENTHREADS_ATOMIC_USE_LIBRARY_ROUTINES
+-#elif defined(_OPENTHREADS_ATOMIC_USE_SUN)
+-# include <atomic.h>
+-# include "Mutex"
+-# include "ScopedLock"
+-#elif defined(_OPENTHREADS_ATOMIC_USE_MUTEX)
+-# include "Mutex"
+-# include "ScopedLock"
+-#endif
++#include <atomic>
+ 
+ #if defined(_OPENTHREADS_ATOMIC_USE_LIBRARY_ROUTINES)
+ #define _OPENTHREADS_ATOMIC_INLINE
+@@ -61,19 +47,7 @@ class OPENTHREAD_EXPORT_DIRECTIVE Atomic {
+     Atomic(const Atomic&);
+     Atomic& operator=(const Atomic&);
+ 
+-#if defined(_OPENTHREADS_ATOMIC_USE_MUTEX)
+-    mutable Mutex _mutex;
+-#endif
+-#if defined(_OPENTHREADS_ATOMIC_USE_WIN32_INTERLOCKED)
+-    volatile long _value;
+-#elif defined(_OPENTHREADS_ATOMIC_USE_BSD_ATOMIC)
+-    volatile int32_t _value;
+-#elif defined(_OPENTHREADS_ATOMIC_USE_SUN)
+-    volatile uint_t _value;
+-    mutable Mutex _mutex;  // needed for xor
+-#else
+-    volatile unsigned _value;
+-#endif
++    std::atomic<unsigned> _value;
+ };
+ 
+ /**
+@@ -95,10 +69,7 @@ private:
+     AtomicPtr(const AtomicPtr&);
+     AtomicPtr& operator=(const AtomicPtr&);
+ 
+-#if defined(_OPENTHREADS_ATOMIC_USE_MUTEX)
+-    mutable Mutex _mutex;
+-#endif
+-    void* volatile _ptr;
++    std::atomic<void*> _ptr;
+ };
+ 
+ #if !defined(_OPENTHREADS_ATOMIC_USE_LIBRARY_ROUTINES)
+@@ -106,178 +77,56 @@ private:
+ _OPENTHREADS_ATOMIC_INLINE unsigned
+ Atomic::operator++()
+ {
+-#if defined(_OPENTHREADS_ATOMIC_USE_GCC_BUILTINS)
+-    return __sync_add_and_fetch(&_value, 1);
+-#elif defined(_OPENTHREADS_ATOMIC_USE_MIPOSPRO_BUILTINS)
+-    return __add_and_fetch(&_value, 1);
+-#elif defined(_OPENTHREADS_ATOMIC_USE_SUN)
+-    return atomic_inc_uint_nv(&_value);
+-#elif defined(_OPENTHREADS_ATOMIC_USE_MUTEX)
+-    ScopedLock<Mutex> lock(_mutex);
+     return ++_value;
+-#else
+-    return ++_value;
+-#endif
+ }
+ 
+ _OPENTHREADS_ATOMIC_INLINE unsigned
+ Atomic::operator--()
+ {
+-#if defined(_OPENTHREADS_ATOMIC_USE_GCC_BUILTINS)
+-    return __sync_sub_and_fetch(&_value, 1);
+-#elif defined(_OPENTHREADS_ATOMIC_USE_MIPOSPRO_BUILTINS)
+-    return __sub_and_fetch(&_value, 1);
+-#elif defined(_OPENTHREADS_ATOMIC_USE_SUN)
+-    return atomic_dec_uint_nv(&_value);
+-#elif defined(_OPENTHREADS_ATOMIC_USE_MUTEX)
+-    ScopedLock<Mutex> lock(_mutex);
+-    return --_value;
+-#else
+     return --_value;
+-#endif
+ }
+ 
+ _OPENTHREADS_ATOMIC_INLINE unsigned
+ Atomic::AND(unsigned value)
+ {
+-#if defined(_OPENTHREADS_ATOMIC_USE_GCC_BUILTINS)
+-    return __sync_fetch_and_and(&_value, value);
+-#elif defined(_OPENTHREADS_ATOMIC_USE_MIPOSPRO_BUILTINS)
+-    return __and_and_fetch(&_value, value);
+-#elif defined(_OPENTHREADS_ATOMIC_USE_SUN)
+-    return atomic_and_uint_nv(&_value, value);
+-#elif defined(_OPENTHREADS_ATOMIC_USE_MUTEX)
+-    ScopedLock<Mutex> lock(_mutex);
+-    _value &= value;
+-    return _value;
+-#else
+-    _value &= value;
+-    return _value;
+-#endif
++    return (_value &= value);
+ }
+ 
+ _OPENTHREADS_ATOMIC_INLINE unsigned
+ Atomic::OR(unsigned value)
+ {
+-#if defined(_OPENTHREADS_ATOMIC_USE_GCC_BUILTINS)
+-    return __sync_fetch_and_or(&_value, value);
+-#elif defined(_OPENTHREADS_ATOMIC_USE_MIPOSPRO_BUILTINS)
+-    return __or_and_fetch(&_value, value);
+-#elif defined(_OPENTHREADS_ATOMIC_USE_SUN)
+-    return atomic_or_uint_nv(&_value, value);
+-#elif defined(_OPENTHREADS_ATOMIC_USE_MUTEX)
+-    ScopedLock<Mutex> lock(_mutex);
+-    _value |= value;
+-    return _value;
+-#else
+-    _value |= value;
+-    return _value;
+-#endif
++    return (_value |= value);
+ }
+ 
+ _OPENTHREADS_ATOMIC_INLINE unsigned
+ Atomic::XOR(unsigned value)
+ {
+-#if defined(_OPENTHREADS_ATOMIC_USE_GCC_BUILTINS)
+-    return __sync_fetch_and_xor(&_value, value);
+-#elif defined(_OPENTHREADS_ATOMIC_USE_MIPOSPRO_BUILTINS)
+-    return __xor_and_fetch(&_value, value);
+-#elif defined(_OPENTHREADS_ATOMIC_USE_SUN)
+-    ScopedLock<Mutex> lock(_mutex);
+-    _value ^= value;
+-    return _value;
+-#elif defined(_OPENTHREADS_ATOMIC_USE_MUTEX)
+-    ScopedLock<Mutex> lock(_mutex);
+-    _value ^= value;
+-    return _value;
+-#else
+-    _value ^= value;
+-    return _value;
+-#endif
++    return (_value ^= value);
+ }
+ 
+ _OPENTHREADS_ATOMIC_INLINE unsigned
+ Atomic::exchange(unsigned value)
+ {
+-#if defined(_OPENTHREADS_ATOMIC_USE_GCC_BUILTINS)
+-    return __sync_lock_test_and_set(&_value, value);
+-#elif defined(_OPENTHREADS_ATOMIC_USE_MIPOSPRO_BUILTINS)
+-    return __compare_and_swap(&_value, _value, value);
+-#elif defined(_OPENTHREADS_ATOMIC_USE_SUN)
+-    return atomic_cas_uint(&_value, _value, value);
+-#elif defined(_OPENTHREADS_ATOMIC_USE_MUTEX)
+-    ScopedLock<Mutex> lock(_mutex);
+-    unsigned oldval = _value;
+-    _value = value;
+-    return oldval;
+-#else
+-    unsigned oldval = _value;
+-    _value = value;
+-    return oldval;
+-#endif
++    return _value.exchange(value);
+ }
+ 
+ _OPENTHREADS_ATOMIC_INLINE
+ Atomic::operator unsigned() const
+ {
+-#if defined(_OPENTHREADS_ATOMIC_USE_GCC_BUILTINS)
+-    __sync_synchronize();
+-    return _value;
+-#elif defined(_OPENTHREADS_ATOMIC_USE_MIPOSPRO_BUILTINS)
+-    __synchronize();
+-    return _value;
+-#elif defined(_OPENTHREADS_ATOMIC_USE_SUN)
+-    membar_consumer(); // Hmm, do we need???
+-    return _value;
+-#elif defined(_OPENTHREADS_ATOMIC_USE_MUTEX)
+-    ScopedLock<Mutex> lock(_mutex);
+-    return _value;
+-#else
+     return _value;
+-#endif
+ }
+ 
+ _OPENTHREADS_ATOMIC_INLINE bool
+ AtomicPtr::assign(void* ptrNew, const void* const ptrOld)
+ {
+-#if defined(_OPENTHREADS_ATOMIC_USE_GCC_BUILTINS)
+-    return __sync_bool_compare_and_swap(&_ptr, (void *)ptrOld, ptrNew);
+-#elif defined(_OPENTHREADS_ATOMIC_USE_MIPOSPRO_BUILTINS)
+-    return __compare_and_swap((unsigned long*)&_ptr, (unsigned long)ptrOld, (unsigned long)ptrNew);
+-#elif defined(_OPENTHREADS_ATOMIC_USE_SUN)
+-    return ptrOld == atomic_cas_ptr(&_ptr, const_cast<void*>(ptrOld), ptrNew);
+-#elif defined(_OPENTHREADS_ATOMIC_USE_MUTEX)
+-    ScopedLock<Mutex> lock(_mutex);
+-    if (_ptr != ptrOld)
+-        return false;
+-    _ptr = ptrNew;
+-    return true;
+-#else
+-    if (_ptr != ptrOld)
+-        return false;
+-    _ptr = ptrNew;
+-    return true;
+-#endif
++    void *old = (void*) ptrOld;
++    return _ptr.compare_exchange_strong(old, ptrNew);
+ }
+ 
+ _OPENTHREADS_ATOMIC_INLINE void*
+ AtomicPtr::get() const
+ {
+-#if defined(_OPENTHREADS_ATOMIC_USE_GCC_BUILTINS)
+-    __sync_synchronize();
+-    return _ptr;
+-#elif defined(_OPENTHREADS_ATOMIC_USE_MIPOSPRO_BUILTINS)
+-    __synchronize();
+     return _ptr;
+-#elif defined(_OPENTHREADS_ATOMIC_USE_SUN)
+-    membar_consumer(); // Hmm, do we need???
+-    return _ptr;
+-#elif defined(_OPENTHREADS_ATOMIC_USE_MUTEX)
+-    ScopedLock<Mutex> lock(_mutex);
+-    return _ptr;
+-#else
+-    return _ptr;
+-#endif
+ }
+ 
+ #endif // !defined(_OPENTHREADS_ATOMIC_USE_LIBRARY_ROUTINES)
+diff --git a/src/OpenThreads/common/Atomic.cpp b/src/OpenThreads/common/Atomic.cpp
+index 21c336435..84fec8e78 100644
+--- a/src/OpenThreads/common/Atomic.cpp
++++ b/src/OpenThreads/common/Atomic.cpp
+@@ -25,6 +25,8 @@ namespace OpenThreads {
+ 
+ #if defined(_OPENTHREADS_ATOMIC_USE_LIBRARY_ROUTINES)
+ 
++    #error Not supported.
++
+ // Non inline implementations for two special cases:
+ // * win32
+ // * i386 gcc
+-- 
+2.19.2
+

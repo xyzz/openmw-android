@@ -1,8 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.libopenmw.openmw"
     android:installLocation="auto"
-    android:versionCode="1"
-    android:versionName="0.46">
+    android:versionCode="7">
 
     <!-- Allow writing to external storage -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -29,13 +28,6 @@
         </activity>
 
         <activity
-            android:name="ui.activity.GlExtensionsActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:label="@string/app_name"
-            android:screenOrientation="sensorLandscape">
-        </activity>
-
-        <activity
             android:name="ui.activity.GameActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="sensorLandscape"
@@ -55,8 +47,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
-
     </application>
 
+    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>
