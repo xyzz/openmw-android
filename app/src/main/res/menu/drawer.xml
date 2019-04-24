@@ -17,11 +17,6 @@
             android:checked="false"
             android:title="Settings" />
 
-        <item
-            android:id="@+id/controls"
-            android:checked="false"
-            android:title="Controls" />
-
     </group>
 
 </menu>

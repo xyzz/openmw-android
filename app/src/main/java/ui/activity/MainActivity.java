@@ -39,7 +39,6 @@ import java.io.InputStreamReader;
 import constants.Constants;
 import file.utils.CopyFilesFromAssets;
 import ui.game.GameState;
-import ui.fragments.FragmentControls;
 import ui.fragments.FragmentSettings;
 import permission.PermissionHelper;
 import ui.screen.ScreenScaler;
@@ -134,12 +133,6 @@ public class MainActivity extends AppCompatActivity {
 //                        disableToolBarViews();
 //                        MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new FragmentPlugins()).commit();
 //                        return true;
-                    case R.id.controls:
-                        showOverflowMenu(false);
-                        disableToolBarViews();
-                        MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new FragmentControls()).commit();
-
-                        return true;
                     case R.id.settings:
                         disableToolBarViews();
                         showOverflowMenu(true);
