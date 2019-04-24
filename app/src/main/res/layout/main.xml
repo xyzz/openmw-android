@@ -26,16 +26,15 @@
 
                 />
 
-            <com.melnykov.fab.FloatingActionButton
+            <android.support.design.widget.FloatingActionButton
                 android:id="@+id/fab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|right"
                 android:layout_margin="16dp"
                 android:src="@android:drawable/ic_media_play"
-                fab:fab_colorNormal="#2196F3"
-                fab:fab_colorPressed="#1976D2"
-                fab:fab_colorRipple="@color/switch_thumb_normal_material_dark" />
+                app:backgroundTint="#2196F3"
+                app:rippleColor="#FFFFFF" />
 
             <View
                 android:layout_width="match_parent"

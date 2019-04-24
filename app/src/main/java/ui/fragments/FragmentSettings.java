@@ -5,9 +5,9 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.preference.Preference;
+import android.preference.PreferenceFragment;
 import android.preference.PreferenceGroup;
 
-import com.github.machinarius.preferencefragment.PreferenceFragment;
 import com.libopenmw.openmw.R;
 
 public class FragmentSettings extends PreferenceFragment implements OnSharedPreferenceChangeListener {

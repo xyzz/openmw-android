@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -21,7 +22,6 @@ import android.widget.Toast;
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.ndk.CrashlyticsNdk;
 import com.libopenmw.openmw.R;
-import com.melnykov.fab.FloatingActionButton;
 
 import io.fabric.sdk.android.Fabric;
 
@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        getSupportFragmentManager().beginTransaction()
+        getFragmentManager().beginTransaction()
                 .replace(R.id.content_frame, new FragmentSettings()).commit();
 
         initializeNavigationView(toolbar);
@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.settings:
                     showOverflowMenu(true);
                     isSettingsEnabled = true;
-                    MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new FragmentSettings()).commit();
+                    MainActivity.this.getFragmentManager().beginTransaction().replace(R.id.content_frame, new FragmentSettings()).commit();
 
                     return true;
 
