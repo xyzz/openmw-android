@@ -38,7 +38,6 @@ import java.io.InputStreamReader;
 
 import constants.Constants;
 import file.utils.CopyFilesFromAssets;
-import ui.game.GameState;
 import ui.fragments.FragmentSettings;
 import permission.PermissionHelper;
 import ui.screen.ScreenScaler;
@@ -69,7 +68,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        GameState.setGameState(false);
         super.onCreate(savedInstanceState);
         Fabric.with(this, new Crashlytics(), new CrashlyticsNdk());
         PermissionHelper.getWriteExternalStoragePermission(MainActivity.this);
@@ -98,7 +96,6 @@ public class MainActivity extends AppCompatActivity {
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                GameState.setGameState(true);
                 startGame();
             }
 

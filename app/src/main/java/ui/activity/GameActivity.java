@@ -23,7 +23,6 @@ import constants.Constants;
 import cursor.MouseCursor;
 import parser.CommandlineParser;
 import ui.controls.Osc;
-import ui.game.GameState;
 import file.ConfigsFileStorageHelper;
 
 import static utils.Utils.hideAndroidControls;
@@ -92,7 +91,6 @@ public class GameActivity extends SDLActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        GameState.setGameState(true);
 //        NativeListener.initJavaVm();
         KeepScreenOn();
         getPathToJni(ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH);
