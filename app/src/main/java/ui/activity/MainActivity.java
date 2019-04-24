@@ -43,7 +43,6 @@ import ui.fragments.FragmentSettings;
 import permission.PermissionHelper;
 import ui.screen.ScreenScaler;
 import file.ConfigsFileStorageHelper;
-import prefs.PreferencesHelper;
 
 import static file.ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH;
 import static file.ConfigsFileStorageHelper.OPENMW_CFG;
@@ -76,7 +75,6 @@ public class MainActivity extends AppCompatActivity {
         PermissionHelper.getWriteExternalStoragePermission(MainActivity.this);
         isSettingsEnabled = true;
         setContentView(R.layout.main);
-        PreferencesHelper.getPrefValues(this);
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         Settings = this.getSharedPreferences(
                 Constants.APP_PREFERENCES, Context.MODE_PRIVATE);
