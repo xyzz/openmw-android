@@ -5,6 +5,7 @@ import com.libopenmw.openmw.R
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.design.widget.TabLayout
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.LayoutInflater
@@ -13,8 +14,8 @@ import android.widget.TextView
 import java.util.*
 import android.view.View
 import android.support.v7.widget.LinearLayoutManager
-
-
+import kotlinx.android.synthetic.main.activity_mods.*
+import android.widget.Toast
 
 
 class RecyclerViewAdapter(private val data: ArrayList<String>) : RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>(), ItemMoveCallback.ItemTouchHelperContract {
@@ -132,6 +133,19 @@ class ModsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mods)
+
+        // Switch tabs between plugins/resources
+        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                flipper.displayedChild = tab.position
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab) {
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab) {
+            }
+        })
 
         recyclerView = findViewById(R.id.mods_list)
 
