@@ -15,8 +15,6 @@ import java.util.*
 import android.view.View
 import android.support.v7.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_mods.*
-import android.widget.Toast
-
 
 class RecyclerViewAdapter(private val data: ArrayList<String>) : RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>(), ItemMoveCallback.ItemTouchHelperContract {
 
@@ -113,6 +111,14 @@ class ItemMoveCallback(private val mAdapter: ItemTouchHelperContract) : ItemTouc
         }
     }
 
+    /**
+     * Speed up dragging of a list element
+     */
+    override fun interpolateOutOfBoundsScroll(recyclerView: RecyclerView, viewSize: Int, viewSizeOutOfBounds: Int, totalSize: Int, msSinceStartScroll: Long): Int {
+        val direction = Math.signum(viewSizeOutOfBounds.toFloat()).toInt()
+        return 20 * direction
+    }
+
     interface ItemTouchHelperContract {
 
         fun onRowMoved(fromPosition: Int, toPosition: Int)
@@ -157,19 +163,9 @@ class ModsActivity : AppCompatActivity() {
     }
 
     private fun populateRecyclerView() {
-        stringArrayList.add("Item 1")
-        stringArrayList.add("Item 2")
-        stringArrayList.add("Item 3")
-        stringArrayList.add("Item 4")
-        stringArrayList.add("Item 5")
-        stringArrayList.add("Item 6")
-        stringArrayList.add("Item 7")
-        stringArrayList.add("Item 8")
-        stringArrayList.add("Item 9")
-        stringArrayList.add("Item 10")
-        stringArrayList.add("Item 11")
-        stringArrayList.add("Item 12")
-        stringArrayList.add("Item 13")
+        for (i in 1..200) {
+            stringArrayList.add("Item $i")
+        }
 
         mAdapter = RecyclerViewAdapter(stringArrayList)
 
