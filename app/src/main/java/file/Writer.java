@@ -13,8 +13,13 @@ import java.io.InputStreamReader;
 
   public class Writer {
 
-      // TODO: refactor so that the order of arguments is (path, key, value)
-        public static void write(String data, String path, String value)
+    /**
+     * Replaces a key=value in config file with the new value
+     * @param path Path to the configuration file to edit
+     * @param key Key to replace
+     * @param value New value to put
+     */
+        public static void write(String path, String key, String value)
                 throws IOException {
             // Create a new empty file if it doesn't already exist
             File fin = new File(path);
@@ -27,8 +32,8 @@ import java.io.InputStreamReader;
             StringBuilder builder = new StringBuilder();
             boolean contains = false;
             while (line != null) {
-                if (line.startsWith(value) && !contains) {
-                    builder.append(value + "=" + data);
+                if (line.startsWith(key) && !contains) {
+                    builder.append(key + "=" + value);
                     contains = true;
                 } else
                     builder.append(line);
@@ -36,7 +41,7 @@ import java.io.InputStreamReader;
                 line = reader.readLine();
             }
             if (!contains)
-                builder.append(value + "=" + data);
+                builder.append(key + "=" + value);
 
             reader.close();
             FileWriter writer = new FileWriter(path);
