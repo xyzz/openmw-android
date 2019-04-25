@@ -121,5 +121,6 @@
 
     <string name="about_title">About OpenMW</string>
     <string name="about_contents">TODO: about text. Also put version info here.</string>
+    <string name="activity_mods">Mods</string>
 
 </resources>

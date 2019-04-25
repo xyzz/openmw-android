@@ -13,6 +13,7 @@ import android.preference.PreferenceGroup;
 import com.libopenmw.openmw.R;
 
 import ui.activity.ConfigureControls;
+import ui.activity.ModsActivity;
 
 public class FragmentSettings extends PreferenceFragment implements OnSharedPreferenceChangeListener {
 
@@ -30,7 +31,8 @@ public class FragmentSettings extends PreferenceFragment implements OnSharedPref
         });
 
         findPreference("pref_mods").setOnPreferenceClickListener((Preference pref) -> {
-            new AlertDialog.Builder(getActivity()).setTitle("Mods").setMessage("Placeholder").show();
+            Intent intent = new Intent(getActivity(), ModsActivity.class);
+            this.startActivity(intent);
             return true;
         });
     }
