@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.v4.math.MathUtils;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -22,18 +23,28 @@ public class Joystick extends View {
     // left or right stick
     protected int stickId = 0;
 
+    // width of a stroke
+    private int width = 0;
+
     private Paint paint = new Paint();
 
     public Joystick(Context context) {
         super(context);
+        init();
     }
 
     public Joystick(Context context, AttributeSet attrs) {
         super(context, attrs);
+        init();
     }
 
     public Joystick(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        init();
+    }
+
+    void init() {
+        width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2, getContext().getResources().getDisplayMetrics());
     }
 
     public void setStick(int id) {
@@ -45,21 +56,20 @@ public class Joystick extends View {
         super.onDraw(canvas);
 
         paint.setStyle(Paint.Style.STROKE);
-        paint.setColor(Color.RED);
-        canvas.drawRect(0, 0, getWidth() - 1, getHeight() - 1, paint);
-        paint.setColor(Color.GREEN);
+        paint.setStrokeWidth(width);
+        paint.setColor(Color.GRAY);
 
-        // Draw circle for initial touch
         if (down) {
-            canvas.drawCircle(initialX, initialY, getWidth() / 10, paint);
-        }
+            // Draw initial touch
+            canvas.drawCircle(initialX, initialY, getWidth() / 10f, paint);
 
-        if (currentX < 0 || currentY < 0) {
-            currentX = currentY = getWidth() / 2;
+            // Draw current stick position
+            canvas.drawCircle(currentX, currentY, getWidth() / 5f, paint);
+        } else {
+            // Draw the outline
+            canvas.drawCircle(getWidth() / 2f, getHeight() / 2f,
+                    getWidth() / 2f - width, paint);
         }
-
-        // Draw circle for current stick position
-        canvas.drawCircle(currentX, currentY, getWidth() / 5, paint);
     }
 
     @Override
