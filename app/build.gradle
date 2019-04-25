@@ -14,14 +14,18 @@ apply plugin: 'kotlin-android'
 ext {
     versionFile = new File(project.rootDir, 'app/src/main/assets/libopenmw/resources/version')
     calculateVersion = {
-        stream = new FileInputStream(versionFile)
-        return stream.readLines()[0]
+        if (versionFile.exists()) {
+            stream = new FileInputStream(versionFile)
+            return stream.readLines()[0]
+        } else {
+            return ""
+        }
     }
 }
 
 android {
-    compileSdkVersion 27
-    buildToolsVersion "27.0.3"
+    compileSdkVersion 28
+    buildToolsVersion "28.0.3"
 
     sourceSets {
         main {
@@ -37,7 +41,7 @@ android {
     defaultConfig {
         applicationId "com.libopenmw.openmw"
         minSdkVersion 21
-        targetSdkVersion 27
+        targetSdkVersion 28
         versionName calculateVersion()
     }
 
@@ -59,8 +63,8 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.android.support:design:27.1.1'
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support:design:28.0.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.crashlytics.sdk.android:crashlytics:2.9.9'
     implementation 'com.crashlytics.sdk.android:crashlytics-ndk:2.0.5'
