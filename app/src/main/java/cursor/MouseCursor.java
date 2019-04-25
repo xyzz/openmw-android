@@ -13,6 +13,7 @@ import org.libsdl.app.SDLActivity;
 
 import ui.activity.GameActivity;
 import ui.activity.MainActivity;
+import ui.controls.Osc;
 
 /**
  * An image view which doesn't downsize itself when moved to the border of a RelativeLayout
@@ -40,8 +41,12 @@ public class MouseCursor implements Choreographer.FrameCallback {
     private Choreographer choreographer;
     private FixedSizeImageView cursor;
     private RelativeLayout layout;
+    private Osc osc;
+    private int prevMouseShown = -1;
 
-    public MouseCursor(GameActivity activity) {
+    public MouseCursor(GameActivity activity, Osc osc) {
+        this.osc = osc;
+
         Resources r = activity.getResources();
 
         int height = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30, r.getDisplayMetrics());
@@ -61,7 +66,16 @@ public class MouseCursor implements Choreographer.FrameCallback {
 
     @Override
     public void doFrame(long frameTimeNanos) {
-        if (SDLActivity.isMouseShown() == 0) {
+        // Check if we need to switch osc widgets visibility
+        int mouseShown = SDLActivity.isMouseShown();
+        if (this.osc != null && mouseShown != prevMouseShown) {
+            if (mouseShown == 0)
+                this.osc.showNonEssential();
+            else
+                this.osc.hideNonEssential();
+        }
+
+        if (mouseShown == 0) {
             cursor.setVisibility(View.GONE);
         } else {
             cursor.setVisibility(View.VISIBLE);
@@ -83,5 +97,6 @@ public class MouseCursor implements Choreographer.FrameCallback {
         }
 
         choreographer.postFrameCallback(this);
+        prevMouseShown = mouseShown;
     }
 }

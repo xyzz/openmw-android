@@ -109,12 +109,13 @@ public class GameActivity extends SDLActivity {
 
     private void showControls() {
         hideControls = PreferenceManager.getDefaultSharedPreferences(this).getBoolean(Constants.HIDE_CONTROLS, false);
+        Osc osc = null;
         if (!hideControls) {
             RelativeLayout layout = getLayout();
-            Osc osc = new Osc();
+            osc = new Osc();
             osc.placeElements(layout);
         }
-        cursor = new MouseCursor(this);
+        cursor = new MouseCursor(this, osc);
     }
 
     private void KeepScreenOn() {
