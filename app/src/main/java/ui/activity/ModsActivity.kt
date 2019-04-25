@@ -53,8 +53,7 @@ class RecyclerViewAdapter(private val data: ArrayList<String>) : RecyclerView.Ad
     }
 
     override fun onRowSelected(myViewHolder: MyViewHolder) {
-        myViewHolder.rowView.setBackgroundColor(Color.GRAY)
-
+        myViewHolder.rowView.setBackgroundColor(Color.LTGRAY)
     }
 
     override fun onRowClear(myViewHolder: MyViewHolder) {
