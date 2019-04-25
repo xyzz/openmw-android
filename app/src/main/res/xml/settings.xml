@@ -44,13 +44,6 @@
             android:title="Hide onscreen buttons" />
 
         <EditTextPreference
-            android:key="pref_touchpadSensitivity"
-            android:title="@string/pref_touchpadSensitivity"
-            android:dialogTitle="@string/pref_touchpadSensitivity"
-            android:inputType="numberDecimal"
-            />
-
-        <EditTextPreference
             android:key="pref_customResolution"
             android:title="@string/pref_customResolution"
             android:dialogTitle="@string/pref_customResolution"
