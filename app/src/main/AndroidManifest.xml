@@ -1,4 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.libopenmw.openmw"
     android:installLocation="auto"
     android:versionCode="7">
@@ -6,13 +7,15 @@
     <!-- Allow writing to external storage -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:hardwareAccelerated="true"
         android:allowBackup="true"
         android:icon="@drawable/openmw"
         android:label="@string/app_name"
-        android:theme="@style/MyTheme">
+        android:theme="@style/MyTheme"
+        tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name="ui.activity.MainActivity"
             android:configChanges="keyboardHidden|orientation"
@@ -22,9 +25,6 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <meta-data
-                android:name="android.app.shortcuts"
-                android:resource="@xml/shortcuts" />
         </activity>
 
         <activity
@@ -32,22 +32,11 @@
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="sensorLandscape"
             android:theme="@style/Theme.AppCompat.FullScreen" />
+
         <activity
             android:name="ui.activity.ConfigureControls"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="sensorLandscape"
             android:theme="@style/Theme.AppCompat.FullScreen" />
-        <activity
-            android:name="com.libopenmw.openmw.FileChooser"
-            android:label="Choose File"
-            android:screenOrientation="sensorLandscape">
-
-            <intent-filter>
-                <action android:name="com.libopenmw.openmw.FileChooser" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
     </application>
-
-    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>
