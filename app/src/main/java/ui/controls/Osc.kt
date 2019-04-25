@@ -12,6 +12,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import com.libopenmw.openmw.R
+import org.libsdl.app.SDLActivity
 import ui.activity.GameActivity
 
 const val VIRTUAL_SCREEN_WIDTH = 1024
@@ -391,19 +392,19 @@ class Osc {
         showNonEssential()
     }
 
-    private var prevVisibility = 0
-
     fun toggleKeyboard() {
         osk.toggle()
 
         if (!keyboardVisible) {
-            prevVisibility = visibilityState
+            keyboardVisible = true
             setVisibility(OscVisibility.KEYBOARD.v)
         } else {
-            setVisibility(prevVisibility)
+            keyboardVisible = false
+            if (SDLActivity.isMouseShown() == 0)
+                showNonEssential()
+            else
+                hideNonEssential()
         }
-
-        keyboardVisible = !keyboardVisible
     }
 
     fun placeConfigurableElements(target: RelativeLayout, listener: View.OnTouchListener) {
@@ -443,14 +444,16 @@ class Osc {
      * Hides everything except the widgets that should be visible in inventory screen
      */
     fun hideNonEssential() {
-        setVisibility(OscVisibility.ESSENTIAL.v)
+        if (!keyboardVisible)
+            setVisibility(OscVisibility.ESSENTIAL.v)
     }
 
     /**
      * Shows all widgets again
      */
     fun showNonEssential() {
-        setVisibility(OscVisibility.ESSENTIAL.v or OscVisibility.NORMAL.v)
+        if (!keyboardVisible)
+            setVisibility(OscVisibility.ESSENTIAL.v or OscVisibility.NORMAL.v)
     }
 
     private fun relayout(l: Int, t: Int, r: Int, b: Int, ol: Int, ot: Int, or: Int, ob: Int) {
