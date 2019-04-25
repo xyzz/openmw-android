@@ -1,5 +1,6 @@
 package ui.activity
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import com.libopenmw.openmw.R
 
@@ -14,13 +15,20 @@ import android.widget.TextView
 import java.util.*
 import android.view.View
 import android.support.v7.widget.LinearLayoutManager
+import android.widget.ImageView
 import kotlinx.android.synthetic.main.activity_mods.*
+import android.view.MotionEvent
+
+
 
 class RecyclerViewAdapter(private val data: ArrayList<String>) : RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>(), ItemMoveCallback.ItemTouchHelperContract {
+
+    lateinit var touchHelper: ItemTouchHelper
 
     inner class MyViewHolder(internal var rowView: View) : RecyclerView.ViewHolder(rowView) {
 
         val mTitle: TextView = rowView.findViewById(R.id.txtTitle)
+        val mHandle: ImageView = rowView.findViewById(R.id.handle)
 
     }
 
@@ -29,8 +37,15 @@ class RecyclerViewAdapter(private val data: ArrayList<String>) : RecyclerView.Ad
         return MyViewHolder(itemView)
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.mTitle.text = data[position]
+        holder.mHandle.setOnTouchListener { v, event ->
+            if (event.action == MotionEvent.ACTION_DOWN) {
+                touchHelper.startDrag(holder)
+            }
+            false
+        }
     }
 
 
@@ -171,6 +186,8 @@ class ModsActivity : AppCompatActivity() {
         val callback = ItemMoveCallback(mAdapter)
         val touchHelper = ItemTouchHelper(callback)
         touchHelper.attachToRecyclerView(recyclerView)
+
+        mAdapter.touchHelper = touchHelper
 
         recyclerView.adapter = mAdapter
     }
