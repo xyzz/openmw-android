@@ -361,7 +361,7 @@ class Osc {
             fnButtons.add(OscHiddenButton("f$el", OscVisibility.NULL,
                 70, 70 * (i + 1), "F$el", code))
         }
-        val fn = OscHiddenToggle("fn", OscVisibility.ESSENTIAL,
+        val fn = OscHiddenToggle("fn", OscVisibility.NULL,
             70, 0, "FN", fnButtons)
 
         // Quick buttons: 0 to 9
@@ -371,7 +371,7 @@ class Osc {
             quickButtons.add(OscHiddenButton("qp$i", OscVisibility.NULL,
                 0, 70 * (i + 1), "$i", code))
         }
-        val qp = OscHiddenToggle("qp", OscVisibility.ESSENTIAL,
+        val qp = OscHiddenToggle("qp", OscVisibility.NULL,
             0, 0, "QP", quickButtons)
 
         elements.addAll(fnButtons)
@@ -430,6 +430,9 @@ class Osc {
             return
 
         for (element in elements) {
+            // don't touch elements with NULL visibility as these are managed externally
+            if (element.visibility == OscVisibility.NULL)
+                continue
             if (newState and element.visibility.v == 0) {
                 element.view?.visibility = View.GONE
             } else {
