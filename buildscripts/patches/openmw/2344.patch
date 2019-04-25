@@ -1,0 +1,171 @@
+From 6c96b5653b63bcda2b52912272b3c593de72669a Mon Sep 17 00:00:00 2001
+From: Ilya Zhuravlev <whatever@xyz.is>
+Date: Wed, 24 Apr 2019 19:22:47 -0400
+Subject: [PATCH 1/2] Add a button to delete spells from spellwindow
+
+---
+ apps/openmw/mwgui/spellmodel.cpp       | 11 +++++++++++
+ apps/openmw/mwgui/spellmodel.hpp       |  2 ++
+ apps/openmw/mwgui/spellwindow.cpp      | 25 +++++++++++++++++++------
+ apps/openmw/mwgui/spellwindow.hpp      |  1 +
+ files/mygui/openmw_spell_window.layout | 12 ++++++++++--
+ 5 files changed, 43 insertions(+), 8 deletions(-)
+
+diff --git a/apps/openmw/mwgui/spellmodel.cpp b/apps/openmw/mwgui/spellmodel.cpp
+index 6dadebca27..d6424c08bc 100644
+--- a/apps/openmw/mwgui/spellmodel.cpp
++++ b/apps/openmw/mwgui/spellmodel.cpp
+@@ -148,6 +148,17 @@ namespace MWGui
+         return mSpells.size();
+     }
+ 
++    SpellModel::ModelIndex SpellModel::getSelectedIndex() const
++    {
++        ModelIndex selected = -1;
++        for (SpellModel::ModelIndex i = 0; i<int(getItemCount()); ++i)
++        {
++            if (getItem(i).mSelected)
++                selected = i;
++        }
++        return selected;
++    }
++
+     Spell SpellModel::getItem(ModelIndex index) const
+     {
+         if (index < 0 || index >= int(mSpells.size()))
+diff --git a/apps/openmw/mwgui/spellmodel.hpp b/apps/openmw/mwgui/spellmodel.hpp
+index 4aa1f9d2a7..d191cba0e0 100644
+--- a/apps/openmw/mwgui/spellmodel.hpp
++++ b/apps/openmw/mwgui/spellmodel.hpp
+@@ -48,6 +48,8 @@ namespace MWGui
+         ///< throws for invalid index
+ 
+         size_t getItemCount() const;
++        ModelIndex getSelectedIndex() const;
++        ///< returns -1 if nothing is selected
+ 
+     private:
+         MWWorld::Ptr mActor;
+diff --git a/apps/openmw/mwgui/spellwindow.cpp b/apps/openmw/mwgui/spellwindow.cpp
+index 254e731d0e..2b1056797e 100644
+--- a/apps/openmw/mwgui/spellwindow.cpp
++++ b/apps/openmw/mwgui/spellwindow.cpp
+@@ -1,5 +1,6 @@
+ #include "spellwindow.hpp"
+ 
++#include <MyGUI_Button.h>
+ #include <MyGUI_EditBox.h>
+ #include <MyGUI_InputManager.h>
+ 
+@@ -36,14 +37,18 @@ namespace MWGui
+     {
+         mSpellIcons = new SpellIcons();
+ 
++        MyGUI::Button *deleteSpellBtn = nullptr;
++
+         getWidget(mSpellView, "SpellView");
+         getWidget(mEffectBox, "EffectsBox");
+         getWidget(mFilterEdit, "FilterEdit");
++        getWidget(deleteSpellBtn, "DeleteSpellButton");
+ 
+         mFilterEdit->setUserString("IgnoreTabKey", "y");
+ 
+         mSpellView->eventSpellClicked += MyGUI::newDelegate(this, &SpellWindow::onModelIndexSelected);
+         mFilterEdit->eventEditTextChange += MyGUI::newDelegate(this, &SpellWindow::onFilterChanged);
++        deleteSpellBtn->eventMouseButtonClick += MyGUI::newDelegate(this, &SpellWindow::onDeleteClicked);
+ 
+         setCoord(498, 300, 302, 300);
+     }
+@@ -185,6 +190,17 @@ namespace MWGui
+         mSpellView->setModel(new SpellModel(MWMechanics::getPlayer(), sender->getCaption()));
+     }
+ 
++    void SpellWindow::onDeleteClicked(MyGUI::Widget *widget)
++    {
++        SpellModel::ModelIndex selected = mSpellView->getModel()->getSelectedIndex();
++        if (selected < 0)
++            return;
++
++        const Spell& spell = mSpellView->getModel()->getItem(selected);
++        if (spell.mType != Spell::Type_EnchantedItem)
++            askDeleteSpell(spell.mId);
++    }
++
+     void SpellWindow::onSpellSelected(const std::string& spellId)
+     {
+         MWWorld::Ptr player = MWMechanics::getPlayer();
+@@ -222,12 +238,9 @@ namespace MWGui
+ 
+         mSpellView->setModel(new SpellModel(MWMechanics::getPlayer(), ""));
+ 
+-        SpellModel::ModelIndex selected = 0;
+-        for (SpellModel::ModelIndex i = 0; i<int(mSpellView->getModel()->getItemCount()); ++i)
+-        {
+-            if (mSpellView->getModel()->getItem(i).mSelected)
+-                selected = i;
+-        }
++        SpellModel::ModelIndex selected = mSpellView->getModel()->getSelectedIndex();
++        if (selected < 0)
++            selected = 0;
+ 
+         selected += next ? 1 : -1;
+         int itemcount = mSpellView->getModel()->getItemCount();
+diff --git a/apps/openmw/mwgui/spellwindow.hpp b/apps/openmw/mwgui/spellwindow.hpp
+index ce10770f55..01a9c7392f 100644
+--- a/apps/openmw/mwgui/spellwindow.hpp
++++ b/apps/openmw/mwgui/spellwindow.hpp
+@@ -33,6 +33,7 @@ namespace MWGui
+         void onSpellSelected(const std::string& spellId);
+         void onModelIndexSelected(SpellModel::ModelIndex index);
+         void onFilterChanged(MyGUI::EditBox *sender);
++        void onDeleteClicked(MyGUI::Widget *widget);
+         void onDeleteSpellAccept();
+         void askDeleteSpell(const std::string& spellId);
+ 
+diff --git a/files/mygui/openmw_spell_window.layout b/files/mygui/openmw_spell_window.layout
+index 8a98c47b23..9959aeb4ea 100644
+--- a/files/mygui/openmw_spell_window.layout
++++ b/files/mygui/openmw_spell_window.layout
+@@ -13,8 +13,16 @@
+         <Widget type="SpellView" skin="MW_SpellView" position="8 38 268 490" align="Left Top Stretch" name="SpellView">
+         </Widget>
+ 
+-        <!-- Search box-->
+-        <Widget type="EditBox" skin="MW_TextBoxEditWithBorder" position="8 535 268 23" align="Left Bottom HStretch" name="FilterEdit">
++        <Widget type="Widget" position="8 535 268 23" align="Left Bottom HStretch">
++            <!-- Spell deletion button -->
++            <Widget type="Button" skin="MW_Button" align="Right Bottom" position="150 0 118 24" name="DeleteSpellButton">
++                <Property key="Caption" value="Delete Spell"/>
++                <Property key="NeedKey" value="false"/>
++            </Widget>
++
++            <!-- Search box-->
++            <Widget type="EditBox" skin="MW_TextBoxEditWithBorder" position="0 0 142 23" align="Left Bottom HStretch" name="FilterEdit">
++            </Widget>
+         </Widget>
+ 
+     </Widget>
+
+From 04de2fcc54d2db0caf4322b273de4a4a3605ae1f Mon Sep 17 00:00:00 2001
+From: Ilya Zhuravlev <whatever@xyz.is>
+Date: Wed, 24 Apr 2019 19:57:15 -0400
+Subject: [PATCH 2/2] spell window: Use sDeleteSpell instead of hardcoding
+ string caption
+
+---
+ files/mygui/openmw_spell_window.layout | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/files/mygui/openmw_spell_window.layout b/files/mygui/openmw_spell_window.layout
+index 9959aeb4ea..49b38dffa0 100644
+--- a/files/mygui/openmw_spell_window.layout
++++ b/files/mygui/openmw_spell_window.layout
+@@ -16,7 +16,7 @@
+         <Widget type="Widget" position="8 535 268 23" align="Left Bottom HStretch">
+             <!-- Spell deletion button -->
+             <Widget type="Button" skin="MW_Button" align="Right Bottom" position="150 0 118 24" name="DeleteSpellButton">
+-                <Property key="Caption" value="Delete Spell"/>
++                <Property key="Caption" value="#{sDeleteSpell}"/>
+                 <Property key="NeedKey" value="false"/>
+             </Widget>
+ 
