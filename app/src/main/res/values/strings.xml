@@ -49,7 +49,7 @@
     <string name="pref_touchpadSensitivity">Virtual touchpad sensitivity</string>
     <string name="action_reset_config">Reset configuration files</string>
     <string name="action_reset_screen_controls">Reset on-screen controls</string>
-    <string name="action_show_screen_controls">Configure on-screen controls</string>
+    <string name="action_show_screen_controls">On-screen controls…</string>
     <string name="config_was_reset">Configuration was reset to default values</string>
     <string name="pref_lang">Language settings</string>
     <string name="pref_encoding">Game language</string>
@@ -116,7 +116,7 @@
     <string name="pref_preload_default">false</string>
     <string name="btn_back">Back</string>
     <string name="pref_customResolution">Custom resolution</string>
-    <string name="mods">Configure mods</string>
+    <string name="mods">Mods…</string>
     <string name="action_about">About</string>
 
     <string name="about_title">About OpenMW</string>
