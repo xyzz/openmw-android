@@ -929,8 +929,35 @@ public class SDLActivity extends Activity {
         return messageboxSelection[0];
     }
 
+    private Dialog showModernDialog(Bundle args) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        int[] buttonIds = args.getIntArray("buttonIds");
+        String[] buttonTexts = args.getStringArray("buttonTexts");
+
+        if (buttonIds.length >= 1)
+            builder.setPositiveButton(buttonTexts[0], (dialog, which) -> {
+                messageboxSelection[0] = buttonIds[0];
+                dialog.dismiss();
+            });
+
+        AlertDialog dialog = builder.create();
+        dialog.setTitle(args.getString("title"));
+        dialog.setCancelable(false);
+        dialog.setOnDismissListener(unused -> {
+            synchronized (messageboxSelection) {
+                messageboxSelection.notify();
+            }
+        });
+        dialog.setMessage(args.getString("message"));
+
+        return dialog;
+    }
+
     @Override
     protected Dialog onCreateDialog(int ignore, Bundle args) {
+        if (args.getIntArray("buttonIds").length <= 1)
+            return showModernDialog(args);
 
         // TODO set values from "flags" to messagebox dialog
 
