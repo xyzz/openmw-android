@@ -10,10 +10,7 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.support.v7.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_mods.*
-import mods.ModMoveCallback
-import mods.ModType
-import mods.ModsAdapter
-import mods.ModsCollection
+import mods.*
 
 
 class ModsActivity : AppCompatActivity() {
@@ -57,7 +54,7 @@ class ModsActivity : AppCompatActivity() {
         list.layoutManager = linearLayoutManager
 
         // Set up the adapter using the specified ModsCollection
-        val adapter = ModsAdapter(ModsCollection(type, dataFiles, extensions))
+        val adapter = ModsAdapter(ModsCollection(type, dataFiles, extensions, database))
 
         // Set up the drag-and-drop callback
         val callback = ModMoveCallback(adapter)
