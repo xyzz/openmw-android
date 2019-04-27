@@ -1,4 +1,4 @@
-From 31b2da5fa1bb9eace51beb53c053358965c52eaf Mon Sep 17 00:00:00 2001
+From 6599dd2426add1eddcc2d717254f3927c4a625af Mon Sep 17 00:00:00 2001
 From: Ilya Zhuravlev <whatever@xyz.is>
 Date: Sun, 10 Feb 2019 19:16:45 -0500
 Subject: [PATCH 3/9] globalmap: fix race vs savegame load

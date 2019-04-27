@@ -1,17 +1,17 @@
-From 66a3cf382fbabb7a909d6202d3f89c4b22c9c98e Mon Sep 17 00:00:00 2001
+From 4eea4edd1b1267cf9f0b42d3a3dc8eb7018c9763 Mon Sep 17 00:00:00 2001
 From: Ilya Zhuravlev <whatever@xyz.is>
 Date: Mon, 1 Apr 2019 13:32:32 -0400
 Subject: [PATCH 5/9] android: Revert UI dimensions
 
 ---
- files/settings-default.cfg | 92 +++++++++++++++++++-------------------
- 1 file changed, 46 insertions(+), 46 deletions(-)
+ files/settings-default.cfg | 95 ++++++++++++++++++++------------------
+ 1 file changed, 49 insertions(+), 46 deletions(-)
 
 diff --git a/files/settings-default.cfg b/files/settings-default.cfg
-index 353a3ac3d..6e7f31b4f 100644
+index 7e7e04b78..989224190 100644
 --- a/files/settings-default.cfg
 +++ b/files/settings-default.cfg
-@@ -477,34 +477,34 @@ refraction scale = 1.0
+@@ -480,42 +480,45 @@ refraction scale = 1.0
  # screen size. (0.0 to 1.0).  X & Y, Width & Height.
  
  # Stats window displaying level, race, class, skills and stats.
@@ -23,8 +23,9 @@ index 353a3ac3d..6e7f31b4f 100644
 +stats y = 0.0
 +stats w = 0.375
 +stats h = 0.4275
- # Stats window pin status
++# Stats window pin status
  stats pin = false
+ stats hidden = false
  
  # Spells window displaying powers, spells, and magical items.
 -spells x = 0.63
@@ -35,8 +36,9 @@ index 353a3ac3d..6e7f31b4f 100644
 +spells y = 0.5725
 +spells w = 0.375
 +spells h = 0.4275
- # Spells window pin status
++# Spells window pin status
  spells pin = false
+ spells hidden = false
  
  # Local and world map window.
 -map x = 0.63
@@ -47,8 +49,21 @@ index 353a3ac3d..6e7f31b4f 100644
 +map y = 0.0
 +map w = 0.375
 +map h = 0.5725
- # Map window pin status
++# Map window pin status
  map pin = false
+ map hidden = false
+ 
+ # Player inventory window when explicitly opened.
+-inventory x = 0.015
+-inventory y = 0.54
+-inventory w = 0.45
+-inventory h = 0.38
++inventory x = 0.0
++inventory y = 0.4275
++inventory w = 0.6225
++inventory h = 0.5725
+ inventory pin = false
+ inventory hidden = false
  
  # Dialog window for talking with NPCs.
 -dialogue x = 0.15
@@ -62,7 +77,7 @@ index 353a3ac3d..6e7f31b4f 100644
  
  # Alchemy window for crafting potions.
  alchemy x = 0.25
-@@ -513,54 +513,54 @@ alchemy w = 0.5
+@@ -524,46 +527,46 @@ alchemy w = 0.5
  alchemy h = 0.5
  
  # Console command window for debugging commands.
@@ -72,18 +87,6 @@ index 353a3ac3d..6e7f31b4f 100644
 +console y = 0.0
  console w = 1.0
  console h = 0.5
- 
- # Player inventory window when explicitly opened.
--inventory x = 0.015
--inventory y = 0.54
--inventory w = 0.45
--inventory h = 0.38
-+inventory x = 0.0
-+inventory y = 0.4275
-+inventory w = 0.6225
-+inventory h = 0.5725
- # Inventory window pin status
- inventory pin = false
  
  # Player inventory window when searching a container.
 -inventory container x = 0.015

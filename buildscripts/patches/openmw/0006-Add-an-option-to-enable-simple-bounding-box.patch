@@ -1,4 +1,4 @@
-From 3b848d7c0a20dafa3625a3c0ba0f23de62a08a12 Mon Sep 17 00:00:00 2001
+From fc4eef7647102200f8274a51e49e82e529fcc3aa Mon Sep 17 00:00:00 2001
 From: Ilya Zhuravlev <whatever@xyz.is>
 Date: Mon, 1 Apr 2019 13:32:49 -0400
 Subject: [PATCH 6/9] Add an option to enable simple bounding box
@@ -39,10 +39,10 @@ index 0f8814aca..5bcf01508 100644
          mShape.reset(new btCapsuleShapeZ(mHalfExtents.x(), 2*mHalfExtents.z() - 2*mHalfExtents.x()));
          mRotationallyInvariant = true;
 diff --git a/files/settings-default.cfg b/files/settings-default.cfg
-index 6e7f31b4f..9293b6117 100644
+index 989224190..be699ed32 100644
 --- a/files/settings-default.cfg
 +++ b/files/settings-default.cfg
-@@ -258,6 +258,9 @@ strength influences hand to hand = 0
+@@ -255,6 +255,9 @@ strength influences hand to hand = 0
  # Render holstered weapons (with quivers and scabbards), requires modded assets
  weapon sheathing = false
  

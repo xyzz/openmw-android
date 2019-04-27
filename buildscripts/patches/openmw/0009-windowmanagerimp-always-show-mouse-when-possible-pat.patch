@@ -1,4 +1,4 @@
-From 3b41d15088a428bf608487a78e453164cf6715e2 Mon Sep 17 00:00:00 2001
+From 96052824378783f1013bd7b4b5d858bdcf975722 Mon Sep 17 00:00:00 2001
 From: Ilya Zhuravlev <whatever@xyz.is>
 Date: Thu, 25 Apr 2019 06:35:09 -0400
 Subject: [PATCH 9/9] windowmanagerimp: always show mouse when possible (patch
@@ -9,10 +9,10 @@ Subject: [PATCH 9/9] windowmanagerimp: always show mouse when possible (patch
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/apps/openmw/mwgui/windowmanagerimp.cpp b/apps/openmw/mwgui/windowmanagerimp.cpp
-index abd483a72..3ab11ead4 100644
+index 2fc4896f8..da8fef4bd 100644
 --- a/apps/openmw/mwgui/windowmanagerimp.cpp
 +++ b/apps/openmw/mwgui/windowmanagerimp.cpp
-@@ -1678,7 +1678,7 @@ namespace MWGui
+@@ -1704,7 +1704,7 @@ namespace MWGui
  
      bool WindowManager::getCursorVisible()
      {

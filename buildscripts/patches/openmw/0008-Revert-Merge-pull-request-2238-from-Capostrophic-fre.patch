@@ -1,4 +1,4 @@
-From 4f7acff35ec600280b083b5cc1edcea31e74222d Mon Sep 17 00:00:00 2001
+From 1ed920b4bf36af8862754a22288a301429b9d104 Mon Sep 17 00:00:00 2001
 From: Ilya Zhuravlev <whatever@xyz.is>
 Date: Mon, 1 Apr 2019 14:01:14 -0400
 Subject: [PATCH 8/9] Revert "Merge pull request #2238 from
@@ -10,7 +10,7 @@ This reverts commit 1f3813a2301edc17c132f07d360d8f00fe596c4d.
  1 file changed, 1 deletion(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index bf489d99c..6aff462a8 100644
+index 98d8ace47..506686cf8 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -262,7 +262,6 @@ include_directories(SYSTEM ${OPENSCENEGRAPH_INCLUDE_DIRS})

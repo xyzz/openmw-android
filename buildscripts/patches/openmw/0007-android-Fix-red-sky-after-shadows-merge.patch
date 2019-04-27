@@ -1,4 +1,4 @@
-From c5101e4c9ad30ec501a50e1866084f36dd1f2607 Mon Sep 17 00:00:00 2001
+From e3c3ca0a06fa6695259054850c13159e6fe60d77 Mon Sep 17 00:00:00 2001
 From: Ilya Zhuravlev <whatever@xyz.is>
 Date: Mon, 1 Apr 2019 13:33:12 -0400
 Subject: [PATCH 7/9] android: Fix red sky after shadows merge
