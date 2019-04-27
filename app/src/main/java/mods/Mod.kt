@@ -20,7 +20,7 @@ enum class ModType(val v: Int) {
  * @param order Load order, or order in the list
  * @param enabled Whether the mod is enabled
  */
-class Mod(val type: ModType, val filename: String, var order: Int, val enabled: Boolean) {
+class Mod(val type: ModType, val filename: String, var order: Int, var enabled: Boolean) {
 
     /// Set to true when DB update is needed to keep consistency
     var dirty: Boolean = false

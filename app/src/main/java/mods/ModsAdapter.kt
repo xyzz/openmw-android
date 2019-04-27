@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
 import com.libopenmw.openmw.R
@@ -26,6 +27,7 @@ class ModsAdapter(private val collection: ModsCollection) : RecyclerView.Adapter
     inner class ModViewHolder(internal var rowView: View) : RecyclerView.ViewHolder(rowView) {
         val mTitle: TextView = rowView.findViewById(R.id.txtTitle)
         val mHandle: ImageView = rowView.findViewById(R.id.handle)
+        val mCheckbox: CheckBox = rowView.findViewById(R.id.modCheckbox)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ModViewHolder {
@@ -35,12 +37,19 @@ class ModsAdapter(private val collection: ModsCollection) : RecyclerView.Adapter
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onBindViewHolder(holder: ModViewHolder, position: Int) {
-        holder.mTitle.text = collection.mods[position].filename
+        val mod = collection.mods[position]
+        holder.mTitle.text = mod.filename
         holder.mHandle.setOnTouchListener { _, event ->
             if (event.action == MotionEvent.ACTION_DOWN) {
                 touchHelper.startDrag(holder)
             }
             false
+        }
+        holder.mCheckbox.isChecked = mod.enabled
+        holder.mCheckbox.setOnClickListener {
+            mod.enabled = (it as CheckBox).isChecked
+            mod.dirty = true
+            collection.update()
         }
     }
 
