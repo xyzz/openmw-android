@@ -17,4 +17,13 @@
         <item name="colorAccent">#FF4081</item>
         <item name="actionBarStyle">@style/MyActionBar</item>
     </style>
+
+    <style name="MyCustomTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="android:textAppearance">@style/CustomTabWidgetText</item>
+    </style>
+
+    <style name="CustomTabWidgetText"
+        parent="@android:style/TextAppearance.Widget.TabWidget">
+        <item name="android:textSize">16sp</item>
+    </style>
 </resources>

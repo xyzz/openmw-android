@@ -42,6 +42,7 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="fullUser"
             android:theme="@style/MyTheme"
+            android:exported="true"
             android:label="@string/activity_mods"
             />
     </application>
