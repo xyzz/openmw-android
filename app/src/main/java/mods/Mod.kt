@@ -1,6 +1,7 @@
 package mods
 
-import org.jetbrains.anko.db.RowParser
+import android.database.sqlite.SQLiteDatabase
+import org.jetbrains.anko.db.*
 
 enum class ModType(val v: Int) {
     Plugin(1),
@@ -21,6 +22,21 @@ enum class ModType(val v: Int) {
  */
 class Mod(val type: ModType, val filename: String, var order: Int, val enabled: Boolean) {
 
+    /// Set to true when DB update is needed to keep consistency
+    var dirty: Boolean = false
+
+    /**
+     * Updates the representation of this mod in the database
+     * @param db Database connection
+     */
+    fun update(db: SQLiteDatabase) {
+        db.update("mod",
+            "load_order" to order,
+            "enabled" to enabled)
+            .whereArgs("filename = {filename} AND type = {type}",
+                "filename" to filename,
+                "type" to type.v).exec()
+    }
 }
 
 class ModRowParser : RowParser<Mod> {

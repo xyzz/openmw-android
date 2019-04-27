@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.libopenmw.openmw.R
+import java.util.*
 
 /**
  * An adapter to put a ModsCollection into a UI list
@@ -47,16 +48,30 @@ class ModsAdapter(private val collection: ModsCollection) : RecyclerView.Adapter
         return collection.mods.size
     }
 
+    private fun swapMods(from: Int, to: Int) {
+        // Swap the orders
+        val tmp = collection.mods[from].order
+        collection.mods[from].order = collection.mods[to].order
+        collection.mods[to].order = tmp
+
+        // Swap the mods inside the list
+        Collections.swap(collection.mods, from, to)
+
+        // Mark mods as dirty to update when the user releases currently dragged mod
+        collection.mods[from].dirty = true
+        collection.mods[to].dirty = true
+    }
+
     fun onRowMoved(fromPosition: Int, toPosition: Int) {
-//        if (fromPosition < toPosition) {
-//            for (i in fromPosition until toPosition) {
-//                Collections.swap(data, i, i + 1)
-//            }
-//        } else {
-//            for (i in fromPosition downTo toPosition + 1) {
-//                Collections.swap(data, i, i - 1)
-//            }
-//        }
+        if (fromPosition < toPosition) {
+            for (i in fromPosition until toPosition) {
+                swapMods(i, i + 1)
+            }
+        } else {
+            for (i in fromPosition downTo toPosition + 1) {
+                swapMods(i, i - 1)
+            }
+        }
         notifyItemMoved(fromPosition, toPosition)
     }
 
@@ -66,5 +81,6 @@ class ModsAdapter(private val collection: ModsCollection) : RecyclerView.Adapter
 
     fun onRowClear(modViewHolder: ModViewHolder) {
         modViewHolder.rowView.setBackgroundColor(Color.WHITE)
+        collection.update()
     }
 }

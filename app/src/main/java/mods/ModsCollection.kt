@@ -94,4 +94,16 @@ class ModsCollection(private val type: ModType,
         // Sort the mods in order
         mods.sortBy { it.order }
     }
+
+    /**
+     * Performs DB updates for all mods marked as dirty
+     */
+    fun update() {
+        db.use {
+            mods.filter { it.dirty }.forEach {
+                it.update(this)
+                it.dirty = false
+            }
+        }
+    }
 }
