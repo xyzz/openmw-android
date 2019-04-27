@@ -34,7 +34,7 @@ class ModsActivity : AppCompatActivity() {
 
         // Set up adapters for the lists
         setupModList(findViewById(R.id.list_mods), ModType.Plugin,
-            arrayOf("esm", "esp", "omwaddon"))
+            arrayOf("esm", "esp", "omwaddon", "omwgame"))
         setupModList(findViewById(R.id.list_resources), ModType.Resource,
             arrayOf("bsa"))
     }
