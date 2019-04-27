@@ -6,25 +6,72 @@ import java.io.File
 /**
  * Represents an ordered list of mods of a specific type
  * @param type Type of the mods represented by this collection, Plugin or Resource
- * @param path Path to the directory of the mods (the Data Files directory)
+ * @param dataFiles Path to the directory of the mods (the Data Files directory)
  * @param extensions List of supported extensions e.g. ["bsa"] or ["esm", "esp", ...]
  */
 class ModsCollection(private val type: ModType,
-                     path: String,
+                     private val dataFiles: String,
                      private val extensions: Array<String>,
                      private val db: ModsDatabaseOpenHelper) {
 
     val mods = arrayListOf<Mod>()
 
     init {
-        syncWithFs(path)
+        if (isEmpty())
+            initDb()
+        syncWithFs()
+        // The database might have become empty (e.g. if user deletes all mods) after the FS sync
+        if (isEmpty())
+            initDb()
+    }
+
+    /**
+     * Checks if the mod DB is empty, i.e. no mods defined yet. This can happen for example
+     * on first startup
+     * @return True if the DB doesn't have any mods
+     */
+    private fun isEmpty(): Boolean {
+        var count = 0
+        db.use {
+            count = select("mod", "count(1)").exec {
+                parseSingle(IntParser)
+            }
+        }
+        return count == 0
+    }
+
+    /**
+     * Inserts built-in mods into the database, in proper order.
+     * Also checks to make sure only installed mods are inserted.
+     */
+    private fun initDb() {
+        val builtIn = arrayOf("Morrowind", "Tribunal", "Bloodmoon")
+        initDbMods(builtIn.map { "$it.esm" }, ModType.Plugin)
+        initDbMods(builtIn.map { "$it.bsa" }, ModType.Resource)
+    }
+
+    /**
+     * Inserts built-in mods of a specific mod type. All of the built-in mods will be enabled
+     * by default.
+     * @param files Filenames of the mods, including extensions
+     * @param type Type of the mods (plugins/resources)
+     */
+    private fun initDbMods(files: List<String>, type: ModType) {
+        db.use {
+            var order = 0
+            files
+                .map { File(dataFiles, it) }
+                .filter { it.exists() }
+                .map { order += 1; Mod(type, it.name, order, true) }
+                .forEach { it.insert(this) }
+        }
     }
 
     /**
      * Synchronizes state of mods in database with the actual mod files on disk
      * This could result in it deleting or adding mods to the database.
      */
-    private fun syncWithFs(path: String) {
+    private fun syncWithFs() {
         var dbMods = listOf<Mod>()
 
         // Get mods from the database
@@ -36,7 +83,7 @@ class ModsCollection(private val type: ModType,
         }
 
         // Get file names matching the extensions
-        val modFiles = File(path).listFiles()?.filter {
+        val modFiles = File(dataFiles).listFiles()?.filter {
             extensions.contains(it.extension.toLowerCase())
         }
 
@@ -81,13 +128,7 @@ class ModsCollection(private val type: ModType,
                 }
 
                 // Create all mods which are on fs but not in db
-                newMods.forEach {
-                    insert("mod",
-                        "type" to it.type.v,
-                        "filename" to it.filename,
-                        "load_order" to it.order,
-                        "enabled" to (if (it.enabled) 1 else 0))
-                }
+                newMods.forEach { it.insert(this) }
             }
         }
 

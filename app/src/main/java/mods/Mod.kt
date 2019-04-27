@@ -37,6 +37,18 @@ class Mod(val type: ModType, val filename: String, var order: Int, var enabled: 
                 "filename" to filename,
                 "type" to type.v).exec()
     }
+
+    /**
+     * Inserts this mod into the database
+     * @param db Database connection
+     */
+    fun insert(db: SQLiteDatabase) {
+        db.insert("mod",
+            "type" to type.v,
+            "filename" to filename,
+            "load_order" to order,
+            "enabled" to (if (enabled) 1 else 0))
+    }
 }
 
 class ModRowParser : RowParser<Mod> {
