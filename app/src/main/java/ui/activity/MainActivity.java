@@ -3,6 +3,7 @@ package ui.activity;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -23,17 +24,30 @@ import com.libopenmw.openmw.R;
 import io.fabric.sdk.android.Fabric;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import file.utils.CopyFilesFromAssets;
+import mods.Mod;
+import mods.ModType;
+import mods.ModsCollection;
+import mods.ModsDatabaseOpenHelper;
 import ui.fragments.FragmentSettings;
 import permission.PermissionHelper;
 import file.ConfigsFileStorageHelper;
 
 import static file.ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH;
+import static file.ConfigsFileStorageHelper.OPENMW_BASE_CFG;
 import static file.ConfigsFileStorageHelper.OPENMW_CFG;
 import static file.ConfigsFileStorageHelper.SETTINGS_CFG;
 import static utils.Utils.hideAndroidControls;
@@ -138,6 +152,51 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    static String readFile(String path, Charset encoding)
+            throws IOException
+    {
+        byte[] encoded = Files.readAllBytes(Paths.get(path));
+        return new String(encoded, encoding);
+    }
+
+    /**
+     * Generates openmw.cfg using values from openmw-base.cfg combined with mod manager settings
+     */
+    private void generateOpenmwCfg() {
+        String base = "";
+        try {
+            base = readFile(OPENMW_BASE_CFG, StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            Log.e(TAG, "Failed to read openmw-base.cfg", e);
+            Crashlytics.logException(e);
+        }
+
+        String dataFiles = prefs.getString("data_files", "");
+        ModsDatabaseOpenHelper db = ModsDatabaseOpenHelper.Companion.getInstance(this);
+        ModsCollection resources = new ModsCollection(ModType.Resource, dataFiles, db);
+        ModsCollection plugins = new ModsCollection(ModType.Plugin, dataFiles, db);
+
+        try (Writer writer = new BufferedWriter(new OutputStreamWriter(
+                new FileOutputStream(OPENMW_CFG), StandardCharsets.UTF_8))) {
+            writer.write("# Automatically generated, do not edit\n");
+
+            for (Mod mod : resources.getMods()) {
+                if (mod.getEnabled())
+                    writer.write("fallback-archive=" + mod.getFilename() + "\n");
+            }
+
+            writer.write("\n" + base + "\n");
+
+            for (Mod mod : plugins.getMods()) {
+                if (mod.getEnabled())
+                    writer.write("content=" + mod.getFilename() + "\n");
+            }
+        } catch (IOException e) {
+            Log.e(TAG, "Failed to generate openmw.cfg.", e);
+            Crashlytics.logException(e);
+        }
+    }
+
     private void startGame() {
         ProgressDialog dialog = ProgressDialog.show(
                 this, "", "Preparing for launch...", true);
@@ -149,9 +208,9 @@ public class MainActivity extends AppCompatActivity {
 
         Thread th = new Thread(() -> {
             try {
-                File openmwCfg = new File(OPENMW_CFG);
+                File openmwBaseCfg = new File(OPENMW_BASE_CFG);
                 File settingsCfg = new File(SETTINGS_CFG);
-                if (!openmwCfg.exists() || !settingsCfg.exists()) {
+                if (!openmwBaseCfg.exists() || !settingsCfg.exists()) {
                     Log.i(TAG, "Config files don't exist, re-creating them.");
                     resetUserConfig();
                 }
@@ -164,6 +223,8 @@ public class MainActivity extends AppCompatActivity {
                 CopyFilesFromAssets copyFiles = new CopyFilesFromAssets(activity, CONFIGS_FILES_STORAGE_PATH);
                 copyFiles.copyFileOrDir("libopenmw/openmw");
                 copyFiles.copyFileOrDir("libopenmw/resources");
+
+                generateOpenmwCfg();
 
                 // openmw.cfg: data, resources
                 // TODO: probably should just reuse ConfigsFileStorageHelper

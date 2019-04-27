@@ -20,5 +20,6 @@ public class ConfigsFileStorageHelper {
     public static final String CONFIGS_FILES_STORAGE_PATH = Environment.getExternalStorageDirectory() + "/Android/data/" + BuildConfig.APPLICATION_ID;
     public static final String SETTINGS_CFG = CONFIGS_FILES_STORAGE_PATH + "/config/openmw/settings.cfg";
     public static final String OPENMW_CFG = CONFIGS_FILES_STORAGE_PATH + "/config/openmw/openmw.cfg";
+    public static final String OPENMW_BASE_CFG = CONFIGS_FILES_STORAGE_PATH + "/config/openmw/openmw-base.cfg";
 
 }

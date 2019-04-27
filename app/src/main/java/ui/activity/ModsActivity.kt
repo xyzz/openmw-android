@@ -33,19 +33,16 @@ class ModsActivity : AppCompatActivity() {
         })
 
         // Set up adapters for the lists
-        setupModList(findViewById(R.id.list_mods), ModType.Plugin,
-            arrayOf("esm", "esp", "omwaddon", "omwgame"))
-        setupModList(findViewById(R.id.list_resources), ModType.Resource,
-            arrayOf("bsa"))
+        setupModList(findViewById(R.id.list_mods), ModType.Plugin)
+        setupModList(findViewById(R.id.list_resources), ModType.Resource)
     }
 
     /**
      * Connects a user-interface RecyclerView to underlying mod data on the disk
      * @param list The list displayed to the user
      * @param type Type of the mods this list will contain
-     * @param extensions Extension filter for the mods
      */
-    private fun setupModList(list: RecyclerView, type: ModType, extensions: Array<String>) {
+    private fun setupModList(list: RecyclerView, type: ModType) {
         val dataFiles = PreferenceManager.getDefaultSharedPreferences(this)
             .getString("data_files", "")
 
@@ -54,7 +51,7 @@ class ModsActivity : AppCompatActivity() {
         list.layoutManager = linearLayoutManager
 
         // Set up the adapter using the specified ModsCollection
-        val adapter = ModsAdapter(ModsCollection(type, dataFiles, extensions, database))
+        val adapter = ModsAdapter(ModsCollection(type, dataFiles, database))
 
         // Set up the drag-and-drop callback
         val callback = ModMoveCallback(adapter)

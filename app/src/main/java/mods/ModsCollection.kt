@@ -7,14 +7,16 @@ import java.io.File
  * Represents an ordered list of mods of a specific type
  * @param type Type of the mods represented by this collection, Plugin or Resource
  * @param dataFiles Path to the directory of the mods (the Data Files directory)
- * @param extensions List of supported extensions e.g. ["bsa"] or ["esm", "esp", ...]
  */
 class ModsCollection(private val type: ModType,
                      private val dataFiles: String,
-                     private val extensions: Array<String>,
                      private val db: ModsDatabaseOpenHelper) {
 
     val mods = arrayListOf<Mod>()
+    private var extensions: Array<String> = if (type == ModType.Resource)
+        arrayOf("bsa")
+    else
+        arrayOf("esm", "esp", "omwaddon", "omwgame")
 
     init {
         if (isEmpty())

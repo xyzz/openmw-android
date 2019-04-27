@@ -201,7 +201,7 @@ if [[ $ARCH = "arm" ]]; then
 	mkdir -p "$DST/config/openmw/"
 	# TODO: do we really need this twice?
 	cp "$SRC/gamecontrollerdb.txt" "$DST/config/openmw/"
-	cp "$DIR/../app/openmw-base.cfg" "$DST/config/openmw/openmw.cfg"
+	cp "$DIR/../app/openmw-base.cfg" "$DST/config/openmw/openmw-base.cfg"
 	cp "$DIR/../app/settings-base.cfg" "$DST/config/openmw/settings.cfg"
 fi
 
