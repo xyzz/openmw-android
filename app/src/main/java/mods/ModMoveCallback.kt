@@ -1,7 +1,7 @@
 package mods
 
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.helper.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.ItemTouchHelper
 
 /**
  * Callback for dragging the mods around to change load order
@@ -44,7 +44,7 @@ class ModMoveCallback(private val mAdapter: ModsAdapter) : ItemTouchHelper.Callb
         super.onSelectedChanged(viewHolder, actionState)
     }
 
-    override fun clearView(recyclerView: RecyclerView?,
+    override fun clearView(recyclerView: RecyclerView,
                            viewHolder: RecyclerView.ViewHolder) {
         super.clearView(recyclerView, viewHolder)
 
