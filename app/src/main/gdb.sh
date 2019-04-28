@@ -5,7 +5,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd $DIR
 
 # first argument: arch of the executable used (you have to figure it out yourself!)
-ABI=${1:-armeabi-v7a}
+ARCH=${1:-arm}
 source ../../../buildscripts/include/version.sh
 
 # set up fake "jni" so that ndk-gdb can find a "valid" Android.mk
