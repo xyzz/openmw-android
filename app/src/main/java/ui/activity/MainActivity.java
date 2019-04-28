@@ -3,7 +3,6 @@ package ui.activity;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -29,13 +28,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 import file.utils.CopyFilesFromAssets;
 import mods.Mod;
@@ -152,11 +148,24 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    static String readFile(String path, Charset encoding)
-            throws IOException
-    {
-        byte[] encoded = Files.readAllBytes(Paths.get(path));
-        return new String(encoded, encoding);
+    // https://stackoverflow.com/a/13357785/2606891
+    static String convertStreamToString(InputStream is) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+        StringBuilder sb = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            sb.append(line).append("\n");
+        }
+        reader.close();
+        return sb.toString();
+    }
+
+    static String readFile(String filePath) throws IOException {
+        File fl = new File(filePath);
+        FileInputStream fin = new FileInputStream(fl);
+        String ret = convertStreamToString(fin);
+        fin.close();
+        return ret;
     }
 
     /**
@@ -165,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
     private void generateOpenmwCfg() {
         String base = "";
         try {
-            base = readFile(OPENMW_BASE_CFG, StandardCharsets.UTF_8);
+            base = readFile(OPENMW_BASE_CFG);
         } catch (IOException e) {
             Log.e(TAG, "Failed to read openmw-base.cfg", e);
             Crashlytics.logException(e);
@@ -177,7 +186,7 @@ public class MainActivity extends AppCompatActivity {
         ModsCollection plugins = new ModsCollection(ModType.Plugin, dataFiles, db);
 
         try (Writer writer = new BufferedWriter(new OutputStreamWriter(
-                new FileOutputStream(OPENMW_CFG), StandardCharsets.UTF_8))) {
+                new FileOutputStream(OPENMW_CFG), "UTF-8"))) {
             writer.write("# Automatically generated, do not edit\n");
 
             for (Mod mod : resources.getMods()) {
