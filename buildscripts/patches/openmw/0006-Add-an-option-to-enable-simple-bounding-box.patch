@@ -1,7 +1,7 @@
-From fc4eef7647102200f8274a51e49e82e529fcc3aa Mon Sep 17 00:00:00 2001
+From 8c720d46043fdb8ee1a87efa2789bcfa324d1d87 Mon Sep 17 00:00:00 2001
 From: Ilya Zhuravlev <whatever@xyz.is>
 Date: Mon, 1 Apr 2019 13:32:49 -0400
-Subject: [PATCH 6/9] Add an option to enable simple bounding box
+Subject: [PATCH 06/10] Add an option to enable simple bounding box
 
 ---
  apps/openmw/mwphysics/actor.cpp | 5 ++++-

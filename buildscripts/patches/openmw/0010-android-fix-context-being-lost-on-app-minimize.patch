@@ -1,0 +1,106 @@
+From fdd1d29f77265c265ace6b09e76c0a729e8f2d4b Mon Sep 17 00:00:00 2001
+From: Ilya Zhuravlev <whatever@xyz.is>
+Date: Sun, 28 Apr 2019 18:16:37 -0400
+Subject: [PATCH 10/10] android: fix context being lost on app minimize
+
+---
+ apps/openmw/android_main.cpp | 39 ++++++++++++++++++++++++++++++++++++
+ apps/openmw/engine.hpp       |  2 ++
+ apps/openmw/main.cpp         |  3 +++
+ 3 files changed, 44 insertions(+)
+
+diff --git a/apps/openmw/android_main.cpp b/apps/openmw/android_main.cpp
+index cc36388b0..be6f39974 100644
+--- a/apps/openmw/android_main.cpp
++++ b/apps/openmw/android_main.cpp
+@@ -1,10 +1,14 @@
+ int stderr = 0; // Hack: fix linker error
+ 
+ #include "SDL_main.h"
++#include "engine.hpp"
+ #include <SDL_gamecontroller.h>
+ #include <SDL_mouse.h>
+ #include <SDL_events.h>
+ 
++#include <osg/GraphicsContext>
++#include <osg/OperationThread>
++
+ /*******************************************************************************
+  Functions called by JNI
+  *******************************************************************************/
+@@ -54,3 +58,38 @@ extern "C" int Java_org_libsdl_app_SDLActivity_nativeInit(JNIEnv* env, jclass cl
+ 
+     return 0;
+ }
++
++extern OMW::Engine *g_engine;
++
++static osg::GraphicsContext *ctx;
++
++class CtxReleaseOperation : public osg::Operation {
++public:
++    virtual void operator () (osg::Object* caller) {
++        ctx->releaseContext();
++    }
++};
++
++class CtxAcquireOperation : public osg::Operation {
++public:
++    virtual void operator () (osg::Object* caller) {
++        ctx->makeCurrent();
++    }
++};
++
++extern "C" void Java_org_libsdl_app_SDLActivity_omwSurfaceDestroyed(JNIEnv *env, jclass cls, jobject obj) {
++    osg::ref_ptr<CtxReleaseOperation> op = new CtxReleaseOperation();
++
++    ctx = g_engine->getViewer()->getCamera()->getGraphicsContext();
++    ctx->add(op);
++}
++
++extern "C" void Java_org_libsdl_app_SDLActivity_omwSurfaceRecreated(JNIEnv *env, jclass cls, jobject obj) {
++    if (!g_engine)
++        return;
++
++    osg::ref_ptr<CtxAcquireOperation> op = new CtxAcquireOperation();
++
++    ctx = g_engine->getViewer()->getCamera()->getGraphicsContext();
++    ctx->add(op);
++}
+diff --git a/apps/openmw/engine.hpp b/apps/openmw/engine.hpp
+index a00cf474a..076c61c39 100644
+--- a/apps/openmw/engine.hpp
++++ b/apps/openmw/engine.hpp
+@@ -134,6 +134,8 @@ namespace OMW
+             Engine(Files::ConfigurationManager& configurationManager);
+             virtual ~Engine();
+ 
++            osgViewer::Viewer * getViewer() { return mViewer.get(); }
++
+             /// Enable strict filesystem mode (do not fold case)
+             ///
+             /// \attention The strict mode must be specified before any path-related settings
+diff --git a/apps/openmw/main.cpp b/apps/openmw/main.cpp
+index 51a256345..c722baeb9 100644
+--- a/apps/openmw/main.cpp
++++ b/apps/openmw/main.cpp
+@@ -243,6 +243,8 @@ bool parseOptions (int argc, char** argv, OMW::Engine& engine, Files::Configurat
+     return true;
+ }
+ 
++OMW::Engine *g_engine;
++
+ int runApplication(int argc, char *argv[])
+ {
+ #ifdef __APPLE__
+@@ -257,6 +259,7 @@ int runApplication(int argc, char *argv[])
+ 
+     if (parseOptions(argc, argv, *engine, cfgMgr))
+     {
++        g_engine = engine.get();
+         engine->go();
+     }
+ 
+-- 
+2.19.2
+

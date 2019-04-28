@@ -1,8 +1,8 @@
-From 96052824378783f1013bd7b4b5d858bdcf975722 Mon Sep 17 00:00:00 2001
+From 63e969a4f508c53c51a331d926a246c607d891fc Mon Sep 17 00:00:00 2001
 From: Ilya Zhuravlev <whatever@xyz.is>
 Date: Thu, 25 Apr 2019 06:35:09 -0400
-Subject: [PATCH 9/9] windowmanagerimp: always show mouse when possible (patch
- by @terabyte25)
+Subject: [PATCH 09/10] windowmanagerimp: always show mouse when possible
+ (patch by @terabyte25)
 
 ---
  apps/openmw/mwgui/windowmanagerimp.cpp | 2 +-

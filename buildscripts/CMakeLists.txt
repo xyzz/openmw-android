@@ -49,8 +49,8 @@ set(OSG_FORK_VERSION ecedf3232c2f1b3b6a2f06f77ea37a9afb6a93f5)
 set(OSG_FORK_HASH SHA256=254f0ce0e236aa80700877ee8664430c1f491be78ea1118bcd53178260edb4b5)
 
 # https://github.com/OpenMW/openmw/commits/master
-set(OPENMW_VERSION cf85f00045b2d0c6ddbbc02befc6cf434fcbfd94)
-set(OPENMW_HASH SHA256=38800775883b1fd2c8233b987f8502bd37e3a466b22608f3a045c31d8b208db1)
+set(OPENMW_VERSION 8d489793a95bc9a38f17100204f2f44a800e73ef)
+set(OPENMW_HASH SHA256=002ca8227b0c92b41fecba6ef18e220c43a945307345179db3a39a9d6e00019f)
 
 # End of configurable options
 
@@ -443,7 +443,8 @@ set(OPENMW_PATCH
 	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/0006-Add-an-option-to-enable-simple-bounding-box.patch &&
 	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/0007-android-Fix-red-sky-after-shadows-merge.patch &&
 	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/0008-Revert-Merge-pull-request-2238-from-Capostrophic-fre.patch &&
-	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/0009-windowmanagerimp-always-show-mouse-when-possible-pat.patch &&
+    patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/0009-windowmanagerimp-always-show-mouse-when-possible-pat.patch &&
+	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/0010-android-fix-context-being-lost-on-app-minimize.patch &&
 	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/2344.patch
 )
 

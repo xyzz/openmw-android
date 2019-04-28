@@ -546,6 +546,9 @@ public class SDLActivity extends Activity {
     public static native void sendRelativeMouseMotion(int x, int y);
     public static native void sendMouseButton(int state, int button);
 
+    public static native void omwSurfaceDestroyed();
+    public static native void omwSurfaceRecreated();
+
 
     /**
      * This method is called by SDL using JNI.
@@ -1232,6 +1235,8 @@ class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
     public void surfaceCreated(SurfaceHolder holder) {
         Log.v("SDL", "surfaceCreated()");
         holder.setType(SurfaceHolder.SURFACE_TYPE_GPU);
+
+        SDLActivity.omwSurfaceRecreated();
     }
 
     // Called when we lose the surface
@@ -1245,6 +1250,8 @@ class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
 
         SDLActivity.mIsSurfaceReady = false;
         SDLActivity.onNativeSurfaceDestroyed();
+
+        SDLActivity.omwSurfaceDestroyed();
     }
 
     // Called when the surface is resized
