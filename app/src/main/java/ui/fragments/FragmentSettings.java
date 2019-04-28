@@ -10,6 +10,7 @@ import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceGroup;
 
+import com.codekidlabs.storagechooser.StorageChooser;
 import com.libopenmw.openmw.R;
 
 import ui.activity.ConfigureControls;
@@ -33,6 +34,26 @@ public class FragmentSettings extends PreferenceFragment implements OnSharedPref
         findPreference("pref_mods").setOnPreferenceClickListener((Preference pref) -> {
             Intent intent = new Intent(getActivity(), ModsActivity.class);
             this.startActivity(intent);
+            return true;
+        });
+
+        findPreference("data_files").setOnPreferenceClickListener((Preference pref) -> {
+            StorageChooser chooser = new StorageChooser.Builder()
+                    .withActivity(getActivity())
+                    .withFragmentManager(getFragmentManager())
+                    .withMemoryBar(true)
+                    .allowCustomPath(true)
+                    .setType(StorageChooser.DIRECTORY_CHOOSER)
+                    .build();
+
+            chooser.show();
+
+            chooser.setOnSelectListener(path -> {
+                SharedPreferences sharedPref = getPreferenceScreen().getSharedPreferences();
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putString("data_files", path);
+                editor.apply();
+            });
             return true;
         });
     }
@@ -65,6 +86,10 @@ public class FragmentSettings extends PreferenceFragment implements OnSharedPref
         if (preference instanceof EditTextPreference) {
             EditTextPreference editTextPreference = (EditTextPreference) preference;
             editTextPreference.setSummary(editTextPreference.getText());
+        }
+        // Show selected value as a summary for data_files
+        if (key.equals("data_files")) {
+            preference.setSummary(preference.getSharedPreferences().getString("data_files", ""));
         }
     }
 
