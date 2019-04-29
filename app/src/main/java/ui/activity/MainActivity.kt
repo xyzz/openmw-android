@@ -20,7 +20,6 @@
 
 package ui.activity
 
-import android.app.Activity
 import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Intent
@@ -31,9 +30,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
 import android.view.Menu
-import android.view.MenuInflater
 import android.view.MenuItem
-import android.view.View
 import android.widget.Toast
 
 import com.crashlytics.android.Crashlytics
@@ -52,10 +49,8 @@ import java.io.IOException
 import java.io.InputStream
 import java.io.InputStreamReader
 import java.io.OutputStreamWriter
-import java.io.Writer
 
 import file.utils.CopyFilesFromAssets
-import mods.Mod
 import mods.ModType
 import mods.ModsCollection
 import mods.ModsDatabaseOpenHelper
@@ -77,7 +72,7 @@ class MainActivity : AppCompatActivity() {
             .replace(R.id.content_frame, FragmentSettings()).commit()
 
         val fab = findViewById<FloatingActionButton>(R.id.fab)
-        fab.setOnClickListener { v -> startGame() }
+        fab.setOnClickListener { startGame() }
     }
 
     private fun deleteRecursive(fileOrDirectory: File) {
@@ -93,7 +88,6 @@ class MainActivity : AppCompatActivity() {
             val openmwCfg = File(Constants.OPENMW_CFG)
             if (openmwCfg.exists()) {
                 val reader = BufferedReader(InputStreamReader(FileInputStream(openmwCfg)))
-                var line: String
                 Crashlytics.log("openmw.cfg")
                 Crashlytics.log("--------------------------------------------------------------------------------")
                 reader.forEachLine {
@@ -267,8 +261,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val id = item.itemId
-        when (id) {
+        when (item.itemId) {
             R.id.action_reset_config -> {
                 resetUserConfig()
                 Toast.makeText(this, getString(R.string.config_was_reset), Toast.LENGTH_SHORT).show()
@@ -288,7 +281,7 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
 
-        private val TAG = "OpenMW-Launcher"
+        private const val TAG = "OpenMW-Launcher"
 
         var resolutionX = 0
         var resolutionY = 0
@@ -298,7 +291,6 @@ class MainActivity : AppCompatActivity() {
         internal fun convertStreamToString(`is`: InputStream): String {
             val reader = BufferedReader(InputStreamReader(`is`, "UTF-8"))
             val sb = StringBuilder()
-            var line: String
             reader.forEachLine {
                 sb.append(it).append("\n")
             }
