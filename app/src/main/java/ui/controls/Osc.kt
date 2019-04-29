@@ -3,7 +3,6 @@ package ui.controls
 import android.content.Context
 import android.graphics.Color
 import android.preference.PreferenceManager
-import android.util.Log
 import android.util.TypedValue
 import android.view.KeyEvent
 import android.view.MotionEvent
@@ -13,7 +12,6 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import com.libopenmw.openmw.R
 import org.libsdl.app.SDLActivity
-import ui.activity.GameActivity
 
 const val VIRTUAL_SCREEN_WIDTH = 1024
 const val VIRTUAL_SCREEN_HEIGHT = 768
@@ -320,7 +318,7 @@ class Osc {
         OscImageButton("inventory", OscVisibility.ESSENTIAL,
             R.drawable.inventory, 950, 95, 3, true),
         OscImageButton("changePerson", OscVisibility.NORMAL,
-            R.drawable.backup, 212, 0, KeyEvent.KEYCODE_TAB),
+            R.drawable.third_person, 212, 0, KeyEvent.KEYCODE_TAB),
         OscImageButton("wait", OscVisibility.NORMAL,
             R.drawable.wait, 274, 0, KeyEvent.KEYCODE_T),
         OscImageButton("pause", OscVisibility.ESSENTIAL,
@@ -331,17 +329,17 @@ class Osc {
         OscImageButton("quickSave", OscVisibility.NORMAL,
             R.drawable.save, 780, 0, 135),
         OscImageButton("weapon", OscVisibility.NORMAL,
-            R.drawable.broadsword1, 880, 95, KeyEvent.KEYCODE_F),
+            R.drawable.toggle_weapon, 880, 95, KeyEvent.KEYCODE_F),
         OscImageButton("jump", OscVisibility.NORMAL,
             R.drawable.jump, 920, 195, KeyEvent.KEYCODE_E),
         OscImageButton("fire", OscVisibility.ESSENTIAL,
-            R.drawable.crossbow, 720, 300, 1, true, 90),
+            R.drawable.attack, 720, 300, 1, true, 90),
         OscImageButton("magic", OscVisibility.NORMAL,
-            R.drawable.starsattelites, 940, 480, KeyEvent.KEYCODE_R),
+            R.drawable.toggle_magic, 940, 480, KeyEvent.KEYCODE_R),
         OscImageButton("crouch", OscVisibility.NORMAL,
-            R.drawable.c, 940, 670, 113),
+            R.drawable.sneak, 940, 670, 113),
         OscImageButton("diary", OscVisibility.NORMAL,
-            R.drawable.di, 414, 0, KeyEvent.KEYCODE_J),
+            R.drawable.journal, 414, 0, KeyEvent.KEYCODE_J),
         keyboardButton,
         OscImageButton("use", OscVisibility.ESSENTIAL,
             R.drawable.use, 940, 368, KeyEvent.KEYCODE_SPACE),
