@@ -20,6 +20,7 @@
 package cursor
 
 import android.content.Context
+import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.Choreographer
 import android.view.View
@@ -37,7 +38,26 @@ import ui.controls.Osc
  * An image view which doesn't downsize itself when moved to the border of a RelativeLayout
  * (not sure if original behavior is intended)
  */
-internal class FixedSizeImageView(context: Context, private val fixedWidth: Int, private val fixedHeight: Int) : androidx.appcompat.widget.AppCompatImageView(context) {
+internal class FixedSizeImageView : androidx.appcompat.widget.AppCompatImageView {
+
+    // Just something so that it's visible
+    private var fixedWidth = 10
+    private var fixedHeight = 10
+
+    // Default constructors for studio UI editor
+    constructor(context: Context): super(context)
+    constructor(context: Context, attrs: AttributeSet): super(context, attrs)
+    constructor(context: Context, attrs: AttributeSet, defStyle: Int):
+        super(context, attrs, defStyle)
+
+    /**
+     * @param w Fixed width of this view
+     * @param h Fixed height of this view
+     */
+    constructor(context: Context, w: Int, h: Int): super(context) {
+        fixedWidth = w
+        fixedHeight = h
+    }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         setMeasuredDimension(fixedWidth, fixedHeight)
@@ -48,14 +68,11 @@ class MouseCursor(activity: GameActivity, private val osc: Osc?) : Choreographer
 
     private val choreographer: Choreographer
     private val cursor: FixedSizeImageView
-    private val layout: RelativeLayout
     private var prevMouseShown = -1
 
     init {
-
-        val r = activity.resources
-
-        val height = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30f, r.displayMetrics).toInt()
+        val height = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30f,
+            activity.resources.displayMetrics).toInt()
         val width = Math.round(height / 1.5).toInt()
 
         cursor = FixedSizeImageView(activity, width, height)
@@ -63,8 +80,7 @@ class MouseCursor(activity: GameActivity, private val osc: Osc?) : Choreographer
 
         cursor.layoutParams = RelativeLayout.LayoutParams(width, height)
 
-        layout = activity.layout
-        layout.addView(cursor)
+        activity.layout.addView(cursor)
 
         choreographer = Choreographer.getInstance()
         choreographer.postFrameCallback(this)
@@ -73,11 +89,11 @@ class MouseCursor(activity: GameActivity, private val osc: Osc?) : Choreographer
     override fun doFrame(frameTimeNanos: Long) {
         // Check if we need to switch osc widgets visibility
         val mouseShown = SDLActivity.isMouseShown()
-        if (this.osc != null && mouseShown != prevMouseShown) {
+        if (osc != null && mouseShown != prevMouseShown) {
             if (mouseShown == 0)
-                this.osc.showNonEssential()
+                osc.showNonEssential()
             else
-                this.osc.hideNonEssential()
+                osc.hideNonEssential()
         }
 
         if (mouseShown == 0) {
@@ -101,7 +117,7 @@ class MouseCursor(activity: GameActivity, private val osc: Osc?) : Choreographer
             cursor.layoutParams = params
         }
 
-        choreographer.postFrameCallback(this)
         prevMouseShown = mouseShown
+        choreographer.postFrameCallback(this)
     }
 }
