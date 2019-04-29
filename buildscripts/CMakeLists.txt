@@ -41,12 +41,8 @@ set(GL4ES_VERSION 9faa54451f28037a2150d2da32df721038ac741e)
 set(GL4ES_HASH SHA256=8866654d345150188b6c33738a576f5de2326132cd3ab3e206e94c87c675deb0)
 
 # https://github.com/openscenegraph/OpenSceneGraph/releases
-set(OSG_MAINLINE_VERSION 3.6.2)
-set(OSG_MAINLINE_HASH SHA256=762c6601f32a761c7a0556766097558f453f23b983dd75bcf90f922e2d077a34)
-
-# https://github.com/OpenMW/osg/commits/master
-set(OSG_FORK_VERSION ecedf3232c2f1b3b6a2f06f77ea37a9afb6a93f5)
-set(OSG_FORK_HASH SHA256=254f0ce0e236aa80700877ee8664430c1f491be78ea1118bcd53178260edb4b5)
+set(OSG_VERSION 3.6.2)
+set(OSG_HASH SHA256=762c6601f32a761c7a0556766097558f453f23b983dd75bcf90f922e2d077a34)
 
 # https://github.com/OpenMW/openmw/commits/master
 set(OPENMW_VERSION 8d489793a95bc9a38f17100204f2f44a800e73ef)
@@ -65,8 +61,7 @@ set(prefix ${CMAKE_INSTALL_PREFIX})
 set(host ${ndk_triplet})
 set(android_platform android-${ANDROID_API})
 set(app_abi ${ABI})
-set(osg_mainline_plugins_dir ${prefix}/osg_mainline/lib/osgPlugins-${OSG_MAINLINE_VERSION})
-set(osg_fork_plugins_dir ${prefix}/osg_fork/lib/osgPlugins-3.7.0)
+set(osg_plugins_dir ${prefix}/osg/lib/osgPlugins-${OSG_VERSION})
 
 set(COMMON_CMAKE_ARGS_NO_PREFIX
 	-DCMAKE_TOOLCHAIN_FILE=${CMAKE_SOURCE_DIR}/toolchain/ndk/build/cmake/android.toolchain.cmake
@@ -379,36 +374,18 @@ set(OSG_PATCH
 	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/osg/0005-CullSettings-make-inheritanceMask-atomic-to-silence-.patch
 )
 
-ExternalProject_Add(osg_mainline
+ExternalProject_Add(osg
 	DEPENDS libjpeg-turbo libpng gl4es
 
-	URL https://github.com/openscenegraph/OpenSceneGraph/archive/OpenSceneGraph-${OSG_MAINLINE_VERSION}.tar.gz
-	URL_HASH ${OSG_MAINLINE_HASH}
+	URL https://github.com/openscenegraph/OpenSceneGraph/archive/OpenSceneGraph-${OSG_VERSION}.tar.gz
+	URL_HASH ${OSG_HASH}
 	DOWNLOAD_DIR ${download_dir}
 
 	PATCH_COMMAND ${OSG_PATCH}
 
 	CONFIGURE_COMMAND ${wrapper_command} cmake <SOURCE_DIR>
 	${COMMON_CMAKE_ARGS_NO_PREFIX}
-	-DCMAKE_INSTALL_PREFIX=${prefix}/osg_mainline
-	${OSG_COMMON}
-
-	BUILD_COMMAND ${wrapper_command} $(MAKE)
-
-	INSTALL_COMMAND mkdir -p <SOURCE_DIR>/3rdparty/build/libpng <SOURCE_DIR>/3rdparty/build/libjpeg
-	COMMAND $(MAKE) install
-)
-
-ExternalProject_Add(osg_fork
-	DEPENDS libjpeg-turbo libpng gl4es
-
-	URL https://github.com/OpenMW/osg/archive/${OSG_FORK_VERSION}.tar.gz
-	URL_HASH ${OSG_FORK_HASH}
-	DOWNLOAD_DIR ${download_dir}
-
-	CONFIGURE_COMMAND ${wrapper_command} cmake <SOURCE_DIR>
-	${COMMON_CMAKE_ARGS_NO_PREFIX}
-	-DCMAKE_INSTALL_PREFIX=${prefix}/osg_fork
+	-DCMAKE_INSTALL_PREFIX=${prefix}/osg
 	${OSG_COMMON}
 
 	BUILD_COMMAND ${wrapper_command} $(MAKE)
@@ -448,8 +425,8 @@ set(OPENMW_PATCH
 	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/2344.patch
 )
 
-ExternalProject_Add(openmw_osg_mainline
-	DEPENDS boost openal osg_mainline mygui ffmpeg sdl2 bullet
+ExternalProject_Add(openmw
+	DEPENDS boost openal osg mygui ffmpeg sdl2 bullet
 
 	URL https://github.com/OpenMW/openmw/archive/${OPENMW_VERSION}.tar.gz
 	URL_HASH ${OPENMW_HASH}
@@ -460,42 +437,15 @@ ExternalProject_Add(openmw_osg_mainline
 	CONFIGURE_COMMAND ${wrapper_command} cmake <SOURCE_DIR>
 	${COMMON_CMAKE_ARGS}
 	${OPENMW_COMMON}
-	-DOSG_PLUGINS_DIR=${osg_mainline_plugins_dir}
-	-DOSGDB_BMP_LIBRARY=${osg_mainline_plugins_dir}/libosgdb_bmp.a
-	-DOSGDB_DDS_LIBRARY=${osg_mainline_plugins_dir}/libosgdb_dds.a
-	-DOSGDB_JPEG_LIBRARY=${osg_mainline_plugins_dir}/libosgdb_jpeg.a
-	-DOSGDB_OSG_LIBRARY=${osg_mainline_plugins_dir}/libosgdb_osg.a
-	-DOSGDB_PNG_LIBRARY=${osg_mainline_plugins_dir}/libosgdb_png.a
-	-DOSGDB_TGA_LIBRARY=${osg_mainline_plugins_dir}/libosgdb_tga.a
-	-DOSGDB_SERIALIZERS_OSG_LIBRARY=${osg_mainline_plugins_dir}/libosgdb_serializers_osg.a
-	-DOPENMW_DEPENDENCIES_DIR=${prefix}/osg_mainline
-
-	BUILD_COMMAND $(MAKE)
-
-	INSTALL_COMMAND ""
-)
-
-ExternalProject_Add(openmw_osg_fork
-	DEPENDS boost openal osg_fork mygui ffmpeg sdl2 bullet
-
-	URL https://github.com/OpenMW/openmw/archive/${OPENMW_VERSION}.tar.gz
-	URL_HASH ${OPENMW_HASH}
-	DOWNLOAD_DIR ${download_dir}
-
-	PATCH_COMMAND ${OPENMW_PATCH}
-
-	CONFIGURE_COMMAND ${wrapper_command} cmake <SOURCE_DIR>
-	${COMMON_CMAKE_ARGS}
-	${OPENMW_COMMON}
-	-DOSG_PLUGINS_DIR=${osg_fork_plugins_dir}
-	-DOSGDB_BMP_LIBRARY=${osg_fork_plugins_dir}/libosgdb_bmp.a
-	-DOSGDB_DDS_LIBRARY=${osg_fork_plugins_dir}/libosgdb_dds.a
-	-DOSGDB_JPEG_LIBRARY=${osg_fork_plugins_dir}/libosgdb_jpeg.a
-	-DOSGDB_OSG_LIBRARY=${osg_fork_plugins_dir}/libosgdb_osg.a
-	-DOSGDB_PNG_LIBRARY=${osg_fork_plugins_dir}/libosgdb_png.a
-	-DOSGDB_TGA_LIBRARY=${osg_fork_plugins_dir}/libosgdb_tga.a
-	-DOSGDB_SERIALIZERS_OSG_LIBRARY=${osg_fork_plugins_dir}/libosgdb_serializers_osg.a
-	-DOPENMW_DEPENDENCIES_DIR=${prefix}/osg_fork
+	-DOSG_PLUGINS_DIR=${osg_plugins_dir}
+	-DOSGDB_BMP_LIBRARY=${osg_plugins_dir}/libosgdb_bmp.a
+	-DOSGDB_DDS_LIBRARY=${osg_plugins_dir}/libosgdb_dds.a
+	-DOSGDB_JPEG_LIBRARY=${osg_plugins_dir}/libosgdb_jpeg.a
+	-DOSGDB_OSG_LIBRARY=${osg_plugins_dir}/libosgdb_osg.a
+	-DOSGDB_PNG_LIBRARY=${osg_plugins_dir}/libosgdb_png.a
+	-DOSGDB_TGA_LIBRARY=${osg_plugins_dir}/libosgdb_tga.a
+	-DOSGDB_SERIALIZERS_OSG_LIBRARY=${osg_plugins_dir}/libosgdb_serializers_osg.a
+	-DOPENMW_DEPENDENCIES_DIR=${prefix}/osg
 
 	BUILD_COMMAND $(MAKE)
 

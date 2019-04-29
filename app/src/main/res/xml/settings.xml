@@ -73,16 +73,6 @@
         />
 
         <ListPreference
-            android:key="pref_osg"
-            android:title="@string/pref_osg"
-            android:dialogTitle="@string/pref_osg"
-            android:entries="@array/pref_osg_entries"
-            android:entryValues="@array/pref_osg_values"
-            android:defaultValue="@string/pref_osg_default"
-            android:summary="%s"
-            />
-
-        <ListPreference
             android:key="pref_physicsFPS"
             android:title="@string/pref_physicsFPS"
             android:dialogTitle="@string/pref_physicsFPS"

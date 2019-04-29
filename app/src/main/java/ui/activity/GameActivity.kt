@@ -43,9 +43,6 @@ class GameActivity : SDLActivity() {
 
     private var prefs: SharedPreferences? = null
 
-    internal val openmwLibName: String
-        get() = "openmw_osg_" + prefs!!.getString("pref_osg", "")!!
-
     val layout: RelativeLayout
         get() = SDLActivity.mLayout as RelativeLayout
 
@@ -78,11 +75,11 @@ class GameActivity : SDLActivity() {
 
         }
         System.loadLibrary("GL")
-        System.loadLibrary(openmwLibName)
+        System.loadLibrary("openmw")
     }
 
     override fun getMainSharedObject(): String {
-        return "lib$openmwLibName.so"
+        return "libopenmw.so"
     }
 
     public override fun onCreate(savedInstanceState: Bundle?) {

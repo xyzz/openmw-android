@@ -135,9 +135,8 @@ mkdir -p prefix/$ARCH/
 # symlink lib64 -> lib so we don't get half the libs in one directory half in another
 mkdir -p prefix/$ARCH/lib
 ln -sf lib prefix/$ARCH/lib64
-mkdir -p prefix/$ARCH/osg_{fork,mainline}/lib
-ln -sf lib prefix/$ARCH/osg_fork/lib64
-ln -sf lib prefix/$ARCH/osg_mainline/lib64
+mkdir -p prefix/$ARCH/osg/lib
+ln -sf lib prefix/$ARCH/osg/lib64
 
 # generate command_wrapper.sh
 cat include/command_wrapper_head.sh.in | \
@@ -178,8 +177,7 @@ rm -rf ../app/src/main/jniLibs/$ABI/
 mkdir -p ../app/src/main/jniLibs/$ABI/
 
 # libopenmw.so is a special case
-find build/$ARCH/openmw_osg_mainline-prefix/ -iname "libopenmw.so" -exec cp "{}" ../app/src/main/jniLibs/$ABI/libopenmw_osg_mainline.so \;
-find build/$ARCH/openmw_osg_fork-prefix/ -iname "libopenmw.so" -exec cp "{}" ../app/src/main/jniLibs/$ABI/libopenmw_osg_fork.so \;
+find build/$ARCH/openmw-prefix/ -iname "libopenmw.so" -exec cp "{}" ../app/src/main/jniLibs/$ABI/libopenmw.so \;
 
 # copy over libs we compiled
 cp prefix/$ARCH/lib/{libopenal,libSDL2,libGL}.so ../app/src/main/jniLibs/$ABI/
@@ -191,7 +189,7 @@ if [[ $DEPLOY_RESOURCES = "true" ]]; then
 	echo "==> Deploying resources"
 
 	DST=$DIR/../app/src/main/assets/libopenmw/
-	SRC=build/$ARCH/openmw_osg_mainline-prefix/src/openmw_osg_mainline-build/
+	SRC=build/$ARCH/openmw-prefix/src/openmw-build/
 
 	rm -rf "$DST" && mkdir -p "$DST"
 
@@ -217,8 +215,7 @@ echo "==> Making your debugging life easier"
 rm -rf "./symbols/$ABI/" && mkdir -p "./symbols/$ABI/"
 cp "./build/$ARCH/openal-prefix/src/openal-build/libopenal.so" "./symbols/$ABI/"
 cp "./build/$ARCH/sdl2-prefix/src/sdl2-build/obj/local/$ABI/libSDL2.so" "./symbols/$ABI/"
-cp "./build/$ARCH/openmw_osg_mainline-prefix/src/openmw_osg_mainline-build/libopenmw.so" "./symbols/$ABI/libopenmw_osg_mainline.so"
-cp "./build/$ARCH/openmw_osg_fork-prefix/src/openmw_osg_fork-build/libopenmw.so" "./symbols/$ABI/libopenmw_osg_fork.so"
+cp "./build/$ARCH/openmw-prefix/src/openmw-build/libopenmw.so" "./symbols/$ABI/libopenmw.so"
 cp "./build/$ARCH/gl4es-prefix/src/gl4es-build/obj/local/$ABI/libGL.so" "./symbols/$ABI/"
 cp "../app/src/main/jniLibs/$ABI/libc++_shared.so" "./symbols/$ABI/"
 
