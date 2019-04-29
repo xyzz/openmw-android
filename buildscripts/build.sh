@@ -7,6 +7,7 @@ cd $DIR
 export ARCH="arm"
 export CCACHE="false"
 ASAN="false"
+DEPLOY_RESOURCES="true"
 LTO="false"
 BUILD_TYPE="release"
 CFLAGS="-fPIC"
@@ -18,6 +19,7 @@ usage() {
 	echo "	--help: print this message"
 	echo "	--arch: build for specified architecture [arm, arm64, x86_64, x86] (default: arm)"
 	echo "	--asan: build with AddressSanitizer enabled"
+	echo "	--no-resources: don't deploy the resources (used in full-build.sh)"
 	echo "	--lto: use LTO for linking"
 	echo "	--ccache: use ccache to speed up repeated builds"
 	echo "	--debug: produce a debug build without optimizations"
@@ -56,6 +58,10 @@ while [[ $# -gt 0 ]]; do
 			;;
 		--release)
 			BUILD_TYPE="release"
+			shift
+			;;
+		--no-resources)
+			DEPLOY_RESOURCES="false"
 			shift
 			;;
 		*)
@@ -181,7 +187,7 @@ cp prefix/$ARCH/lib/{libopenal,libSDL2,libGL}.so ../app/src/main/jniLibs/$ABI/
 # copy over libc++_shared
 find ./toolchain/$ARCH/ -iname "libc++_shared.so" -exec cp "{}" ../app/src/main/jniLibs/$ABI/ \;
 
-if [[ $ARCH = "arm" ]]; then
+if [[ $DEPLOY_RESOURCES = "true" ]]; then
 	echo "==> Deploying resources"
 
 	DST=$DIR/../app/src/main/assets/libopenmw/
