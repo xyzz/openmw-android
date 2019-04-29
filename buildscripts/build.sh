@@ -211,16 +211,18 @@ if [[ $DEPLOY_RESOURCES = "true" ]]; then
 	cp "$DIR/../app/settings-base.cfg" "$DST/config/openmw/settings.cfg"
 fi
 
-echo "==> Making your debugging life easier"
+if [ $BUILD_TYPE = "debug" ]; then
+	echo "==> Making your debugging life easier"
 
-# copy unstripped libs to aid debugging
-rm -rf "./symbols/$ABI/" && mkdir -p "./symbols/$ABI/"
-cp "./build/$ARCH/openal-prefix/src/openal-build/libopenal.so" "./symbols/$ABI/"
-cp "./build/$ARCH/sdl2-prefix/src/sdl2-build/obj/local/$ABI/libSDL2.so" "./symbols/$ABI/"
-cp "./build/$ARCH/openmw_osg_mainline-prefix/src/openmw_osg_mainline-build/libopenmw.so" "./symbols/$ABI/libopenmw_osg_mainline.so"
-cp "./build/$ARCH/openmw_osg_fork-prefix/src/openmw_osg_fork-build/libopenmw.so" "./symbols/$ABI/libopenmw_osg_fork.so"
-cp "./build/$ARCH/gl4es-prefix/src/gl4es-build/obj/local/$ABI/libGL.so" "./symbols/$ABI/"
-cp "../app/src/main/jniLibs/$ABI/libc++_shared.so" "./symbols/$ABI/"
+	# copy unstripped libs to aid debugging
+	rm -rf "./symbols/$ABI/" && mkdir -p "./symbols/$ABI/"
+	cp "./build/$ARCH/openal-prefix/src/openal-build/libopenal.so" "./symbols/$ABI/"
+	cp "./build/$ARCH/sdl2-prefix/src/sdl2-build/obj/local/$ABI/libSDL2.so" "./symbols/$ABI/"
+	cp "./build/$ARCH/openmw_osg_mainline-prefix/src/openmw_osg_mainline-build/libopenmw.so" "./symbols/$ABI/libopenmw_osg_mainline.so"
+	cp "./build/$ARCH/openmw_osg_fork-prefix/src/openmw_osg_fork-build/libopenmw.so" "./symbols/$ABI/libopenmw_osg_fork.so"
+	cp "./build/$ARCH/gl4es-prefix/src/gl4es-build/obj/local/$ABI/libGL.so" "./symbols/$ABI/"
+	cp "../app/src/main/jniLibs/$ABI/libc++_shared.so" "./symbols/$ABI/"
+fi
 
 if [ $ASAN = true ]; then
 	cp ./toolchain/$ARCH/lib64/clang/*/lib/linux/libclang_rt.asan-$ASAN_ARCH-android.so "./symbols/$ABI/"
