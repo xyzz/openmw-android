@@ -1166,8 +1166,8 @@ class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
     // Startup
     public SDLSurface(Context context) {
         super(context);
-        fixedWidth = MainActivity.resolutionX;
-        fixedHeight = MainActivity.resolutionY;
+        fixedWidth = MainActivity.Companion.getResolutionX();
+        fixedHeight = MainActivity.Companion.getResolutionY();
 
         if (fixedWidth > 0) {
             getHolder().setFixedSize(fixedWidth, fixedHeight);
