@@ -20,7 +20,6 @@
 
 package ui.fragments
 
-import android.app.AlertDialog
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
@@ -44,19 +43,19 @@ class FragmentSettings : PreferenceFragment(), OnSharedPreferenceChangeListener 
         addPreferencesFromResource(R.xml.settings)
         preferenceScreen.sharedPreferences.registerOnSharedPreferenceChangeListener(this)
 
-        findPreference("pref_controls").setOnPreferenceClickListener { pref: Preference ->
+        findPreference("pref_controls").setOnPreferenceClickListener {
             val intent = Intent(activity, ConfigureControls::class.java)
             this.startActivity(intent)
             true
         }
 
-        findPreference("pref_mods").setOnPreferenceClickListener { pref: Preference ->
+        findPreference("pref_mods").setOnPreferenceClickListener {
             val intent = Intent(activity, ModsActivity::class.java)
             this.startActivity(intent)
             true
         }
 
-        findPreference("data_files").setOnPreferenceClickListener { pref: Preference ->
+        findPreference("data_files").setOnPreferenceClickListener {
             val chooser = StorageChooser.Builder()
                 .withActivity(activity)
                 .withFragmentManager(fragmentManager)
