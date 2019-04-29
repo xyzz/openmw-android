@@ -47,8 +47,8 @@ Then open Android Studio and compile and install the project.
 To get symbolized output:
 
 ```
-adb logcat | ./tool/asan_symbolize.py --demangle -s ./build/arm/symbols/
-# Or: adb logcat | ./tool/asan_symbolize.py --demangle -s ./build/arm64/symbols/
+adb logcat | ./tool/asan_symbolize.py --demangle -s ./symbols/armeabi-v7a/
+# Or: adb logcat | ./tool/asan_symbolize.py --demangle -s ./symbols/arm64-v8a/
 ```
 
 ## Credits
