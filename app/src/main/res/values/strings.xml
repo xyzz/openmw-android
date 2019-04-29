@@ -35,7 +35,7 @@
     <string name="start_game_label">Start game</string>
     <string name="closeDrawer">Navigation View</string>
     <string name="openDrawer">Navigation View Closed</string>
-    <string name="data_files">Path to game data files</string>
+    <string name="data_files">Game data files</string>
 
     <!-- Graphics library -->
     <string name="pref_graphicsLibrary">Graphics library</string>

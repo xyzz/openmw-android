@@ -1,7 +1,7 @@
 package ui.controls;
 
 import android.content.Context;
-import android.support.v4.math.MathUtils;
+import androidx.core.math.MathUtils;
 import android.util.AttributeSet;
 
 public class JoystickLeft extends Joystick {

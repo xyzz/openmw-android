@@ -7,8 +7,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -241,7 +241,7 @@ public class MainActivity extends AppCompatActivity {
                         OPENMW_CFG, "resources", CONFIGS_FILES_STORAGE_PATH + "/resources"
                 );
                 // TODO: it will crash if there's no value/invalid value provided
-                file.Writer.write(OPENMW_CFG, "data", prefs.getString("data_files", ""));
+                file.Writer.write(OPENMW_CFG, "data", '"' + prefs.getString("data_files", "") + '"');
 
                 file.Writer.write(OPENMW_CFG, "encoding", prefs.getString("pref_encoding", "win1252"));
 

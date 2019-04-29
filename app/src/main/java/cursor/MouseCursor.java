@@ -19,7 +19,7 @@ import ui.controls.Osc;
  * An image view which doesn't downsize itself when moved to the border of a RelativeLayout
  * (not sure if original behavior is intended)
  */
-class FixedSizeImageView extends android.support.v7.widget.AppCompatImageView {
+class FixedSizeImageView extends androidx.appcompat.widget.AppCompatImageView {
 
     private int measuredWidth;
     private int measuredHeight;

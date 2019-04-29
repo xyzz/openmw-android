@@ -7,34 +7,34 @@
     tools:context="ui.activity.ModsActivity"
     android:orientation="vertical">
 
-    <android.support.design.widget.TabLayout
+    <com.google.android.material.tabs.TabLayout
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         app:tabTextAppearance="@style/MyCustomTextAppearance"
         android:id="@+id/tabLayout">
 
-        <android.support.design.widget.TabItem
+        <com.google.android.material.tabs.TabItem
             android:layout_height="match_parent"
             android:layout_width="wrap_content"
             android:text="@string/tab_plugins"/>
 
-        <android.support.design.widget.TabItem
+        <com.google.android.material.tabs.TabItem
             android:layout_height="match_parent"
             android:layout_width="wrap_content"
             android:text="@string/tab_resources"/>
-    </android.support.design.widget.TabLayout>
+    </com.google.android.material.tabs.TabLayout>
 
     <ViewFlipper
         android:id="@+id/flipper"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/list_mods"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/list_resources"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
