@@ -53,8 +53,7 @@
 
         <CheckBoxPreference
             android:key="pref_screen_keeper"
-            android:summary="@string/pref_screen_keeper"
-            android:title="Screen" />
+            android:title="@string/pref_screen_keeper"/>
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/pref_advanced">
