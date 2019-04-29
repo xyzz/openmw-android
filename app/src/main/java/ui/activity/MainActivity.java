@@ -144,7 +144,8 @@ public class MainActivity extends AppCompatActivity {
             file.Writer.write(ConfigsFileStorageHelper.SETTINGS_CFG, "resolution x", String.valueOf(resolutionX));
             file.Writer.write(ConfigsFileStorageHelper.SETTINGS_CFG, "resolution y", String.valueOf(resolutionY));
         } catch (IOException e) {
-            // TODO
+            Log.e(TAG, "Failed to write screen resolution", e);
+            Crashlytics.logException(e);
         }
     }
 
@@ -236,7 +237,6 @@ public class MainActivity extends AppCompatActivity {
                 generateOpenmwCfg();
 
                 // openmw.cfg: data, resources
-                // TODO: probably should just reuse ConfigsFileStorageHelper
                 file.Writer.write(
                         OPENMW_CFG, "resources", CONFIGS_FILES_STORAGE_PATH + "/resources"
                 );
