@@ -32,6 +32,7 @@
         <item>halfResolution</item>
     </string-array>
 
+    <string name="general_settings">Game setup</string>
     <string name="start_game_label">Start game</string>
     <string name="closeDrawer">Navigation View</string>
     <string name="openDrawer">Navigation View Closed</string>
@@ -46,10 +47,12 @@
     <string name="pref_commandLine">Custom command line arguments</string>
     <string name="pref_ui">User interface</string>
     <string name="pref_uiScaling">GUI scaling factor</string>
+    <string name="pref_screen_keeper">Keep screen always on</string>
     <string name="pref_touchpadSensitivity">Virtual touchpad sensitivity</string>
     <string name="action_reset_config">Reset configuration files</string>
     <string name="action_reset_screen_controls">Reset on-screen controls</string>
     <string name="action_show_screen_controls">On-screen controls…</string>
+    <string name="pref_hide_controls">Hide on-screen buttons</string>
     <string name="config_was_reset">Configuration was reset to default values</string>
     <string name="pref_lang">Language settings</string>
     <string name="pref_encoding">Game language</string>

@@ -93,9 +93,9 @@ class GameActivity : SDLActivity() {
     }
 
     private fun showControls() {
-        val hideControls = PreferenceManager.getDefaultSharedPreferences(this).getBoolean(Constants.HIDE_CONTROLS, false)
+        val pref_hide_controls = PreferenceManager.getDefaultSharedPreferences(this).getBoolean(Constants.HIDE_CONTROLS, false)
         var osc: Osc? = null
-        if (!hideControls) {
+        if (!pref_hide_controls) {
             val layout = layout
             osc = Osc()
             osc.placeElements(layout)
@@ -104,7 +104,7 @@ class GameActivity : SDLActivity() {
     }
 
     private fun KeepScreenOn() {
-        val needKeepScreenOn = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("screen_keeper", false)
+        val needKeepScreenOn = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("pref_screen_keeper", false)
         if (needKeepScreenOn) {
             window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         }
