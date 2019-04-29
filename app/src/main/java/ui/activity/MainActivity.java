@@ -241,7 +241,7 @@ public class MainActivity extends AppCompatActivity {
                         OPENMW_CFG, "resources", CONFIGS_FILES_STORAGE_PATH + "/resources"
                 );
                 // TODO: it will crash if there's no value/invalid value provided
-                file.Writer.write(OPENMW_CFG, "data", prefs.getString("data_files", ""));
+                file.Writer.write(OPENMW_CFG, "data", '"' + prefs.getString("data_files", "") + '"');
 
                 file.Writer.write(OPENMW_CFG, "encoding", prefs.getString("pref_encoding", "win1252"));
 
