@@ -19,6 +19,7 @@
 
 package ui.controls
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
@@ -31,17 +32,20 @@ import android.view.View
 open class Joystick : View {
 
     // Initial touch position
-    protected var initialX: Float = 0.toFloat()
-    protected var initialY: Float = 0.toFloat()
+    protected var initialX = 0f
+    protected var initialY = 0f
+
     // Current touch position
     protected var currentX = -1f
     protected var currentY = -1f
+
     // Whether the finger is down
-    protected var down: Boolean? = false
+    protected var down = false
+
     // left or right stick
     protected var stickId = 0
 
-    // width of a stroke
+    // width of a stroke to draw stick circles
     private var strokeWidth = 0
 
     private val paint = Paint()
@@ -58,7 +62,7 @@ open class Joystick : View {
         init()
     }
 
-    internal fun init() {
+    private fun init() {
         strokeWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2f, context.resources.displayMetrics).toInt()
     }
 
@@ -73,16 +77,16 @@ open class Joystick : View {
         paint.strokeWidth = strokeWidth.toFloat()
         paint.color = Color.GRAY
 
-        if (down!!) {
+        if (down) {
             // Draw initial touch
-            canvas.drawCircle(initialX, initialY, getWidth() / 10f, paint)
+            canvas.drawCircle(initialX, initialY, width / 10f, paint)
 
             // Draw current stick position
-            canvas.drawCircle(currentX, currentY, getWidth() / 5f, paint)
+            canvas.drawCircle(currentX, currentY, width / 5f, paint)
         } else {
             // Draw the outline
-            canvas.drawCircle(getWidth() / 2f, height / 2f,
-                getWidth() / 2f - strokeWidth, paint)
+            canvas.drawCircle(width / 2f, height / 2f,
+                width / 2f - strokeWidth, paint)
         }
     }
 
@@ -90,10 +94,9 @@ open class Joystick : View {
         setMeasuredDimension(widthMeasureSpec, heightMeasureSpec)
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        val action = event.actionMasked
-
-        when (action) {
+        when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
                 initialX = event.x
                 initialY = event.y
@@ -107,8 +110,9 @@ open class Joystick : View {
             }
             MotionEvent.ACTION_UP -> {
                 down = false
+                // make sure it's hidden
                 currentY = -1f
-                currentX = currentY
+                currentX = -1f
             }
         }
 
