@@ -21,14 +21,14 @@
 
 package ui.controls
 
+import android.annotation.SuppressLint
 import android.view.MotionEvent
 import android.view.View
 import android.view.View.OnTouchListener
 
 import org.libsdl.app.SDLActivity
 
-class ButtonTouchListener(private val keyCode: Int, needEmulateMouse: Boolean) : OnTouchListener {
-    internal var needEmulateMouse = false
+class ButtonTouchListener(private val keyCode: Int, private val needEmulateMouse: Boolean) : OnTouchListener {
 
     enum class Movement {
         KEY_DOWN,
@@ -38,30 +38,30 @@ class ButtonTouchListener(private val keyCode: Int, needEmulateMouse: Boolean) :
     }
 
     init {
-        this.needEmulateMouse = needEmulateMouse
+        // TODO: this is set multiple times, gotta be a bug
         SDLActivity.mSeparateMouseAndTouch = needEmulateMouse
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onTouch(v: View, event: MotionEvent): Boolean {
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                onTouchDown(v)
+                onTouchDown()
                 return true
             }
             MotionEvent.ACTION_UP -> {
-                onTouchUp(v)
+                onTouchUp()
                 return true
             }
-
             MotionEvent.ACTION_CANCEL -> {
-                onTouchUp(v)
+                onTouchUp()
                 return true
             }
         }
         return false
     }
 
-    private fun onTouchDown(v: View) {
+    private fun onTouchDown() {
         if (!needEmulateMouse) {
             eventMovement(Movement.KEY_DOWN)
         } else {
@@ -69,7 +69,7 @@ class ButtonTouchListener(private val keyCode: Int, needEmulateMouse: Boolean) :
         }
     }
 
-    private fun onTouchUp(v: View) {
+    private fun onTouchUp() {
         if (!needEmulateMouse) {
             eventMovement(Movement.KEY_UP)
         } else {
@@ -77,12 +77,12 @@ class ButtonTouchListener(private val keyCode: Int, needEmulateMouse: Boolean) :
         }
     }
 
-    protected fun eventMovement(event: Movement) {
+    private fun eventMovement(event: Movement) {
         when (event) {
-            ButtonTouchListener.Movement.KEY_DOWN -> SDLActivity.onNativeKeyDown(keyCode)
-            ButtonTouchListener.Movement.KEY_UP -> SDLActivity.onNativeKeyUp(keyCode)
-            ButtonTouchListener.Movement.MOUSE_DOWN -> SDLActivity.sendMouseButton(1, keyCode)
-            ButtonTouchListener.Movement.MOUSE_UP -> SDLActivity.sendMouseButton(0, keyCode)
+            Movement.KEY_DOWN -> SDLActivity.onNativeKeyDown(keyCode)
+            Movement.KEY_UP -> SDLActivity.onNativeKeyUp(keyCode)
+            Movement.MOUSE_DOWN -> SDLActivity.sendMouseButton(1, keyCode)
+            Movement.MOUSE_UP -> SDLActivity.sendMouseButton(0, keyCode)
         }
     }
 }
