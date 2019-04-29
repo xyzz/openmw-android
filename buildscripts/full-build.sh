@@ -4,7 +4,7 @@ set -e
 
 ./clean.sh
 
-./build.sh --arch arm --lto
+./build.sh --arch arm --lto &
 
 ./build.sh --arch arm64 --lto --no-resources &
 PID1=$!
