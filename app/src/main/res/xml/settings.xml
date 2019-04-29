@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory
-        android:key="genereal_settings"
-        android:title="Game setup">
+        android:key="general_settings"
+        android:title="@string/general_settings">
 
         <Preference
             android:key="data_files"
@@ -37,11 +37,12 @@
             android:title="@string/pref_uiScaling"
             android:dialogTitle="@string/pref_uiScaling"
             android:inputType="numberDecimal"
+            android:hint="1.5"
             />
 
         <CheckBoxPreference
-            android:key="hidecontrols"
-            android:title="Hide onscreen buttons" />
+            android:key="pref_hide_controls"
+            android:title="@string/pref_hide_controls" />
 
         <EditTextPreference
             android:key="pref_customResolution"
@@ -51,8 +52,8 @@
             />
 
         <CheckBoxPreference
-            android:key="screen_keeper"
-            android:summary="Keep screen always on"
+            android:key="pref_screen_keeper"
+            android:summary="@string/pref_screen_keeper"
             android:title="Screen" />
     </PreferenceCategory>
 
