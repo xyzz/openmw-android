@@ -30,11 +30,6 @@
                 android:src="@android:drawable/ic_media_play"
                 app:backgroundTint="#2196F3"
                 app:rippleColor="#FFFFFF" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="5dp"
-                android:background="@drawable/toolbar_dropshadow" />
         </FrameLayout>
     </LinearLayout>
 
