@@ -25,14 +25,13 @@ import android.util.AttributeSet
 
 class JoystickLeft : Joystick {
 
-    constructor(context: Context) : super(context) {}
-
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {}
-
-    constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(context, attrs, defStyle) {}
+    constructor(context: Context) : super(context)
+    constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
+    constructor(context: Context, attrs: AttributeSet, defStyle: Int)
+        : super(context, attrs, defStyle)
 
     override fun updateStick() {
-        if (down!!) {
+        if (down) {
             // GamepadEmulator takes values on a scale [-1; 1] so convert our values
             val w = (width / 3).toFloat()
             var diffX = currentX - initialX

@@ -19,10 +19,9 @@
 
 package ui.controls
 
+import android.annotation.SuppressLint
 import android.content.Context
-import android.os.Handler
 import android.util.AttributeSet
-import android.util.Log
 import android.view.MotionEvent
 
 import org.libsdl.app.SDLActivity
@@ -32,12 +31,14 @@ class JoystickRight : Joystick {
     private var curX: Float = 0.toFloat()
     private var curY: Float = 0.toFloat()
 
-    constructor(context: Context) : super(context) {}
+    constructor(context: Context) : super(context)
 
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {}
+    constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
-    constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(context, attrs, defStyle) {}
+    constructor(context: Context, attrs: AttributeSet, defStyle: Int)
+        : super(context, attrs, defStyle)
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
         when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
