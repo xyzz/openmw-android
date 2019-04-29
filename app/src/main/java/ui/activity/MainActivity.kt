@@ -39,6 +39,7 @@ import android.widget.Toast
 import com.crashlytics.android.Crashlytics
 import com.crashlytics.android.ndk.CrashlyticsNdk
 import com.libopenmw.openmw.R
+import constants.Constants
 
 import io.fabric.sdk.android.Fabric
 
@@ -60,12 +61,6 @@ import mods.ModsCollection
 import mods.ModsDatabaseOpenHelper
 import ui.fragments.FragmentSettings
 import permission.PermissionHelper
-import file.ConfigsFileStorageHelper
-
-import file.ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH
-import file.ConfigsFileStorageHelper.OPENMW_BASE_CFG
-import file.ConfigsFileStorageHelper.OPENMW_CFG
-import file.ConfigsFileStorageHelper.SETTINGS_CFG
 import utils.Utils.hideAndroidControls
 
 class MainActivity : AppCompatActivity() {
@@ -95,7 +90,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun logConfig() {
         try {
-            val openmwCfg = File(ConfigsFileStorageHelper.OPENMW_CFG)
+            val openmwCfg = File(Constants.OPENMW_CFG)
             if (openmwCfg.exists()) {
                 val reader = BufferedReader(InputStreamReader(FileInputStream(openmwCfg)))
                 var line: String
@@ -129,9 +124,9 @@ class MainActivity : AppCompatActivity() {
      */
     private fun resetUserConfig() {
         // Wipe out the old version
-        deleteRecursive(File(ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH + "/config"))
+        deleteRecursive(File(Constants.CONFIGS_FILES_STORAGE_PATH + "/config"))
         // and copy in the default values
-        val copyFiles = CopyFilesFromAssets(this, ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH)
+        val copyFiles = CopyFilesFromAssets(this, Constants.CONFIGS_FILES_STORAGE_PATH)
         copyFiles.copyFileOrDir("libopenmw/config")
     }
 
@@ -157,8 +152,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         try {
-            file.Writer.write(ConfigsFileStorageHelper.SETTINGS_CFG, "resolution x", resolutionX.toString())
-            file.Writer.write(ConfigsFileStorageHelper.SETTINGS_CFG, "resolution y", resolutionY.toString())
+            file.Writer.write(Constants.SETTINGS_CFG, "resolution x", resolutionX.toString())
+            file.Writer.write(Constants.SETTINGS_CFG, "resolution y", resolutionY.toString())
         } catch (e: IOException) {
             Log.e(TAG, "Failed to write screen resolution", e)
             Crashlytics.logException(e)
@@ -172,7 +167,7 @@ class MainActivity : AppCompatActivity() {
     private fun generateOpenmwCfg() {
         var base = ""
         try {
-            base = readFile(ConfigsFileStorageHelper.OPENMW_BASE_CFG)
+            base = readFile(Constants.OPENMW_BASE_CFG)
         } catch (e: IOException) {
             Log.e(TAG, "Failed to read openmw-base.cfg", e)
             Crashlytics.logException(e)
@@ -185,7 +180,7 @@ class MainActivity : AppCompatActivity() {
 
         try {
             BufferedWriter(OutputStreamWriter(
-                FileOutputStream(ConfigsFileStorageHelper.OPENMW_CFG), "UTF-8")).use { writer ->
+                FileOutputStream(Constants.OPENMW_CFG), "UTF-8")).use { writer ->
                 writer.write("# Automatically generated, do not edit\n")
 
                 for (mod in resources.mods) {
@@ -218,19 +213,19 @@ class MainActivity : AppCompatActivity() {
 
         val th = Thread {
             try {
-                val openmwBaseCfg = File(ConfigsFileStorageHelper.OPENMW_BASE_CFG)
-                val settingsCfg = File(ConfigsFileStorageHelper.SETTINGS_CFG)
+                val openmwBaseCfg = File(Constants.OPENMW_BASE_CFG)
+                val settingsCfg = File(Constants.SETTINGS_CFG)
                 if (!openmwBaseCfg.exists() || !settingsCfg.exists()) {
                     Log.i(TAG, "Config files don't exist, re-creating them.")
                     resetUserConfig()
                 }
 
                 // wipe old "wipeable" (see ConfigsFileStorageHelper) config files just to be safe
-                deleteRecursive(File(ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH + "/openmw"))
-                deleteRecursive(File(ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH + "/resources"))
+                deleteRecursive(File(Constants.CONFIGS_FILES_STORAGE_PATH + "/openmw"))
+                deleteRecursive(File(Constants.CONFIGS_FILES_STORAGE_PATH + "/resources"))
 
                 // copy all assets
-                val copyFiles = CopyFilesFromAssets(activity, ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH)
+                val copyFiles = CopyFilesFromAssets(activity, Constants.CONFIGS_FILES_STORAGE_PATH)
                 copyFiles.copyFileOrDir("libopenmw/openmw")
                 copyFiles.copyFileOrDir("libopenmw/resources")
 
@@ -238,18 +233,18 @@ class MainActivity : AppCompatActivity() {
 
                 // openmw.cfg: data, resources
                 file.Writer.write(
-                    ConfigsFileStorageHelper.OPENMW_CFG, "resources", ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH + "/resources"
+                    Constants.OPENMW_CFG, "resources", Constants.CONFIGS_FILES_STORAGE_PATH + "/resources"
                 )
                 // TODO: it will crash if there's no value/invalid value provided
-                file.Writer.write(ConfigsFileStorageHelper.OPENMW_CFG, "data", '"'.toString() + prefs!!.getString("data_files", "") + '"'.toString())
+                file.Writer.write(Constants.OPENMW_CFG, "data", '"'.toString() + prefs!!.getString("data_files", "") + '"'.toString())
 
-                file.Writer.write(ConfigsFileStorageHelper.OPENMW_CFG, "encoding", prefs!!.getString("pref_encoding", "win1252")!!)
+                file.Writer.write(Constants.OPENMW_CFG, "encoding", prefs!!.getString("pref_encoding", "win1252")!!)
 
-                file.Writer.write(ConfigsFileStorageHelper.SETTINGS_CFG, "scaling factor", prefs!!.getString("pref_uiScaling", "1.0")!!)
+                file.Writer.write(Constants.SETTINGS_CFG, "scaling factor", prefs!!.getString("pref_uiScaling", "1.0")!!)
 
-                file.Writer.write(ConfigsFileStorageHelper.SETTINGS_CFG, "allow capsule shape", prefs!!.getString("pref_allowCapsuleShape", "true")!!)
+                file.Writer.write(Constants.SETTINGS_CFG, "allow capsule shape", prefs!!.getString("pref_allowCapsuleShape", "true")!!)
 
-                file.Writer.write(ConfigsFileStorageHelper.SETTINGS_CFG, "preload enabled", prefs!!.getString("pref_preload", "false")!!)
+                file.Writer.write(Constants.SETTINGS_CFG, "preload enabled", prefs!!.getString("pref_preload", "false")!!)
 
                 runOnUiThread {
                     obtainScreenResolution()

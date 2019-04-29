@@ -36,7 +36,6 @@ import constants.Constants
 import cursor.MouseCursor
 import parser.CommandlineParser
 import ui.controls.Osc
-import file.ConfigsFileStorageHelper
 
 import utils.Utils.hideAndroidControls
 
@@ -89,7 +88,7 @@ class GameActivity : SDLActivity() {
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         KeepScreenOn()
-        getPathToJni(ConfigsFileStorageHelper.CONFIGS_FILES_STORAGE_PATH)
+        getPathToJni(Constants.CONFIGS_FILES_STORAGE_PATH)
         showControls()
     }
 
