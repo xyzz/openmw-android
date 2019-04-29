@@ -1,7 +1,7 @@
 From c5d7f78c9a6f46a01988176f66b69d23c5cbbe31 Mon Sep 17 00:00:00 2001
 From: Ilya Zhuravlev <whatever@xyz.is>
 Date: Sun, 10 Feb 2019 19:12:00 -0500
-Subject: [PATCH 02/10] scenemanager: disable state share / inc compile
+Subject: [PATCH 02/12] scenemanager: disable state share / inc compile
 
 ---
  components/resource/scenemanager.cpp | 4 ++++

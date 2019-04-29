@@ -1,0 +1,43 @@
+From 2dcf96b0c391e86db10ac8cd3e2fc5f5b558043b Mon Sep 17 00:00:00 2001
+From: Ilya Zhuravlev <whatever@xyz.is>
+Date: Mon, 29 Apr 2019 16:51:05 -0400
+Subject: [PATCH 11/12] android: pause the game on minimize
+
+---
+ apps/openmw/android_main.cpp | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/apps/openmw/android_main.cpp b/apps/openmw/android_main.cpp
+index 1176384f2..d2b2d0c5e 100644
+--- a/apps/openmw/android_main.cpp
++++ b/apps/openmw/android_main.cpp
+@@ -2,6 +2,8 @@ int stderr = 0; // Hack: fix linker error
+ 
+ #include "SDL_main.h"
+ #include "engine.hpp"
++#include "mwbase/inputmanager.hpp"
++#include "mwinput/inputmanagerimp.hpp"
+ #include <SDL_gamecontroller.h>
+ #include <SDL_mouse.h>
+ #include <SDL_events.h>
+@@ -83,6 +85,9 @@ extern "C" void Java_org_libsdl_app_SDLActivity_omwSurfaceDestroyed(JNIEnv *env,
+     osg::ref_ptr<CtxReleaseOperation> op = new CtxReleaseOperation();
+     ctx = g_viewer->getCamera()->getGraphicsContext();
+     ctx->add(op);
++
++    auto inp = (MWInput::InputManager *)MWBase::Environment::get().getInputManager();
++    inp->windowVisibilityChange(false);
+ }
+ 
+ extern "C" void Java_org_libsdl_app_SDLActivity_omwSurfaceRecreated(JNIEnv *env, jclass cls, jobject obj) {
+@@ -92,4 +97,7 @@ extern "C" void Java_org_libsdl_app_SDLActivity_omwSurfaceRecreated(JNIEnv *env,
+     osg::ref_ptr<CtxAcquireOperation> op = new CtxAcquireOperation();
+     ctx = g_viewer->getCamera()->getGraphicsContext();
+     ctx->add(op);
++
++    auto inp = (MWInput::InputManager *)MWBase::Environment::get().getInputManager();
++    inp->windowVisibilityChange(true);
+ }
+-- 
+2.19.2
+
