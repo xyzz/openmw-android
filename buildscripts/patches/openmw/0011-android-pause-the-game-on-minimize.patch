@@ -1,4 +1,4 @@
-From 2dcf96b0c391e86db10ac8cd3e2fc5f5b558043b Mon Sep 17 00:00:00 2001
+From a1d9b108af660dc50d6a80e0f1aaa25ca70d2b99 Mon Sep 17 00:00:00 2001
 From: Ilya Zhuravlev <whatever@xyz.is>
 Date: Mon, 29 Apr 2019 16:51:05 -0400
 Subject: [PATCH 11/13] android: pause the game on minimize

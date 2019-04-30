@@ -1,4 +1,4 @@
-From 537d7d72ba75c0039bde64327b60c436631adf41 Mon Sep 17 00:00:00 2001
+From 329a3bdadb420f7b96a0ec66ca5da08bd1a21410 Mon Sep 17 00:00:00 2001
 From: Ilya Zhuravlev <whatever@xyz.is>
 Date: Tue, 30 Apr 2019 14:25:24 -0400
 Subject: [PATCH 13/13] engine: fix window creation when SDL returns
@@ -9,7 +9,7 @@ Subject: [PATCH 13/13] engine: fix window creation when SDL returns
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/apps/openmw/engine.cpp b/apps/openmw/engine.cpp
-index 4e6d27ddd..100c3bf14 100644
+index ec29e896a..55a07f03d 100644
 --- a/apps/openmw/engine.cpp
 +++ b/apps/openmw/engine.cpp
 @@ -447,11 +447,11 @@ void OMW::Engine::createWindow(Settings::Manager& settings)

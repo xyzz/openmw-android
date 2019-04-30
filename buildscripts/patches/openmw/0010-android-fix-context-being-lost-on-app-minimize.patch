@@ -1,12 +1,12 @@
-From 272de7f8cdae82007a79399afcada5c2a5b4e44e Mon Sep 17 00:00:00 2001
+From ac4da1161ae152f378ca67dd0a76f25e7ee7372b Mon Sep 17 00:00:00 2001
 From: Ilya Zhuravlev <whatever@xyz.is>
 Date: Sun, 28 Apr 2019 18:16:37 -0400
 Subject: [PATCH 10/13] android: fix context being lost on app minimize
 
 ---
  apps/openmw/android_main.cpp | 39 ++++++++++++++++++++++++++++++++++++
- apps/openmw/engine.cpp       |  6 ++++++
- 2 files changed, 45 insertions(+)
+ apps/openmw/engine.cpp       |  8 ++++++++
+ 2 files changed, 47 insertions(+)
 
 diff --git a/apps/openmw/android_main.cpp b/apps/openmw/android_main.cpp
 index cc36388b0..1176384f2 100644
@@ -67,7 +67,7 @@ index cc36388b0..1176384f2 100644
 +    ctx->add(op);
 +}
 diff --git a/apps/openmw/engine.cpp b/apps/openmw/engine.cpp
-index e60a4e792..23356ba16 100644
+index e60a4e792..ed2a0422a 100644
 --- a/apps/openmw/engine.cpp
 +++ b/apps/openmw/engine.cpp
 @@ -336,6 +336,9 @@ std::string OMW::Engine::loadSettings (Settings::Manager & settings)
@@ -90,6 +90,15 @@ index e60a4e792..23356ba16 100644
  }
  
  void OMW::Engine::setWindowIcon()
+@@ -764,6 +770,8 @@ void OMW::Engine::go()
+         mEnvironment.limitFrameRate(frameTimer.time_s());
+     }
+ 
++    g_viewer.release();
++
+     // Save user settings
+     settings.saveUser(settingspath);
+ 
 -- 
 2.19.2
 
