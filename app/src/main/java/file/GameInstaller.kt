@@ -1,6 +1,8 @@
 package file
 
+import com.crashlytics.android.Crashlytics
 import java.io.File
+import java.io.IOException
 
 /**
  * Class responsible for initial game setup which involves
@@ -43,6 +45,19 @@ class GameInstaller(path: String) {
      */
     fun findDataFiles(): String {
         return File(dir, DATA_NAME).absolutePath
+    }
+
+    /**
+     * Adds a .nomedia to the game folder so that it doesn't bloat up the gallery
+     * If this fails, then who cares
+     */
+    fun setNomedia() {
+        try {
+            val file = File(dir, ".nomedia")
+            if (!file.exists())
+                file.createNewFile()
+        } catch (e: IOException) {
+        }
     }
 
     companion object {
