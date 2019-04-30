@@ -34,8 +34,15 @@ class GameInstaller(path: String) {
             return false
 
         // morrowind.ini as well as data files must exist
-        return findCaseInsensitive(Companion.INI_NAME) != null
-            && findCaseInsensitive(Companion.DATA_NAME) != null
+        return findCaseInsensitive(INI_NAME) != null
+            && findCaseInsensitive(DATA_NAME) != null
+    }
+
+    /**
+     * Returns path to the Data Files directory as a string
+     */
+    fun findDataFiles(): String {
+        return File(dir, DATA_NAME).absolutePath
     }
 
     companion object {
