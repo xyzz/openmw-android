@@ -59,7 +59,7 @@ import permission.PermissionHelper
 import utils.Utils.hideAndroidControls
 
 class MainActivity : AppCompatActivity() {
-    private var prefs: SharedPreferences? = null
+    private lateinit var prefs: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -124,13 +124,13 @@ class MainActivity : AppCompatActivity() {
         copyFiles.copyFileOrDir("libopenmw/config")
     }
 
-    private fun obtainScreenResolution() {
-        val v = window.decorView
-        resolutionX = v.width
-        resolutionY = v.height
-
+    /**
+     * Set up fixed screen resolution
+     * This doesn't do anything unless the user chose to override screen resolution
+     */
+    private fun obtainFixedScreenResolution() {
         // Split resolution e.g 640x480 to width/height
-        val customResolution = prefs!!.getString("pref_customResolution", "")
+        val customResolution = prefs.getString("pref_customResolution", "")
         val sep = customResolution!!.indexOf("x")
         if (sep > 0) {
             try {
@@ -140,19 +140,9 @@ class MainActivity : AppCompatActivity() {
                 resolutionX = x
                 resolutionY = y
             } catch (e: NumberFormatException) {
-                // pass
+                // user entered resolution wrong, just ignore it
             }
-
         }
-
-        try {
-            file.Writer.write(Constants.SETTINGS_CFG, "resolution x", resolutionX.toString())
-            file.Writer.write(Constants.SETTINGS_CFG, "resolution y", resolutionY.toString())
-        } catch (e: IOException) {
-            Log.e(TAG, "Failed to write screen resolution", e)
-            Crashlytics.logException(e)
-        }
-
     }
 
     /**
@@ -241,7 +231,7 @@ class MainActivity : AppCompatActivity() {
                 file.Writer.write(Constants.SETTINGS_CFG, "preload enabled", prefs!!.getString("pref_preload", "false")!!)
 
                 runOnUiThread {
-                    obtainScreenResolution()
+                    obtainFixedScreenResolution()
                     dialog.hide()
                     runGame()
                 }

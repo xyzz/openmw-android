@@ -1,0 +1,31 @@
+From 537d7d72ba75c0039bde64327b60c436631adf41 Mon Sep 17 00:00:00 2001
+From: Ilya Zhuravlev <whatever@xyz.is>
+Date: Tue, 30 Apr 2019 14:25:24 -0400
+Subject: [PATCH 13/13] engine: fix window creation when SDL returns
+ different-sized window
+
+---
+ apps/openmw/engine.cpp | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/apps/openmw/engine.cpp b/apps/openmw/engine.cpp
+index 4e6d27ddd..100c3bf14 100644
+--- a/apps/openmw/engine.cpp
++++ b/apps/openmw/engine.cpp
+@@ -447,11 +447,11 @@ void OMW::Engine::createWindow(Settings::Manager& settings)
+ 
+     osg::ref_ptr<osg::Camera> camera = mViewer->getCamera();
+     camera->setGraphicsContext(graphicsWindow);
+-    camera->setViewport(0, 0, width, height);
++    camera->setViewport(0, 0, traits->width, traits->height);
+ 
+     mViewer->realize();
+ 
+-    mViewer->getEventQueue()->getCurrentEventState()->setWindowRectangle(0, 0, width, height);
++    mViewer->getEventQueue()->getCurrentEventState()->setWindowRectangle(0, 0, traits->width, traits->height);
+ 
+     // To share the viewer with Android interfaces
+     g_viewer = mViewer;
+-- 
+2.19.2
+
