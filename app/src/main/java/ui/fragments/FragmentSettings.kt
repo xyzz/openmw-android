@@ -20,6 +20,8 @@
 
 package ui.fragments
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
@@ -31,6 +33,7 @@ import android.preference.PreferenceGroup
 
 import com.codekidlabs.storagechooser.StorageChooser
 import com.libopenmw.openmw.R
+import file.GameInstaller
 
 import ui.activity.ConfigureControls
 import ui.activity.ModsActivity
@@ -66,13 +69,31 @@ class FragmentSettings : PreferenceFragment(), OnSharedPreferenceChangeListener 
 
             chooser.show()
 
-            chooser.setOnSelectListener { path ->
-                val sharedPref = preferenceScreen.sharedPreferences
-                val editor = sharedPref.edit()
-                editor.putString("data_files", path)
-                editor.apply()
-            }
+            chooser.setOnSelectListener { path -> setupData(path) }
             true
+        }
+    }
+
+    /**
+     * Checks the specified path for a valid morrowind installation, generates config files
+     * and saves the path to shared prefs if it's valid.
+     * If it isn't, an error is displayed to the user.
+     */
+    private fun setupData(path: String) {
+        val sharedPref = preferenceScreen.sharedPreferences
+
+        val inst = GameInstaller(path)
+        if (inst.check()) {
+            with (sharedPref.edit()) {
+                putString("data_files", path)
+                apply()
+            }
+        } else {
+            AlertDialog.Builder(activity)
+                .setTitle(R.string.data_error_title)
+                .setMessage(R.string.data_error_message)
+                .setPositiveButton(android.R.string.ok) { _: DialogInterface, _: Int -> }
+                .show()
         }
     }
 
