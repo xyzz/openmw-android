@@ -96,7 +96,7 @@ class MouseCursor(activity: GameActivity, private val osc: Osc?) : Choreographer
                 osc.hideNonEssential()
         }
 
-        if (mouseShown == 0) {
+        if (mouseShown == 0 || (osc != null && osc.keyboardVisible)) {
             cursor.visibility = View.GONE
         } else {
             cursor.visibility = View.VISIBLE
