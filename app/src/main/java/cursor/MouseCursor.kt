@@ -103,8 +103,13 @@ class MouseCursor(activity: GameActivity, private val osc: Osc?) : Choreographer
 
             val surface = SDLActivity.getSurface()
 
-            val translateX = 1.0f * surface.width / MainActivity.resolutionX
-            val translateY = 1.0f * surface.height / MainActivity.resolutionY
+            var translateX = 1.0f
+            var translateY = 1.0f
+
+            if (MainActivity.resolutionX > 0) {
+                translateX = 1.0f * surface.width / MainActivity.resolutionX
+                translateY = 1.0f * surface.height / MainActivity.resolutionY
+            }
 
             val mouseX = SDLActivity.getMouseX()
             val mouseY = SDLActivity.getMouseY()
