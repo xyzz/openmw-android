@@ -1,0 +1,35 @@
+diff --git a/CMake/InstallResources.cmake b/CMake/InstallResources.cmake
+index 12501726e..d6850e75d 100644
+--- a/CMake/InstallResources.cmake
++++ b/CMake/InstallResources.cmake
+@@ -60,7 +60,7 @@ if (MYGUI_INSTALL_SAMPLES OR MYGUI_INSTALL_TOOLS)
+ 	else() # other OS only need one cfg file
+ 		string(TOLOWER "${CMAKE_BUILD_TYPE}" MYGUI_BUILD_TYPE)
+ 		if (MYGUI_BUILD_TYPE STREQUAL "debug" AND NOT APPLE)
+-			set(MYGUI_CFG_SUFFIX "_d")
++			# set(MYGUI_CFG_SUFFIX "_d")
+ 		endif ()
+ 		# create resources.xml
+ 		configure_file(${MYGUI_TEMPLATES_DIR}/resources.xml.in ${MYGUI_BINARY_DIR}/bin/resources.xml)
+@@ -83,7 +83,7 @@ else ()
+ 	else() # other OS only need one cfg file
+ 		string(TOLOWER "${CMAKE_BUILD_TYPE}" MYGUI_BUILD_TYPE)
+ 		if (MYGUI_BUILD_TYPE STREQUAL "debug" AND NOT APPLE)
+-			set(MYGUI_CFG_SUFFIX "_d")
++			# set(MYGUI_CFG_SUFFIX "_d")
+ 		endif ()
+ 		# create resources.xml
+ 		configure_file(${MYGUI_TEMPLATES_DIR}/resources.xml.in ${MYGUI_BINARY_DIR}/bin/resources.xml)
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 35658d989..0f5f9d3cd 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -44,7 +44,7 @@ message(STATUS "Configuring MYGUI ${MYGUI_VERSION}")
+ 
+ if (NOT APPLE)
+ 	# Create debug libraries with _d postfix
+-	set(CMAKE_DEBUG_POSTFIX "_d")
++	# set(CMAKE_DEBUG_POSTFIX "_d")
+ endif ()
+ 
+ if (CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_CXX_COMPILER_ID MATCHES "Intel")
