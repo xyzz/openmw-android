@@ -259,7 +259,7 @@ class MainActivity : AppCompatActivity() {
 
             R.id.action_about -> AlertDialog.Builder(this)
                 .setTitle(getString(R.string.about_title))
-                .setMessage(R.string.about_contents)
+                .setMessage((getResources().getString(R.string.about_contents)) + "\n" + getVersionString())
                 .show()
 
             else -> {
@@ -267,6 +267,16 @@ class MainActivity : AppCompatActivity() {
         }
 
         return super.onOptionsItemSelected(item)
+    }
+    
+    private fun getVersionString(): String {
+        val versionFile = File(Constants.CONFIGS_FILES_STORAGE_PATH + "/resources/version"))
+        if (versionFile.exists()) {
+            val stream = FileInputStream(versionFile)
+            return (stream.readLines()[0] + "\n" + stream.readLines()[1])
+        } else {
+            return "Error: Version file does not exist."
+        }
     }
 
     companion object {
