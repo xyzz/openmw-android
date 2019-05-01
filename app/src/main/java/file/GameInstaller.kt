@@ -19,8 +19,11 @@
 
 package file
 
+import constants.Constants
 import java.io.File
 import java.io.IOException
+import java.nio.charset.Charset
+import java.nio.charset.StandardCharsets
 
 /**
  * Class responsible for initial game setup which involves
@@ -76,6 +79,26 @@ class GameInstaller(path: String) {
                 file.createNewFile()
         } catch (e: IOException) {
         }
+    }
+
+    /**
+     * Converts morrowind.ini into openmw format and places it into our resources directory
+     * (properly named and everything)
+     * @return Whether the conversion succeeded
+     */
+    fun convertIni(): Boolean {
+        val file = findCaseInsensitive(INI_NAME) ?: return false
+
+        // TODO: support user-provided encoding
+        // win-1252
+        val contents = file.readText(StandardCharsets.ISO_8859_1)
+        if (contents.isEmpty())
+            return false
+
+        val ini = IniConverter(contents)
+        File(Constants.OPENMW_FALLBACK_CFG).writeText(ini.convert())
+
+        return true
     }
 
     companion object {

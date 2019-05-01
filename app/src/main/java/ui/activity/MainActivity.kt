@@ -46,7 +46,6 @@ import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.io.IOException
-import java.io.InputStream
 import java.io.InputStreamReader
 import java.io.OutputStreamWriter
 
@@ -117,6 +116,7 @@ class MainActivity : AppCompatActivity() {
      * (and we also write some values to both on startup such as screen res or some options)
      */
     private fun resetUserConfig() {
+        // TODO: this should also regen openmw.fallback.cfg
         // Wipe out the old version
         deleteRecursive(File(Constants.CONFIGS_FILES_STORAGE_PATH + "/config"))
         // and copy in the default values
@@ -149,41 +149,47 @@ class MainActivity : AppCompatActivity() {
      * Generates openmw.cfg using values from openmw-base.cfg combined with mod manager settings
      */
     private fun generateOpenmwCfg() {
-        var base = ""
+        // contents of openmw-base.cfg
+        val base: String
+        // contents of openmw.fallback.cfg
+        val fallback: String
+
+        // try to read the files
         try {
-            base = readFile(Constants.OPENMW_BASE_CFG)
+            base = File(Constants.OPENMW_BASE_CFG).readText()
+            // TODO: support user custom options
+            fallback = File(Constants.OPENMW_FALLBACK_CFG).readText()
         } catch (e: IOException) {
-            Log.e(TAG, "Failed to read openmw-base.cfg", e)
+            Log.e(TAG, "Failed to read openmw-base.cfg or openmw-fallback.cfg", e)
             Crashlytics.logException(e)
+            return
         }
 
-        val dataFiles = prefs!!.getString("data_files", "")
+        val dataFiles = prefs.getString("data_files", "")!!
         val db = ModsDatabaseOpenHelper.getInstance(this)
-        val resources = ModsCollection(ModType.Resource, dataFiles!!, db)
+        val resources = ModsCollection(ModType.Resource, dataFiles, db)
         val plugins = ModsCollection(ModType.Plugin, dataFiles, db)
 
         try {
-            BufferedWriter(OutputStreamWriter(
-                FileOutputStream(Constants.OPENMW_CFG), "UTF-8")).use { writer ->
-                writer.write("# Automatically generated, do not edit\n")
+            // generate final output.cfg
+            var output = base + "\n" + fallback + "\n"
 
-                for (mod in resources.mods) {
-                    if (mod.enabled)
-                        writer.write("fallback-archive=" + mod.filename + "\n")
-                }
+            // output resources
+            resources.mods
+                .filter { it.enabled }
+                .forEach { output += "fallback-archive=${it.filename}\n" }
 
-                writer.write("\n" + base + "\n")
+            // output plugins
+            plugins.mods
+                .filter { it.enabled }
+                .forEach { output += "content=${it.filename}\n" }
 
-                for (mod in plugins.mods) {
-                    if (mod.enabled)
-                        writer.write("content=" + mod.filename + "\n")
-                }
-            }
+            // write everything to openmw.cfg
+            File(Constants.OPENMW_CFG).writeText(output)
         } catch (e: IOException) {
             Log.e(TAG, "Failed to generate openmw.cfg.", e)
             Crashlytics.logException(e)
         }
-
     }
 
     private fun startGame() {
@@ -270,31 +276,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
-
         private const val TAG = "OpenMW-Launcher"
 
         var resolutionX = 0
         var resolutionY = 0
-
-        // https://stackoverflow.com/a/13357785/2606891
-        @Throws(IOException::class)
-        internal fun convertStreamToString(`is`: InputStream): String {
-            val reader = BufferedReader(InputStreamReader(`is`, "UTF-8"))
-            val sb = StringBuilder()
-            reader.forEachLine {
-                sb.append(it).append("\n")
-            }
-            reader.close()
-            return sb.toString()
-        }
-
-        @Throws(IOException::class)
-        internal fun readFile(filePath: String): String {
-            val fl = File(filePath)
-            val fin = FileInputStream(fl)
-            val ret = convertStreamToString(fin)
-            fin.close()
-            return ret
-        }
     }
 }

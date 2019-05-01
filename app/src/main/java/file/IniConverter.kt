@@ -41,12 +41,15 @@ class IniConverter(private val data: String) {
             // Remove comments and empty lines
             .filter { it.isNotEmpty() && !it.startsWith(";") }
             .forEach {
-                // It's a category
-                if (it.startsWith("[") && it.endsWith("]"))
+                if (it.startsWith("[") && it.endsWith("]")) {
+                    // It's a category
                     category = it.substring(1, it.length - 1).replace(" ", "_")
-                // It's a key-value pair
-                else if (it.contains("="))
-                    output += "fallback=${category}_${convertLine(it)}\n"
+                } else if (it.contains("=")) {
+                    // It's a key-value pair
+                    val converted = convertLine(it)
+                    if (converted.isNotEmpty())
+                        output += "fallback=${category}_$converted\n"
+                }
             }
 
         return output
@@ -63,6 +66,9 @@ class IniConverter(private val data: String) {
         val kv = line.split("=".toRegex(), 2)
         val key = kv[0].replace(" ", "_")
         val value = kv[1]
+
+        if (key.isEmpty() || value.isEmpty())
+            return ""
 
         return "$key,$value"
     }

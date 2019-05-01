@@ -85,6 +85,7 @@ class FragmentSettings : PreferenceFragment(), OnSharedPreferenceChangeListener 
         val inst = GameInstaller(path)
         if (inst.check()) {
             inst.setNomedia()
+            inst.convertIni()
             with (sharedPref.edit()) {
                 putString("data_files", inst.findDataFiles())
                 apply()

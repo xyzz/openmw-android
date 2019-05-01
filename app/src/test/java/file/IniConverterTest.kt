@@ -35,7 +35,7 @@ Long key with spaces=Some value also with spaces
 
 [Another thing]
 First=Value
-
+This ones empty=
 Second=Another value
         """.trimIndent())
         val res = ini.convert()
