@@ -74,6 +74,7 @@ dependencies {
 
     implementation 'com.crashlytics.sdk.android:crashlytics:2.9.9'
     implementation 'com.crashlytics.sdk.android:crashlytics-ndk:2.0.5'
+    testImplementation 'junit:junit:4.12'
 }
 
 crashlytics {
