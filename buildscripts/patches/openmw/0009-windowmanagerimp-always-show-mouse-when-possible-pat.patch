@@ -1,7 +1,7 @@
 From c26132b7de339b96d48efa0b8e0cc1ce01859779 Mon Sep 17 00:00:00 2001
 From: Ilya Zhuravlev <whatever@xyz.is>
 Date: Thu, 25 Apr 2019 06:35:09 -0400
-Subject: [PATCH 09/13] windowmanagerimp: always show mouse when possible
+Subject: [PATCH 09/14] windowmanagerimp: always show mouse when possible
  (patch by @terabyte25)
 
 ---

@@ -41,6 +41,7 @@ import file.GameInstaller
 import ui.activity.ConfigureControls
 import ui.activity.MainActivity
 import ui.activity.ModsActivity
+import java.io.File
 
 class FragmentSettings : PreferenceFragment(), OnSharedPreferenceChangeListener {
 
@@ -98,8 +99,7 @@ class FragmentSettings : PreferenceFragment(), OnSharedPreferenceChangeListener 
         val inst = GameInstaller(path)
         if (inst.check()) {
             inst.setNomedia()
-            if (!inst.convertIni(sharedPref.getString("pref_encoding",
-                    GameInstaller.DEFAULT_CHARSET_PREF)!!)) {
+            if (!inst.convertIni(sharedPref.getString("pref_encoding", GameInstaller.DEFAULT_CHARSET_PREF)!!)) {
                 showError(R.string.data_error_title, R.string.ini_error_message)
             } else {
                 gameFiles = path

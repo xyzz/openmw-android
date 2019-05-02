@@ -1,7 +1,7 @@
 From b70d6818448d47aa21f7f0e0c33a39ed0a4de815 Mon Sep 17 00:00:00 2001
 From: Ilya Zhuravlev <whatever@xyz.is>
 Date: Mon, 1 Apr 2019 14:01:14 -0400
-Subject: [PATCH 08/13] Revert "Merge pull request #2238 from
+Subject: [PATCH 08/14] Revert "Merge pull request #2238 from
  Capostrophic/freetype"
 
 This reverts commit 1f3813a2301edc17c132f07d360d8f00fe596c4d.

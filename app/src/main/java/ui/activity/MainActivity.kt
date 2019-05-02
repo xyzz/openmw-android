@@ -37,6 +37,7 @@ import android.widget.Toast
 
 import com.crashlytics.android.Crashlytics
 import com.crashlytics.android.ndk.CrashlyticsNdk
+import com.libopenmw.openmw.BuildConfig
 import com.libopenmw.openmw.R
 import constants.Constants
 import file.GameInstaller
@@ -114,24 +115,6 @@ class MainActivity : AppCompatActivity() {
         this@MainActivity.startActivity(intent)
     }
 
-    /**
-     * Resets $base/config to default values. This contains user-modifiable openmw.cfg and settings.cfg
-     * (and we also write some values to both on startup such as screen res or some options)
-     */
-    private fun resetUserConfig() {
-        // Wipe out the old version
-        deleteRecursive(File(Constants.CONFIGS_FILES_STORAGE_PATH + "/config"))
-        // and copy in the default values
-        val copyFiles = CopyFilesFromAssets(this, Constants.CONFIGS_FILES_STORAGE_PATH)
-        copyFiles.copyFileOrDir("libopenmw/config")
-
-        // Regenerate the openmw.fallback.cfg as well
-        val inst = GameInstaller(prefs.getString("game_files", "")!!)
-        if (inst.check()) {
-            inst.convertIni(prefs.getString("pref_encoding",
-                GameInstaller.DEFAULT_CHARSET_PREF)!!)
-        }
-    }
 
     /**
      * Set up fixed screen resolution
@@ -155,10 +138,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     /**
-     * Generates openmw.cfg using values from openmw-base.cfg combined with mod manager settings
+     * Generates openmw.cfg using values from openmw.base.cfg combined with mod manager settings
      */
     private fun generateOpenmwCfg() {
-        // contents of openmw-base.cfg
+        // contents of openmw.base.cfg
         val base: String
         // contents of openmw.fallback.cfg
         val fallback: String
@@ -169,7 +152,7 @@ class MainActivity : AppCompatActivity() {
             // TODO: support user custom options
             fallback = File(Constants.OPENMW_FALLBACK_CFG).readText()
         } catch (e: IOException) {
-            Log.e(TAG, "Failed to read openmw-base.cfg or openmw-fallback.cfg", e)
+            Log.e(TAG, "Failed to read openmw.base.cfg or openmw.fallback.cfg", e)
             Crashlytics.logException(e)
             return
         }
@@ -231,6 +214,43 @@ class MainActivity : AppCompatActivity() {
         return maxOf(dm.heightPixels, dm.widthPixels) / 1024.0f
     }
 
+    /**
+     * Removes old and creates new files located in private application directories
+     * (i.e. under getFilesDir(), or /data/data/.../files)
+     */
+    private fun reinstallStaticFiles() {
+        // we store global "config" and "resources" under private files
+
+        // wipe old version first
+        removeStaticFiles()
+
+        // copy in the new version
+        val assetCopier = CopyFilesFromAssets(this)
+        assetCopier.copy("libopenmw/resources", Constants.RESOURCES)
+        assetCopier.copy("libopenmw/openmw", Constants.GLOBAL_CONFIG)
+
+        // set version stamp
+        File(Constants.VERSION_STAMP).writeText(BuildConfig.VERSION_CODE.toString())
+    }
+
+    /**
+     * Removes global static files, these include resources and config
+     */
+    private fun removeStaticFiles() {
+        // remove version stamp so that reinstallStaticFiles is called during game launch
+        File(Constants.VERSION_STAMP).delete()
+
+        deleteRecursive(File(Constants.GLOBAL_CONFIG))
+        deleteRecursive(File(Constants.RESOURCES))
+    }
+
+    /**
+     * Resets user config to default values by removing it
+     */
+    private fun removeUserConfig() {
+        deleteRecursive(File(Constants.USER_CONFIG))
+    }
+
     private fun startGame() {
         // First, check that there are game files present
         val inst = GameInstaller(prefs.getString("game_files", "")!!)
@@ -267,37 +287,32 @@ class MainActivity : AppCompatActivity() {
 
         val th = Thread {
             try {
-                val openmwBaseCfg = File(Constants.OPENMW_BASE_CFG)
-                val settingsCfg = File(Constants.SETTINGS_CFG)
-                if (!openmwBaseCfg.exists() || !settingsCfg.exists()) {
-                    Log.i(TAG, "Config files don't exist, re-creating them.")
-                    resetUserConfig()
+                // Only reinstall static files if they are of a mismatched version
+                try {
+                    val stamp = File(Constants.VERSION_STAMP).readText().trim()
+                    if (stamp.toInt() != BuildConfig.VERSION_CODE) {
+                        reinstallStaticFiles()
+                    }
+                } catch (e: Exception) {
+                    reinstallStaticFiles()
                 }
 
-                // wipe old "wipeable" (see ConfigsFileStorageHelper) config files just to be safe
-                deleteRecursive(File(Constants.CONFIGS_FILES_STORAGE_PATH + "/openmw"))
-                deleteRecursive(File(Constants.CONFIGS_FILES_STORAGE_PATH + "/resources"))
-
-                // copy all assets
-                val copyFiles = CopyFilesFromAssets(activity, Constants.CONFIGS_FILES_STORAGE_PATH)
-                copyFiles.copyFileOrDir("libopenmw/openmw")
-                copyFiles.copyFileOrDir("libopenmw/resources")
+                // Regenerate the fallback file in case user edits their Morrowind.ini
+                inst.convertIni(prefs.getString("pref_encoding", GameInstaller.DEFAULT_CHARSET_PREF)!!)
 
                 generateOpenmwCfg()
 
                 // openmw.cfg: data, resources
-                file.Writer.write(
-                    Constants.OPENMW_CFG, "resources", Constants.CONFIGS_FILES_STORAGE_PATH + "/resources"
-                )
+                file.Writer.write(Constants.OPENMW_CFG, "resources", Constants.RESOURCES)
                 file.Writer.write(Constants.OPENMW_CFG, "data", "\"" + inst.findDataFiles() + "\"")
 
                 file.Writer.write(Constants.OPENMW_CFG, "encoding", prefs!!.getString("pref_encoding", GameInstaller.DEFAULT_CHARSET_PREF)!!)
 
-                file.Writer.write(Constants.SETTINGS_CFG, "scaling factor", "%.2f".format(scaling))
+                file.Writer.write(Constants.SETTINGS_DEFAULT_CFG, "scaling factor", "%.2f".format(scaling))
 
-                file.Writer.write(Constants.SETTINGS_CFG, "allow capsule shape", prefs!!.getString("pref_allowCapsuleShape", "true")!!)
+                file.Writer.write(Constants.SETTINGS_DEFAULT_CFG, "allow capsule shape", prefs!!.getString("pref_allowCapsuleShape", "true")!!)
 
-                file.Writer.write(Constants.SETTINGS_CFG, "preload enabled", prefs!!.getString("pref_preload", "false")!!)
+                file.Writer.write(Constants.SETTINGS_DEFAULT_CFG, "preload enabled", prefs!!.getString("pref_preload", "false")!!)
 
                 runOnUiThread {
                     obtainFixedScreenResolution()
@@ -322,7 +337,8 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_reset_config -> {
-                resetUserConfig()
+                removeUserConfig()
+                removeStaticFiles()
                 Toast.makeText(this, getString(R.string.config_was_reset), Toast.LENGTH_SHORT).show()
             }
 

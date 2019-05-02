@@ -1,0 +1,205 @@
+From 4f8ddf61d659d676bae48e579fbf4ebe4083ebb4 Mon Sep 17 00:00:00 2001
+From: Ilya Zhuravlev <whatever@xyz.is>
+Date: Thu, 2 May 2019 17:59:00 -0400
+Subject: [PATCH 14/14] Clean up androidpath
+
+---
+ components/files/androidpath.cpp | 101 ++++++++-----------------------
+ components/files/androidpath.h   |  19 ------
+ components/files/androidpath.hpp |   2 -
+ 3 files changed, 24 insertions(+), 98 deletions(-)
+ delete mode 100644 components/files/androidpath.h
+
+diff --git a/components/files/androidpath.cpp b/components/files/androidpath.cpp
+index bf5c98577..a35b2f75b 100644
+--- a/components/files/androidpath.cpp
++++ b/components/files/androidpath.cpp
+@@ -1,110 +1,58 @@
+ #include "androidpath.hpp"
+ 
+-#if defined(__ANDROID__) 
++#if defined(__ANDROID__)
+ 
++#include <jni.h>
+ #include <cstdlib>
+ #include <cstring>
+ #include <pwd.h>
+-#include "androidpath.h"
+ #include <unistd.h>
+ #include <boost/filesystem/fstream.hpp>
+ 
++static const char *g_path_global; //< Path to global directory root, e.g. /data/data/com.libopenmw.openmw
++static const char *g_path_user; //< Path to user root, e.g. /sdcard/Android/data/com.libopenmw.openmw
+ 
+-class Buffer {
+-    public:
+-      static void setData(char const *data);
+-      static char const * getData();
+-};
+-static char const *path;
+-
+-void Buffer::setData(char const *data)
+-{
+-    path=data;
+-}
+-char const * Buffer::getData()
+-{
+-    return path;
+-}
+-
+-
+-JNIEXPORT void JNICALL Java_ui_activity_GameActivity_getPathToJni(JNIEnv *env, jobject obj, jstring prompt)
+-{
+-    jboolean iscopy;
+-    Buffer::setData((env)->GetStringUTFChars(prompt, &iscopy));
+-    (env)->DeleteLocalRef(prompt);
+-}
+-
+-namespace
++/**
++ * \brief Called by java code to set up directory paths
++ */
++extern "C" JNIEXPORT void JNICALL Java_ui_activity_GameActivity_getPathToJni(JNIEnv *env, jobject obj, jstring global, jstring user)
+ {
+-
+-    boost::filesystem::path getUserHome()
+-    {
+-        const char* dir = getenv("HOME");
+-        if (dir == nullptr)
+-        {
+-            struct passwd* pwd = getpwuid(getuid());
+-            if (pwd != nullptr)
+-            {
+-                dir = pwd->pw_dir;
+-            }
+-        }
+-        if (dir == nullptr)
+-            return boost::filesystem::path();
+-        else
+-            return boost::filesystem::path(dir);
+-    }
+-
+-    boost::filesystem::path getEnv(const std::string& envVariable, const boost::filesystem::path& fallback)
+-    {
+-        const char* result = getenv(envVariable.c_str());
+-        if (!result)
+-            return fallback;
+-        boost::filesystem::path dir(result);
+-        if (dir.empty())
+-            return fallback;
+-        else
+-            return dir;
+-    }
++    g_path_global = env->GetStringUTFChars(global, nullptr);
++    g_path_user = env->GetStringUTFChars(user, nullptr);
+ }
+ 
+-/**
+- * \namespace Files
+- */
+ namespace Files
+ {
+ 
+ AndroidPath::AndroidPath(const std::string& application_name)
+-    : mName(application_name)
+ {
+ }
+ 
++// /sdcard/Android/data/com.libopenmw.openmw/config
+ boost::filesystem::path AndroidPath::getUserConfigPath() const
+ {
+-    std::string buffer = ""; 
+-    buffer = buffer + Buffer::getData() +"/config";
+-    return getEnv("XDG_CONFIG_HOME", buffer) / mName;
++    return boost::filesystem::path(g_path_user) / "config";
+ }
+ 
++// /sdcard/Android/data/com.libopenmw.openmw/
++// (so that saves are placed at /sdcard/Android/data/com.libopenmw.openmw/saves)
+ boost::filesystem::path AndroidPath::getUserDataPath() const
+ {
+-    std::string buffer = ""; 
+-    buffer = buffer + Buffer::getData() +"/share";
+-    return getEnv("XDG_DATA_HOME", buffer) / mName;
++    return boost::filesystem::path(g_path_user);
+ }
+ 
++// /data/data/com.libopenmw.openmw/cache
++// (supposed to be "official" android cache location)
+ boost::filesystem::path AndroidPath::getCachePath() const
+ {
+-    std::string buffer = ""; 
+-    buffer = buffer + Buffer::getData() +"/cache";
+-    return getEnv("XDG_CACHE_HOME", buffer) / mName;
++    return boost::filesystem::path(g_path_global) / "cache";
+ }
+ 
++// /data/data/com.libopenmw.openmw/files/config
++// (note the addition of "files")
+ boost::filesystem::path AndroidPath::getGlobalConfigPath() const
+ {
+-    std::string buffer = ""; 
+-    buffer = buffer + Buffer::getData() +"/";
+-    boost::filesystem::path globalPath(buffer); 
+-    return globalPath / mName;
++    return boost::filesystem::path(g_path_global) / "files" / "config";
+ }
+ 
+ boost::filesystem::path AndroidPath::getLocalPath() const
+@@ -112,12 +60,11 @@ boost::filesystem::path AndroidPath::getLocalPath() const
+     return boost::filesystem::path("./");
+ }
+ 
++// /sdcard/Android/data/com.libopenmw.openmw
++// (so that the data is at /sdcard/Android/data/com.libopenmw.openmw/data)
+ boost::filesystem::path AndroidPath::getGlobalDataPath() const
+ {
+-    std::string buffer = ""; 
+-    buffer = buffer + Buffer::getData() +"/data";
+-    boost::filesystem::path globalDataPath(buffer);
+-    return globalDataPath / mName;
++    return boost::filesystem::path(g_path_user);
+ }
+ 
+ boost::filesystem::path AndroidPath::getInstallPath() const
+diff --git a/components/files/androidpath.h b/components/files/androidpath.h
+deleted file mode 100644
+index a93a160e0..000000000
+--- a/components/files/androidpath.h
++++ /dev/null
+@@ -1,19 +0,0 @@
+-/* DO NOT EDIT THIS FILE - it is machine generated */
+-#include <jni.h>
+-
+-#ifndef _Included_ui_activity_GameActivity_getPathToJni
+-#define _Included_ui_activity_GameActivity_getPathToJni
+-#ifdef __cplusplus
+-extern "C" {
+-#endif
+-/*
+- * Class:     Java_org_libsdl_app_SDLActivity_getPathToJni
+- * Method:    getPathToJni
+- * Signature: (I)I
+- */
+-JNIEXPORT void JNICALL Java_ui_activity_GameActivity_getPathToJni(JNIEnv *env, jobject obj, jstring prompt);
+-
+-#ifdef __cplusplus
+-}
+-#endif
+-#endif
+diff --git a/components/files/androidpath.hpp b/components/files/androidpath.hpp
+index a8124e6db..cca77858c 100644
+--- a/components/files/androidpath.hpp
++++ b/components/files/androidpath.hpp
+@@ -46,8 +46,6 @@ struct AndroidPath
+     boost::filesystem::path getCachePath() const;
+ 
+     boost::filesystem::path getInstallPath() const;
+-
+-    std::string mName;
+ };
+ 
+ } /* namespace Files */
+-- 
+2.19.2
+

@@ -1,7 +1,7 @@
 From 4c3d1ceefbe4e19591ec15e12ae224c87b6e91f8 Mon Sep 17 00:00:00 2001
 From: Ilya Zhuravlev <whatever@xyz.is>
 Date: Mon, 29 Apr 2019 18:27:40 -0400
-Subject: [PATCH 12/13] engine: pause sounds when game is paused
+Subject: [PATCH 12/14] engine: pause sounds when game is paused
 
 ---
  apps/openmw/engine.cpp | 16 ++++++++++++++++
