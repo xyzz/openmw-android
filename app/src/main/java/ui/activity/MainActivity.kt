@@ -27,6 +27,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.util.DisplayMetrics
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
@@ -43,13 +44,10 @@ import file.GameInstaller
 import io.fabric.sdk.android.Fabric
 
 import java.io.BufferedReader
-import java.io.BufferedWriter
 import java.io.File
 import java.io.FileInputStream
-import java.io.FileOutputStream
 import java.io.IOException
 import java.io.InputStreamReader
-import java.io.OutputStreamWriter
 
 import file.utils.CopyFilesFromAssets
 import mods.ModType
@@ -61,9 +59,12 @@ import utils.Utils.hideAndroidControls
 
 class MainActivity : AppCompatActivity() {
     private lateinit var prefs: SharedPreferences
+    var defaultScaling = 0f
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        defaultScaling = determineScaling()
+
         Fabric.with(this, Crashlytics(), CrashlyticsNdk())
         PermissionHelper.getWriteExternalStoragePermission(this@MainActivity)
         setContentView(R.layout.main)
@@ -216,8 +217,18 @@ class MainActivity : AppCompatActivity() {
     /**
      * Determines required screen scaling based on resolution and physical size of the device
      */
-    private fun getScaling(): Float {
-        return 2.0f
+    private fun determineScaling(): Float {
+        // The idea is to stretch an old-school 1024x768 monitor to the device screen
+        // Assume that 1x scaling corresponds to resolution of 1024x768
+        // Assume that the longest side of the device corresponds to the 1024 side
+        // Therefore scaling is calculated as longest size of the device divided by 1024
+        // Note that it doesn't take into account DPI at all. Which is fine for now, but in future
+        // we might want to add some bonus scaling to e.g. phone devices so that it's easier
+        // to click things.
+
+        val dm = DisplayMetrics()
+        windowManager.defaultDisplay.getMetrics(dm)
+        return maxOf(dm.heightPixels, dm.widthPixels) / 1024.0f
     }
 
     private fun startGame() {
@@ -243,7 +254,7 @@ class MainActivity : AppCompatActivity() {
 
         // If scaling didn't get set, determine it automatically
         if (scaling == 0f) {
-            scaling = getScaling()
+            scaling = defaultScaling
         }
 
         val dialog = ProgressDialog.show(

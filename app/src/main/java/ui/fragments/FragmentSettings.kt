@@ -36,6 +36,7 @@ import com.libopenmw.openmw.R
 import file.GameInstaller
 
 import ui.activity.ConfigureControls
+import ui.activity.MainActivity
 import ui.activity.ModsActivity
 
 class FragmentSettings : PreferenceFragment(), OnSharedPreferenceChangeListener {
@@ -142,7 +143,9 @@ class FragmentSettings : PreferenceFragment(), OnSharedPreferenceChangeListener 
             return
         if (preference is EditTextPreference) {
             if (key == "pref_uiScaling" && preference.text.isEmpty())
-                preference.summary = getString(R.string.uiScaling_auto)
+                // Show "Auto (1.23)"
+                preference.summary = getString(R.string.uiScaling_auto,
+                    (activity as MainActivity).defaultScaling)
             else
                 preference.summary = preference.text
         }
