@@ -117,12 +117,18 @@ class MainActivity : AppCompatActivity() {
      * (and we also write some values to both on startup such as screen res or some options)
      */
     private fun resetUserConfig() {
-        // TODO: this should also regen openmw.fallback.cfg
         // Wipe out the old version
         deleteRecursive(File(Constants.CONFIGS_FILES_STORAGE_PATH + "/config"))
         // and copy in the default values
         val copyFiles = CopyFilesFromAssets(this, Constants.CONFIGS_FILES_STORAGE_PATH)
         copyFiles.copyFileOrDir("libopenmw/config")
+
+        // Regenerate the openmw.fallback.cfg as well
+        val inst = GameInstaller(prefs.getString("game_files", "")!!)
+        if (inst.check()) {
+            inst.convertIni(prefs.getString("pref_encoding",
+                GameInstaller.DEFAULT_CHARSET_PREF)!!)
+        }
     }
 
     /**
