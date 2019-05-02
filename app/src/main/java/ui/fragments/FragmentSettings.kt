@@ -142,7 +142,7 @@ class FragmentSettings : PreferenceFragment(), OnSharedPreferenceChangeListener 
         if (preference == null)
             return
         if (preference is EditTextPreference) {
-            if (key == "pref_uiScaling" && preference.text.isEmpty())
+            if (key == "pref_uiScaling" && (preference.text == null || preference.text.isEmpty()))
                 // Show "Auto (1.23)"
                 preference.summary = getString(R.string.uiScaling_auto,
                     (activity as MainActivity).defaultScaling)
