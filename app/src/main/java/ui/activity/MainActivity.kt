@@ -35,14 +35,10 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 
-import com.crashlytics.android.Crashlytics
-import com.crashlytics.android.ndk.CrashlyticsNdk
 import com.libopenmw.openmw.BuildConfig
 import com.libopenmw.openmw.R
 import constants.Constants
 import file.GameInstaller
-
-import io.fabric.sdk.android.Fabric
 
 import java.io.BufferedReader
 import java.io.File
@@ -67,7 +63,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         defaultScaling = determineScaling()
 
-        Fabric.with(this, Crashlytics(), CrashlyticsNdk())
         PermissionHelper.getWriteExternalStoragePermission(this@MainActivity)
         setContentView(R.layout.main)
         prefs = PreferenceManager.getDefaultSharedPreferences(this)
@@ -122,22 +117,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun logConfig() {
-        try {
-            val openmwCfg = File(Constants.OPENMW_CFG)
-            if (openmwCfg.exists()) {
-                val reader = BufferedReader(InputStreamReader(FileInputStream(openmwCfg)))
-                Crashlytics.log("openmw.cfg")
-                Crashlytics.log("--------------------------------------------------------------------------------")
-                reader.forEachLine {
-                    // Don't log fallback lines, they are mostly useless
-                    if (!it.contains("fallback="))
-                        Crashlytics.log(it)
-                }
-                Crashlytics.log("--------------------------------------------------------------------------------")
-            }
-        } catch (e: Exception) {
-            // not a big deal if we can't log the contents
-        }
 
     }
 
@@ -188,7 +167,6 @@ class MainActivity : AppCompatActivity() {
             fallback = File(Constants.OPENMW_FALLBACK_CFG).readText()
         } catch (e: IOException) {
             Log.e(TAG, "Failed to read openmw.base.cfg or openmw.fallback.cfg", e)
-            Crashlytics.logException(e)
             return
         }
 
@@ -215,7 +193,6 @@ class MainActivity : AppCompatActivity() {
             File(Constants.OPENMW_CFG).writeText(output)
         } catch (e: IOException) {
             Log.e(TAG, "Failed to generate openmw.cfg.", e)
-            Crashlytics.logException(e)
         }
     }
 
@@ -361,7 +338,6 @@ class MainActivity : AppCompatActivity() {
                 }
             } catch (e: IOException) {
                 Log.e(TAG, "Failed to write config files.", e)
-                Crashlytics.logException(e)
             }
         }
         th.start()
