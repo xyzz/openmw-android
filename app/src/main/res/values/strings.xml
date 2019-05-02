@@ -79,7 +79,7 @@
         <item>60</item>
     </string-array>
 
-    <string name="pref_physicsFPS_default">60</string>
+    <string name="pref_physicsFPS_default">15</string>
 
     <string name="pref_allowCapsuleShape">Force a simple collision box for actors</string>
 
@@ -94,7 +94,7 @@
         <item>true</item>
     </string-array>
 
-    <string name="pref_allowCapsuleShape_default">true</string>
+    <string name="pref_allowCapsuleShape_default">false</string>
 
     <string name="pref_preload">Preloading</string>
     <string-array name="pref_preload_entries">
