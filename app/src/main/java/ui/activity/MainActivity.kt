@@ -213,12 +213,37 @@ class MainActivity : AppCompatActivity() {
             .show()
     }
 
+    /**
+     * Determines required screen scaling based on resolution and physical size of the device
+     */
+    private fun getScaling(): Float {
+        return 2.0f
+    }
+
     private fun startGame() {
         // First, check that there are game files present
         val inst = GameInstaller(prefs.getString("game_files", "")!!)
         if (!inst.check()) {
             showAlert(R.string.no_data_files_title, R.string.no_data_files_message)
             return
+        }
+
+        // Get scaling factor from config; if invalid or not provided, generate one
+        var scaling = 0f
+
+        try {
+            scaling = prefs.getString("pref_uiScaling", "")!!.toFloat()
+        } catch (e: NumberFormatException) {
+            // Reset the invalid setting
+            with(prefs.edit()) {
+                putString("pref_uiScaling", "")
+                apply()
+            }
+        }
+
+        // If scaling didn't get set, determine it automatically
+        if (scaling == 0f) {
+            scaling = getScaling()
         }
 
         val dialog = ProgressDialog.show(
@@ -257,7 +282,7 @@ class MainActivity : AppCompatActivity() {
 
                 file.Writer.write(Constants.OPENMW_CFG, "encoding", prefs!!.getString("pref_encoding", GameInstaller.DEFAULT_CHARSET_PREF)!!)
 
-                file.Writer.write(Constants.SETTINGS_CFG, "scaling factor", prefs!!.getString("pref_uiScaling", "1.0")!!)
+                file.Writer.write(Constants.SETTINGS_CFG, "scaling factor", "%.2f".format(scaling))
 
                 file.Writer.write(Constants.SETTINGS_CFG, "allow capsule shape", prefs!!.getString("pref_allowCapsuleShape", "true")!!)
 

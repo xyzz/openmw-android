@@ -141,8 +141,10 @@ class FragmentSettings : PreferenceFragment(), OnSharedPreferenceChangeListener 
         if (preference == null)
             return
         if (preference is EditTextPreference) {
-            val editTextPreference = preference as EditTextPreference?
-            editTextPreference!!.summary = editTextPreference.text
+            if (key == "pref_uiScaling" && preference.text.isEmpty())
+                preference.summary = getString(R.string.uiScaling_auto)
+            else
+                preference.summary = preference.text
         }
         // Show selected value as a summary for game_files
         if (key == "game_files") {
