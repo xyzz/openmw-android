@@ -82,22 +82,40 @@ class FragmentSettings : PreferenceFragment(), OnSharedPreferenceChangeListener 
     private fun setupData(path: String) {
         val sharedPref = preferenceScreen.sharedPreferences
 
+        // reset the setting so that it's erased on error instead of keeping
+        // possibly stale value
+        var dataFiles = ""
+
         val inst = GameInstaller(path)
         if (inst.check()) {
             inst.setNomedia()
-            inst.convertIni(sharedPref.getString("pref_encoding",
-                GameInstaller.DEFAULT_CHARSET_PREF)!!)
-            with (sharedPref.edit()) {
-                putString("data_files", inst.findDataFiles())
-                apply()
+            if (!inst.convertIni(sharedPref.getString("pref_encoding",
+                    GameInstaller.DEFAULT_CHARSET_PREF)!!)) {
+                showError(R.string.data_error_title, R.string.ini_error_message)
+            } else {
+                dataFiles = inst.findDataFiles()
             }
         } else {
-            AlertDialog.Builder(activity)
-                .setTitle(R.string.data_error_title)
-                .setMessage(R.string.data_error_message)
-                .setPositiveButton(android.R.string.ok) { _: DialogInterface, _: Int -> }
-                .show()
+            showError(R.string.data_error_title, R.string.data_error_message)
         }
+
+        with(sharedPref.edit()) {
+            putString("data_files", dataFiles)
+            apply()
+        }
+    }
+
+    /**
+     * Shows an alert dialog displaying a specific error
+     * @param title Title string resource
+     * @param message Message string resource
+     */
+    private fun showError(title: Int, message: Int) {
+        AlertDialog.Builder(activity)
+            .setTitle(title)
+            .setMessage(message)
+            .setPositiveButton(android.R.string.ok) { _: DialogInterface, _: Int -> }
+            .show()
     }
 
     override fun onResume() {

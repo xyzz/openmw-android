@@ -117,5 +117,6 @@
     <string name="tab_resources">Resources</string>
     <string name="data_error_title">Error locating data files</string>
     <string name="data_error_message">Please select a directory which contains both the \"Morrowind.ini\" file and the \"Data Files\" directory.</string>
+    <string name="ini_error_message">Failure transforming the configuration file. Please ensure your \"Morrowind.ini\" is well-formed.</string>
 
 </resources>

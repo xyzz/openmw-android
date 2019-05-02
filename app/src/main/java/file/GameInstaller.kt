@@ -101,7 +101,11 @@ class GameInstaller(path: String) {
             return false
 
         val ini = IniConverter(contents)
-        File(Constants.OPENMW_FALLBACK_CFG).writeText(ini.convert())
+        val output = ini.convert()
+        // there's gotta be something in the output as well
+        if (output.isEmpty())
+            return false
+        File(Constants.OPENMW_FALLBACK_CFG).writeText(output)
 
         return true
     }
