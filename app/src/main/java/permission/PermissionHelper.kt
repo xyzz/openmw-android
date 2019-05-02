@@ -31,9 +31,8 @@ object PermissionHelper {
         if (Build.VERSION.SDK_INT >= 23) {
             if (ContextCompat.checkSelfPermission(activity,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                if (ActivityCompat.shouldShowRequestPermissionRationale(activity,
+                if (!ActivityCompat.shouldShowRequestPermissionRationale(activity,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                } else {
                     ActivityCompat.requestPermissions(activity,
                         arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 23
                     )
