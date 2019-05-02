@@ -37,6 +37,7 @@ import android.widget.Toast
 
 import com.crashlytics.android.Crashlytics
 import com.crashlytics.android.ndk.CrashlyticsNdk
+import com.libopenmw.openmw.BuildConfig
 import com.libopenmw.openmw.R
 import constants.Constants
 import file.GameInstaller
@@ -230,6 +231,7 @@ class MainActivity : AppCompatActivity() {
         assetCopier.copy("libopenmw/openmw", Constants.GLOBAL_CONFIG)
 
         // set version stamp
+        File(Constants.VERSION_STAMP).writeText(BuildConfig.VERSION_CODE.toString())
     }
 
     private fun startGame() {
@@ -268,14 +270,15 @@ class MainActivity : AppCompatActivity() {
 
         val th = Thread {
             try {
-                val openmwBaseCfg = File(Constants.OPENMW_BASE_CFG)
-                val settingsCfg = File(Constants.SETTINGS_DEFAULT_CFG)
-                if (!openmwBaseCfg.exists() || !settingsCfg.exists()) {
-                    Log.i(TAG, "Config files don't exist, re-creating them.")
+                // Only reinstall static files if they are of a mismatched version
+                try {
+                    val stamp = File(Constants.VERSION_STAMP).readText().trim()
+                    if (stamp.toInt() != BuildConfig.VERSION_CODE) {
+                        reinstallStaticFiles()
+                    }
+                } catch (e: Exception) {
                     reinstallStaticFiles()
                 }
-
-                reinstallStaticFiles()
 
                 // Regenerate the fallback file in case user edits their Morrowind.ini
                 inst.convertIni(prefs.getString("pref_encoding", GameInstaller.DEFAULT_CHARSET_PREF)!!)

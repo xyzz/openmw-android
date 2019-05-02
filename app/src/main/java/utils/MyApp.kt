@@ -15,5 +15,6 @@ class MyApp : Application() {
         Constants.OPENMW_FALLBACK_CFG = File(filesDir, "config/openmw.fallback.cfg").absolutePath
         Constants.RESOURCES = File(filesDir, "resources").absolutePath
         Constants.GLOBAL_CONFIG = File(filesDir, "config").absolutePath
+        Constants.VERSION_STAMP = File(filesDir, "stamp").absolutePath
     }
 }
