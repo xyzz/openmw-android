@@ -37,6 +37,7 @@ import com.crashlytics.android.Crashlytics
 import com.crashlytics.android.ndk.CrashlyticsNdk
 import com.libopenmw.openmw.R
 import constants.Constants
+import file.GameInstaller
 
 import io.fabric.sdk.android.Fabric
 
@@ -228,7 +229,7 @@ class MainActivity : AppCompatActivity() {
                 // TODO: it will crash if there's no value/invalid value provided
                 file.Writer.write(Constants.OPENMW_CFG, "data", '"'.toString() + prefs!!.getString("data_files", "") + '"'.toString())
 
-                file.Writer.write(Constants.OPENMW_CFG, "encoding", prefs!!.getString("pref_encoding", "win1252")!!)
+                file.Writer.write(Constants.OPENMW_CFG, "encoding", prefs!!.getString("pref_encoding", GameInstaller.DEFAULT_CHARSET_PREF)!!)
 
                 file.Writer.write(Constants.SETTINGS_CFG, "scaling factor", prefs!!.getString("pref_uiScaling", "1.0")!!)
 

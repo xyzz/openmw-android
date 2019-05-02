@@ -53,7 +53,7 @@
     <string name="pref_hide_controls">Hide on-screen buttons</string>
     <string name="config_was_reset">Configuration was reset to default values</string>
     <string name="pref_lang">Language settings</string>
-    <string name="pref_encoding">Character encoding</string>
+    <string name="pref_encoding">Game language</string>
     <string name="pref_encoding_default">win1252</string>
     <string name="btn_opacityPlus">Alpha+</string>
     <string name="btn_opacityMinus">Alpha-</string>

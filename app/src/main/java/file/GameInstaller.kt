@@ -84,14 +84,19 @@ class GameInstaller(path: String) {
     /**
      * Converts morrowind.ini into openmw format and places it into our resources directory
      * (properly named and everything)
+     * @param encoding Game encoding as entered by the user; one of pref_encoding_values
      * @return Whether the conversion succeeded
      */
-    fun convertIni(): Boolean {
+    fun convertIni(encoding: String): Boolean {
         val file = findCaseInsensitive(INI_NAME) ?: return false
 
-        // TODO: support user-provided encoding
-        // win-1252
-        val contents = file.readText(StandardCharsets.ISO_8859_1)
+        val charset = when (encoding) {
+            "win1250" -> Charset.forName("windows-1250")
+            "win1251" -> Charset.forName("windows-1251")
+            else -> Charset.forName("windows-1252")
+        }
+
+        val contents = file.readText(charset)
         if (contents.isEmpty())
             return false
 
@@ -104,6 +109,7 @@ class GameInstaller(path: String) {
     companion object {
         const val INI_NAME = "Morrowind.ini"
         const val DATA_NAME = "Data Files"
+        const val DEFAULT_CHARSET_PREF = "win1252"
     }
 
 }

@@ -4,16 +4,6 @@
         android:key="general_settings"
         android:title="@string/general_settings">
 
-        <Preference
-            android:key="data_files"
-            android:title="@string/data_files"
-            />
-
-        <Preference
-            android:title="@string/mods"
-            android:key="pref_mods"
-            />
-
         <ListPreference
             android:key="pref_encoding"
             android:summary="%s"
@@ -22,6 +12,16 @@
             android:entries="@array/pref_encoding_entries"
             android:entryValues="@array/pref_encoding_values"
             android:defaultValue="@string/pref_encoding_default"
+            />
+
+        <Preference
+            android:key="data_files"
+            android:title="@string/data_files"
+            />
+
+        <Preference
+            android:title="@string/mods"
+            android:key="pref_mods"
             />
     </PreferenceCategory>
 
