@@ -222,8 +222,7 @@ class MainActivity : AppCompatActivity() {
         // we store global "config" and "resources" under private files
 
         // wipe old version first
-        deleteRecursive(File(filesDir, "config"))
-        deleteRecursive(File(filesDir, "resources"))
+        removeStaticFiles()
 
         // copy in the new version
         val assetCopier = CopyFilesFromAssets(this)
@@ -232,6 +231,24 @@ class MainActivity : AppCompatActivity() {
 
         // set version stamp
         File(Constants.VERSION_STAMP).writeText(BuildConfig.VERSION_CODE.toString())
+    }
+
+    /**
+     * Removes global static files, these include resources and config
+     */
+    private fun removeStaticFiles() {
+        // remove version stamp so that reinstallStaticFiles is called during game launch
+        File(Constants.VERSION_STAMP).delete()
+
+        deleteRecursive(File(Constants.GLOBAL_CONFIG))
+        deleteRecursive(File(Constants.RESOURCES))
+    }
+
+    /**
+     * Resets user config to default values by removing it
+     */
+    private fun removeUserConfig() {
+        deleteRecursive(File(Constants.USER_CONFIG))
     }
 
     private fun startGame() {
@@ -320,7 +337,8 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_reset_config -> {
-                reinstallStaticFiles()
+                removeUserConfig()
+                removeStaticFiles()
                 Toast.makeText(this, getString(R.string.config_was_reset), Toast.LENGTH_SHORT).show()
             }
 
