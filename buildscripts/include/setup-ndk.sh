@@ -28,6 +28,9 @@ if [[ ! -d toolchain ]]; then
 
 		popd
 	fi
+
+	# workaround https://github.com/android-ndk/ndk/issues/721
+	sed -i 's/Oz/O2/g' toolchain/ndk/build/cmake/android.toolchain.cmake
 fi
 
 pushd toolchain
