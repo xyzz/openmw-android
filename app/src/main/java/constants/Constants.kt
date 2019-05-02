@@ -37,8 +37,16 @@ object Constants {
     // $base/config - user settings
 
     val CONFIGS_FILES_STORAGE_PATH = Environment.getExternalStorageDirectory().toString() + "/Android/data/" + BuildConfig.APPLICATION_ID
-    val SETTINGS_CFG = "$CONFIGS_FILES_STORAGE_PATH/config/openmw/settings.cfg"
-    val OPENMW_CFG = "$CONFIGS_FILES_STORAGE_PATH/config/openmw/openmw.cfg"
-    val OPENMW_FALLBACK_CFG = "$CONFIGS_FILES_STORAGE_PATH/config/openmw/openmw.fallback.cfg"
-    val OPENMW_BASE_CFG = "$CONFIGS_FILES_STORAGE_PATH/config/openmw/openmw-base.cfg"
+
+    // e.g. /data/data/com.libopenmw.openmw/files/config/settings.cfg
+    var SETTINGS_CFG = ""
+
+    // e.g. /data/data/com.libopenmw.openmw/files/config/openmw.cfg
+    var OPENMW_CFG = ""
+
+    // e.g. /data/data/com.libopenmw.openmw/files/config/openmw.base.cfg
+    var OPENMW_BASE_CFG = ""
+
+    // e.g. /data/data/com.libopenmw.openmw/files/config/openmw.fallback.cfg
+    var OPENMW_FALLBACK_CFG = ""
 }

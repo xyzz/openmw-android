@@ -27,21 +27,30 @@ import java.io.IOException
 import android.content.Context
 import com.crashlytics.android.Crashlytics
 
-class CopyFilesFromAssets(private val context: Context, private val configsPath: String) {
+/**
+ * Helper class to handle copying assets to the storage
+ * @param context Android context to use
+ */
+class CopyFilesFromAssets(private val context: Context) {
 
-    fun copyFileOrDir(path: String) {
+    /**
+     * Copies assets recursively
+     * @param src Source directory in assets
+     * @param dst Destination directory on disk, absolute path
+     */
+    fun copy(src: String, dst: String) {
         val assetManager = context.assets
         try {
-            val assets = assetManager.list(path) ?: return
+            val assets = assetManager.list(src) ?: return
             if (assets.isEmpty()) {
-                copyFile(path)
+                copyFile(src, dst)
             } else {
-                val fullPath = configsPath
-                val dir = File(fullPath)
+                // Recurse into a subdirectory
+                val dir = File(dst)
                 if (!dir.exists())
                     dir.mkdirs()
                 for (i in assets.indices) {
-                    copyFileOrDir(path + "/" + assets[i])
+                    copy(src + "/" + assets[i], dst + "/" + assets[i])
                 }
             }
         } catch (ex: IOException) {
@@ -49,23 +58,22 @@ class CopyFilesFromAssets(private val context: Context, private val configsPath:
         }
     }
 
-    private fun copyFile(filename: String) {
+    /**
+     * Copies a single file from assets to disk
+     * @param src Path of source file inside assets
+     * @param dst Absolute path to destination file on disk
+     */
+    private fun copyFile(src: String, dst: String) {
         try {
-            val inp = context.assets.open(filename)
-            val newFileName = configsPath + filename.replace("libopenmw", "")
+            val inp = context.assets.open(src)
+            val out = FileOutputStream(dst)
 
-            val dirPath = newFileName.replace(File(newFileName).name, "")
-            val dir = File(dirPath)
-            if (!dir.exists())
-                dir.mkdirs()
-
-            val out = FileOutputStream(newFileName)
             inp.copyTo(out)
             out.flush()
 
             inp.close()
             out.close()
-        } catch (e: Exception) {
+        } catch (e: IOException) {
             Crashlytics.logException(e)
         }
     }

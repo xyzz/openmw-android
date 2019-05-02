@@ -200,13 +200,8 @@ if [[ $DEPLOY_RESOURCES = "true" ]]; then
 	mkdir -p "$DST/openmw/"
 	cp "$SRC/settings-default.cfg" "$DST/openmw/"
 	cp "$SRC/gamecontrollerdb.txt" "$DST/openmw/"
-
-	# local config
-	mkdir -p "$DST/config/openmw/"
-	# TODO: do we really need this twice?
-	cp "$SRC/gamecontrollerdb.txt" "$DST/config/openmw/"
-	cp "$DIR/../app/openmw-base.cfg" "$DST/config/openmw/openmw-base.cfg"
-	cp "$DIR/../app/settings-base.cfg" "$DST/config/openmw/settings.cfg"
+	cat "$SRC/openmw.cfg" | grep -v "data=" | grep -v "data-local=" >> "$DST/openmw/openmw.base.cfg"
+	cat "$DIR/../app/openmw.base.cfg" >> "$DST/openmw/openmw.base.cfg"
 fi
 
 echo "==> Making your debugging life easier"

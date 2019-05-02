@@ -119,18 +119,7 @@ class MainActivity : AppCompatActivity() {
      * (and we also write some values to both on startup such as screen res or some options)
      */
     private fun resetUserConfig() {
-        // Wipe out the old version
-        deleteRecursive(File(Constants.CONFIGS_FILES_STORAGE_PATH + "/config"))
-        // and copy in the default values
-        val copyFiles = CopyFilesFromAssets(this, Constants.CONFIGS_FILES_STORAGE_PATH)
-        copyFiles.copyFileOrDir("libopenmw/config")
-
-        // Regenerate the openmw.fallback.cfg as well
-        val inst = GameInstaller(prefs.getString("game_files", "")!!)
-        if (inst.check()) {
-            inst.convertIni(prefs.getString("pref_encoding",
-                GameInstaller.DEFAULT_CHARSET_PREF)!!)
-        }
+        reinstallStaticFiles()
     }
 
     /**
@@ -155,10 +144,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     /**
-     * Generates openmw.cfg using values from openmw-base.cfg combined with mod manager settings
+     * Generates openmw.cfg using values from openmw.base.cfg combined with mod manager settings
      */
     private fun generateOpenmwCfg() {
-        // contents of openmw-base.cfg
+        // contents of openmw.base.cfg
         val base: String
         // contents of openmw.fallback.cfg
         val fallback: String
@@ -169,7 +158,7 @@ class MainActivity : AppCompatActivity() {
             // TODO: support user custom options
             fallback = File(Constants.OPENMW_FALLBACK_CFG).readText()
         } catch (e: IOException) {
-            Log.e(TAG, "Failed to read openmw-base.cfg or openmw-fallback.cfg", e)
+            Log.e(TAG, "Failed to read openmw.base.cfg or openmw.fallback.cfg", e)
             Crashlytics.logException(e)
             return
         }
@@ -231,6 +220,25 @@ class MainActivity : AppCompatActivity() {
         return maxOf(dm.heightPixels, dm.widthPixels) / 1024.0f
     }
 
+    /**
+     * Removes old and creates new files located in private application directories
+     * (i.e. under getFilesDir(), or /data/data/.../files)
+     */
+    private fun reinstallStaticFiles() {
+        // we store global "config" and "resources" under private files
+
+        // wipe old version first
+        deleteRecursive(File(filesDir, "config"))
+        deleteRecursive(File(filesDir, "resources"))
+
+        // copy in the new version
+        val assetCopier = CopyFilesFromAssets(this)
+        assetCopier.copy("libopenmw/resources", File(filesDir, "resources").absolutePath)
+        assetCopier.copy("libopenmw/openmw", File(filesDir, "config").absolutePath)
+
+        // set version stamp
+    }
+
     private fun startGame() {
         // First, check that there are game files present
         val inst = GameInstaller(prefs.getString("game_files", "")!!)
@@ -274,14 +282,10 @@ class MainActivity : AppCompatActivity() {
                     resetUserConfig()
                 }
 
-                // wipe old "wipeable" (see ConfigsFileStorageHelper) config files just to be safe
-                deleteRecursive(File(Constants.CONFIGS_FILES_STORAGE_PATH + "/openmw"))
-                deleteRecursive(File(Constants.CONFIGS_FILES_STORAGE_PATH + "/resources"))
+                reinstallStaticFiles()
 
-                // copy all assets
-                val copyFiles = CopyFilesFromAssets(activity, Constants.CONFIGS_FILES_STORAGE_PATH)
-                copyFiles.copyFileOrDir("libopenmw/openmw")
-                copyFiles.copyFileOrDir("libopenmw/resources")
+                // Regenerate the fallback file in case user edits their Morrowind.ini
+                inst.convertIni(prefs.getString("pref_encoding", GameInstaller.DEFAULT_CHARSET_PREF)!!)
 
                 generateOpenmwCfg()
 

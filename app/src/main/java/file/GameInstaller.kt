@@ -106,6 +106,8 @@ class GameInstaller(path: String) {
         // there's gotta be something in the output as well
         if (output.isEmpty())
             return false
+
+        File(File(Constants.OPENMW_FALLBACK_CFG).parent).mkdirs()
         File(Constants.OPENMW_FALLBACK_CFG).writeText(output)
 
         return true
