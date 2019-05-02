@@ -69,7 +69,7 @@ class ModsActivity : AppCompatActivity() {
         val dataFiles = GameInstaller.getDataFiles(this)
 
         val linearLayoutManager = LinearLayoutManager(this)
-        linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
+        linearLayoutManager.orientation = RecyclerView.VERTICAL
         list.layoutManager = linearLayoutManager
 
         // Set up the adapter using the specified ModsCollection
