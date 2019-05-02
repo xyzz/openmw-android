@@ -1,7 +1,7 @@
 From fa91b9f43269e2017c5fbcb29a63e600f7a8d787 Mon Sep 17 00:00:00 2001
 From: Ilya Zhuravlev <whatever@xyz.is>
 Date: Mon, 1 Apr 2019 13:32:32 -0400
-Subject: [PATCH 05/13] android: Revert UI dimensions
+Subject: [PATCH 05/14] android: Revert UI dimensions
 
 ---
  files/settings-default.cfg | 95 ++++++++++++++++++++------------------

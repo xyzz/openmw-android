@@ -1,7 +1,7 @@
 From f42dafeec08e5f9c944ad1575b2349f2335aa068 Mon Sep 17 00:00:00 2001
 From: Ilya Zhuravlev <whatever@xyz.is>
 Date: Mon, 29 Apr 2019 16:51:05 -0400
-Subject: [PATCH 11/13] android: pause the game on minimize
+Subject: [PATCH 11/14] android: pause the game on minimize
 
 ---
  apps/openmw/android_main.cpp | 8 ++++++++

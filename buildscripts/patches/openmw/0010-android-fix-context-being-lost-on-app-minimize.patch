@@ -1,7 +1,7 @@
 From 81a0e5f8f2ae2c756fdd1d87b6e2b4a69fe11452 Mon Sep 17 00:00:00 2001
 From: Ilya Zhuravlev <whatever@xyz.is>
 Date: Sun, 28 Apr 2019 18:16:37 -0400
-Subject: [PATCH 10/13] android: fix context being lost on app minimize
+Subject: [PATCH 10/14] android: fix context being lost on app minimize
 
 ---
  apps/openmw/android_main.cpp | 39 ++++++++++++++++++++++++++++++++++++
