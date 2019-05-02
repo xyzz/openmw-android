@@ -58,7 +58,7 @@ class FragmentSettings : PreferenceFragment(), OnSharedPreferenceChangeListener 
             true
         }
 
-        findPreference("data_files").setOnPreferenceClickListener {
+        findPreference("game_files").setOnPreferenceClickListener {
             val chooser = StorageChooser.Builder()
                 .withActivity(activity)
                 .withFragmentManager(fragmentManager)
@@ -84,7 +84,7 @@ class FragmentSettings : PreferenceFragment(), OnSharedPreferenceChangeListener 
 
         // reset the setting so that it's erased on error instead of keeping
         // possibly stale value
-        var dataFiles = ""
+        var gameFiles = ""
 
         val inst = GameInstaller(path)
         if (inst.check()) {
@@ -93,14 +93,14 @@ class FragmentSettings : PreferenceFragment(), OnSharedPreferenceChangeListener 
                     GameInstaller.DEFAULT_CHARSET_PREF)!!)) {
                 showError(R.string.data_error_title, R.string.ini_error_message)
             } else {
-                dataFiles = inst.findDataFiles()
+                gameFiles = path
             }
         } else {
             showError(R.string.data_error_title, R.string.data_error_message)
         }
 
         with(sharedPref.edit()) {
-            putString("data_files", dataFiles)
+            putString("game_files", gameFiles)
             apply()
         }
     }
@@ -144,9 +144,9 @@ class FragmentSettings : PreferenceFragment(), OnSharedPreferenceChangeListener 
             val editTextPreference = preference as EditTextPreference?
             editTextPreference!!.summary = editTextPreference.text
         }
-        // Show selected value as a summary for data_files
-        if (key == "data_files") {
-            preference.summary = preference.sharedPreferences.getString("data_files", "")
+        // Show selected value as a summary for game_files
+        if (key == "game_files") {
+            preference.summary = preference.sharedPreferences.getString("game_files", "")
         }
     }
 

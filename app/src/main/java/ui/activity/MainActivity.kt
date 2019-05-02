@@ -166,7 +166,7 @@ class MainActivity : AppCompatActivity() {
             return
         }
 
-        val dataFiles = prefs.getString("data_files", "")!!
+        val dataFiles = GameInstaller.getDataFiles(this)
         val db = ModsDatabaseOpenHelper.getInstance(this)
         val resources = ModsCollection(ModType.Resource, dataFiles, db)
         val plugins = ModsCollection(ModType.Plugin, dataFiles, db)
@@ -226,8 +226,7 @@ class MainActivity : AppCompatActivity() {
                 file.Writer.write(
                     Constants.OPENMW_CFG, "resources", Constants.CONFIGS_FILES_STORAGE_PATH + "/resources"
                 )
-                // TODO: it will crash if there's no value/invalid value provided
-                file.Writer.write(Constants.OPENMW_CFG, "data", '"'.toString() + prefs!!.getString("data_files", "") + '"'.toString())
+                file.Writer.write(Constants.OPENMW_CFG, "data", "\"" + GameInstaller.getDataFiles(this) + "\"")
 
                 file.Writer.write(Constants.OPENMW_CFG, "encoding", prefs!!.getString("pref_encoding", GameInstaller.DEFAULT_CHARSET_PREF)!!)
 

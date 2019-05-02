@@ -15,8 +15,8 @@
             />
 
         <Preference
-            android:key="data_files"
-            android:title="@string/data_files"
+            android:key="game_files"
+            android:title="@string/game_files"
             />
 
         <Preference

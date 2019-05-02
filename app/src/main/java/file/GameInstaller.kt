@@ -19,11 +19,12 @@
 
 package file
 
+import android.content.Context
+import android.preference.PreferenceManager
 import constants.Constants
 import java.io.File
 import java.io.IOException
 import java.nio.charset.Charset
-import java.nio.charset.StandardCharsets
 
 /**
  * Class responsible for initial game setup which involves
@@ -114,6 +115,18 @@ class GameInstaller(path: String) {
         const val INI_NAME = "Morrowind.ini"
         const val DATA_NAME = "Data Files"
         const val DEFAULT_CHARSET_PREF = "win1252"
+
+        /**
+         * Returns path of Data Files, making use of path to the game from the settings
+         * @param ctx Android context
+         * @return Absolute path to data files as a string
+         */
+        fun getDataFiles(ctx: Context): String {
+            val gamePath = PreferenceManager.getDefaultSharedPreferences(ctx)
+                .getString("game_files", "")!!
+            val inst = GameInstaller(gamePath)
+            return inst.findDataFiles()
+        }
     }
 
 }

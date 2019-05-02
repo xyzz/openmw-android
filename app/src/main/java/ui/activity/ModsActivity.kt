@@ -28,6 +28,7 @@ import com.google.android.material.tabs.TabLayout
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import file.GameInstaller
 import kotlinx.android.synthetic.main.activity_mods.*
 import mods.*
 
@@ -62,8 +63,7 @@ class ModsActivity : AppCompatActivity() {
      * @param type Type of the mods this list will contain
      */
     private fun setupModList(list: RecyclerView, type: ModType) {
-        val dataFiles = PreferenceManager.getDefaultSharedPreferences(this)
-            .getString("data_files", "")
+        val dataFiles = GameInstaller.getDataFiles(this)
 
         val linearLayoutManager = LinearLayoutManager(this)
         linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
