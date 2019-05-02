@@ -9,9 +9,11 @@ class MyApp : Application() {
         super.onCreate()
 
         // Set up global paths
-        Constants.SETTINGS_CFG = File(filesDir, "config/settings.cfg").absolutePath
+        Constants.SETTINGS_DEFAULT_CFG = File(filesDir, "config/settings-default.cfg").absolutePath
         Constants.OPENMW_CFG = File(filesDir, "config/openmw.cfg").absolutePath
         Constants.OPENMW_BASE_CFG = File(filesDir, "config/openmw.base.cfg").absolutePath
         Constants.OPENMW_FALLBACK_CFG = File(filesDir, "config/openmw.fallback.cfg").absolutePath
+        Constants.RESOURCES = File(filesDir, "resources").absolutePath
+        Constants.GLOBAL_CONFIG = File(filesDir, "config").absolutePath
     }
 }

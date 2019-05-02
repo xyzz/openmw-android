@@ -114,13 +114,6 @@ class MainActivity : AppCompatActivity() {
         this@MainActivity.startActivity(intent)
     }
 
-    /**
-     * Resets $base/config to default values. This contains user-modifiable openmw.cfg and settings.cfg
-     * (and we also write some values to both on startup such as screen res or some options)
-     */
-    private fun resetUserConfig() {
-        reinstallStaticFiles()
-    }
 
     /**
      * Set up fixed screen resolution
@@ -233,8 +226,8 @@ class MainActivity : AppCompatActivity() {
 
         // copy in the new version
         val assetCopier = CopyFilesFromAssets(this)
-        assetCopier.copy("libopenmw/resources", File(filesDir, "resources").absolutePath)
-        assetCopier.copy("libopenmw/openmw", File(filesDir, "config").absolutePath)
+        assetCopier.copy("libopenmw/resources", Constants.RESOURCES)
+        assetCopier.copy("libopenmw/openmw", Constants.GLOBAL_CONFIG)
 
         // set version stamp
     }
@@ -276,10 +269,10 @@ class MainActivity : AppCompatActivity() {
         val th = Thread {
             try {
                 val openmwBaseCfg = File(Constants.OPENMW_BASE_CFG)
-                val settingsCfg = File(Constants.SETTINGS_CFG)
+                val settingsCfg = File(Constants.SETTINGS_DEFAULT_CFG)
                 if (!openmwBaseCfg.exists() || !settingsCfg.exists()) {
                     Log.i(TAG, "Config files don't exist, re-creating them.")
-                    resetUserConfig()
+                    reinstallStaticFiles()
                 }
 
                 reinstallStaticFiles()
@@ -290,18 +283,16 @@ class MainActivity : AppCompatActivity() {
                 generateOpenmwCfg()
 
                 // openmw.cfg: data, resources
-                file.Writer.write(
-                    Constants.OPENMW_CFG, "resources", Constants.CONFIGS_FILES_STORAGE_PATH + "/resources"
-                )
+                file.Writer.write(Constants.OPENMW_CFG, "resources", Constants.RESOURCES)
                 file.Writer.write(Constants.OPENMW_CFG, "data", "\"" + inst.findDataFiles() + "\"")
 
                 file.Writer.write(Constants.OPENMW_CFG, "encoding", prefs!!.getString("pref_encoding", GameInstaller.DEFAULT_CHARSET_PREF)!!)
 
-                file.Writer.write(Constants.SETTINGS_CFG, "scaling factor", "%.2f".format(scaling))
+                file.Writer.write(Constants.SETTINGS_DEFAULT_CFG, "scaling factor", "%.2f".format(scaling))
 
-                file.Writer.write(Constants.SETTINGS_CFG, "allow capsule shape", prefs!!.getString("pref_allowCapsuleShape", "true")!!)
+                file.Writer.write(Constants.SETTINGS_DEFAULT_CFG, "allow capsule shape", prefs!!.getString("pref_allowCapsuleShape", "true")!!)
 
-                file.Writer.write(Constants.SETTINGS_CFG, "preload enabled", prefs!!.getString("pref_preload", "false")!!)
+                file.Writer.write(Constants.SETTINGS_DEFAULT_CFG, "preload enabled", prefs!!.getString("pref_preload", "false")!!)
 
                 runOnUiThread {
                     obtainFixedScreenResolution()
@@ -326,7 +317,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_reset_config -> {
-                resetUserConfig()
+                reinstallStaticFiles()
                 Toast.makeText(this, getString(R.string.config_was_reset), Toast.LENGTH_SHORT).show()
             }
 

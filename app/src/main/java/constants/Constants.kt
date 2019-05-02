@@ -27,6 +27,7 @@ object Constants {
     val APP_PREFERENCES = "settings"
     val HIDE_CONTROLS = "pref_hide_controls"
 
+    // TODO: the comment below is outdated
     // Base path: [/sdcard]/Android/data/[com.libopenmw.openmw]/
     // * /sdcard - in theory, can be different, haven't seen any on modern android though
     // * com.libopenmw.openmw - our application id
@@ -36,10 +37,11 @@ object Constants {
     // $base/openmw - default settings, ok to overwrite
     // $base/config - user settings
 
-    val CONFIGS_FILES_STORAGE_PATH = Environment.getExternalStorageDirectory().toString() + "/Android/data/" + BuildConfig.APPLICATION_ID
+    // e.g. /sdcard/Android/data/com.libopenmw.openmw
+    val USER_FILE_STORAGE = Environment.getExternalStorageDirectory().toString() + "/Android/data/" + BuildConfig.APPLICATION_ID
 
-    // e.g. /data/data/com.libopenmw.openmw/files/config/settings.cfg
-    var SETTINGS_CFG = ""
+    // e.g. /data/data/com.libopenmw.openmw/files/config/settings-default.cfg
+    var SETTINGS_DEFAULT_CFG = ""
 
     // e.g. /data/data/com.libopenmw.openmw/files/config/openmw.cfg
     var OPENMW_CFG = ""
@@ -49,4 +51,10 @@ object Constants {
 
     // e.g. /data/data/com.libopenmw.openmw/files/config/openmw.fallback.cfg
     var OPENMW_FALLBACK_CFG = ""
+
+    // e.g. /data/data/com.libopenmw.openmw/files/resources
+    var RESOURCES = ""
+
+    // e.g. /data/data/com.libopenmw.openmw/files/config
+    var GLOBAL_CONFIG = ""
 }

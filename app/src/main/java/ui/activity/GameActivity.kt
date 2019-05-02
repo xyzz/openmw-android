@@ -85,7 +85,7 @@ class GameActivity : SDLActivity() {
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         KeepScreenOn()
-        getPathToJni(Constants.CONFIGS_FILES_STORAGE_PATH)
+        getPathToJni(filesDir.parent, Constants.USER_FILE_STORAGE)
         showControls()
     }
 
@@ -126,5 +126,5 @@ class GameActivity : SDLActivity() {
         return commandlineParser.argv
     }
 
-    private external fun getPathToJni(path: String)
+    private external fun getPathToJni(path_global: String, path_user: String)
 }
