@@ -1,7 +1,7 @@
 From edce79e946682f2faa3a53ae5f39658901f20cc9 Mon Sep 17 00:00:00 2001
 From: Ilya Zhuravlev <whatever@xyz.is>
 Date: Sun, 10 Feb 2019 19:16:45 -0500
-Subject: [PATCH 03/12] globalmap: fix race vs savegame load
+Subject: [PATCH 03/13] globalmap: fix race vs savegame load
 
 ---
  apps/openmw/mwrender/globalmap.cpp | 2 ++
