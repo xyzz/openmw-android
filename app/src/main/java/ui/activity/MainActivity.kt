@@ -34,6 +34,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import com.bugsnag.android.Bugsnag
 
 import com.libopenmw.openmw.BuildConfig
 import com.libopenmw.openmw.R
@@ -52,6 +53,7 @@ import mods.ModsCollection
 import mods.ModsDatabaseOpenHelper
 import ui.fragments.FragmentSettings
 import permission.PermissionHelper
+import utils.MyApp
 import utils.Utils.hideAndroidControls
 import java.util.*
 

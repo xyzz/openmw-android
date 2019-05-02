@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.bugsnag.android.gradle'
 
 ext {
     versionFile = new File(project.rootDir, 'app/src/main/assets/libopenmw/resources/version')
@@ -79,6 +80,8 @@ dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "org.jetbrains.anko:anko-sqlite:$anko_version"
+
+    implementation 'com.bugsnag:bugsnag-android-ndk:4.+'
 
     testImplementation 'junit:junit:4.12'
 }

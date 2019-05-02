@@ -3,6 +3,8 @@ package utils
 import android.app.Application
 import constants.Constants
 import java.io.File
+import com.bugsnag.android.Bugsnag
+import com.bugsnag.android.Configuration
 
 class MyApp : Application() {
     override fun onCreate() {
@@ -16,5 +18,16 @@ class MyApp : Application() {
         Constants.RESOURCES = File(filesDir, "resources").absolutePath
         Constants.GLOBAL_CONFIG = File(filesDir, "config").absolutePath
         Constants.VERSION_STAMP = File(filesDir, "stamp").absolutePath
+
+        // Enable bugsnag only when API key is provided
+        if (BugsnagApiKey.API_KEY.isNotEmpty()) {
+            val config = Configuration(BugsnagApiKey.API_KEY)
+            Bugsnag.init(this, config)
+            reportCrashes = true
+        }
+    }
+
+    companion object {
+        var reportCrashes = false
     }
 }
