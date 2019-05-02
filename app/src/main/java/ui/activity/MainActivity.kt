@@ -22,6 +22,7 @@ package ui.activity
 
 import android.app.AlertDialog
 import android.app.ProgressDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -199,7 +200,27 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Shows an alert dialog displaying a specific message
+     * @param title Title string resource
+     * @param message Message string resource
+     */
+    private fun showAlert(title: Int, message: Int) {
+        AlertDialog.Builder(this)
+            .setTitle(title)
+            .setMessage(message)
+            .setPositiveButton(android.R.string.ok) { _: DialogInterface, _: Int -> }
+            .show()
+    }
+
     private fun startGame() {
+        // First, check that there are game files present
+        val inst = GameInstaller(prefs.getString("game_files", "")!!)
+        if (!inst.check()) {
+            showAlert(R.string.no_data_files_title, R.string.no_data_files_message)
+            return
+        }
+
         val dialog = ProgressDialog.show(
             this, "", "Preparing for launch...", true)
 
@@ -232,7 +253,7 @@ class MainActivity : AppCompatActivity() {
                 file.Writer.write(
                     Constants.OPENMW_CFG, "resources", Constants.CONFIGS_FILES_STORAGE_PATH + "/resources"
                 )
-                file.Writer.write(Constants.OPENMW_CFG, "data", "\"" + GameInstaller.getDataFiles(this) + "\"")
+                file.Writer.write(Constants.OPENMW_CFG, "data", "\"" + inst.findDataFiles() + "\"")
 
                 file.Writer.write(Constants.OPENMW_CFG, "encoding", prefs!!.getString("pref_encoding", GameInstaller.DEFAULT_CHARSET_PREF)!!)
 

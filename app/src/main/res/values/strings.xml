@@ -119,4 +119,7 @@
     <string name="data_error_message">Please select a directory which contains both the \"Morrowind.ini\" file and the \"Data Files\" directory.</string>
     <string name="ini_error_message">Failure transforming the configuration file. Please ensure your \"Morrowind.ini\" is well-formed.</string>
 
+    <string name="no_data_files_title">Data files not found</string>
+    <string name="no_data_files_message">You must copy Morrowind game files to your device and select the path under "Game files" before the game can be played.</string>
+
 </resources>
