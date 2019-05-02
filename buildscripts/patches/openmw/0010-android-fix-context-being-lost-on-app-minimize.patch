@@ -1,7 +1,7 @@
-From ac4da1161ae152f378ca67dd0a76f25e7ee7372b Mon Sep 17 00:00:00 2001
+From 81a0e5f8f2ae2c756fdd1d87b6e2b4a69fe11452 Mon Sep 17 00:00:00 2001
 From: Ilya Zhuravlev <whatever@xyz.is>
 Date: Sun, 28 Apr 2019 18:16:37 -0400
-Subject: [PATCH 10/13] android: fix context being lost on app minimize
+Subject: [PATCH 10/12] android: fix context being lost on app minimize
 
 ---
  apps/openmw/android_main.cpp | 39 ++++++++++++++++++++++++++++++++++++
@@ -67,7 +67,7 @@ index cc36388b0..1176384f2 100644
 +    ctx->add(op);
 +}
 diff --git a/apps/openmw/engine.cpp b/apps/openmw/engine.cpp
-index e60a4e792..ed2a0422a 100644
+index 1c95ccc93..25f37d953 100644
 --- a/apps/openmw/engine.cpp
 +++ b/apps/openmw/engine.cpp
 @@ -336,6 +336,9 @@ std::string OMW::Engine::loadSettings (Settings::Manager & settings)
@@ -83,7 +83,7 @@ index e60a4e792..ed2a0422a 100644
 @@ -433,6 +436,9 @@ void OMW::Engine::createWindow(Settings::Manager& settings)
      mViewer->realize();
  
-     mViewer->getEventQueue()->getCurrentEventState()->setWindowRectangle(0, 0, width, height);
+     mViewer->getEventQueue()->getCurrentEventState()->setWindowRectangle(0, 0, traits->width, traits->height);
 +
 +    // To share the viewer with Android interfaces
 +    g_viewer = mViewer;

@@ -1,14 +1,14 @@
-From 80fb596ce589437e6a5c3f8a6520f3c5a1d0aee5 Mon Sep 17 00:00:00 2001
+From 4c3d1ceefbe4e19591ec15e12ae224c87b6e91f8 Mon Sep 17 00:00:00 2001
 From: Ilya Zhuravlev <whatever@xyz.is>
 Date: Mon, 29 Apr 2019 18:27:40 -0400
-Subject: [PATCH 12/13] engine: pause sounds when game is paused
+Subject: [PATCH 12/12] engine: pause sounds when game is paused
 
 ---
  apps/openmw/engine.cpp | 16 ++++++++++++++++
  1 file changed, 16 insertions(+)
 
 diff --git a/apps/openmw/engine.cpp b/apps/openmw/engine.cpp
-index ed2a0422a..ec29e896a 100644
+index 25f37d953..55a07f03d 100644
 --- a/apps/openmw/engine.cpp
 +++ b/apps/openmw/engine.cpp
 @@ -93,6 +93,22 @@ bool OMW::Engine::frame(float frametime)
