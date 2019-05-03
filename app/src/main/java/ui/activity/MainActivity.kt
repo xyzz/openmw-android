@@ -113,7 +113,7 @@ class MainActivity : AppCompatActivity() {
             GameActivity::class.java)
         finish()
 
-        this@MainActivity.startActivity(intent)
+        this@MainActivity.startActivityForResult(intent, 1)
     }
 
 
