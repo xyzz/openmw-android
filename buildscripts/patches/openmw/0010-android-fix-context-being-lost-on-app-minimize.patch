@@ -1,12 +1,13 @@
-From 81a0e5f8f2ae2c756fdd1d87b6e2b4a69fe11452 Mon Sep 17 00:00:00 2001
+From 05fa57596dc984ad571108a0a636a6776a7c2cae Mon Sep 17 00:00:00 2001
 From: Ilya Zhuravlev <whatever@xyz.is>
 Date: Sun, 28 Apr 2019 18:16:37 -0400
-Subject: [PATCH 10/14] android: fix context being lost on app minimize
+Subject: [PATCH 10/13] android: fix context being lost on app minimize
 
 ---
- apps/openmw/android_main.cpp | 39 ++++++++++++++++++++++++++++++++++++
- apps/openmw/engine.cpp       |  8 ++++++++
- 2 files changed, 47 insertions(+)
+ apps/openmw/android_main.cpp   | 39 ++++++++++++++++++++++++++++++++++
+ apps/openmw/engine.cpp         |  8 +++++++
+ components/debug/debugging.cpp |  5 +++++
+ 3 files changed, 52 insertions(+)
 
 diff --git a/apps/openmw/android_main.cpp b/apps/openmw/android_main.cpp
 index cc36388b0..1176384f2 100644
@@ -99,6 +100,36 @@ index 1c95ccc93..25f37d953 100644
      // Save user settings
      settings.saveUser(settingspath);
  
+diff --git a/components/debug/debugging.cpp b/components/debug/debugging.cpp
+index 28446ccc7..9c9a8ddf0 100644
+--- a/components/debug/debugging.cpp
++++ b/components/debug/debugging.cpp
+@@ -8,6 +8,8 @@
+ #   include <windows.h>
+ #endif
+ 
++#include <osgViewer/Viewer>
++
+ namespace Debug
+ {
+ #ifdef _WIN32
+@@ -86,6 +88,8 @@ namespace Debug
+     }
+ }
+ 
++extern osg::ref_ptr<osgViewer::Viewer> g_viewer;
++
+ int wrapApplication(int (*innerApplication)(int argc, char *argv[]), int argc, char *argv[], const std::string& appName)
+ {
+ #if defined _WIN32
+@@ -138,6 +142,7 @@ int wrapApplication(int (*innerApplication)(int argc, char *argv[]), int argc, c
+     }
+     catch (std::exception& e)
+     {
++        g_viewer.release();
+ #if (defined(__APPLE__) || defined(__linux) || defined(__unix) || defined(__posix))
+         if (!isatty(fileno(stdin)))
+ #endif
 -- 
 2.19.2
 

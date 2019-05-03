@@ -1,7 +1,7 @@
-From d2f09c7c89eee004ba147e7db089d06a8c87c8d6 Mon Sep 17 00:00:00 2001
+From 57062f170c500823da4aee15004de5bfa81671d6 Mon Sep 17 00:00:00 2001
 From: Ilya Zhuravlev <whatever@xyz.is>
 Date: Thu, 2 May 2019 11:15:52 -0400
-Subject: [PATCH 13/14] android: Update default settings for android
+Subject: [PATCH 13/13] android: Update default settings for android
 
 ---
  files/settings-default.cfg | 6 +++---
