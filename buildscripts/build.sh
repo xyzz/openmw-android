@@ -202,6 +202,9 @@ if [[ $DEPLOY_RESOURCES = "true" ]]; then
 	cp "$SRC/gamecontrollerdb.txt" "$DST/openmw/"
 	cat "$SRC/openmw.cfg" | grep -v "data=" | grep -v "data-local=" >> "$DST/openmw/openmw.base.cfg"
 	cat "$DIR/../app/openmw.base.cfg" >> "$DST/openmw/openmw.base.cfg"
+
+	# licensing info
+	cp "$DIR/../3rdparty-licenses.txt" "$DST"
 fi
 
 echo "==> Making your debugging life easier"

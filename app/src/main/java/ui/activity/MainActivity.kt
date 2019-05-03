@@ -341,23 +341,28 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
+        return when (item.itemId) {
             R.id.action_reset_config -> {
                 removeUserConfig()
                 removeStaticFiles()
                 Toast.makeText(this, getString(R.string.config_was_reset), Toast.LENGTH_SHORT).show()
+                true
             }
 
-            R.id.action_about -> AlertDialog.Builder(this)
-                .setTitle(getString(R.string.about_title))
-                .setMessage(R.string.about_contents)
-                .show()
+            R.id.action_about -> {
+                val text = assets.open("libopenmw/3rdparty-licenses.txt")
+                    .bufferedReader()
+                    .use { it.readText() }
 
-            else -> {
+                AlertDialog.Builder(this)
+                    .setTitle(getString(R.string.about_title))
+                    .setMessage(text)
+                    .show()
+                true
             }
+
+            else -> super.onOptionsItemSelected(item)
         }
-
-        return super.onOptionsItemSelected(item)
     }
 
     companion object {
