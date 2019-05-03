@@ -183,6 +183,8 @@ class OscImageButton(
     override fun makeView(ctx: Context) {
         val v = ImageView(ctx)
         v.setImageResource(imageSrc)
+        // fix blurry icons on old android
+        v.scaleType = ImageView.ScaleType.FIT_XY
         v.setOnTouchListener(ButtonTouchListener(keyCode, needMouse))
         v.tag = this
 
