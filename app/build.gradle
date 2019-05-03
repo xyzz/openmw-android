@@ -35,7 +35,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.libopenmw.openmw"
+        applicationId "is.xyz.omw"
         versionCode 13
         versionName calculateVersion()
 
