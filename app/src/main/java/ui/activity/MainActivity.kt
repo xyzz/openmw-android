@@ -318,6 +318,11 @@ class MainActivity : AppCompatActivity() {
 
                 file.Writer.write(Constants.SETTINGS_DEFAULT_CFG, "allow capsule shape", prefs!!.getString("pref_allowCapsuleShape", "true")!!)
 
+                file.Writer.write(Constants.SETTINGS_DEFAULT_CFG,
+                    "allow unsafe optimizations",
+                    prefs.getString("pref_unsafe_state_graph",
+                                    getString(R.string.pref_unsafe_state_graph_default))!!)
+
                 file.Writer.write(Constants.SETTINGS_DEFAULT_CFG, "preload enabled", prefs!!.getString("pref_preload", "false")!!)
 
                 runOnUiThread {
