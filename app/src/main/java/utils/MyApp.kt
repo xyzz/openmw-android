@@ -22,6 +22,7 @@ class MyApp : Application() {
         // Enable bugsnag only when API key is provided
         if (BugsnagApiKey.API_KEY.isNotEmpty()) {
             val config = Configuration(BugsnagApiKey.API_KEY)
+            config.buildUUID = ""
             Bugsnag.init(this, config)
             reportCrashes = true
         }
