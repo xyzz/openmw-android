@@ -79,6 +79,17 @@
         <item>60</item>
     </string-array>
 
+    <string name="pref_unsafe_state_graph">Enable unsafe graphics optimizations</string>
+    <string-array name="pref_unsafe_state_graph_entries">
+        <item>Yes</item>
+        <item>No</item>
+    </string-array>
+    <string-array name="pref_unsafe_state_graph_values">
+        <item>true</item>
+        <item>false</item>
+    </string-array>
+    <string name="pref_unsafe_state_graph_default">false</string>
+
     <string name="pref_physicsFPS_default">15</string>
 
     <string name="pref_allowCapsuleShape">Force a simple collision box for actors</string>
@@ -123,5 +134,6 @@
 
     <string name="no_data_files_title">Data files not found</string>
     <string name="no_data_files_message">You must copy Morrowind game files to your device and select the path under "Game files" before the game can be played.</string>
+    <string name="category_performance">Performance</string>
 
 </resources>

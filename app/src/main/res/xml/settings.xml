@@ -56,21 +56,16 @@
             android:title="@string/pref_screen_keeper"/>
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/pref_advanced">
-        <EditTextPreference
-            android:key="commandLine"
-            android:title="@string/pref_commandLine"
-            />
-
+    <PreferenceCategory android:title="@string/category_performance">
         <ListPreference
-            android:key="pref_graphicsLibrary"
-            android:title="@string/pref_graphicsLibrary"
-            android:dialogTitle="@string/pref_graphicsLibrary"
-            android:entries="@array/pref_graphicsLibrary_entries"
-            android:entryValues="@array/pref_graphicsLibrary_values"
-            android:defaultValue="@string/pref_graphicsLibrary_default"
+            android:key="pref_unsafe_state_graph"
+            android:title="@string/pref_unsafe_state_graph"
+            android:dialogTitle="@string/pref_unsafe_state_graph"
+            android:entries="@array/pref_unsafe_state_graph_entries"
+            android:entryValues="@array/pref_unsafe_state_graph_values"
+            android:defaultValue="@string/pref_unsafe_state_graph_default"
             android:summary="%s"
-        />
+            />
 
         <ListPreference
             android:key="pref_physicsFPS"
@@ -101,7 +96,23 @@
             android:defaultValue="@string/pref_preload_default"
             android:summary="%s"
             />
+    </PreferenceCategory>
 
+    <PreferenceCategory android:title="@string/pref_advanced">
+        <EditTextPreference
+            android:key="commandLine"
+            android:title="@string/pref_commandLine"
+            />
+
+        <ListPreference
+            android:key="pref_graphicsLibrary"
+            android:title="@string/pref_graphicsLibrary"
+            android:dialogTitle="@string/pref_graphicsLibrary"
+            android:entries="@array/pref_graphicsLibrary_entries"
+            android:entryValues="@array/pref_graphicsLibrary_values"
+            android:defaultValue="@string/pref_graphicsLibrary_default"
+            android:summary="%s"
+        />
     </PreferenceCategory>
 
 </PreferenceScreen>
