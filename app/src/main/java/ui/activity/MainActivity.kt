@@ -229,6 +229,11 @@ class MainActivity : AppCompatActivity() {
         assetCopier.copy("libopenmw/resources", Constants.RESOURCES)
         assetCopier.copy("libopenmw/openmw", Constants.GLOBAL_CONFIG)
 
+        // set up user config (if not present)
+        File(Constants.USER_CONFIG).mkdirs()
+        if (!File(Constants.USER_OPENMW_CFG).exists())
+            File(Constants.USER_OPENMW_CFG).writeText("# This is the user openmw.cfg. Feel free to modify it as you wish.\n")
+
         // set version stamp
         File(Constants.VERSION_STAMP).writeText(BuildConfig.VERSION_CODE.toString())
     }

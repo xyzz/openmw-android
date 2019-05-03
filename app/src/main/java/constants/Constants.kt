@@ -61,6 +61,9 @@ object Constants {
     // e.g. /sdcard/Android/data/com.libopenmw.openmw/config
     val USER_CONFIG = "$USER_FILE_STORAGE/config"
 
+    // e.g. /sdcard/Android/data/com.libopenmw.openmw/config/openmw.cfg
+    val USER_OPENMW_CFG = "$USER_CONFIG/openmw.cfg"
+
     // Contains app version code for currently deployed resources; redeployed on mismatch
     // e.g. /sdcard/Android/data/com.libopenmw.openmw/files/stamp
     var VERSION_STAMP = ""
