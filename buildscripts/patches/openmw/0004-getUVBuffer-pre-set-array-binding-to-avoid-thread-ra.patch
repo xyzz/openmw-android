@@ -1,7 +1,7 @@
-From f7625166331e883465ce8b9e874268f4b02ba871 Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Ilya Zhuravlev <whatever@xyz.is>
 Date: Sun, 10 Feb 2019 19:31:34 -0500
-Subject: [PATCH 04/13] getUVBuffer: pre-set array binding to avoid thread race
+Subject: [PATCH] getUVBuffer: pre-set array binding to avoid thread race
 
 ---
  components/terrain/buffercache.cpp | 1 +
