@@ -98,6 +98,9 @@ def main():
     api_key = find_api_key()
     print("API key: {}".format(api_key))
 
+    if len(api_key) == 0:
+        raise RuntimeError("No API key provided")
+
     print("")
 
     if not os.path.exists("tmp"):
@@ -106,7 +109,8 @@ def main():
     libraries = []
     for abi in os.listdir("symbols"):
         for so in os.listdir(os.path.join("symbols", abi)):
-            libraries.append((abi, so))
+            if so != "libopenmw.so":
+                libraries.append((abi, so))
 
     with Pool(16) as p:
         p.map(do_symbol_file, libraries)
