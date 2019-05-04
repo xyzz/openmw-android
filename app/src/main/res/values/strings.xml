@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">OpenMW</string>
+    <string name="app_name">OMW</string>
 
     <string-array name="pref_encoding_entries">
         <item>Central and Eastern European (win1250)</item>
@@ -122,14 +122,14 @@
     <string name="mods">Mods…</string>
     <string name="action_about">About</string>
 
-    <string name="about_title">About OpenMW</string>
+    <string name="about_title">About OMW</string>
     <string name="activity_mods">Mods</string>
     <string name="tab_plugins">Plugins</string>
     <string name="tab_resources">Resources</string>
     <string name="data_error_title">Error locating data files</string>
     <string name="data_error_message">Please select a directory which contains both the \"Morrowind.ini\" file and the \"Data Files\" directory.</string>
     <string name="permissions_error_title">No permissions</string>
-    <string name="permissions_error_message">OpenMW needs storage permissions to locate and access Morrowind game files. Please grant this permission through settings.</string>
+    <string name="permissions_error_message">OMW needs storage permissions to locate and access Morrowind game files. Please grant this permission through settings.</string>
     <string name="ini_error_message">Failure transforming the configuration file. Please ensure your \"Morrowind.ini\" is well-formed.</string>
 
     <string name="no_data_files_title">Data files not found</string>
