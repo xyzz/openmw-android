@@ -356,6 +356,11 @@ class Osc {
     private var visibilityState = 0
 
     private var elements = arrayListOf(
+        OscJoystickLeft("joystickLeft", OscVisibility.NORMAL,
+            75, 400, 170, 0),
+        OscJoystickRight("joystickRight", OscVisibility.ESSENTIAL,
+            650, 400, 170, 1),
+
         OscImageButton("inventory", OscVisibility.NULL,
             R.drawable.inventory, 950, 95, 3, true),
         OscImageButton("changePerson", OscVisibility.NORMAL,
@@ -385,12 +390,7 @@ class Osc {
         OscMouseButton("mouse", OscVisibility.NULL,
             R.drawable.mouse, 660, 0, this),
         OscImageButton("use", OscVisibility.ESSENTIAL,
-            R.drawable.use, 940, 368, KeyEvent.KEYCODE_SPACE),
-
-        OscJoystickLeft("joystickLeft", OscVisibility.NORMAL,
-            75, 400, 170, 0),
-        OscJoystickRight("joystickRight", OscVisibility.ESSENTIAL,
-            650, 400, 170, 1)
+            R.drawable.use, 940, 368, KeyEvent.KEYCODE_SPACE)
     )
 
     init {
