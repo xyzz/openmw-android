@@ -346,12 +346,12 @@ enum class OscVisibility(val v: Int) {
     ESSENTIAL(1),
     // Keyboard button and keys are visible
     KEYBOARD(2),
-    ESSENTIAL_KEYBOARD(ESSENTIAL.v or KEYBOARD.v),
     // Widgets visible during gameplay
     NORMAL(4),
     // Nothing except mouse icon is visible
     MOUSE(8),
     ESSENTIAL_MOUSE(ESSENTIAL.v or MOUSE.v),
+    ESSENTIAL_KEYBOARD(ESSENTIAL.v or KEYBOARD.v or MOUSE.v), //< make sure keyboard btn is also shown in mouse-mode
 }
 
 class Osc {
@@ -437,43 +437,43 @@ class Osc {
 
         target.addOnLayoutChangeListener { v, l, t, r, b, ol, ot, or, ob -> relayout(l, t, r, b, ol, ot, or, ob) }
 
-        showNonEssential()
+        showBasedOnState()
     }
 
     fun toggleKeyboard() {
         osk.toggle()
 
-        if (!keyboardVisible) {
-            keyboardVisible = true
-            setVisibility(OscVisibility.KEYBOARD.v)
-        } else {
-            keyboardVisible = false
-            showBasedOnMouse()
-        }
+        keyboardVisible = !keyboardVisible
+        showBasedOnState()
     }
 
     /**
-     * Displays different controls depending on whether the mouse-cursor is visible
+     * Displays different controls depending on current state
+     * - keyboard visibility
+     * - mouse-mode visibility
+     * - actual mouse cursor visibility
      */
-    fun showBasedOnMouse() {
-        // Don't do anything if keyboard or mouse are visible
-        if (keyboardVisible || mouseVisible)
-            return
+    fun showBasedOnState() {
+        var computedVisibility = 0
+        if (keyboardVisible)
+            computedVisibility = computedVisibility or OscVisibility.KEYBOARD.v
+        if (mouseVisible)
+            computedVisibility = computedVisibility or OscVisibility.MOUSE.v
 
-        if (SDLActivity.isMouseShown() == 0)
-            showNonEssential()
-        else
-            hideNonEssential()
+        // If keyboard or mouse-mode or both, then just apply that
+        if (computedVisibility != 0) {
+            setVisibility(computedVisibility)
+        } else {
+            if (SDLActivity.isMouseShown() == 0)
+                setVisibility(OscVisibility.ESSENTIAL.v or OscVisibility.NORMAL.v)
+            else
+                setVisibility(OscVisibility.ESSENTIAL.v)
+        }
     }
 
     fun toggleMouse() {
-        if (!mouseVisible) {
-            mouseVisible = true
-            setVisibility(OscVisibility.MOUSE.v)
-        } else {
-            mouseVisible = false
-            showBasedOnMouse()
-        }
+        mouseVisible = !mouseVisible
+        showBasedOnState()
     }
 
     fun placeConfigurableElements(target: RelativeLayout, listener: View.OnTouchListener) {
@@ -510,20 +510,6 @@ class Osc {
         }
 
         visibilityState = newState
-    }
-
-    /**
-     * Hides everything except the widgets that should be visible in inventory screen
-     */
-    fun hideNonEssential() {
-        setVisibility(OscVisibility.ESSENTIAL.v)
-    }
-
-    /**
-     * Shows all widgets again
-     */
-    fun showNonEssential() {
-        setVisibility(OscVisibility.ESSENTIAL.v or OscVisibility.NORMAL.v)
     }
 
     private fun relayout(l: Int, t: Int, r: Int, b: Int, ol: Int, ot: Int, or: Int, ob: Int) {

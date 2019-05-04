@@ -90,7 +90,7 @@ class MouseCursor(activity: GameActivity, private val osc: Osc?) : Choreographer
         // Check if we need to switch osc widgets visibility
         val mouseShown = SDLActivity.isMouseShown()
         if (osc != null && mouseShown != prevMouseShown) {
-            osc.showBasedOnMouse()
+            osc.showBasedOnState()
         }
 
         if (mouseShown == 0 || (osc != null && osc.keyboardVisible)) {
