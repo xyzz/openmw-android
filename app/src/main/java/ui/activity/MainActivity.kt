@@ -148,7 +148,15 @@ class MainActivity : AppCompatActivity() {
         // First, check that there are game files present
         val inst = GameInstaller(prefs.getString("game_files", "")!!)
         if (!inst.check()) {
-            showAlert(R.string.no_data_files_title, R.string.no_data_files_message)
+            AlertDialog.Builder(this)
+                .setTitle(R.string.no_data_files_title)
+                .setMessage(R.string.no_data_files_message)
+                .setNeutralButton(R.string.dialog_howto) { _, _ ->
+                    val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://omw.xyz.is/game.html"))
+                    startActivity(browserIntent)
+                }
+                .setPositiveButton(android.R.string.ok) { _: DialogInterface, _: Int -> }
+                .show()
             return
         }
 
@@ -160,6 +168,10 @@ class MainActivity : AppCompatActivity() {
             AlertDialog.Builder(this)
                 .setTitle(R.string.no_content_files_title)
                 .setMessage(R.string.no_content_files_message)
+                .setNeutralButton(R.string.dialog_howto) { _, _ ->
+                    val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://omw.xyz.is/mods.html"))
+                    startActivity(browserIntent)
+                }
                 .setNegativeButton(R.string.no_content_files_dismiss) { _, _ -> startGame() }
                 .setPositiveButton(R.string.configure_mods) { _, _ ->
                     this.startActivity(Intent(this, ModsActivity::class.java))
@@ -259,19 +271,6 @@ class MainActivity : AppCompatActivity() {
         } catch (e: IOException) {
             Log.e(TAG, "Failed to generate openmw.cfg.", e)
         }
-    }
-
-    /**
-     * Shows an alert dialog displaying a specific message
-     * @param title Title string resource
-     * @param message Message string resource
-     */
-    private fun showAlert(title: Int, message: Int) {
-        AlertDialog.Builder(this)
-            .setTitle(title)
-            .setMessage(message)
-            .setPositiveButton(android.R.string.ok) { _: DialogInterface, _: Int -> }
-            .show()
     }
 
     /**

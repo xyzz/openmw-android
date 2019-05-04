@@ -164,4 +164,6 @@
     <string name="bugsnag_consent_restart_message">You must restart the application for these settings to come into effect.</string>
     <string name="action_bugsnag_consent">Crash reporting</string>
 
+    <string name="dialog_howto">How-To</string>
+
 </resources>
