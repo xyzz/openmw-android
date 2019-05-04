@@ -11,6 +11,12 @@
             />
 
         <item
+            android:id="@+id/action_bugsnag_consent"
+            android:title="@string/action_bugsnag_consent"
+            app:showAsAction="never"
+            />
+
+        <item
             android:id="@+id/action_about"
             android:title="@string/action_about"
             app:showAsAction="never"

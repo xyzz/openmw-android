@@ -153,4 +153,15 @@
     </string-array>
     <string name="pref_mouse_mode_default">joystick</string>
 
+    <string name="bugsnag_yes">Yes</string>
+    <string name="bugsnag_no">No</string>
+    <string name="bugsnag_policy">Privacy policy</string>
+
+    <string name="bugsnag_consent_title">Report crashes automatically?</string>
+    <string name="bugsnag_consent_message">Would you like to enable automatic crash reporting?\nIf a crash occurs, some data about your device, configuration and installed mods will be automatically submitted to Bugsnag. You can find more information in the Privacy Policy.\nThis setting can be changed at any time from the menu.</string>
+
+    <string name="bugsnag_consent_restart_title">Please restart the application</string>
+    <string name="bugsnag_consent_restart_message">You must restart the application for these settings to come into effect.</string>
+    <string name="action_bugsnag_consent">Crash reporting</string>
+
 </resources>

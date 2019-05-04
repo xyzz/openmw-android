@@ -25,7 +25,6 @@ import java.io.FileOutputStream
 import java.io.IOException
 
 import android.content.Context
-import com.crashlytics.android.Crashlytics
 
 /**
  * Helper class to handle copying assets to the storage
@@ -54,7 +53,6 @@ class CopyFilesFromAssets(private val context: Context) {
                 }
             }
         } catch (ex: IOException) {
-            Crashlytics.logException(ex)
         }
     }
 
@@ -74,7 +72,6 @@ class CopyFilesFromAssets(private val context: Context) {
             inp.close()
             out.close()
         } catch (e: IOException) {
-            Crashlytics.logException(e)
         }
     }
 }

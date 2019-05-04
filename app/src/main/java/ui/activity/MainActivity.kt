@@ -20,11 +20,16 @@
 
 package ui.activity
 
+import android.annotation.SuppressLint
+import android.app.AlarmManager
 import android.app.AlertDialog
+import android.app.PendingIntent
 import android.app.ProgressDialog
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
+import android.net.Uri
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.DisplayMetrics
@@ -34,15 +39,12 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import com.bugsnag.android.Bugsnag
 
-import com.crashlytics.android.Crashlytics
-import com.crashlytics.android.ndk.CrashlyticsNdk
 import com.libopenmw.openmw.BuildConfig
 import com.libopenmw.openmw.R
 import constants.Constants
 import file.GameInstaller
-
-import io.fabric.sdk.android.Fabric
 
 import java.io.BufferedReader
 import java.io.File
@@ -56,6 +58,7 @@ import mods.ModsCollection
 import mods.ModsDatabaseOpenHelper
 import ui.fragments.FragmentSettings
 import permission.PermissionHelper
+import utils.MyApp
 import utils.Utils.hideAndroidControls
 import java.util.*
 
@@ -67,7 +70,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         defaultScaling = determineScaling()
 
-        Fabric.with(this, Crashlytics(), CrashlyticsNdk())
         PermissionHelper.getWriteExternalStoragePermission(this@MainActivity)
         setContentView(R.layout.main)
         prefs = PreferenceManager.getDefaultSharedPreferences(this)
@@ -77,6 +79,64 @@ class MainActivity : AppCompatActivity() {
 
         val fab = findViewById<FloatingActionButton>(R.id.fab)
         fab.setOnClickListener { checkStartGame() }
+
+        if (prefs.getString("bugsnag_consent", "")!! == "") {
+            askBugsnagConsent()
+        }
+    }
+
+    /**
+     * Set new user consent and maybe restart the app
+     * @param consent New value of bugsnag consent
+     */
+    @SuppressLint("ApplySharedPref")
+    private fun setBugsnagConsent(consent: String) {
+        val currentConsent = prefs.getString("bugsnag_consent", "")!!
+        if (currentConsent == consent)
+            return
+
+        // We only need to force a restart if the user revokes their consent
+        // If user grants consent, crashes won't be reported for 1 game session, but that's alright
+        val needRestart = currentConsent == "true" && consent == "false"
+
+        with (prefs.edit()) {
+            putString("bugsnag_consent", consent)
+            commit()
+        }
+
+        if (needRestart) {
+            AlertDialog.Builder(this)
+                .setOnDismissListener { System.exit(0) }
+                .setTitle(R.string.bugsnag_consent_restart_title)
+                .setMessage(R.string.bugsnag_consent_restart_message)
+                .setPositiveButton(android.R.string.ok) { _, _ -> System.exit(0) }
+                .show()
+        }
+    }
+
+    /**
+     * Asks the user if they want to automatically report crashes
+     */
+    private fun askBugsnagConsent() {
+        // Do nothing for builds without api-key
+        if (!MyApp.haveBugsnagApiKey)
+            return
+
+        val dialog = AlertDialog.Builder(this)
+            .setTitle(R.string.bugsnag_consent_title)
+            .setMessage(R.string.bugsnag_consent_message)
+            .setNeutralButton(R.string.bugsnag_policy) { _, _ -> /* set up below */ }
+            .setNegativeButton(R.string.bugsnag_no) { _, _ -> setBugsnagConsent("false") }
+            .setPositiveButton(R.string.bugsnag_yes) { _, _ -> setBugsnagConsent("true") }
+            .create()
+
+        dialog.show()
+
+        // don't close the dialog when the privacy-policy button is clicked
+        dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setOnClickListener {
+            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://omw.xyz.is/privacy-policy.html"))
+            startActivity(browserIntent)
+        }
     }
 
     /**
@@ -122,22 +182,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun logConfig() {
-        try {
-            val openmwCfg = File(Constants.OPENMW_CFG)
-            if (openmwCfg.exists()) {
-                val reader = BufferedReader(InputStreamReader(FileInputStream(openmwCfg)))
-                Crashlytics.log("openmw.cfg")
-                Crashlytics.log("--------------------------------------------------------------------------------")
-                reader.forEachLine {
-                    // Don't log fallback lines, they are mostly useless
-                    if (!it.contains("fallback="))
-                        Crashlytics.log(it)
-                }
-                Crashlytics.log("--------------------------------------------------------------------------------")
-            }
-        } catch (e: Exception) {
-            // not a big deal if we can't log the contents
-        }
 
     }
 
@@ -188,7 +232,6 @@ class MainActivity : AppCompatActivity() {
             fallback = File(Constants.OPENMW_FALLBACK_CFG).readText()
         } catch (e: IOException) {
             Log.e(TAG, "Failed to read openmw.base.cfg or openmw.fallback.cfg", e)
-            Crashlytics.logException(e)
             return
         }
 
@@ -215,7 +258,6 @@ class MainActivity : AppCompatActivity() {
             File(Constants.OPENMW_CFG).writeText(output)
         } catch (e: IOException) {
             Log.e(TAG, "Failed to generate openmw.cfg.", e)
-            Crashlytics.logException(e)
         }
     }
 
@@ -361,7 +403,6 @@ class MainActivity : AppCompatActivity() {
                 }
             } catch (e: IOException) {
                 Log.e(TAG, "Failed to write config files.", e)
-                Crashlytics.logException(e)
             }
         }
         th.start()
@@ -371,6 +412,8 @@ class MainActivity : AppCompatActivity() {
         menu.clear()
         val inflater = menuInflater
         inflater.inflate(R.menu.menu_settings, menu)
+        if (!MyApp.haveBugsnagApiKey)
+            menu.findItem(R.id.action_bugsnag_consent).setVisible(false)
         return super.onPrepareOptionsMenu(menu)
     }
 
@@ -392,6 +435,12 @@ class MainActivity : AppCompatActivity() {
                     .setTitle(getString(R.string.about_title))
                     .setMessage(text)
                     .show()
+
+                true
+            }
+
+            R.id.action_bugsnag_consent -> {
+                askBugsnagConsent()
                 true
             }
 
