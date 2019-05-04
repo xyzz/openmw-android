@@ -344,14 +344,8 @@ enum class OscVisibility(val v: Int) {
     NULL(0),
     // Widgets that must be visible when menu is open
     ESSENTIAL(1),
-    // Keyboard button and keys are visible
-    KEYBOARD(2),
     // Widgets visible during gameplay
-    NORMAL(4),
-    // Nothing except mouse icon is visible
-    MOUSE(8),
-    ESSENTIAL_MOUSE(ESSENTIAL.v or MOUSE.v),
-    ESSENTIAL_KEYBOARD(ESSENTIAL.v or KEYBOARD.v or MOUSE.v), //< make sure keyboard btn is also shown in mouse-mode
+    NORMAL(2),
 }
 
 class Osc {
@@ -386,9 +380,9 @@ class Osc {
             R.drawable.sneak, 940, 670, 113),
         OscImageButton("diary", OscVisibility.ESSENTIAL,
             R.drawable.journal, 414, 0, KeyEvent.KEYCODE_J),
-        OscKeyboardButton("keyboard", OscVisibility.ESSENTIAL_KEYBOARD,
+        OscKeyboardButton("keyboard", OscVisibility.NULL,
             R.drawable.keyboard, 586, 0, this),
-        OscMouseButton("mouse", OscVisibility.ESSENTIAL_MOUSE,
+        OscMouseButton("mouse", OscVisibility.NULL,
             R.drawable.mouse, 660, 0, this),
         OscImageButton("use", OscVisibility.ESSENTIAL,
             R.drawable.use, 940, 368, KeyEvent.KEYCODE_SPACE),
@@ -453,15 +447,9 @@ class Osc {
      * - actual mouse cursor visibility
      */
     fun showBasedOnState() {
-        var computedVisibility = 0
-        if (keyboardVisible)
-            computedVisibility = computedVisibility or OscVisibility.KEYBOARD.v
-        if (mouseVisible)
-            computedVisibility = computedVisibility or OscVisibility.MOUSE.v
-
-        // If keyboard or mouse-mode or both, then just apply that
-        if (computedVisibility != 0) {
-            setVisibility(computedVisibility)
+        // If keyboard or mouse-mode or both, then hide everything
+        if (keyboardVisible || mouseVisible) {
+            setVisibility(OscVisibility.NULL.v)
         } else {
             if (SDLActivity.isMouseShown() == 0)
                 setVisibility(OscVisibility.ESSENTIAL.v or OscVisibility.NORMAL.v)
