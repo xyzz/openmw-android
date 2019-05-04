@@ -29,6 +29,7 @@ import android.system.Os
 import android.util.Log
 import android.view.WindowManager
 import android.widget.RelativeLayout
+import com.libopenmw.openmw.R
 
 import org.libsdl.app.SDLActivity
 
@@ -90,12 +91,17 @@ class GameActivity : SDLActivity() {
     }
 
     private fun showControls() {
-        val pref_hide_controls = PreferenceManager.getDefaultSharedPreferences(this).getBoolean(Constants.HIDE_CONTROLS, false)
+        val prefs = PreferenceManager.getDefaultSharedPreferences(this)
+
+        val pref_hide_controls = prefs.getBoolean(Constants.HIDE_CONTROLS, false)
         var osc: Osc? = null
         if (!pref_hide_controls) {
             val layout = layout
             osc = Osc()
             osc.placeElements(layout)
+            if (prefs.getString("pref_mouse_mode",
+                    getString(R.string.pref_mouse_mode_default))!! == "touch")
+                osc.defaultMouse = true
         }
         MouseCursor(this, osc)
     }
