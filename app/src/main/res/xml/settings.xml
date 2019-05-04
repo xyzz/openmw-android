@@ -40,6 +40,16 @@
             android:hint="1.5"
             />
 
+        <ListPreference
+            android:key="pref_mouse_mode"
+            android:title="@string/pref_mouse_mode"
+            android:dialogTitle="@string/pref_mouse_mode"
+            android:entries="@array/pref_mouse_mode_entries"
+            android:entryValues="@array/pref_mouse_mode_values"
+            android:defaultValue="@string/pref_mouse_mode_default"
+            android:summary="%s"
+            />
+
         <CheckBoxPreference
             android:key="pref_hide_controls"
             android:title="@string/pref_hide_controls" />

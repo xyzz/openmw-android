@@ -358,6 +358,7 @@ class Osc {
     private var osk = Osk()
     var keyboardVisible = false //< Mode where only keyboard is visible
     var mouseVisible = false //< Mode where only mouse-switch icon is visible
+    var defaultMouse = false //< Whether we should enter the mouse-mode every time mouse is visible (i.e. in menus)
     private var visibilityState = 0
 
     private var elements = arrayListOf(
