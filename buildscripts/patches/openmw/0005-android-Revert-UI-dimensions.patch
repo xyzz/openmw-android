@@ -8,7 +8,7 @@ Subject: [PATCH] android: Revert UI dimensions
  1 file changed, 49 insertions(+), 46 deletions(-)
 
 diff --git a/files/settings-default.cfg b/files/settings-default.cfg
-index 61fcfebe2..effab2876 100644
+index fb5862fad..1675261d5 100644
 --- a/files/settings-default.cfg
 +++ b/files/settings-default.cfg
 @@ -482,42 +482,45 @@ refraction scale = 1.0
