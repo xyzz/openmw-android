@@ -76,7 +76,41 @@ class MainActivity : AppCompatActivity() {
             .replace(R.id.content_frame, FragmentSettings()).commit()
 
         val fab = findViewById<FloatingActionButton>(R.id.fab)
-        fab.setOnClickListener { startGame() }
+        fab.setOnClickListener { checkStartGame() }
+    }
+
+    /**
+     * Checks that the game is properly installed and if so, starts the game
+     * - the game files must be selected
+     * - there must be at least 1 activated mod (user can ignore this warning)
+     */
+    private fun checkStartGame() {
+        // First, check that there are game files present
+        val inst = GameInstaller(prefs.getString("game_files", "")!!)
+        if (!inst.check()) {
+            showAlert(R.string.no_data_files_title, R.string.no_data_files_message)
+            return
+        }
+
+        // Second, check if user has at least one mod enabled
+        val plugins = ModsCollection(ModType.Plugin, inst.findDataFiles(),
+            ModsDatabaseOpenHelper.getInstance(this))
+        if (plugins.mods.count { it.enabled } == 0) {
+            // No mods enabled, show a warning
+            AlertDialog.Builder(this)
+                .setTitle(R.string.no_content_files_title)
+                .setMessage(R.string.no_content_files_message)
+                .setNegativeButton(R.string.no_content_files_dismiss) { _, _ -> startGame() }
+                .setPositiveButton(R.string.configure_mods) { _, _ ->
+                    this.startActivity(Intent(this, ModsActivity::class.java))
+                }
+                .show()
+
+            return
+        }
+
+        // If everything's alright, start the game
+        startGame()
     }
 
     private fun deleteRecursive(fileOrDirectory: File) {
@@ -258,13 +292,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun startGame() {
-        // First, check that there are game files present
-        val inst = GameInstaller(prefs.getString("game_files", "")!!)
-        if (!inst.check()) {
-            showAlert(R.string.no_data_files_title, R.string.no_data_files_message)
-            return
-        }
-
         // Get scaling factor from config; if invalid or not provided, generate one
         var scaling = 0f
 
@@ -302,6 +329,8 @@ class MainActivity : AppCompatActivity() {
                 } catch (e: Exception) {
                     reinstallStaticFiles()
                 }
+
+                val inst = GameInstaller(prefs.getString("game_files", "")!!)
 
                 // Regenerate the fallback file in case user edits their Morrowind.ini
                 inst.convertIni(prefs.getString("pref_encoding", GameInstaller.DEFAULT_CHARSET_PREF)!!)
