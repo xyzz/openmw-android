@@ -371,7 +371,6 @@ class Osc {
             R.drawable.wait, 274, 0, KeyEvent.KEYCODE_T),
         OscImageButton("pause", OscVisibility.ESSENTIAL,
             R.drawable.pause, 950, 0, KeyEvent.KEYCODE_ESCAPE),
-        // TODO: replace load/save icons with more intuitive
         OscImageButton("quickLoad", OscVisibility.NORMAL,
             R.drawable.load, 860, 0, 139),
         OscImageButton("quickSave", OscVisibility.NORMAL,
