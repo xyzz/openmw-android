@@ -218,6 +218,31 @@ class OscKeyboardButton(
 
 }
 
+class OscMouseButton(
+    uniqueId: String,
+    visibility: OscVisibility,
+    private val imageSrc: Int,
+    defaultX: Int,
+    defaultY: Int,
+    private val osc: Osc
+) : OscElement(uniqueId, visibility, defaultX, defaultY) {
+
+    override fun makeView(ctx: Context) {
+        val v = ImageView(ctx)
+        v.setImageResource(imageSrc)
+        v.setOnTouchListener(View.OnTouchListener { _, motionEvent ->
+            if (motionEvent.action == MotionEvent.ACTION_UP) {
+                osc.toggleMouse()
+            }
+            return@OnTouchListener true
+        })
+        v.tag = this
+
+        view = v
+    }
+
+}
+
 class OscJoystickLeft(
     uniqueId: String,
     visibility: OscVisibility,
@@ -323,14 +348,16 @@ enum class OscVisibility(val v: Int) {
     KEYBOARD(2),
     ESSENTIAL_KEYBOARD(ESSENTIAL.v or KEYBOARD.v),
     // Widgets visible during gameplay
-    NORMAL(4)
+    NORMAL(4),
+    // Nothing except mouse icon is visible
+    MOUSE(8),
+    ESSENTIAL_MOUSE(ESSENTIAL.v or MOUSE.v),
 }
 
 class Osc {
     private var osk = Osk()
-    public var keyboardVisible = false
-    private var keyboardButton = OscKeyboardButton("keyboard", OscVisibility.ESSENTIAL_KEYBOARD,
-        R.drawable.keyboard, 586, 0, this)
+    var keyboardVisible = false //< Mode where only keyboard is visible
+    var mouseVisible = false //< Mode where only mouse-switch icon is visible
     private var visibilityState = 0
 
     private var elements = arrayListOf(
@@ -361,7 +388,10 @@ class Osc {
             R.drawable.sneak, 940, 670, 113),
         OscImageButton("diary", OscVisibility.NORMAL,
             R.drawable.journal, 414, 0, KeyEvent.KEYCODE_J),
-        keyboardButton,
+        OscKeyboardButton("keyboard", OscVisibility.ESSENTIAL_KEYBOARD,
+            R.drawable.keyboard, 586, 0, this),
+        OscMouseButton("mouse", OscVisibility.ESSENTIAL_MOUSE,
+            R.drawable.mouse, 660, 0, this),
         OscImageButton("use", OscVisibility.ESSENTIAL,
             R.drawable.use, 940, 368, KeyEvent.KEYCODE_SPACE),
 
@@ -419,10 +449,31 @@ class Osc {
             setVisibility(OscVisibility.KEYBOARD.v)
         } else {
             keyboardVisible = false
-            if (SDLActivity.isMouseShown() == 0)
-                showNonEssential()
-            else
-                hideNonEssential()
+            showBasedOnMouse()
+        }
+    }
+
+    /**
+     * Displays different controls depending on whether the mouse-cursor is visible
+     */
+    fun showBasedOnMouse() {
+        // Don't do anything if keyboard or mouse are visible
+        if (keyboardVisible || mouseVisible)
+            return
+
+        if (SDLActivity.isMouseShown() == 0)
+            showNonEssential()
+        else
+            hideNonEssential()
+    }
+
+    fun toggleMouse() {
+        if (!mouseVisible) {
+            mouseVisible = true
+            setVisibility(OscVisibility.MOUSE.v)
+        } else {
+            mouseVisible = false
+            showBasedOnMouse()
         }
     }
 
@@ -466,16 +517,14 @@ class Osc {
      * Hides everything except the widgets that should be visible in inventory screen
      */
     fun hideNonEssential() {
-        if (!keyboardVisible)
-            setVisibility(OscVisibility.ESSENTIAL.v)
+        setVisibility(OscVisibility.ESSENTIAL.v)
     }
 
     /**
      * Shows all widgets again
      */
     fun showNonEssential() {
-        if (!keyboardVisible)
-            setVisibility(OscVisibility.ESSENTIAL.v or OscVisibility.NORMAL.v)
+        setVisibility(OscVisibility.ESSENTIAL.v or OscVisibility.NORMAL.v)
     }
 
     private fun relayout(l: Int, t: Int, r: Int, b: Int, ol: Int, ot: Int, or: Int, ob: Int) {
