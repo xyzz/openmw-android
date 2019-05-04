@@ -385,7 +385,7 @@ class Osc {
             R.drawable.toggle_magic, 940, 480, KeyEvent.KEYCODE_R),
         OscImageButton("crouch", OscVisibility.NORMAL,
             R.drawable.sneak, 940, 670, 113),
-        OscImageButton("diary", OscVisibility.NORMAL,
+        OscImageButton("diary", OscVisibility.ESSENTIAL,
             R.drawable.journal, 414, 0, KeyEvent.KEYCODE_J),
         OscKeyboardButton("keyboard", OscVisibility.ESSENTIAL_KEYBOARD,
             R.drawable.keyboard, 586, 0, this),
