@@ -51,7 +51,7 @@ open class OscElement(
         private val defaultX: Int,
         private val defaultY: Int,
         private val defaultSize: Int = 50,
-        private val defaultOpacity: Float = 0.5f
+        private val defaultOpacity: Float = 0.4f
 ) {
 
     private var opacity = defaultOpacity
