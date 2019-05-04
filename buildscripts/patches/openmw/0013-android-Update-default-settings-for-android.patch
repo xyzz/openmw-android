@@ -8,7 +8,7 @@ Subject: [PATCH] android: Update default settings for android
  1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/files/settings-default.cfg b/files/settings-default.cfg
-index 87f5a299d..895930b6a 100644
+index b3cf951c1..5405393b4 100644
 --- a/files/settings-default.cfg
 +++ b/files/settings-default.cfg
 @@ -23,7 +23,7 @@ small feature culling pixel size = 2.0

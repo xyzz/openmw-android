@@ -45,8 +45,8 @@ set(OSG_VERSION 3.6.2)
 set(OSG_HASH SHA256=762c6601f32a761c7a0556766097558f453f23b983dd75bcf90f922e2d077a34)
 
 # https://github.com/OpenMW/openmw/commits/master
-set(OPENMW_VERSION 4f74d09179bf3a9540d58887adc3a6e8ca76b0e5)
-set(OPENMW_HASH SHA256=63c1b77b57f18e4ac2886c0b91a9961707b4e9460dba3e2daa0a527b093e27e2)
+set(OPENMW_VERSION 15142a608d31aa58fa21c7395a2a67e83863b93f)
+set(OPENMW_HASH SHA256=6c5e8497bd0a2069b0c54d93c5f60525907f9d46d765fb70872c7da1ad69f1e9)
 
 # End of configurable options
 
@@ -428,8 +428,7 @@ set(OPENMW_PATCH
 	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/0010-android-fix-context-being-lost-on-app-minimize.patch &&
 	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/0011-android-pause-the-game-on-minimize.patch &&
 	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/0012-engine-pause-sounds-when-game-is-paused.patch &&
-	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/0013-android-Update-default-settings-for-android.patch &&
-	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/2344.patch
+	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/0013-android-Update-default-settings-for-android.patch
 )
 
 ExternalProject_Add(openmw

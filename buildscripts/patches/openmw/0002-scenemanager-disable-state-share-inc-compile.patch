@@ -43,7 +43,7 @@ index 61a40ee4b..7b46058c5 100644
              else
                  loaded->getBound();
 diff --git a/files/settings-default.cfg b/files/settings-default.cfg
-index 40a84f1c1..fb5862fad 100644
+index d3776e92f..e7bdf0ba0 100644
 --- a/files/settings-default.cfg
 +++ b/files/settings-default.cfg
 @@ -454,6 +454,8 @@ gamma = 1.0

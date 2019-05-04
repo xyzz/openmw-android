@@ -39,7 +39,7 @@ index 0f8814aca..5bcf01508 100644
          mShape.reset(new btCapsuleShapeZ(mHalfExtents.x(), 2*mHalfExtents.z() - 2*mHalfExtents.x()));
          mRotationallyInvariant = true;
 diff --git a/files/settings-default.cfg b/files/settings-default.cfg
-index 1675261d5..87f5a299d 100644
+index 8c454c2eb..b3cf951c1 100644
 --- a/files/settings-default.cfg
 +++ b/files/settings-default.cfg
 @@ -255,6 +255,9 @@ strength influences hand to hand = 0

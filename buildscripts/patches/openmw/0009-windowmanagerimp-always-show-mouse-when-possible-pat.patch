@@ -9,10 +9,10 @@ Subject: [PATCH] windowmanagerimp: always show mouse when possible (patch by
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/apps/openmw/mwgui/windowmanagerimp.cpp b/apps/openmw/mwgui/windowmanagerimp.cpp
-index 2fc4896f8..da8fef4bd 100644
+index 1b271dfd5..8aaac51fa 100644
 --- a/apps/openmw/mwgui/windowmanagerimp.cpp
 +++ b/apps/openmw/mwgui/windowmanagerimp.cpp
-@@ -1704,7 +1704,7 @@ namespace MWGui
+@@ -1708,7 +1708,7 @@ namespace MWGui
  
      bool WindowManager::getCursorVisible()
      {
