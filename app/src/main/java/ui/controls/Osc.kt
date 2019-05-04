@@ -372,13 +372,13 @@ class Osc {
         OscImageButton("quickSave", OscVisibility.NORMAL,
             R.drawable.save, 860, 0, 135),
         OscImageButton("weapon", OscVisibility.NORMAL,
-            R.drawable.toggle_weapon, 880, 95, KeyEvent.KEYCODE_F),
+            R.drawable.toggle_weapon, 868, 539, KeyEvent.KEYCODE_F),
         OscImageButton("jump", OscVisibility.NORMAL,
-            R.drawable.jump, 920, 195, KeyEvent.KEYCODE_E),
+            R.drawable.jump, 936, 300, KeyEvent.KEYCODE_E),
         OscAttackButton("fire", OscVisibility.ESSENTIAL,
-            R.drawable.attack, 720, 300, 1, 90),
+            R.drawable.attack, 740, 315, 1, 90),
         OscImageButton("magic", OscVisibility.NORMAL,
-            R.drawable.toggle_magic, 940, 480, KeyEvent.KEYCODE_R),
+            R.drawable.toggle_magic, 815, 642, KeyEvent.KEYCODE_R),
         OscImageButton("crouch", OscVisibility.NORMAL,
             R.drawable.sneak, 940, 670, 113),
         OscImageButton("diary", OscVisibility.ESSENTIAL,
@@ -388,7 +388,7 @@ class Osc {
         OscMouseButton("mouse", OscVisibility.NULL,
             R.drawable.mouse, 660, 0, this),
         OscImageButton("use", OscVisibility.ESSENTIAL,
-            R.drawable.use, 940, 368, KeyEvent.KEYCODE_SPACE)
+            R.drawable.use, 950, 436, KeyEvent.KEYCODE_SPACE)
     )
 
     init {
