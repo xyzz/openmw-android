@@ -361,8 +361,6 @@ class Osc {
     private var visibilityState = 0
 
     private var elements = arrayListOf(
-        OscImageButton("run", OscVisibility.NORMAL,
-            R.drawable.run, 65, 330, 115),
         OscImageButton("inventory", OscVisibility.ESSENTIAL,
             R.drawable.inventory, 950, 95, 3, true),
         OscImageButton("changePerson", OscVisibility.NORMAL,
