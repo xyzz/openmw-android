@@ -37,8 +37,9 @@ object Constants {
     // $base/openmw - default settings, ok to overwrite
     // $base/config - user settings
 
-    // e.g. /sdcard/Android/data/com.libopenmw.openmw
-    val USER_FILE_STORAGE = Environment.getExternalStorageDirectory().toString() + "/Android/data/" + BuildConfig.APPLICATION_ID
+    // TODO: this should be omw-nightly for nightly builds
+    // e.g. /sdcard/omw
+    val USER_FILE_STORAGE = Environment.getExternalStorageDirectory().toString() + "/omw/"
 
     // e.g. /data/data/com.libopenmw.openmw/files/config/settings-default.cfg
     var SETTINGS_DEFAULT_CFG = ""
