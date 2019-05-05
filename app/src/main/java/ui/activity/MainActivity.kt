@@ -64,11 +64,10 @@ import java.util.*
 
 class MainActivity : AppCompatActivity() {
     private lateinit var prefs: SharedPreferences
-    var defaultScaling = 0f
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        defaultScaling = determineScaling()
+        MyApp.app.defaultScaling = determineScaling()
 
         PermissionHelper.getWriteExternalStoragePermission(this@MainActivity)
         setContentView(R.layout.main)
@@ -348,7 +347,7 @@ class MainActivity : AppCompatActivity() {
 
         // If scaling didn't get set, determine it automatically
         if (scaling == 0f) {
-            scaling = defaultScaling
+            scaling = MyApp.app.defaultScaling
         }
 
         val dialog = ProgressDialog.show(

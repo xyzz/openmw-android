@@ -8,7 +8,12 @@ import com.bugsnag.android.Bugsnag
 import com.bugsnag.android.Configuration
 
 class MyApp : Application() {
+
+    var defaultScaling = 0f
+
     override fun onCreate() {
+        app = this
+
         super.onCreate()
 
         // Set up global paths
@@ -37,5 +42,6 @@ class MyApp : Application() {
     companion object {
         var reportCrashes = false
         var haveBugsnagApiKey = false
+        lateinit var app: MyApp
     }
 }

@@ -39,9 +39,8 @@ import com.libopenmw.openmw.R
 import file.GameInstaller
 
 import ui.activity.ConfigureControls
-import ui.activity.MainActivity
 import ui.activity.ModsActivity
-import java.io.File
+import utils.MyApp
 import java.util.*
 
 class FragmentSettings : PreferenceFragment(), OnSharedPreferenceChangeListener {
@@ -153,8 +152,8 @@ class FragmentSettings : PreferenceFragment(), OnSharedPreferenceChangeListener 
         if (preference is EditTextPreference) {
             if (key == "pref_uiScaling" && (preference.text == null || preference.text.isEmpty()))
                 // Show "Auto (1.23)"
-                preference.summary = getString(R.string.uiScaling_auto)
-                    .format(Locale.ROOT, (activity as MainActivity).defaultScaling)
+                preference.summary = MyApp.app.getString(R.string.uiScaling_auto)
+                    .format(Locale.ROOT, MyApp.app.defaultScaling)
             else
                 preference.summary = preference.text
         }
