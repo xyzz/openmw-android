@@ -168,4 +168,7 @@
 
     <string name="dialog_howto">How-To</string>
 
+    <string name="no_browser_title">Unable to open a URL</string>
+    <string name="no_browser_message">You don\'t appear to have a web browser installed. Tried to open the following URL:\n\n%1$s</string>
+
 </resources>

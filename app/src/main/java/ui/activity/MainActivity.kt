@@ -25,10 +25,7 @@ import android.app.AlarmManager
 import android.app.AlertDialog
 import android.app.PendingIntent
 import android.app.ProgressDialog
-import android.content.Context
-import android.content.DialogInterface
-import android.content.Intent
-import android.content.SharedPreferences
+import android.content.*
 import android.net.Uri
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -114,6 +111,23 @@ class MainActivity : AppCompatActivity() {
     }
 
     /**
+     * Opens the url in a web browser and gracefully handles the failure
+     * @param url Url to open
+     */
+    private fun openUrl(url: String) {
+        try {
+            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            startActivity(browserIntent)
+        } catch (e: ActivityNotFoundException) {
+            AlertDialog.Builder(this)
+                .setTitle(R.string.no_browser_title)
+                .setMessage(getString(R.string.no_browser_message, url))
+                .setPositiveButton(android.R.string.ok) { _, _ -> }
+                .show()
+        }
+    }
+
+    /**
      * Asks the user if they want to automatically report crashes
      */
     private fun askBugsnagConsent() {
@@ -133,8 +147,7 @@ class MainActivity : AppCompatActivity() {
 
         // don't close the dialog when the privacy-policy button is clicked
         dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setOnClickListener {
-            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://omw.xyz.is/privacy-policy.html"))
-            startActivity(browserIntent)
+            openUrl("https://omw.xyz.is/privacy-policy.html")
         }
     }
 
@@ -151,8 +164,7 @@ class MainActivity : AppCompatActivity() {
                 .setTitle(R.string.no_data_files_title)
                 .setMessage(R.string.no_data_files_message)
                 .setNeutralButton(R.string.dialog_howto) { _, _ ->
-                    val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://omw.xyz.is/game.html"))
-                    startActivity(browserIntent)
+                    openUrl("https://omw.xyz.is/game.html")
                 }
                 .setPositiveButton(android.R.string.ok) { _: DialogInterface, _: Int -> }
                 .show()
@@ -168,8 +180,7 @@ class MainActivity : AppCompatActivity() {
                 .setTitle(R.string.no_content_files_title)
                 .setMessage(R.string.no_content_files_message)
                 .setNeutralButton(R.string.dialog_howto) { _, _ ->
-                    val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://omw.xyz.is/mods.html"))
-                    startActivity(browserIntent)
+                    openUrl("https://omw.xyz.is/mods.html")
                 }
                 .setNegativeButton(R.string.no_content_files_dismiss) { _, _ -> startGame() }
                 .setPositiveButton(R.string.configure_mods) { _, _ ->
