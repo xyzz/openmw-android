@@ -32,6 +32,7 @@ import org.libsdl.app.SDLActivity
 
 import ui.activity.GameActivity
 import ui.activity.MainActivity
+import ui.activity.MouseMode
 import ui.controls.Osc
 
 /**
@@ -90,14 +91,14 @@ class MouseCursor(activity: GameActivity, private val osc: Osc?) : Choreographer
         // Check if we need to switch osc widgets visibility
         val mouseShown = SDLActivity.isMouseShown()
         if (osc != null && mouseShown != prevMouseShown) {
-            if (osc.defaultMouse) {
+            if (GameActivity.mouseMode == MouseMode.Touch) {
                 // If the player has default mouse-mode enabled, trigger it here
                 osc.mouseVisible = mouseShown != 0
             }
             osc.showBasedOnState()
         }
 
-        if (mouseShown == 0 || (osc != null && osc.keyboardVisible)) {
+        if (GameActivity.mouseMode == MouseMode.Touch || mouseShown == 0 || (osc != null && osc.keyboardVisible)) {
             cursor.visibility = View.GONE
         } else {
             cursor.visibility = View.VISIBLE

@@ -40,6 +40,25 @@ import ui.controls.Osc
 
 import utils.Utils.hideAndroidControls
 
+/**
+ * Enum for different mouse modes as specified in settings
+ */
+enum class MouseMode {
+    Hybrid,
+    Joystick,
+    Touch;
+
+    companion object {
+        fun get(s: String): MouseMode {
+            return when (s) {
+                "joystick" -> Joystick
+                "touch" -> Touch
+                else -> Hybrid
+            }
+        }
+    }
+}
+
 class GameActivity : SDLActivity() {
 
     private var prefs: SharedPreferences? = null
@@ -93,15 +112,15 @@ class GameActivity : SDLActivity() {
     private fun showControls() {
         val prefs = PreferenceManager.getDefaultSharedPreferences(this)
 
+        mouseMode = MouseMode.get((prefs.getString("pref_mouse_mode",
+            getString(R.string.pref_mouse_mode_default))!!))
+
         val pref_hide_controls = prefs.getBoolean(Constants.HIDE_CONTROLS, false)
         var osc: Osc? = null
         if (!pref_hide_controls) {
             val layout = layout
             osc = Osc()
             osc.placeElements(layout)
-            if (prefs.getString("pref_mouse_mode",
-                    getString(R.string.pref_mouse_mode_default))!! == "touch")
-                osc.defaultMouse = true
         }
         MouseCursor(this, osc)
     }
@@ -133,4 +152,8 @@ class GameActivity : SDLActivity() {
     }
 
     private external fun getPathToJni(path_global: String, path_user: String)
+
+    companion object {
+        var mouseMode = MouseMode.Hybrid
+    }
 }

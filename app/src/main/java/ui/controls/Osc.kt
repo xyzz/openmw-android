@@ -21,6 +21,7 @@ package ui.controls
 
 import android.content.Context
 import android.graphics.Color
+import android.opengl.Visibility
 import android.preference.PreferenceManager
 import android.util.TypedValue
 import android.view.KeyEvent
@@ -31,6 +32,8 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import com.libopenmw.openmw.R
 import org.libsdl.app.SDLActivity
+import ui.activity.GameActivity
+import ui.activity.MouseMode
 
 const val VIRTUAL_SCREEN_WIDTH = 1024
 const val VIRTUAL_SCREEN_HEIGHT = 768
@@ -352,8 +355,9 @@ class Osc {
     private var osk = Osk()
     var keyboardVisible = false //< Mode where only keyboard is visible
     var mouseVisible = false //< Mode where only mouse-switch icon is visible
-    var defaultMouse = false //< Whether we should enter the mouse-mode every time mouse is visible (i.e. in menus)
     private var visibilityState = 0
+    private val btnMouse = OscMouseButton("mouse", OscVisibility.NULL,
+        R.drawable.mouse, 660, 0, this)
 
     private var elements = arrayListOf(
         OscJoystickLeft("joystickLeft", OscVisibility.NORMAL,
@@ -385,8 +389,7 @@ class Osc {
             R.drawable.journal, 414, 0, KeyEvent.KEYCODE_J),
         OscKeyboardButton("keyboard", OscVisibility.NULL,
             R.drawable.keyboard, 586, 0, this),
-        OscMouseButton("mouse", OscVisibility.NULL,
-            R.drawable.mouse, 660, 0, this),
+        btnMouse,
         OscImageButton("use", OscVisibility.ESSENTIAL,
             R.drawable.use, 950, 436, KeyEvent.KEYCODE_SPACE)
     )
@@ -429,6 +432,10 @@ class Osc {
         target.addOnLayoutChangeListener { v, l, t, r, b, ol, ot, or, ob -> relayout(l, t, r, b, ol, ot, or, ob) }
 
         showBasedOnState()
+
+        // Mouse button is only needed in hybrid mode
+        if (GameActivity.mouseMode != MouseMode.Hybrid)
+            btnMouse.view?.visibility = View.GONE
     }
 
     fun toggleKeyboard() {

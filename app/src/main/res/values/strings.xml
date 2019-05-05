@@ -142,16 +142,18 @@
 
     <string name="configure_mods">Configure mods</string>
 
-    <string name="pref_mouse_mode">Default mouse mode in menus</string>
+    <string name="pref_mouse_mode">Mouse mode in menus</string>
     <string-array name="pref_mouse_mode_entries">
+        <item>Hybrid</item>
         <item>Relative joystick controls</item>
         <item>Absolute touch controls</item>
     </string-array>
     <string-array name="pref_mouse_mode_values">
+        <item>hybrid</item>
         <item>joystick</item>
         <item>touch</item>
     </string-array>
-    <string name="pref_mouse_mode_default">joystick</string>
+    <string name="pref_mouse_mode_default">hybrid</string>
 
     <string name="bugsnag_yes">Yes</string>
     <string name="bugsnag_no">No</string>
