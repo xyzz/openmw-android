@@ -37,31 +37,31 @@ object Constants {
     // e.g. /sdcard/omw
     var USER_FILE_STORAGE = ""
 
-    // e.g. /data/data/com.libopenmw.openmw/files/config/settings-default.cfg
+    // e.g. /data/data/is.xyz.omw/files/config/settings-default.cfg
     var SETTINGS_DEFAULT_CFG = ""
 
-    // e.g. /data/data/com.libopenmw.openmw/files/config/openmw.cfg
+    // e.g. /data/data/is.xyz.omw/files/config/openmw.cfg
     var OPENMW_CFG = ""
 
-    // e.g. /data/data/com.libopenmw.openmw/files/config/openmw.base.cfg
+    // e.g. /data/data/is.xyz.omw/files/config/openmw.base.cfg
     var OPENMW_BASE_CFG = ""
 
-    // e.g. /data/data/com.libopenmw.openmw/files/config/openmw.fallback.cfg
+    // e.g. /data/data/is.xyz.omw/files/config/openmw.fallback.cfg
     var OPENMW_FALLBACK_CFG = ""
 
-    // e.g. /data/data/com.libopenmw.openmw/files/resources
+    // e.g. /data/data/is.xyz.omw/files/resources
     var RESOURCES = ""
 
-    // e.g. /data/data/com.libopenmw.openmw/files/config
+    // e.g. /data/data/is.xyz.omw/files/config
     var GLOBAL_CONFIG = ""
 
-    // e.g. /sdcard/Android/data/com.libopenmw.openmw/config
+    // e.g. /sdcard/omw/config
     var USER_CONFIG = ""
 
-    // e.g. /sdcard/Android/data/com.libopenmw.openmw/config/openmw.cfg
+    // e.g. /sdcard/omw/config/openmw.cfg
     var USER_OPENMW_CFG = ""
 
     // Contains app version code for currently deployed resources; redeployed on mismatch
-    // e.g. /sdcard/Android/data/com.libopenmw.openmw/files/stamp
+    // e.g. /data/data/is.xyz.omw/files/stamp
     var VERSION_STAMP = ""
 }
