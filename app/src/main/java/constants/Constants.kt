@@ -20,9 +20,6 @@
 
 package constants
 
-import android.os.Environment
-import com.libopenmw.openmw.BuildConfig
-
 object Constants {
     val APP_PREFERENCES = "settings"
     val HIDE_CONTROLS = "pref_hide_controls"
@@ -37,9 +34,8 @@ object Constants {
     // $base/openmw - default settings, ok to overwrite
     // $base/config - user settings
 
-    // TODO: this should be omw-nightly for nightly builds
     // e.g. /sdcard/omw
-    val USER_FILE_STORAGE = Environment.getExternalStorageDirectory().toString() + "/omw/"
+    var USER_FILE_STORAGE = ""
 
     // e.g. /data/data/com.libopenmw.openmw/files/config/settings-default.cfg
     var SETTINGS_DEFAULT_CFG = ""
@@ -60,10 +56,10 @@ object Constants {
     var GLOBAL_CONFIG = ""
 
     // e.g. /sdcard/Android/data/com.libopenmw.openmw/config
-    val USER_CONFIG = "$USER_FILE_STORAGE/config"
+    var USER_CONFIG = ""
 
     // e.g. /sdcard/Android/data/com.libopenmw.openmw/config/openmw.cfg
-    val USER_OPENMW_CFG = "$USER_CONFIG/openmw.cfg"
+    var USER_OPENMW_CFG = ""
 
     // Contains app version code for currently deployed resources; redeployed on mismatch
     // e.g. /sdcard/Android/data/com.libopenmw.openmw/files/stamp
