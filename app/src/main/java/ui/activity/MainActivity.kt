@@ -73,6 +73,8 @@ class MainActivity : AppCompatActivity() {
         fragmentManager.beginTransaction()
             .replace(R.id.content_frame, FragmentSettings()).commit()
 
+        setSupportActionBar(findViewById(R.id.main_toolbar))
+
         val fab = findViewById<FloatingActionButton>(R.id.fab)
         fab.setOnClickListener { checkStartGame() }
 
