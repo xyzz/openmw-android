@@ -58,6 +58,20 @@ android {
         }
     }
 
+    flavorDimensions "version"
+
+    productFlavors {
+        mainline {
+            dimension "version"
+        }
+
+        nightly {
+            dimension "version"
+            applicationId "is.xyz.omw_nightly"
+            versionNameSuffix "-nightly"
+        }
+    }
+
     applicationVariants.all { variant ->
         variant.outputs.all {
             outputFileName = "omw_${variant.buildType.name}_${defaultConfig.versionName}.apk"

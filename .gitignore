@@ -10,4 +10,5 @@ assets
 app/wrap
 fabric.properties
 captures
-app/release
+*.apk
+output.json
