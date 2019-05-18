@@ -40,6 +40,7 @@ const val VIRTUAL_SCREEN_HEIGHT = 768
 const val CONTROL_DEFAULT_SIZE = 70
 const val JOYSTICK_SIZE = 230
 const val JOYSTICK_OFFSET = 110
+const val TOP_BAR_SPACING = 90
 
 /**
  * Class to hold on-screen control elements such as buttons or joysticks.
@@ -54,8 +55,8 @@ const val JOYSTICK_OFFSET = 110
 open class OscElement(
         val uniqueId: String,
         var visibility: OscVisibility,
-        private val defaultX: Int,
-        private val defaultY: Int,
+        val defaultX: Int,
+        val defaultY: Int,
         private val defaultSize: Int = CONTROL_DEFAULT_SIZE,
         private val defaultOpacity: Float = 0.4f
 ) {
@@ -335,32 +336,37 @@ class Osc {
     private var topVisible = true //< The controls located at the top hidden behind the hamburger toggle
     private var visibilityState = 0
     private val btnMouse = OscCustomButton("mouse", OscVisibility.NULL,
-        R.drawable.mouse, 660, 0) { toggleMouse() }
+        R.drawable.mouse, TOP_BAR_SPACING * 6, 0) { toggleMouse() }
     private val btnTopToggle = OscCustomButton("toggle", OscVisibility.NULL,
         R.drawable.toggle, 0, 0) { toggleTopControls() }
 
+    private val joystickLeft = OscJoystickLeft("joystickLeft", OscVisibility.NORMAL,
+        JOYSTICK_OFFSET, 400, JOYSTICK_SIZE, 0)
+    private val joystickRight = OscJoystickRight("joystickRight", OscVisibility.ESSENTIAL,
+        VIRTUAL_SCREEN_WIDTH - JOYSTICK_SIZE - JOYSTICK_OFFSET,
+        400, JOYSTICK_SIZE, 1)
+
     private var elements = arrayListOf(
-        OscJoystickLeft("joystickLeft", OscVisibility.NORMAL,
-            JOYSTICK_OFFSET, 400, JOYSTICK_SIZE, 0),
-        OscJoystickRight("joystickRight", OscVisibility.ESSENTIAL,
-            VIRTUAL_SCREEN_WIDTH - JOYSTICK_SIZE - JOYSTICK_OFFSET,
-            400, JOYSTICK_SIZE, 1),
+        joystickLeft,
+        joystickRight,
 
         btnTopToggle,
         OscImageButton("inventory", OscVisibility.NULL,
-            R.drawable.inventory, 950, 95, 3, true),
+            R.drawable.inventory, 940, 95, 3, true),
         OscImageButton("pause", OscVisibility.ESSENTIAL,
-            R.drawable.pause, 950, 0, KeyEvent.KEYCODE_ESCAPE),
-        OscImageButton("weapon", OscVisibility.NORMAL,
-            R.drawable.toggle_weapon, 868, 539, KeyEvent.KEYCODE_F),
-        OscImageButton("jump", OscVisibility.NORMAL,
-            R.drawable.jump, 650, 630, KeyEvent.KEYCODE_E),
-        OscAttackButton("fire", OscVisibility.ESSENTIAL,
-            R.drawable.attack, 740, 315, 1, 90),
+            R.drawable.pause, 940, 0, KeyEvent.KEYCODE_ESCAPE),
         OscImageButton("magic", OscVisibility.NORMAL,
-            R.drawable.toggle_magic, 815, 642, KeyEvent.KEYCODE_R),
+            R.drawable.toggle_magic, 940, 450, KeyEvent.KEYCODE_R),
+        OscImageButton("weapon", OscVisibility.NORMAL,
+            R.drawable.toggle_weapon, 940, 560, KeyEvent.KEYCODE_F),
+        OscAttackButton("fire", OscVisibility.ESSENTIAL,
+            R.drawable.attack, 800, 315, 1, 120),
         OscImageButton("use", OscVisibility.NORMAL,
-            R.drawable.use, 300, 630, KeyEvent.KEYCODE_SPACE)
+            R.drawable.use, joystickLeft.defaultX + JOYSTICK_SIZE/2 + 105, 630,
+            KeyEvent.KEYCODE_SPACE),
+        OscImageButton("jump", OscVisibility.NORMAL, R.drawable.jump,
+            joystickRight.defaultX + JOYSTICK_SIZE/2 - 105 - CONTROL_DEFAULT_SIZE,
+            630, KeyEvent.KEYCODE_E)
     )
 
     private val topButtons: ArrayList<OscElement>
@@ -390,18 +396,18 @@ class Osc {
 
         topButtons = arrayListOf(
             OscImageButton("changePerson", OscVisibility.NORMAL,
-                R.drawable.third_person, 212, 0, KeyEvent.KEYCODE_TAB),
+                R.drawable.third_person, TOP_BAR_SPACING * 1, 0, KeyEvent.KEYCODE_TAB),
             OscImageButton("quickSave", OscVisibility.NORMAL,
-                R.drawable.save, 860, 0, 135),
+                R.drawable.save, TOP_BAR_SPACING * 2, 0, 135),
             OscImageButton("diary", OscVisibility.ESSENTIAL,
-                R.drawable.journal, 414, 0, KeyEvent.KEYCODE_J),
+                R.drawable.journal, TOP_BAR_SPACING * 3, 0, KeyEvent.KEYCODE_J),
             OscImageButton("wait", OscVisibility.NORMAL,
-                R.drawable.wait, 274, 0, KeyEvent.KEYCODE_T),
-            OscImageButton("crouch", OscVisibility.NORMAL,
-                R.drawable.sneak, 940, 670, 113),
+                R.drawable.wait, TOP_BAR_SPACING * 4, 0, KeyEvent.KEYCODE_T),
             OscCustomButton("keyboard", OscVisibility.NULL,
-                R.drawable.keyboard, 586, 0) { toggleKeyboard() },
-            btnMouse
+                R.drawable.keyboard, TOP_BAR_SPACING * 5, 0) { toggleKeyboard() },
+            btnMouse,
+            OscImageButton("crouch", OscVisibility.NORMAL,
+                R.drawable.sneak, TOP_BAR_SPACING * 7, 0, 113)
         )
 
         elements.addAll(fnButtons)
