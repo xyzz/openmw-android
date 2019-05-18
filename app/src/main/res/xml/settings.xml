@@ -54,6 +54,14 @@
             android:key="pref_hide_controls"
             android:title="@string/pref_hide_controls" />
 
+        <CheckBoxPreference
+            android:key="pref_show_qp"
+            android:title="@string/pref_show_qp" />
+
+        <CheckBoxPreference
+            android:key="pref_show_fn"
+            android:title="@string/pref_show_fn" />
+
         <EditTextPreference
             android:key="pref_customResolution"
             android:title="@string/pref_customResolution"
