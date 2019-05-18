@@ -390,7 +390,7 @@ class Osc {
         OscKeyboardButton("keyboard", OscVisibility.NULL,
             R.drawable.keyboard, 586, 0, this),
         btnMouse,
-        OscImageButton("use", OscVisibility.ESSENTIAL,
+        OscImageButton("use", OscVisibility.NORMAL,
             R.drawable.use, 950, 436, KeyEvent.KEYCODE_SPACE)
     )
 
