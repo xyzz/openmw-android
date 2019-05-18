@@ -4,6 +4,30 @@ Font Awesome Free
 
 This software includes graphical resources based on Font Awesome icons. Font Awesome is licensed under the Creative Commons Attribution 4.0 International license. See https://fontawesome.com/license/free for more details.
 
+journal.png: https://fontawesome.com/icons/book-open?style=solid
+jump.png: https://fontawesome.com/icons/reply?style=solid
+keyboard.png: https://fontawesome.com/icons/keyboard?style=solid
+pause.png: https://fontawesome.com/icons/pause?style=solid
+save.png: https://fontawesome.com/icons/file-download?style=solid
+sneak.png: https://fontawesome.com/icons/eye-slash?style=solid 
+third_person.png: https://fontawesome.com/icons/video?style=solid
+toggle.png: https://fontawesome.com/icons/bars?style=solid
+toggle_magic.png: https://fontawesome.com/icons/bolt?style=solid
+use.png: https://fontawesome.com/icons/hand-point-up?style=solid
+wait.png: https://fontawesome.com/icons/hourglass?style=solid
+mouse.png - https://github.com/FortAwesome/Font-Awesome/issues/2376#issuecomment-215401368 - Based on an icon by t1k3 https://github.com/t1k3
+
+
+============
+Noun Project
+============
+
+This software includes graphical resources based on Noun Project icons.
+
+inventory.png: https://thenounproject.com/term/backpack/2551/ - CC-0 - By Rémy Médard, FR
+weapon.png: https://thenounproject.com/term/sword/1161/ - CC-BY-3 - By Christopher T. Howlett, CA
+attack.png: Based on the weapon.png by Christopher T. Howlett and modified by treio
+
 
 =============
 libjpeg-turbo
