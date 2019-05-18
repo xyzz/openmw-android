@@ -22,9 +22,7 @@ package ui.controls
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
-import android.opengl.Visibility
 import android.preference.PreferenceManager
-import android.util.TypedValue
 import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.View
@@ -39,6 +37,9 @@ import ui.activity.MouseMode
 
 const val VIRTUAL_SCREEN_WIDTH = 1024
 const val VIRTUAL_SCREEN_HEIGHT = 768
+const val CONTROL_DEFAULT_SIZE = 70
+const val JOYSTICK_SIZE = 230
+const val JOYSTICK_OFFSET = 110
 
 /**
  * Class to hold on-screen control elements such as buttons or joysticks.
@@ -55,7 +56,7 @@ open class OscElement(
         var visibility: OscVisibility,
         private val defaultX: Int,
         private val defaultY: Int,
-        private val defaultSize: Int = 50,
+        private val defaultSize: Int = CONTROL_DEFAULT_SIZE,
         private val defaultOpacity: Float = 0.4f
 ) {
 
@@ -117,14 +118,13 @@ open class OscElement(
     fun updateView() {
         val v = view ?: return
 
-        // Convert display pixels units into real pixels
-        val px: Float = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, size.toFloat(), v.context.resources.displayMetrics)
-        val params = RelativeLayout.LayoutParams(px.toInt(), px.toInt())
-
         val realScreenWidth = (v.parent as View).width
         val realScreenHeight = (v.parent as View).height
         val realX = x * realScreenWidth / VIRTUAL_SCREEN_WIDTH
         val realY = y * realScreenHeight / VIRTUAL_SCREEN_HEIGHT
+
+        val screenSize = (1.0 * size * realScreenWidth / VIRTUAL_SCREEN_WIDTH).toInt()
+        val params = RelativeLayout.LayoutParams(screenSize, screenSize)
 
         params.leftMargin = realX
         params.topMargin = realY
@@ -182,7 +182,7 @@ class OscImageButton(
         defaultY: Int,
         private val keyCode: Int,
         private val needMouse: Boolean = false,
-        defaultSize: Int = 50
+        defaultSize: Int = CONTROL_DEFAULT_SIZE
 ) : OscElement(uniqueId, visibility, defaultX, defaultY, defaultSize) {
 
     override fun makeView(ctx: Context) {
@@ -341,9 +341,10 @@ class Osc {
 
     private var elements = arrayListOf(
         OscJoystickLeft("joystickLeft", OscVisibility.NORMAL,
-            75, 400, 170, 0),
+            JOYSTICK_OFFSET, 400, JOYSTICK_SIZE, 0),
         OscJoystickRight("joystickRight", OscVisibility.ESSENTIAL,
-            650, 400, 170, 1),
+            VIRTUAL_SCREEN_WIDTH - JOYSTICK_SIZE - JOYSTICK_OFFSET,
+            400, JOYSTICK_SIZE, 1),
 
         btnTopToggle,
         OscImageButton("inventory", OscVisibility.NULL,
@@ -353,13 +354,13 @@ class Osc {
         OscImageButton("weapon", OscVisibility.NORMAL,
             R.drawable.toggle_weapon, 868, 539, KeyEvent.KEYCODE_F),
         OscImageButton("jump", OscVisibility.NORMAL,
-            R.drawable.jump, 936, 300, KeyEvent.KEYCODE_E),
+            R.drawable.jump, 650, 630, KeyEvent.KEYCODE_E),
         OscAttackButton("fire", OscVisibility.ESSENTIAL,
             R.drawable.attack, 740, 315, 1, 90),
         OscImageButton("magic", OscVisibility.NORMAL,
             R.drawable.toggle_magic, 815, 642, KeyEvent.KEYCODE_R),
         OscImageButton("use", OscVisibility.NORMAL,
-            R.drawable.use, 950, 436, KeyEvent.KEYCODE_SPACE)
+            R.drawable.use, 300, 630, KeyEvent.KEYCODE_SPACE)
     )
 
     private val topButtons: ArrayList<OscElement>
