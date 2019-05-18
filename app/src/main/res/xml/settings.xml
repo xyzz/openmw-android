@@ -55,6 +55,10 @@
             android:title="@string/pref_hide_controls" />
 
         <CheckBoxPreference
+            android:key="pref_always_show_top_bar"
+            android:title="@string/pref_always_show_top_bar" />
+
+        <CheckBoxPreference
             android:key="pref_show_qp"
             android:title="@string/pref_show_qp" />
 
