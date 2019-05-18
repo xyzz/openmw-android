@@ -1,5 +1,7 @@
 # OpenMW for Android
 
+[Google Play](https://play.google.com/store/apps/details?id=is.xyz.omw) | [Google Play (Nightly)](https://play.google.com/store/apps/details?id=is.xyz.omw_nightly) | [FAQ & Info](https://omw.xyz.is/)
+
 ## Building
 
 There are two steps for building OpenMW for Android. The first step is building C/C++ libraries. The second step is building the Java launcher.
