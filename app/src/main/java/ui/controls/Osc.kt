@@ -31,6 +31,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import com.libopenmw.openmw.R
+import org.jetbrains.anko.defaultSharedPreferences
 import org.libsdl.app.SDLActivity
 import ui.activity.GameActivity
 import ui.activity.MouseMode
@@ -394,26 +395,28 @@ class Osc {
             R.drawable.use, 950, 436, KeyEvent.KEYCODE_SPACE)
     )
 
-    init {
-        val fnButtons = ArrayList<OscHiddenButton>()
+    private val fnButtons = arrayListOf<OscHiddenButton>()
+    private val quickButtons = arrayListOf<OscHiddenButton>()
+    private val fn: OscHiddenToggle
+    private val qp: OscHiddenToggle
 
+    init {
         // Fn buttons: F1, F3, F4, F10, F11 are the only ones we care about
         arrayOf(1, 3, 4, 10, 11).forEachIndexed{ i, el ->
             val code = 130 + el
             fnButtons.add(OscHiddenButton("f$el", OscVisibility.NULL,
                 70, 70 * (i + 1), "F$el", code))
         }
-        val fn = OscHiddenToggle("fn", OscVisibility.NULL,
+        fn = OscHiddenToggle("fn", OscVisibility.NULL,
             70, 0, "FN", fnButtons)
 
         // Quick buttons: 0 to 9
-        val quickButtons = ArrayList<OscHiddenButton>()
         for (i in 0..9) {
             val code = KeyEvent.KEYCODE_0 + i
             quickButtons.add(OscHiddenButton("qp$i", OscVisibility.NULL,
                 0, 70 * (i + 1), "$i", code))
         }
-        val qp = OscHiddenToggle("qp", OscVisibility.NULL,
+        qp = OscHiddenToggle("qp", OscVisibility.NULL,
             0, 0, "QP", quickButtons)
 
         elements.addAll(fnButtons)
@@ -423,7 +426,16 @@ class Osc {
     }
 
     fun placeElements(target: RelativeLayout) {
+        val prefs = target.context.defaultSharedPreferences
+        val showQp = prefs.getBoolean("pref_show_qp", false)
+        val showFn = prefs.getBoolean("pref_show_fn", false)
+
         for (element in elements) {
+            if (!showQp && (element == qp || quickButtons.contains(element)))
+                continue
+            if (!showFn && (element == fn || fnButtons.contains(element)))
+                continue
+
             element.place(target)
             element.loadPrefs(target.context)
         }
