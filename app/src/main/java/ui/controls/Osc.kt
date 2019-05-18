@@ -19,6 +19,7 @@
 
 package ui.controls
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.opengl.Visibility
@@ -197,49 +198,24 @@ class OscImageButton(
 
 }
 
-class OscKeyboardButton(
+class OscCustomButton(
     uniqueId: String,
     visibility: OscVisibility,
     private val imageSrc: Int,
     defaultX: Int,
     defaultY: Int,
-    private val osc: Osc
+    private val handler: () -> Unit
 ) : OscElement(uniqueId, visibility, defaultX, defaultY) {
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun makeView(ctx: Context) {
         val v = ImageView(ctx)
         v.setImageResource(imageSrc)
-        v.setOnTouchListener(View.OnTouchListener { _, motionEvent ->
-            if (motionEvent.action == MotionEvent.ACTION_UP) {
-                osc.toggleKeyboard()
-            }
-            return@OnTouchListener true
-        })
-        v.tag = this
-
-        view = v
-    }
-
-}
-
-class OscMouseButton(
-    uniqueId: String,
-    visibility: OscVisibility,
-    private val imageSrc: Int,
-    defaultX: Int,
-    defaultY: Int,
-    private val osc: Osc
-) : OscElement(uniqueId, visibility, defaultX, defaultY) {
-
-    override fun makeView(ctx: Context) {
-        val v = ImageView(ctx)
-        v.setImageResource(imageSrc)
-        v.setOnTouchListener(View.OnTouchListener { _, motionEvent ->
-            if (motionEvent.action == MotionEvent.ACTION_UP) {
-                osc.toggleMouse()
-            }
-            return@OnTouchListener true
-        })
+        v.setOnTouchListener { _, motionEvent ->
+            if (motionEvent.action == MotionEvent.ACTION_UP)
+                handler()
+            true
+        }
         v.tag = this
 
         view = v
@@ -357,8 +333,8 @@ class Osc {
     var keyboardVisible = false //< Mode where only keyboard is visible
     var mouseVisible = false //< Mode where only mouse-switch icon is visible
     private var visibilityState = 0
-    private val btnMouse = OscMouseButton("mouse", OscVisibility.NULL,
-        R.drawable.mouse, 660, 0, this)
+    private val btnMouse = OscCustomButton("mouse", OscVisibility.NULL,
+        R.drawable.mouse, 660, 0) { toggleMouse() }
 
     private var elements = arrayListOf(
         OscJoystickLeft("joystickLeft", OscVisibility.NORMAL,
@@ -388,8 +364,8 @@ class Osc {
             R.drawable.sneak, 940, 670, 113),
         OscImageButton("diary", OscVisibility.ESSENTIAL,
             R.drawable.journal, 414, 0, KeyEvent.KEYCODE_J),
-        OscKeyboardButton("keyboard", OscVisibility.NULL,
-            R.drawable.keyboard, 586, 0, this),
+        OscCustomButton("keyboard", OscVisibility.NULL,
+            R.drawable.keyboard, 586, 0) { toggleKeyboard() },
         btnMouse,
         OscImageButton("use", OscVisibility.NORMAL,
             R.drawable.use, 950, 436, KeyEvent.KEYCODE_SPACE)
