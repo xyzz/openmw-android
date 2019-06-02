@@ -37,16 +37,16 @@ set(MYGUI_VERSION 3.2.2)
 set(MYGUI_HASH SHA256=0a28d7ec8a47993cb68deb48b36331e28f12dd92580b709eaef21d599b67a78f)
 
 # https://github.com/ptitSeb/gl4es
-set(GL4ES_VERSION 5ad06f591db5324dff5736c625184db90cd01b49)
-set(GL4ES_HASH SHA256=c308fc4f6f0f3f8ea9b002fceef038f7049b4ad9ad3bcad0aa603146b771eb28)
+set(GL4ES_VERSION 152d17667a0d0521361faf0294f41263db6c56f5)
+set(GL4ES_HASH SHA256=bed859c21731467e7b6363667778615ebe9accd1c84f8279e0287e33bcd4be08)
 
 # https://github.com/openscenegraph/OpenSceneGraph/releases
 set(OSG_VERSION 3.6.2)
 set(OSG_HASH SHA256=762c6601f32a761c7a0556766097558f453f23b983dd75bcf90f922e2d077a34)
 
 # https://github.com/OpenMW/openmw/commits/master
-set(OPENMW_VERSION c66ddea4294ed2244799f65718b400dfd346395e)
-set(OPENMW_HASH SHA256=57007b6fd06479fde3eae98e5f1435ad09a7e39e98a9f5cd4738bc47cb6fac0c)
+set(OPENMW_VERSION 2436652181b339f237ef62395c24ad3d0e3b7c8e)
+set(OPENMW_HASH SHA256=253856d492ff484dab422e278ff6994f12a583ab88636757fd2ea91be2023e9c)
 
 # End of configurable options
 
@@ -61,9 +61,8 @@ set(prefix ${CMAKE_INSTALL_PREFIX})
 set(host ${ndk_triplet})
 set(android_platform android-${ANDROID_API})
 set(app_abi ${ABI})
-set(osg_plugins_dir ${prefix}/osg/lib/osgPlugins-${OSG_VERSION})
 
-set(COMMON_CMAKE_ARGS_NO_PREFIX
+set(COMMON_CMAKE_ARGS
 	-DCMAKE_TOOLCHAIN_FILE=${CMAKE_SOURCE_DIR}/toolchain/ndk/build/cmake/android.toolchain.cmake
 	-DANDROID_ABI=${app_abi}
 	-DANDROID_PLATFORM=${android_platform}
@@ -74,10 +73,6 @@ set(COMMON_CMAKE_ARGS_NO_PREFIX
 	-DCMAKE_SHARED_LINKER_FLAGS=$ENV{LDFLAGS}
 	-DCMAKE_BUILD_TYPE=${BUILD_TYPE}
 	-DCMAKE_DEBUG_POSTFIX=
-)
-
-set(COMMON_CMAKE_ARGS
-	${COMMON_CMAKE_ARGS_NO_PREFIX}
 	-DCMAKE_INSTALL_PREFIX=${prefix}
 	-DCMAKE_FIND_ROOT_PATH=${prefix}
 )
@@ -371,6 +366,7 @@ set(OSG_COMMON
 )
 
 set(OSG_PATCH
+	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/osg/remove-lib-prefix-from-plugins.patch &&
 	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/osg/0001-Replace-Atomic-impl-with-std-atomic.patch &&
 	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/osg/0002-BufferObject-make-numClients-atomic.patch &&
 	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/osg/0003-Array-make-possible-to-use-thread-safely-with-setTex.patch &&
@@ -388,8 +384,7 @@ ExternalProject_Add(osg
 	PATCH_COMMAND ${OSG_PATCH}
 
 	CONFIGURE_COMMAND ${wrapper_command} cmake <SOURCE_DIR>
-	${COMMON_CMAKE_ARGS_NO_PREFIX}
-	-DCMAKE_INSTALL_PREFIX=${prefix}/osg
+	${COMMON_CMAKE_ARGS}
 	${OSG_COMMON}
 
 	BUILD_COMMAND ${wrapper_command} $(MAKE)
@@ -443,15 +438,6 @@ ExternalProject_Add(openmw
 	CONFIGURE_COMMAND ${wrapper_command} cmake <SOURCE_DIR>
 	${COMMON_CMAKE_ARGS}
 	${OPENMW_COMMON}
-	-DOSG_PLUGINS_DIR=${osg_plugins_dir}
-	-DOSGDB_BMP_LIBRARY=${osg_plugins_dir}/libosgdb_bmp.a
-	-DOSGDB_DDS_LIBRARY=${osg_plugins_dir}/libosgdb_dds.a
-	-DOSGDB_JPEG_LIBRARY=${osg_plugins_dir}/libosgdb_jpeg.a
-	-DOSGDB_OSG_LIBRARY=${osg_plugins_dir}/libosgdb_osg.a
-	-DOSGDB_PNG_LIBRARY=${osg_plugins_dir}/libosgdb_png.a
-	-DOSGDB_TGA_LIBRARY=${osg_plugins_dir}/libosgdb_tga.a
-	-DOSGDB_SERIALIZERS_OSG_LIBRARY=${osg_plugins_dir}/libosgdb_serializers_osg.a
-	-DOPENMW_DEPENDENCIES_DIR=${prefix}/osg
 
 	BUILD_COMMAND $(MAKE)
 
