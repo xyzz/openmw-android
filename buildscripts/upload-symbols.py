@@ -25,11 +25,12 @@ def find_version_code():
 
 
 def find_app_id():
-    with open("../app/build.gradle", "r") as fin:
-        for line in fin.readlines():
-            line = line.strip()
-            if line.startswith("applicationId"):
-                return line.split()[1].replace('"', "")
+    user_input = ""
+    while user_input not in ["y", "n"]:
+        user_input = input("Nightly? (y/n) ")
+    if user_input == "y":
+        return "is.xyz.omw_nightly"
+    return "is.xyz.omw"
 
 
 def find_api_key():
@@ -109,8 +110,7 @@ def main():
     libraries = []
     for abi in os.listdir("symbols"):
         for so in os.listdir(os.path.join("symbols", abi)):
-            if so != "libopenmw.so":
-                libraries.append((abi, so))
+            libraries.append((abi, so))
 
     with Pool(16) as p:
         p.map(do_symbol_file, libraries)
