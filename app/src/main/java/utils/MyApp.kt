@@ -26,7 +26,8 @@ class MyApp : Application() {
         Constants.VERSION_STAMP = File(filesDir, "stamp").absolutePath
 
         // Enable bugsnag only when API key is provided and we have user consent
-        if (BugsnagApiKey.API_KEY.isNotEmpty()) {
+        // Also don't enable bugsnag in debug builds
+        if (BugsnagApiKey.API_KEY.isNotEmpty() && !BuildConfig.DEBUG) {
             haveBugsnagApiKey = true
 
             val prefs = PreferenceManager.getDefaultSharedPreferences(this)
