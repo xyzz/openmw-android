@@ -1,0 +1,73 @@
+From ffe8bbd2ddd39de83ce87cfaf7e04a439991bec8 Mon Sep 17 00:00:00 2001
+From: bzzt <bzzt@bzzt.bzzt>
+Date: Wed, 29 May 2019 13:37:00 +0000
+Subject: [PATCH] racingcrashfix #4766
+
+---
+ components/nifosg/nifloader.cpp     | 12 ++++++++++--
+ components/shader/shadervisitor.cpp |  5 ++++-
+ 2 files changed, 14 insertions(+), 3 deletions(-)
+
+diff --git a/components/nifosg/nifloader.cpp b/components/nifosg/nifloader.cpp
+index d6a459b1b..f5f7c3704 100644
+--- a/components/nifosg/nifloader.cpp
++++ b/components/nifosg/nifloader.cpp
+@@ -400,7 +400,10 @@ namespace NifOsg
+                 return;
+             }
+ 
+-            osg::ref_ptr<osg::Texture2D> texture2d (new osg::Texture2D(handleSourceTexture(textureEffect->texture.getPtr(), imageManager)));
++            osg::ref_ptr<osg::Image> image (handleSourceTexture(textureEffect->texture.getPtr(), imageManager));
++            osg::ref_ptr<osg::Texture2D> texture2d (new osg::Texture2D(image));
++            if (image)
++                texture2d->setTextureSize(image->s(), image->t());
+             texture2d->setName("envMap");
+             unsigned int clamp = static_cast<unsigned int>(textureEffect->clamp);
+             int wrapT = (clamp) & 0x1;
+@@ -770,7 +773,10 @@ namespace NifOsg
+                             wrapT = inherit->getWrap(osg::Texture2D::WRAP_T);
+                         }
+ 
+-                        osg::ref_ptr<osg::Texture2D> texture (new osg::Texture2D(handleSourceTexture(st.getPtr(), imageManager)));
++                        osg::ref_ptr<osg::Image> image (handleSourceTexture(st.getPtr(), imageManager));
++                        osg::ref_ptr<osg::Texture2D> texture (new osg::Texture2D(image));
++                        if (image)
++                            texture->setTextureSize(image->s(), image->t());
+                         texture->setWrap(osg::Texture::WRAP_S, wrapS);
+                         texture->setWrap(osg::Texture::WRAP_T, wrapT);
+                         textures.push_back(texture);
+@@ -1337,6 +1343,8 @@ namespace NifOsg
+                         const Nif::NiSourceTexture *st = tex.texture.getPtr();
+                         osg::ref_ptr<osg::Image> image = handleSourceTexture(st, imageManager);
+                         texture2d = new osg::Texture2D(image);
++                        if (image)
++                            texture2d->setTextureSize(image->s(), image->t());
+                     }
+                     else
+                         texture2d = new osg::Texture2D;
+diff --git a/components/shader/shadervisitor.cpp b/components/shader/shadervisitor.cpp
+index 63c676118..e40cc255b 100644
+--- a/components/shader/shadervisitor.cpp
++++ b/components/shader/shadervisitor.cpp
+@@ -163,6 +163,7 @@ namespace Shader
+                 if (image)
+                 {
+                     osg::ref_ptr<osg::Texture2D> normalMapTex (new osg::Texture2D(image));
++                    normalMapTex->setTextureSize(image->s(), image->t());
+                     normalMapTex->setWrap(osg::Texture::WRAP_S, diffuseMap->getWrap(osg::Texture::WRAP_S));
+                     normalMapTex->setWrap(osg::Texture::WRAP_T, diffuseMap->getWrap(osg::Texture::WRAP_T));
+                     normalMapTex->setFilter(osg::Texture::MIN_FILTER, diffuseMap->getFilter(osg::Texture::MIN_FILTER));
+@@ -186,7 +187,9 @@ namespace Shader
+                 boost::replace_last(specularMapFileName, ".", mSpecularMapPattern + ".");
+                 if (mImageManager.getVFS()->exists(specularMapFileName))
+                 {
+-                    osg::ref_ptr<osg::Texture2D> specularMapTex (new osg::Texture2D(mImageManager.getImage(specularMapFileName)));
++                    osg::ref_ptr<osg::Image> image (mImageManager.getImage(specularMapFileName));
++                    osg::ref_ptr<osg::Texture2D> specularMapTex (new osg::Texture2D(image));
++                    specularMapTex->setTextureSize(image->s(), image->t());
+                     specularMapTex->setWrap(osg::Texture::WRAP_S, diffuseMap->getWrap(osg::Texture::WRAP_S));
+                     specularMapTex->setWrap(osg::Texture::WRAP_T, diffuseMap->getWrap(osg::Texture::WRAP_T));
+                     specularMapTex->setFilter(osg::Texture::MIN_FILTER, diffuseMap->getFilter(osg::Texture::MIN_FILTER));
+-- 
+2.21.0
+
