@@ -6,6 +6,7 @@ import constants.Constants
 import java.io.File
 import com.bugsnag.android.Bugsnag
 import com.bugsnag.android.Configuration
+import com.libopenmw.openmw.BuildConfig
 
 class MyApp : Application() {
 
