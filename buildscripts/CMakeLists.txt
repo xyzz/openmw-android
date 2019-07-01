@@ -61,9 +61,8 @@ set(prefix ${CMAKE_INSTALL_PREFIX})
 set(host ${ndk_triplet})
 set(android_platform android-${ANDROID_API})
 set(app_abi ${ABI})
-set(osg_plugins_dir ${prefix}/osg/lib/osgPlugins-${OSG_VERSION})
 
-set(COMMON_CMAKE_ARGS_NO_PREFIX
+set(COMMON_CMAKE_ARGS
 	-DCMAKE_TOOLCHAIN_FILE=${CMAKE_SOURCE_DIR}/toolchain/ndk/build/cmake/android.toolchain.cmake
 	-DANDROID_ABI=${app_abi}
 	-DANDROID_PLATFORM=${android_platform}
@@ -74,10 +73,6 @@ set(COMMON_CMAKE_ARGS_NO_PREFIX
 	-DCMAKE_SHARED_LINKER_FLAGS=$ENV{LDFLAGS}
 	-DCMAKE_BUILD_TYPE=${BUILD_TYPE}
 	-DCMAKE_DEBUG_POSTFIX=
-)
-
-set(COMMON_CMAKE_ARGS
-	${COMMON_CMAKE_ARGS_NO_PREFIX}
 	-DCMAKE_INSTALL_PREFIX=${prefix}
 	-DCMAKE_FIND_ROOT_PATH=${prefix}
 )
@@ -371,6 +366,7 @@ set(OSG_COMMON
 )
 
 set(OSG_PATCH
+	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/osg/remove-lib-prefix-from-plugins.patch &&
 	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/osg/0001-Replace-Atomic-impl-with-std-atomic.patch &&
 	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/osg/0002-BufferObject-make-numClients-atomic.patch &&
 	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/osg/0003-Array-make-possible-to-use-thread-safely-with-setTex.patch &&
@@ -388,8 +384,7 @@ ExternalProject_Add(osg
 	PATCH_COMMAND ${OSG_PATCH}
 
 	CONFIGURE_COMMAND ${wrapper_command} cmake <SOURCE_DIR>
-	${COMMON_CMAKE_ARGS_NO_PREFIX}
-	-DCMAKE_INSTALL_PREFIX=${prefix}/osg
+	${COMMON_CMAKE_ARGS}
 	${OSG_COMMON}
 
 	BUILD_COMMAND ${wrapper_command} $(MAKE)
@@ -443,15 +438,6 @@ ExternalProject_Add(openmw
 	CONFIGURE_COMMAND ${wrapper_command} cmake <SOURCE_DIR>
 	${COMMON_CMAKE_ARGS}
 	${OPENMW_COMMON}
-	-DOSG_PLUGINS_DIR=${osg_plugins_dir}
-	-DOSGDB_BMP_LIBRARY=${osg_plugins_dir}/libosgdb_bmp.a
-	-DOSGDB_DDS_LIBRARY=${osg_plugins_dir}/libosgdb_dds.a
-	-DOSGDB_JPEG_LIBRARY=${osg_plugins_dir}/libosgdb_jpeg.a
-	-DOSGDB_OSG_LIBRARY=${osg_plugins_dir}/libosgdb_osg.a
-	-DOSGDB_PNG_LIBRARY=${osg_plugins_dir}/libosgdb_png.a
-	-DOSGDB_TGA_LIBRARY=${osg_plugins_dir}/libosgdb_tga.a
-	-DOSGDB_SERIALIZERS_OSG_LIBRARY=${osg_plugins_dir}/libosgdb_serializers_osg.a
-	-DOPENMW_DEPENDENCIES_DIR=${prefix}/osg
 
 	BUILD_COMMAND $(MAKE)
 
