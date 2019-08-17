@@ -45,8 +45,8 @@ set(OSG_VERSION 3.6.4)
 set(OSG_HASH SHA256=81394d1b484c631028b85d21c5535280c21bbd911cb058e8746c87e93e7b9d33)
 
 # https://github.com/OpenMW/openmw/commits/master
-set(OPENMW_VERSION 9dfee1dfe20918e56bfed34311556c4d889e1a6d)
-set(OPENMW_HASH SHA256=f93a5ebdba6ad8cf79c01e78a43dfce4955b41b93ce119b17d85ab4a78e4adf0)
+set(OPENMW_VERSION ee5b81470c9e9bc1240f43a218cd0f1fb8ef7b64)
+set(OPENMW_HASH SHA256=09856ab992c4de5f77f56e092dfa6066fb33cb8909fad072e0880fa167adc66c)
 
 # End of configurable options
 
@@ -411,7 +411,6 @@ set(OPENMW_COMMON
 )
 
 set(OPENMW_PATCH
-	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/119.patch &&
 	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/0001-loadingscreen-disable-for-now.patch &&
 	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/0003-globalmap-fix-race-vs-savegame-load.patch &&
 	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/0004-getUVBuffer-pre-set-array-binding-to-avoid-thread-ra.patch &&
