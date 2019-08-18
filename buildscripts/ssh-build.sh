@@ -34,8 +34,8 @@ append "tar xvf cmake-$CMAKE_VERSION.0-Linux-x86_64.tar.gz"
 append "cd /home/ubuntu/"
 append "export PATH=/home/ubuntu/cmake-$CMAKE_VERSION.0-Linux-x86_64/bin/:\$PATH"
 append "cd /mnt"
-append "git clone https://github.com/xyzz/android-port.git"
-append "cd android-port/buildscripts"
+append "git clone https://github.com/xyzz/openmw-android.git"
+append "cd openmw-android/buildscripts"
 append "time ./full-build.sh"
 append "./package-symbols.sh"
 
@@ -47,15 +47,15 @@ echo "==> Running the script"
 ssh -i $PEM ubuntu@$REMOTE "bash tmp_script.sh"
 
 echo "==> Retrieving the libraries"
-scp -r -i $PEM ubuntu@$REMOTE:/mnt/android-port/app/src/main/jniLibs ../app/src/main/
+scp -r -i $PEM ubuntu@$REMOTE:/mnt/openmw-android/app/src/main/jniLibs ../app/src/main/
 
 rm -rf ../app/src/main/assets/libopenmw/
 echo "==> Retrieving the resources"
-scp -r -i $PEM ubuntu@$REMOTE:/mnt/android-port/app/src/main/assets/libopenmw ../app/src/main/assets/
+scp -r -i $PEM ubuntu@$REMOTE:/mnt/openmw-android/app/src/main/assets/libopenmw ../app/src/main/assets/
 
 echo "==> Retrieving the symbols"
 rm -f symbols.7z
-scp -r -i $PEM ubuntu@$REMOTE:/mnt/android-port/buildscripts/symbols.7z .
+scp -r -i $PEM ubuntu@$REMOTE:/mnt/openmw-android/buildscripts/symbols.7z .
 
 echo "==> Extracting the symbols"
 rm -rf symbols
