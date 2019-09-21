@@ -125,7 +125,7 @@ index e7bdf0ba0..8c454c2eb 100644
 +dialogue x = 0.095
 +dialogue y = 0.095
 +dialogue w = 0.810
-+dialogue h = 0.810
++dialogue h = 0.890
  dialogue maximized x = 0.0
  dialogue maximized y = 0.0
  dialogue maximized w = 1.0
