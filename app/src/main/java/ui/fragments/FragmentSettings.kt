@@ -39,6 +39,7 @@ import com.libopenmw.openmw.R
 import file.GameInstaller
 
 import ui.activity.ConfigureControls
+import ui.activity.MainActivity
 import ui.activity.ModsActivity
 import utils.MyApp
 import java.util.*
@@ -105,7 +106,8 @@ class FragmentSettings : PreferenceFragment(), OnSharedPreferenceChangeListener 
                 gameFiles = path
             }
         } else {
-            showError(R.string.data_error_title, R.string.data_error_message)
+            showError(R.string.data_error_title, R.string.data_error_message,
+                    "https://omw.xyz.is/game.html")
         }
 
         with(sharedPref.edit()) {
@@ -119,12 +121,19 @@ class FragmentSettings : PreferenceFragment(), OnSharedPreferenceChangeListener 
      * @param title Title string resource
      * @param message Message string resource
      */
-    private fun showError(title: Int, message: Int) {
-        AlertDialog.Builder(activity)
+    private fun showError(title: Int, message: Int, url: String? = null) {
+        val dialog = AlertDialog.Builder(activity)
             .setTitle(title)
             .setMessage(message)
             .setPositiveButton(android.R.string.ok) { _: DialogInterface, _: Int -> }
-            .show()
+
+        if (url != null) {
+            dialog.setNeutralButton(R.string.dialog_howto) { _, _ ->
+                (activity as MainActivity).openUrl(url)
+            }
+        }
+
+        dialog.show()
     }
 
     override fun onResume() {

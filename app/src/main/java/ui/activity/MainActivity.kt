@@ -116,7 +116,7 @@ class MainActivity : AppCompatActivity() {
      * Opens the url in a web browser and gracefully handles the failure
      * @param url Url to open
      */
-    private fun openUrl(url: String) {
+    fun openUrl(url: String) {
         try {
             val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
             startActivity(browserIntent)

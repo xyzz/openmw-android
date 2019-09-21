@@ -166,7 +166,7 @@
     <string name="bugsnag_consent_restart_message">You must restart the application for these settings to come into effect.</string>
     <string name="action_bugsnag_consent">Crash reporting</string>
 
-    <string name="dialog_howto">How-To</string>
+    <string name="dialog_howto">How To</string>
 
     <string name="no_browser_title">Unable to open a URL</string>
     <string name="no_browser_message">You don\'t appear to have a web browser installed. Tried to open the following URL:\n\n%1$s</string>
