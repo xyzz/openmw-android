@@ -302,6 +302,7 @@ ExternalProject_Add(gl4es
 	DOWNLOAD_DIR ${download_dir}
 
 	PATCH_COMMAND patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/gl4es-build-shared.patch
+	COMMAND patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/gl4es-gamma.patch
 
 	CONFIGURE_COMMAND ""
 
@@ -413,6 +414,7 @@ set(OPENMW_COMMON
 )
 
 set(OPENMW_PATCH
+	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/gamma.patch &&
 	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/0001-loadingscreen-disable-for-now.patch &&
 	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/0003-globalmap-fix-race-vs-savegame-load.patch &&
 	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/0004-getUVBuffer-pre-set-array-binding-to-avoid-thread-ra.patch &&
