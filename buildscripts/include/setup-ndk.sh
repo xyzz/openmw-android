@@ -11,7 +11,7 @@ if [[ ! -d toolchain ]]; then
 	mkdir -p toolchain
 
 	echo "(Extracting, this will take a while...)"
-	unzip -q downloads/ndk.zip -d toolchain/
+	unzip -q downloads/$NDK_FILE -d toolchain/
 	mv toolchain/android-ndk-* toolchain/ndk/
 
 	if [[ $CCACHE = "true" ]]; then
