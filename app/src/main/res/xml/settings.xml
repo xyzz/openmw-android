@@ -115,7 +115,7 @@
             />
 
         <ListPreference
-            android:key="pref_graphicsLibrary"
+            android:key="pref_graphicsLibrary_v2"
             android:title="@string/pref_graphicsLibrary"
             android:dialogTitle="@string/pref_graphicsLibrary"
             android:entries="@array/pref_graphicsLibrary_entries"
