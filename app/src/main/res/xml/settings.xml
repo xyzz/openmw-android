@@ -33,6 +33,14 @@
             />
 
         <EditTextPreference
+            android:key="pref_gamma"
+            android:title="@string/pref_gamma"
+            android:dialogTitle="@string/pref_gamma"
+            android:inputType="numberDecimal"
+            android:hint="1.0"
+            />
+
+        <EditTextPreference
             android:key="pref_uiScaling"
             android:title="@string/pref_uiScaling"
             android:dialogTitle="@string/pref_uiScaling"
