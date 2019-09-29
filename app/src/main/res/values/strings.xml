@@ -45,7 +45,7 @@
     <string name="pref_commandLine">Custom command line arguments</string>
     <string name="pref_ui">User interface</string>
     <string name="pref_gamma">Gamma</string>
-    <string name="pref_uiScaling">GUI scaling factor</string>
+    <string name="pref_uiScaling">UI scaling factor</string>
     <string name="uiScaling_auto">Auto (%1$.2f)</string>
     <string name="pref_screen_keeper">Keep screen always on</string>
     <string name="pref_touchpadSensitivity">Virtual touchpad sensitivity</string>
