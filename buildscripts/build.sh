@@ -79,9 +79,9 @@ fi
 source ./include/version.sh
 
 if [ $ASAN = true ]; then
-	CFLAGS="$CFLAGS -fsanitize=address -fno-omit-frame-pointer"
-	CXXFLAGS="$CXXFLAGS -fsanitize=address -fno-omit-frame-pointer"
-	LDFLAGS="$LDFLAGS -fsanitize=address -fno-omit-frame-pointer"
+	CFLAGS="$CFLAGS -fsanitize=address -fuse-ld=gold -fno-omit-frame-pointer"
+	CXXFLAGS="$CXXFLAGS -fsanitize=address -fuse-ld=gold -fno-omit-frame-pointer"
+	LDFLAGS="$LDFLAGS -fsanitize=address -fuse-ld=gold -fno-omit-frame-pointer"
 fi
 
 if [ $BUILD_TYPE = "release" ]; then
