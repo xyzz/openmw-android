@@ -353,6 +353,8 @@ class Osc {
         btnTopToggle,
         OscImageButton("inventory", OscVisibility.NULL,
             R.drawable.inventory, 940, 95, 3, true),
+        OscImageButton("crouch", OscVisibility.NORMAL,
+                R.drawable.sneak, 940 - TOP_BAR_SPACING, 0, 113),
         OscImageButton("pause", OscVisibility.ESSENTIAL,
             R.drawable.pause, 940, 0, KeyEvent.KEYCODE_ESCAPE),
         OscImageButton("magic", OscVisibility.NORMAL,
@@ -412,9 +414,7 @@ class Osc {
                 R.drawable.wait, TOP_BAR_SPACING * 4, 0, KeyEvent.KEYCODE_T),
             OscCustomButton("keyboard", OscVisibility.NULL,
                 R.drawable.keyboard, TOP_BAR_SPACING * 5, 0) { toggleKeyboard() },
-            btnMouse,
-            OscImageButton("crouch", OscVisibility.NORMAL,
-                R.drawable.sneak, TOP_BAR_SPACING * 7, 0, 113)
+            btnMouse
         )
 
         elements.addAll(fnButtons)
