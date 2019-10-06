@@ -52,6 +52,8 @@ class FragmentSettings : PreferenceFragment(), OnSharedPreferenceChangeListener 
         addPreferencesFromResource(R.xml.settings)
         preferenceScreen.sharedPreferences.registerOnSharedPreferenceChangeListener(this)
 
+        updateGammaState()
+
         findPreference("pref_controls").setOnPreferenceClickListener {
             val intent = Intent(activity, ConfigureControls::class.java)
             this.startActivity(intent)
@@ -153,6 +155,7 @@ class FragmentSettings : PreferenceFragment(), OnSharedPreferenceChangeListener 
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
         updatePreference(findPreference(key), key)
+        updateGammaState()
     }
 
     private fun updatePreference(preference: Preference?, key: String) {
@@ -170,6 +173,15 @@ class FragmentSettings : PreferenceFragment(), OnSharedPreferenceChangeListener 
         if (key == "game_files") {
             preference.summary = preference.sharedPreferences.getString("game_files", "")
         }
+    }
+
+    /**
+     * @brief Disable gamma preference if GLES1 is selected
+     */
+    private fun updateGammaState() {
+        val sharedPref = preferenceScreen.sharedPreferences
+        findPreference("pref_gamma").isEnabled =
+                sharedPref.getString("pref_graphicsLibrary_v2", "") != "gles1"
     }
 
 }
