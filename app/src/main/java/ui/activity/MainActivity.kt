@@ -21,11 +21,12 @@
 package ui.activity
 
 import android.annotation.SuppressLint
-import android.app.AlarmManager
 import android.app.AlertDialog
-import android.app.PendingIntent
 import android.app.ProgressDialog
 import android.content.*
+import android.content.pm.ShortcutInfo
+import android.content.pm.ShortcutManager
+import android.graphics.drawable.Icon
 import android.net.Uri
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -38,18 +39,14 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
-import com.bugsnag.android.Bugsnag
 
 import com.libopenmw.openmw.BuildConfig
 import com.libopenmw.openmw.R
 import constants.Constants
 import file.GameInstaller
 
-import java.io.BufferedReader
 import java.io.File
-import java.io.FileInputStream
 import java.io.IOException
-import java.io.InputStreamReader
 
 import file.utils.CopyFilesFromAssets
 import mods.ModType
@@ -82,6 +79,31 @@ class MainActivity : AppCompatActivity() {
 
         if (prefs.getString("bugsnag_consent", "")!! == "") {
             askBugsnagConsent()
+        }
+
+        setUpRunGameShortcut()
+        checkIfShouldInstantlyRunGame()
+    }
+
+    private fun setUpRunGameShortcut() {
+        val shortcutManager = getSystemService<ShortcutManager>(ShortcutManager::class.java)
+        val intent = Intent(this, MainActivity::class.java)
+        intent.putExtra("runGame", true)
+        intent.action = Intent.ACTION_VIEW
+        val shortcut = ShortcutInfo.Builder(this, "id1")
+                .setShortLabel(getString(R.string.start_game_label))
+                .setLongLabel(getString(R.string.start_game_label))
+                .setIcon(Icon.createWithResource(this, R.drawable.ic_play_arrow))
+                .setIntent(intent)
+                .build()
+
+        shortcutManager!!.dynamicShortcuts = listOf(shortcut)
+    }
+
+    private fun checkIfShouldInstantlyRunGame() {
+        val shouldStartGame = intent?.hasExtra("runGame") ?: false
+        if (shouldStartGame) {
+            checkStartGame()
         }
     }
 
