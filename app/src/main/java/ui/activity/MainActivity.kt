@@ -24,9 +24,6 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.*
-import android.content.pm.ShortcutInfo
-import android.content.pm.ShortcutManager
-import android.graphics.drawable.Icon
 import android.net.Uri
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -81,23 +78,7 @@ class MainActivity : AppCompatActivity() {
             askBugsnagConsent()
         }
 
-        setUpRunGameShortcut()
         checkIfShouldInstantlyRunGame()
-    }
-
-    private fun setUpRunGameShortcut() {
-        val shortcutManager = getSystemService<ShortcutManager>(ShortcutManager::class.java)
-        val intent = Intent(this, MainActivity::class.java)
-        intent.putExtra("runGame", true)
-        intent.action = Intent.ACTION_VIEW
-        val shortcut = ShortcutInfo.Builder(this, "id1")
-                .setShortLabel(getString(R.string.start_game_label))
-                .setLongLabel(getString(R.string.start_game_label))
-                .setIcon(Icon.createWithResource(this, R.drawable.ic_play_arrow))
-                .setIntent(intent)
-                .build()
-
-        shortcutManager!!.dynamicShortcuts = listOf(shortcut)
     }
 
     private fun checkIfShouldInstantlyRunGame() {
