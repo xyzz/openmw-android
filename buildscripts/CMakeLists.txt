@@ -12,9 +12,9 @@ set(LIBPNG_HASH SHA256=505e70834d35383537b6491e7ae8641f1a4bed1876dbfe361201fc808
 set(FREETYPE2_VERSION 2.10.1)
 set(FREETYPE2_HASH SHA256=3a60d391fd579440561bf0e7f31af2222bc610ad6ce4d9d7bd2165bca8669110)
 
-# http://kcat.strangesoft.net/openal.html
+# https://github.com/kcat/openal-soft/releases
 set(OPENAL_VERSION 1.19.1)
-set(OPENAL_HASH SHA256=5c2f87ff5188b95e0dc4769719a9d89ce435b8322b4478b95dd4b427fe84b2e9)
+set(OPENAL_HASH SHA256=9f3536ab2bb7781dbafabc6a61e0b34b17edd16bd6c2eaf2ae71bc63078f98c7)
 
 # http://www.boost.org/users/download/
 set(BOOST_VERSION 1.69.0)
@@ -161,7 +161,7 @@ ExternalProject_Add(freetype2
 )
 
 ExternalProject_Add(openal
-	URL http://kcat.strangesoft.net/openal-releases/openal-soft-${OPENAL_VERSION}.tar.bz2
+	URL https://github.com/kcat/openal-soft/archive/openal-soft-${OPENAL_VERSION}.tar.gz
 	URL_HASH ${OPENAL_HASH}
 	DOWNLOAD_DIR ${download_dir}
 
