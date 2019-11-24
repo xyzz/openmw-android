@@ -26,7 +26,8 @@ If applicable, add screenshots to help explain your problem.
 **Smartphone (please complete the following information):**
  - Device: [e.g. Google Pixel]
  - OS: [e.g. Android 9]
- - Version [e.g. 22]
-
+ - Version: [e.g. 22]
+ - App source: [e.g. Github, Google Play store, F-Droid, self-built]
+ 
 **Additional context**
 Add any other context about the problem here.
