@@ -31,6 +31,7 @@ android {
         versionName calculateVersion()
 
         minSdkVersion 21
+        // Do not update past 28 -- see https://github.com/xyzz/openmw-android/issues/30
         targetSdkVersion 28
 
         ndk {
