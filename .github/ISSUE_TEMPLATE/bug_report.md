@@ -29,5 +29,5 @@ If applicable, add screenshots to help explain your problem.
  - Version [e.g. 22]
  - App source: [e.g. Github, Google Play store, F-Droid, self-built]
  
- **Additional context**
+**Additional context**
 Add any other context about the problem here.
