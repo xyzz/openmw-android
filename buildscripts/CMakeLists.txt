@@ -121,6 +121,7 @@ endif()
 
 ExternalProject_Add(libjpeg-turbo
 	URL https://sourceforge.net/projects/libjpeg-turbo/files/${LIBJPEG_TURBO_VERSION}/libjpeg-turbo-${LIBJPEG_TURBO_VERSION}.tar.gz/download
+	https://github.com/xyzz/openmw-deps/releases/download/v0/libjpeg-turbo-${LIBJPEG_TURBO_VERSION}.tar.gz
 	URL_HASH ${LIBJPEG_TURBO_HASH}
 	DOWNLOAD_DIR ${download_dir}
 
@@ -135,6 +136,7 @@ ExternalProject_Add(libjpeg-turbo
 
 ExternalProject_Add(libpng
 	URL http://prdownloads.sourceforge.net/libpng/libpng-${LIBPNG_VERSION}.tar.xz
+	https://github.com/xyzz/openmw-deps/releases/download/v0/libpng-${LIBPNG_VERSION}.tar.xz
 	URL_HASH ${LIBPNG_HASH}
 	DOWNLOAD_DIR ${download_dir}
 
@@ -148,6 +150,7 @@ ExternalProject_Add(libpng
 
 ExternalProject_Add(freetype2
 	URL https://download.savannah.gnu.org/releases/freetype/freetype-${FREETYPE2_VERSION}.tar.gz
+	https://github.com/xyzz/openmw-deps/releases/download/v0/freetype-${FREETYPE2_VERSION}.tar.gz
 	URL_HASH ${FREETYPE2_HASH}
 	DOWNLOAD_DIR ${download_dir}
 
@@ -162,6 +165,7 @@ ExternalProject_Add(freetype2
 
 ExternalProject_Add(openal
 	URL https://github.com/kcat/openal-soft/archive/openal-soft-${OPENAL_VERSION}.tar.gz
+	https://github.com/xyzz/openmw-deps/releases/download/v0/openal-soft-${OPENAL_VERSION}.tar.gz
 	URL_HASH ${OPENAL_HASH}
 	DOWNLOAD_DIR ${download_dir}
 
@@ -184,6 +188,7 @@ ExternalProject_Add(openal
 string(REPLACE "." "_" BOOST_VERSION_UNDERSCORE ${BOOST_VERSION})
 ExternalProject_Add(boost
 	URL https://dl.bintray.com/boostorg/release/${BOOST_VERSION}/source/boost_${BOOST_VERSION_UNDERSCORE}.tar.bz2
+	https://github.com/xyzz/openmw-deps/releases/download/v0/boost_${BOOST_VERSION_UNDERSCORE}.tar.bz2
 	URL_HASH ${BOOST_HASH}
 	DOWNLOAD_DIR ${download_dir}
 
@@ -221,6 +226,7 @@ ExternalProject_Add(boost
 
 ExternalProject_Add(ffmpeg
 	URL http://ffmpeg.org/releases/ffmpeg-${FFMPEG_VERSION}.tar.bz2
+	https://github.com/xyzz/openmw-deps/releases/download/v0/ffmpeg-${FFMPEG_VERSION}.tar.bz2
 	URL_HASH ${FFMPEG_HASH}
 	DOWNLOAD_DIR ${download_dir}
 
@@ -261,6 +267,7 @@ ExternalProject_Add(ffmpeg
 
 ExternalProject_Add(sdl2
 	URL https://www.libsdl.org/release/SDL2-${SDL2_VERSION}.tar.gz
+	https://github.com/xyzz/openmw-deps/releases/download/v0/SDL2-${SDL2_VERSION}.tar.gz
 	URL_HASH ${SDL2_HASH}
 	DOWNLOAD_DIR ${download_dir}
 
@@ -279,6 +286,7 @@ ExternalProject_Add(sdl2
 
 ExternalProject_Add(bullet
 	URL https://github.com/bulletphysics/bullet3/archive/${BULLET_VERSION}.tar.gz
+	https://github.com/xyzz/openmw-deps/releases/download/v0/bullet3-${BULLET_VERSION}.tar.gz
 	URL_HASH ${BULLET_HASH}
 	DOWNLOAD_DIR ${download_dir}
 
@@ -298,6 +306,7 @@ ExternalProject_Add(bullet
 
 ExternalProject_Add(gl4es
 	URL https://github.com/ptitSeb/gl4es/archive/${GL4ES_VERSION}.tar.gz
+	https://github.com/xyzz/openmw-deps/releases/download/v0/gl4es-${GL4ES_VERSION}.gz
 	URL_HASH ${GL4ES_HASH}
 	DOWNLOAD_DIR ${download_dir}
 
@@ -318,6 +327,7 @@ ExternalProject_Add(mygui
 	DEPENDS freetype2
 
 	URL https://github.com/MyGUI/mygui/archive/MyGUI${MYGUI_VERSION}.tar.gz
+	https://github.com/xyzz/openmw-deps/releases/download/v0/MyGUI${MYGUI_VERSION}.tar.gz
 	URL_HASH ${MYGUI_HASH}
 	DOWNLOAD_DIR ${download_dir}
 
@@ -381,6 +391,7 @@ ExternalProject_Add(osg
 	DEPENDS libjpeg-turbo libpng gl4es
 
 	URL https://github.com/openscenegraph/OpenSceneGraph/archive/OpenSceneGraph-${OSG_VERSION}.tar.gz
+	https://github.com/xyzz/openmw-deps/releases/download/v0/OpenSceneGraph-${OSG_VERSION}.tar.gz
 	URL_HASH ${OSG_HASH}
 	DOWNLOAD_DIR ${download_dir}
 
