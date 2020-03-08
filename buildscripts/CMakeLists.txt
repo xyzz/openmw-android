@@ -41,12 +41,12 @@ set(GL4ES_VERSION v1.1.2)
 set(GL4ES_HASH SHA256=0774a1d0500c3a5d4da2d8cf3054ce4780a53cd20fe607024e1ceb38823f195e)
 
 # https://github.com/openscenegraph/OpenSceneGraph/releases
-set(OSG_VERSION 3.6.4)
-set(OSG_HASH SHA256=81394d1b484c631028b85d21c5535280c21bbd911cb058e8746c87e93e7b9d33)
+set(OSG_VERSION 3.6.5)
+set(OSG_HASH SHA256=aea196550f02974d6d09291c5d83b51ca6a03b3767e234a8c0e21322927d1e12)
 
 # https://github.com/OpenMW/openmw/commits/master
-set(OPENMW_VERSION 04f2b320b9edd094acc6f211d7a0c7a2e85d075f)
-set(OPENMW_HASH SHA256=3e1119af9ea55ad5e89e4a99771e92eda57c3ae9328ac453243b2174b08047df)
+set(OPENMW_VERSION bbca1f3d1d9456b8ace3f8e3598c1e192d33aea1)
+set(OPENMW_HASH SHA256=fa02eca1a266e587b8373328e339a9737a241f8cba1b20328814e27f945c0943)
 
 # End of configurable options
 
@@ -378,7 +378,6 @@ set(OSG_COMMON
 )
 
 set(OSG_PATCH
-	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/osg/149c04b0df37e605a94495363801eb518b58a059.patch &&
 	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/osg/remove-lib-prefix-from-plugins.patch &&
 	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/osg/0001-Replace-Atomic-impl-with-std-atomic.patch &&
 	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/osg/0002-BufferObject-make-numClients-atomic.patch &&
