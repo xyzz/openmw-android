@@ -180,7 +180,7 @@ mkdir -p ../app/src/main/jniLibs/$ABI/
 find build/$ARCH/openmw-prefix/ -iname "libopenmw.so" -exec cp "{}" ../app/src/main/jniLibs/$ABI/libopenmw.so \;
 
 # copy over libs we compiled
-cp prefix/$ARCH/lib/{libopenal,libSDL2,libGL}.so ../app/src/main/jniLibs/$ABI/
+cp prefix/$ARCH/lib/{libopenal,libSDL2,libhidapi,libGL}.so ../app/src/main/jniLibs/$ABI/
 
 # copy over libc++_shared
 find ./toolchain/$ARCH/sysroot/usr/lib/$NDK_TRIPLET -iname "libc++_shared.so" -exec cp "{}" ../app/src/main/jniLibs/$ABI/ \;
@@ -213,6 +213,7 @@ echo "==> Making your debugging life easier"
 rm -rf "./symbols/$ABI/" && mkdir -p "./symbols/$ABI/"
 cp "./build/$ARCH/openal-prefix/src/openal-build/libopenal.so" "./symbols/$ABI/"
 cp "./build/$ARCH/sdl2-prefix/src/sdl2-build/obj/local/$ABI/libSDL2.so" "./symbols/$ABI/"
+cp "./build/$ARCH/sdl2-prefix/src/sdl2-build/obj/local/$ABI/libhidapi.so" "./symbols/$ABI/"
 cp "./build/$ARCH/openmw-prefix/src/openmw-build/libopenmw.so" "./symbols/$ABI/libopenmw.so"
 cp "./build/$ARCH/gl4es-prefix/src/gl4es-build/obj/local/$ABI/libGL.so" "./symbols/$ABI/"
 cp "../app/src/main/jniLibs/$ABI/libc++_shared.so" "./symbols/$ABI/"

@@ -37,11 +37,6 @@ class ButtonTouchListener(private val keyCode: Int, private val needEmulateMouse
         MOUSE_UP
     }
 
-    init {
-        // TODO: this is set multiple times, gotta be a bug
-        SDLActivity.mSeparateMouseAndTouch = needEmulateMouse
-    }
-
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouch(v: View, event: MotionEvent): Boolean {
         when (event.action) {

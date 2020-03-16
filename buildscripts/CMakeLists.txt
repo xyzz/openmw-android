@@ -25,8 +25,8 @@ set(FFMPEG_VERSION 4.2)
 set(FFMPEG_HASH SHA256=306bde5f411e9ee04352d1d3de41bd3de986e42e2af2a4c44052dce1ada26fb8)
 
 # https://www.libsdl.org/download-2.0.php
-set(SDL2_VERSION 2.0.8)
-set(SDL2_HASH SHA256=edc77c57308661d576e843344d8638e025a7818bff73f8fbfab09c3c5fd092ec)
+set(SDL2_VERSION 2.0.12)
+set(SDL2_HASH SHA256=349268f695c02efbc9b9148a70b85e58cefbbf704abd3e91be654db7f1e2c863)
 
 # https://github.com/bulletphysics/bullet3/releases
 set(BULLET_VERSION 2.88)
@@ -271,9 +271,6 @@ ExternalProject_Add(sdl2
 	URL_HASH ${SDL2_HASH}
 	DOWNLOAD_DIR ${download_dir}
 
-	PATCH_COMMAND patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/sdl2-android-gamepad.patch
-	COMMAND cp ${CMAKE_SOURCE_DIR}/patches/sdl2-SDL_gamecontrollerdb.h <SOURCE_DIR>/src/joystick/SDL_gamecontrollerdb.h
-
 	CONFIGURE_COMMAND ""
 
 	BUILD_COMMAND ${wrapper_command} ndk-build
@@ -281,6 +278,7 @@ ExternalProject_Add(sdl2
 
 	INSTALL_COMMAND mkdir -p ${prefix}/lib/
 	COMMAND cp libs/${app_abi}/libSDL2.so ${prefix}/lib/
+	COMMAND cp libs/${app_abi}/libhidapi.so ${prefix}/lib/
 	COMMAND cp -r <SOURCE_DIR>/include ${prefix}/
 )
 
