@@ -1,0 +1,56 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+
+    env:
+      CMAKE_VERSION: 3.11
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get install -y build-essential python unzip pkg-config p7zip-full
+        cd /home/runner/
+        wget https://cmake.org/files/v$CMAKE_VERSION/cmake-$CMAKE_VERSION.0-Linux-x86_64.tar.gz
+        tar xvf cmake-$CMAKE_VERSION.0-Linux-x86_64.tar.gz
+
+    - name: Build native libraries
+      run: |
+        export PATH=/home/runner/cmake-$CMAKE_VERSION.0-Linux-x86_64/bin/:$PATH
+        cd buildscripts
+        ./build.sh --arch arm64
+
+    - name: Build the APK
+      run: |
+        export ANDROID_NDK_HOME=$(pwd)/buildscripts/toolchain/ndk/
+        ./gradlew assembleNightlyDebug
+
+    - name: Compress symbols
+      run: |
+        cd buildscripts
+        ./package-symbols.sh
+
+    - name: Collect outputs
+      id: getfilename
+      run: echo "::set-output name=file::$(ls app/build/outputs/apk/nightly/debug/omw_debug_*.apk)"
+
+    - name: Upload the APK
+      uses: actions/upload-artifact@v1
+      with:
+        name: omw_debug_apk
+        path: ${{ steps.getfilename.outputs.file }}
+
+    - name: Upload debug symbols
+      uses: actions/upload-artifact@v1
+      with:
+        name: symbols
+        path: buildscripts/symbols.7z
