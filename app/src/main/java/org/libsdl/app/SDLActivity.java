@@ -271,7 +271,7 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
 
         setWindowStyle(false);
 
-        getWindow().getDecorView().setOnSystemUiVisibilityChangeListener(this);
+//        getWindow().getDecorView().setOnSystemUiVisibilityChangeListener(this);
 
         // Get filename from "Open with" of another application
         Intent intent = getIntent();
@@ -603,6 +603,7 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
                     Log.e(TAG, "error handling message, getContext() returned no Activity");
                 }
                 break;
+/*
             case COMMAND_CHANGE_WINDOW_STYLE:
                 if (Build.VERSION.SDK_INT < 19) {
                     // This version of Android doesn't support the immersive fullscreen mode
@@ -634,6 +635,7 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
                     Log.e(TAG, "error handling message, getContext() returned no Activity");
                 }
                 break;
+ */
             case COMMAND_TEXTEDIT_HIDE:
                 if (mTextEdit != null) {
                     // Note: On some devices setting view to GONE creates a flicker in landscape.
