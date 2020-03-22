@@ -271,6 +271,8 @@ ExternalProject_Add(sdl2
 	URL_HASH ${SDL2_HASH}
 	DOWNLOAD_DIR ${download_dir}
 
+	PATCH_COMMAND patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/sdl2-android-120hz-gyroscope.patch
+
 	CONFIGURE_COMMAND ""
 
 	BUILD_COMMAND ${wrapper_command} ndk-build
