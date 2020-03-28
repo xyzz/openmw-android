@@ -1791,6 +1791,8 @@ class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
             mHeight = resultHeight;
             setMeasuredDimension((int) resultWidth, (int) resultHeight);
         } else {
+            mWidth = widthSize;
+            mHeight = heightSize;
             setMeasuredDimension(widthSize, heightSize);
         }
     }
@@ -1870,8 +1872,6 @@ class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
             break;
         }
 
-        mWidth = width;
-        mHeight = height;
         int nDeviceWidth = width;
         int nDeviceHeight = height;
         try
