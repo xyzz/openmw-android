@@ -1,0 +1,33 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Ilya Zhuravlev <whatever@xyz.is>
+Date: Sat, 28 Mar 2020 14:23:31 -0400
+Subject: [PATCH] android: don't block on pause to restore old behavior
+
+---
+ apps/openmw/android_main.cpp | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/apps/openmw/android_main.cpp b/apps/openmw/android_main.cpp
+index 28f311ce5..fb02fbd53 100644
+--- a/apps/openmw/android_main.cpp
++++ b/apps/openmw/android_main.cpp
+@@ -7,6 +7,7 @@ int stderr = 0; // Hack: fix linker error
+ #include <SDL_gamecontroller.h>
+ #include <SDL_mouse.h>
+ #include <SDL_events.h>
++#include <SDL_hints.h>
+ 
+ #include <osg/GraphicsContext>
+ #include <osg/OperationThread>
+@@ -58,6 +59,8 @@ extern "C" int Java_org_libsdl_app_SDLActivity_nativeInit(JNIEnv* env, jclass cl
+     // On Android, we use a virtual controller with guid="Virtual"
+     SDL_GameControllerAddMapping("5669727475616c000000000000000000,Virtual,a:b0,b:b1,back:b15,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,dpup:h0.1,guide:b16,leftshoulder:b6,leftstick:b13,lefttrigger:a5,leftx:a0,lefty:a1,rightshoulder:b7,rightstick:b14,righttrigger:a4,rightx:a2,righty:a3,start:b11,x:b3,y:b4");
+ 
++    SDL_SetHint(SDL_HINT_ANDROID_BLOCK_ON_PAUSE, "0");
++
+     return 0;
+ }
+ 
+-- 
+2.17.1
+
