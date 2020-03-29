@@ -665,6 +665,7 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
                 }
                 break;
             }
+/*
             case COMMAND_CHANGE_SURFACEVIEW_FORMAT:
             {
                 int format = (Integer) msg.obj;
@@ -691,6 +692,7 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
 
                 break;
             }
+ */
             default:
                 if ((context instanceof SDLActivity) && !((SDLActivity) context).onUnhandledMessage(msg.arg1, msg.obj)) {
                     Log.e(TAG, "error handling message, command is " + msg.arg1);
