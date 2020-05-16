@@ -1,0 +1,13 @@
+diff --git a/files/shaders/terrain_fragment.glsl b/files/shaders/terrain_fragment.glsl
+index b1917d33b..505061681 100644
+--- a/files/shaders/terrain_fragment.glsl
++++ b/files/shaders/terrain_fragment.glsl
+@@ -82,7 +82,7 @@ void main()
+ #endif
+ 
+ #if @specularMap
+-    float shininess = 128; // TODO: make configurable
++    float shininess = 128.0; // TODO: make configurable
+     vec3 matSpec = vec3(diffuseTex.a, diffuseTex.a, diffuseTex.a);
+ #else
+     float shininess = gl_FrontMaterial.shininess;

@@ -45,8 +45,8 @@ set(OSG_VERSION 3.6.5)
 set(OSG_HASH SHA256=aea196550f02974d6d09291c5d83b51ca6a03b3767e234a8c0e21322927d1e12)
 
 # https://github.com/OpenMW/openmw/commits/master
-set(OPENMW_VERSION 8c4acc69c484ada1af055d34f888ce5f8e8708bc)
-set(OPENMW_HASH SHA256=9232e3a1dee2b1581296289cdaffd9874276342abe6c19f6465bcb4b946f29be)
+set(OPENMW_VERSION df1417bf32133ca0a57928c21cfd45b32ef009ad)
+set(OPENMW_HASH SHA256=8e2fa8ab554f51cdf144c42428f72e61942fc4cc7443003d473c3b18e65edd0c)
 
 # End of configurable options
 
@@ -311,7 +311,6 @@ ExternalProject_Add(gl4es
 	DOWNLOAD_DIR ${download_dir}
 
 	PATCH_COMMAND patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/gl4es-build-shared.patch
-
 	COMMAND patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/gl4es-gamma.patch
 
 	CONFIGURE_COMMAND ""
@@ -440,6 +439,7 @@ set(OPENMW_PATCH
 	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/0013-android-Update-default-settings-for-android.patch &&
 	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/0014-settingswindow-save-user-settings-file-when-ok-is-pr.patch &&
 	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/0015-object-fragment-patch.patch &&
+	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/0015-terrain-fragment-patch.patch &&
 	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/0015-water-refraction-dirty-patch.patch &&
 	cp ${CMAKE_SOURCE_DIR}/patches/openmw/android_main.cpp <SOURCE_DIR>/apps/openmw/android_main.cpp
 )
