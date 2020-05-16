@@ -37,8 +37,8 @@ set(MYGUI_VERSION 3.2.2)
 set(MYGUI_HASH SHA256=0a28d7ec8a47993cb68deb48b36331e28f12dd92580b709eaef21d599b67a78f)
 
 # https://github.com/ptitSeb/gl4es
-set(GL4ES_VERSION d8f996bf76196e43adaf01e266b36aba62310e67)
-set(GL4ES_HASH SHA256=c4f0b7bb0b0a6ac897d7afee1451c7982b6fbcbc82d1ceb3e7be1bb5eeff28dc)
+set(GL4ES_VERSION 7c2332d39238e9c6c88e7d348e73da9942612ef7)
+set(GL4ES_HASH SHA256=4cdf5a20313739302d0a7d07447d3662182303c5a60bb13e8c47ade97eb32b09)
 
 # https://github.com/openscenegraph/OpenSceneGraph/releases
 set(OSG_VERSION 3.6.5)
@@ -310,8 +310,8 @@ ExternalProject_Add(gl4es
 	URL_HASH ${GL4ES_HASH}
 	DOWNLOAD_DIR ${download_dir}
 
-	PATCH_COMMAND patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/gl4es-build-shared.patch &&
-	PATCH_COMMAND patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/gl4es-mipmap-fix.patch 
+	PATCH_COMMAND patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/gl4es-build-shared.patch
+
 	COMMAND patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/gl4es-gamma.patch
 
 	CONFIGURE_COMMAND ""
