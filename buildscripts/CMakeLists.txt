@@ -37,16 +37,16 @@ set(MYGUI_VERSION 3.2.2)
 set(MYGUI_HASH SHA256=0a28d7ec8a47993cb68deb48b36331e28f12dd92580b709eaef21d599b67a78f)
 
 # https://github.com/ptitSeb/gl4es
-set(GL4ES_VERSION v1.1.2)
-set(GL4ES_HASH SHA256=0774a1d0500c3a5d4da2d8cf3054ce4780a53cd20fe607024e1ceb38823f195e)
+set(GL4ES_VERSION d8f996bf76196e43adaf01e266b36aba62310e67)
+set(GL4ES_HASH SHA256=c4f0b7bb0b0a6ac897d7afee1451c7982b6fbcbc82d1ceb3e7be1bb5eeff28dc)
 
 # https://github.com/openscenegraph/OpenSceneGraph/releases
 set(OSG_VERSION 3.6.5)
 set(OSG_HASH SHA256=aea196550f02974d6d09291c5d83b51ca6a03b3767e234a8c0e21322927d1e12)
 
 # https://github.com/OpenMW/openmw/commits/master
-set(OPENMW_VERSION dc2c9ee343931810b11b9e543d6361a4ef4bc420)
-set(OPENMW_HASH SHA256=0ee17d980ede9f98e9044b4e6723e1322935fb39f34219f633bd0158185ba972)
+set(OPENMW_VERSION 8c4acc69c484ada1af055d34f888ce5f8e8708bc)
+set(OPENMW_HASH SHA256=9232e3a1dee2b1581296289cdaffd9874276342abe6c19f6465bcb4b946f29be)
 
 # End of configurable options
 
@@ -310,7 +310,8 @@ ExternalProject_Add(gl4es
 	URL_HASH ${GL4ES_HASH}
 	DOWNLOAD_DIR ${download_dir}
 
-	PATCH_COMMAND patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/gl4es-build-shared.patch
+	PATCH_COMMAND patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/gl4es-build-shared.patch &&
+	PATCH_COMMAND patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/gl4es-mipmap-fix.patch 
 	COMMAND patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/gl4es-gamma.patch
 
 	CONFIGURE_COMMAND ""
@@ -435,9 +436,11 @@ set(OPENMW_PATCH
 	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/0006-Add-an-option-to-enable-simple-bounding-box.patch &&
 	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/0007-android-Fix-red-sky-after-shadows-merge.patch &&
 	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/0009-windowmanagerimp-always-show-mouse-when-possible-pat.patch &&
-    patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/0010-android-fix-context-being-lost-on-app-minimize.patch &&
+   	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/0010-android-fix-context-being-lost-on-app-minimize.patch &&
 	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/0013-android-Update-default-settings-for-android.patch &&
 	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/0014-settingswindow-save-user-settings-file-when-ok-is-pr.patch &&
+	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/0015-object-fragment-patch.patch &&
+	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/0015-water-refraction-dirty-patch.patch &&
 	cp ${CMAKE_SOURCE_DIR}/patches/openmw/android_main.cpp <SOURCE_DIR>/apps/openmw/android_main.cpp
 )
 

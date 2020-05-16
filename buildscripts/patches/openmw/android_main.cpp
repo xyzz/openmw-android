@@ -2,8 +2,7 @@ int stderr = 0; // Hack: fix linker error
 
 #include "SDL_main.h"
 #include "engine.hpp"
-#include "mwbase/inputmanager.hpp"
-#include "mwinput/inputmanagerimp.hpp"
+#include "mwbase/windowmanager.hpp"
 #include <SDL_gamecontroller.h>
 #include <SDL_mouse.h>
 #include <SDL_events.h>
@@ -90,9 +89,9 @@ extern "C" void Java_org_libsdl_app_SDLActivity_omwSurfaceDestroyed(JNIEnv *env,
     ctx = g_viewer->getCamera()->getGraphicsContext();
     ctx->add(op);
 
-    auto inp = (MWInput::InputManager *)MWBase::Environment::get().getInputManager();
-    if (inp)
-        inp->windowVisibilityChange(false);
+    auto win = (MWBase::WindowManager *)MWBase::Environment::get().getWindowManager();
+    if (win)
+        win->windowVisibilityChange(false);
 }
 
 extern "C" void Java_org_libsdl_app_SDLActivity_omwSurfaceRecreated(JNIEnv *env, jclass cls, jobject obj) {
@@ -103,7 +102,7 @@ extern "C" void Java_org_libsdl_app_SDLActivity_omwSurfaceRecreated(JNIEnv *env,
     ctx = g_viewer->getCamera()->getGraphicsContext();
     ctx->add(op);
 
-    auto inp = (MWInput::InputManager *)MWBase::Environment::get().getInputManager();
-    if (inp)
-        inp->windowVisibilityChange(true);
+    auto win = (MWBase::WindowManager *)MWBase::Environment::get().getWindowManager();
+    if (win)
+        win->windowVisibilityChange(true);
 }

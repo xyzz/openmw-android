@@ -1,11 +1,13 @@
 diff --git a/Android.mk b/Android.mk
-index f7004d3..44ab5b9 100755
+index 951d77e..35b7cc1 100755
 --- a/Android.mk
 +++ b/Android.mk
-@@ -82,5 +82,5 @@ LOCAL_CFLAGS += -DNO_GBM
- 
+@@ -93,6 +93,6 @@ LOCAL_CFLAGS += -DNO_GBM
  LOCAL_LDLIBS := -ldl -llog
+ #building as a static lib
  
+-LOCAL_CFLAGS += -DSTATICLIB
 -include $(BUILD_STATIC_LIBRARY)
++#LOCAL_CFLAGS += -DSTATICLIB
 +include $(BUILD_SHARED_LIBRARY)
  

@@ -1,0 +1,13 @@
+diff --git a/files/shaders/objects_fragment.glsl b/files/shaders/objects_fragment.glsl
+index 78cc8c1dd..6fcf15261 100644
+--- a/files/shaders/objects_fragment.glsl
++++ b/files/shaders/objects_fragment.glsl
+@@ -49,7 +49,7 @@ uniform vec2 envMapLumaBias;
+ uniform mat2 bumpMapMatrix;
+ #endif
+ 
+-uniform bool simpleWater = false;
++uniform bool simpleWater;
+ 
+ varying float euclideanDepth;
+ varying float linearDepth;

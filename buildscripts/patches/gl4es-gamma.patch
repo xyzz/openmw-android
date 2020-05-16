@@ -1,31 +1,30 @@
 diff --git a/src/gl/fpe.h b/src/gl/fpe.h
-index 4480bfd..309aa4c 100755
+index e4ceb9c..2022808 100755
 --- a/src/gl/fpe.h
 +++ b/src/gl/fpe.h
-@@ -150,6 +150,7 @@ typedef struct fpe_state_s {
-     unsigned int pointsprite:1;          // point sprite rendering
-     unsigned int pointsprite_coord:1;    // point sprite coord replace
-     unsigned int pointsprite_upper:1;    // if coord is upper left and not lower left
+@@ -187,6 +187,7 @@ typedef struct fpe_state_s {
+     unsigned int fragment_prg_enable:1;  // if fragment program is enabled
+     uint16_t     vertex_prg_id;          // Id of vertex program currently binded (0 most of the time), 16bits is more than enough...
+     uint16_t     fragment_prg_id;        // Id of fragment program currently binded (0 most of the time)
 +    int16_t gamma;
  }__attribute__((packed)) fpe_state_t;
  
  typedef struct fpe_fpe_s {
 diff --git a/src/gl/fpe_shader.c b/src/gl/fpe_shader.c
-index d3c983f..5e7a662 100755
+index 2a2bd69..3964353 100755
 --- a/src/gl/fpe_shader.c
 +++ b/src/gl/fpe_shader.c
-@@ -1206,6 +1206,11 @@ const char* const* fpe_FragmentShader(fpe_state_t *state) {
+@@ -1300,6 +1300,10 @@ const char* const* fpe_FragmentShader(fpe_state_t *state) {
+         #if 0   // vertex fog
          ShadAppend("fColor.rgb = mix(gl_Fog.color.rgb, fColor.rgb, FogF);\n");
-     }
- 
+         #else   // pixel fog
 +    if (state->gamma) {
 +        sprintf(buff, "fColor.rgb = pow(fColor.rgb, vec3(1.0 / %.3f));\n", state->gamma / 100.0);
 +        ShadAppend(buff);
 +    }
-+
-     //done
-     ShadAppend("gl_FragColor = fColor;\n");
-     ShadAppend("}");
+         char fogsrc[50];
+         if(fogsource==FPE_FOG_SRC_COORD)
+             strcpy(fogsrc, "FogSrc");
 diff --git a/src/gl/light.c b/src/gl/light.c
 index 54aeb4f..1f114a9 100755
 --- a/src/gl/light.c
