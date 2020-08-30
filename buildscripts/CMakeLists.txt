@@ -9,8 +9,8 @@ set(LIBPNG_VERSION 1.6.37)
 set(LIBPNG_HASH SHA256=505e70834d35383537b6491e7ae8641f1a4bed1876dbfe361201fc80868d88ca)
 
 # https://www.freetype.org/index.html#news
-set(FREETYPE2_VERSION 2.10.1)
-set(FREETYPE2_HASH SHA256=3a60d391fd579440561bf0e7f31af2222bc610ad6ce4d9d7bd2165bca8669110)
+set(FREETYPE2_VERSION 2.10.2)
+set(FREETYPE2_HASH SHA256=e09aa914e4f7a5d723ac381420949c55c0b90b15744adce5d1406046022186ab)
 
 # https://github.com/kcat/openal-soft/releases
 set(OPENAL_VERSION 1.19.1)
@@ -21,24 +21,24 @@ set(BOOST_VERSION 1.69.0)
 set(BOOST_HASH SHA256=8f32d4617390d1c2d16f26a27ab60d97807b35440d45891fa340fc2648b04406)
 
 # https://www.ffmpeg.org/download.html
-set(FFMPEG_VERSION 4.2)
-set(FFMPEG_HASH SHA256=306bde5f411e9ee04352d1d3de41bd3de986e42e2af2a4c44052dce1ada26fb8)
+set(FFMPEG_VERSION 4.3.1)
+set(FFMPEG_HASH SHA256=f4a4ac63946b6eee3bbdde523e298fca6019d048d6e1db0d1439a62cea65f0d9)
 
 # https://www.libsdl.org/download-2.0.php
 set(SDL2_VERSION 2.0.12)
 set(SDL2_HASH SHA256=349268f695c02efbc9b9148a70b85e58cefbbf704abd3e91be654db7f1e2c863)
 
 # https://github.com/bulletphysics/bullet3/releases
-set(BULLET_VERSION 2.88)
-set(BULLET_HASH SHA256=21c135775527754fc2929db1db5144e92ad0218ae72840a9f162acb467a7bbf9)
+set(BULLET_VERSION 2.89)
+set(BULLET_HASH SHA256=621b36e91c0371933f3c2156db22c083383164881d2a6b84636759dc4cbb0bb8)
 
 # https://github.com/MyGUI/mygui/releases
-set(MYGUI_VERSION 3.2.2)
-set(MYGUI_HASH SHA256=0a28d7ec8a47993cb68deb48b36331e28f12dd92580b709eaef21d599b67a78f)
+set(MYGUI_VERSION 3.4.0)
+set(MYGUI_HASH SHA256=d1d5f294670ae71f7200ed4b30859018281d8cfd45d6a38d18b97a4aba604c42)
 
-# https://github.com/ptitSeb/gl4es
-set(GL4ES_VERSION v1.1.2)
-set(GL4ES_HASH SHA256=0774a1d0500c3a5d4da2d8cf3054ce4780a53cd20fe607024e1ceb38823f195e)
+# https://github.com/ptitSeb/gl4es/releases
+set(GL4ES_VERSION v1.1.4)
+set(GL4ES_HASH SHA256=b565e717c7d192e936bda25f3cb90ad8db398af56414ec08294b6716574c1a6d)
 
 # https://github.com/openscenegraph/OpenSceneGraph/releases
 set(OSG_VERSION 3.6.5)
@@ -310,8 +310,8 @@ ExternalProject_Add(gl4es
 	URL_HASH ${GL4ES_HASH}
 	DOWNLOAD_DIR ${download_dir}
 
-	PATCH_COMMAND patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/gl4es-build-shared.patch
-	COMMAND patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/gl4es-gamma.patch
+	PATCH_COMMAND patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/gl4es/shared-library.patch
+	COMMAND patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/gl4es/gamma.patch
 
 	CONFIGURE_COMMAND ""
 

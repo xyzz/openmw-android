@@ -12,3 +12,4 @@ fabric.properties
 captures
 *.apk
 output.json
+.ccls-cache

@@ -1,0 +1,19 @@
+commit d83b6b9f258ba95bf485a98f185047e3e60bc4cb
+Author: Ilya Zhuravlev <whatever@xyz.is>
+Date:   Sun Aug 30 18:05:29 2020 -0400
+
+    Android.mk: build shared version of the library
+
+diff --git a/Android.mk b/Android.mk
+index 51831b9..ae9d41f 100755
+--- a/Android.mk
++++ b/Android.mk
+@@ -95,7 +95,5 @@ LOCAL_CFLAGS += -DNO_GBM
+ #LOCAL_CFLAGS += -DDEFAULT_ES=2
+ 
+ LOCAL_LDLIBS := -ldl -llog
+-#building as a static lib
+ 
+-LOCAL_CFLAGS += -DSTATICLIB
+-include $(BUILD_STATIC_LIBRARY)
++include $(BUILD_SHARED_LIBRARY)
