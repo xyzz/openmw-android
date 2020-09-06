@@ -13,3 +13,4 @@ captures
 *.apk
 output.json
 .ccls-cache
+app/nightly
