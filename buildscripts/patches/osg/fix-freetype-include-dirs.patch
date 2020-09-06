@@ -1,0 +1,13 @@
+diff --git a/CMakeModules/OsgAndroidMacroUtils.cmake b/CMakeModules/OsgAndroidMacroUtils.cmake
+index 50c22e0f1..e8453208f 100644
+--- a/CMakeModules/OsgAndroidMacroUtils.cmake
++++ b/CMakeModules/OsgAndroidMacroUtils.cmake
+@@ -163,7 +163,7 @@ MACRO(ANDROID_3RD_PARTY)
+     )
+     #set(ENV{AND_OSG_LIB_NAMES} "$ENV{AND_OSG_LIB_NAMES} libft2")
+     #set(ENV{AND_OSG_LIB_PATHS} "$ENV{AND_OSG_LIB_PATHS}include ${FREETYPE_DIR}/Android.mk \n")
+-    set(FREETYPE_INCLUDE_DIRS ${FREETYPE_DIR}/include ${FREETYPE_DIR}/include/freetype/config)
++    set(FREETYPE_INCLUDE_DIRS ${FREETYPE_DIR}/include ${FREETYPE_DIR}/include/freetype2)
+     if(FREETYPE_DIR)
+         message(STATUS "FREETYPE found ${FREETYPE_DIR}" )
+         set(FREETYPE_FOUND "Yes")

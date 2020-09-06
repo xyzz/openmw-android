@@ -68,7 +68,7 @@ class GameActivity : SDLActivity() {
 
     override fun loadLibraries() {
         prefs = PreferenceManager.getDefaultSharedPreferences(this)
-        val graphicsLibrary = prefs!!.getString("pref_graphicsLibrary", "")
+        val graphicsLibrary = prefs!!.getString("pref_graphicsLibrary_v2", "")
         val physicsFPS = prefs!!.getString("pref_physicsFPS", "")
         if (!physicsFPS!!.isEmpty()) {
             try {
@@ -84,7 +84,7 @@ class GameActivity : SDLActivity() {
         System.loadLibrary("c++_shared")
         System.loadLibrary("openal")
         System.loadLibrary("SDL2")
-        if (graphicsLibrary == "gles2") {
+        if (graphicsLibrary != "gles1") {
             try {
                 Os.setenv("OPENMW_GLES_VERSION", "2", true)
                 Os.setenv("LIBGL_ES", "2", true)

@@ -39,6 +39,7 @@ import com.libopenmw.openmw.R
 import file.GameInstaller
 
 import ui.activity.ConfigureControls
+import ui.activity.MainActivity
 import ui.activity.ModsActivity
 import utils.MyApp
 import java.util.*
@@ -50,6 +51,8 @@ class FragmentSettings : PreferenceFragment(), OnSharedPreferenceChangeListener 
 
         addPreferencesFromResource(R.xml.settings)
         preferenceScreen.sharedPreferences.registerOnSharedPreferenceChangeListener(this)
+
+        updateGammaState()
 
         findPreference("pref_controls").setOnPreferenceClickListener {
             val intent = Intent(activity, ConfigureControls::class.java)
@@ -105,7 +108,8 @@ class FragmentSettings : PreferenceFragment(), OnSharedPreferenceChangeListener 
                 gameFiles = path
             }
         } else {
-            showError(R.string.data_error_title, R.string.data_error_message)
+            showError(R.string.data_error_title, R.string.data_error_message,
+                    "https://omw.xyz.is/game.html")
         }
 
         with(sharedPref.edit()) {
@@ -119,12 +123,19 @@ class FragmentSettings : PreferenceFragment(), OnSharedPreferenceChangeListener 
      * @param title Title string resource
      * @param message Message string resource
      */
-    private fun showError(title: Int, message: Int) {
-        AlertDialog.Builder(activity)
+    private fun showError(title: Int, message: Int, url: String? = null) {
+        val dialog = AlertDialog.Builder(activity)
             .setTitle(title)
             .setMessage(message)
             .setPositiveButton(android.R.string.ok) { _: DialogInterface, _: Int -> }
-            .show()
+
+        if (url != null) {
+            dialog.setNeutralButton(R.string.dialog_howto) { _, _ ->
+                (activity as MainActivity).openUrl(url)
+            }
+        }
+
+        dialog.show()
     }
 
     override fun onResume() {
@@ -144,6 +155,7 @@ class FragmentSettings : PreferenceFragment(), OnSharedPreferenceChangeListener 
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
         updatePreference(findPreference(key), key)
+        updateGammaState()
     }
 
     private fun updatePreference(preference: Preference?, key: String) {
@@ -161,6 +173,15 @@ class FragmentSettings : PreferenceFragment(), OnSharedPreferenceChangeListener 
         if (key == "game_files") {
             preference.summary = preference.sharedPreferences.getString("game_files", "")
         }
+    }
+
+    /**
+     * @brief Disable gamma preference if GLES1 is selected
+     */
+    private fun updateGammaState() {
+        val sharedPref = preferenceScreen.sharedPreferences
+        findPreference("pref_gamma").isEnabled =
+                sharedPref.getString("pref_graphicsLibrary_v2", "") != "gles1"
     }
 
 }

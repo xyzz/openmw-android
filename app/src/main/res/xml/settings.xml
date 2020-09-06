@@ -33,6 +33,14 @@
             />
 
         <EditTextPreference
+            android:key="pref_gamma"
+            android:title="@string/pref_gamma"
+            android:dialogTitle="@string/pref_gamma"
+            android:inputType="numberDecimal"
+            android:hint="1.0"
+            />
+
+        <EditTextPreference
             android:key="pref_uiScaling"
             android:title="@string/pref_uiScaling"
             android:dialogTitle="@string/pref_uiScaling"
@@ -80,16 +88,6 @@
 
     <PreferenceCategory android:title="@string/category_performance">
         <ListPreference
-            android:key="pref_unsafe_state_graph"
-            android:title="@string/pref_unsafe_state_graph"
-            android:dialogTitle="@string/pref_unsafe_state_graph"
-            android:entries="@array/pref_unsafe_state_graph_entries"
-            android:entryValues="@array/pref_unsafe_state_graph_values"
-            android:defaultValue="@string/pref_unsafe_state_graph_default"
-            android:summary="%s"
-            />
-
-        <ListPreference
             android:key="pref_physicsFPS"
             android:title="@string/pref_physicsFPS"
             android:dialogTitle="@string/pref_physicsFPS"
@@ -108,16 +106,6 @@
             android:defaultValue="@string/pref_allowCapsuleShape_default"
             android:summary="%s"
             />
-
-        <ListPreference
-            android:key="pref_preload"
-            android:title="@string/pref_preload"
-            android:dialogTitle="@string/pref_preload"
-            android:entries="@array/pref_preload_entries"
-            android:entryValues="@array/pref_preload_values"
-            android:defaultValue="@string/pref_preload_default"
-            android:summary="%s"
-            />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/pref_advanced">
@@ -127,7 +115,7 @@
             />
 
         <ListPreference
-            android:key="pref_graphicsLibrary"
+            android:key="pref_graphicsLibrary_v2"
             android:title="@string/pref_graphicsLibrary"
             android:dialogTitle="@string/pref_graphicsLibrary"
             android:entries="@array/pref_graphicsLibrary_entries"

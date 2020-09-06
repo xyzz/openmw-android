@@ -40,11 +40,12 @@
 
     <!-- Graphics library -->
     <string name="pref_graphicsLibrary">Graphics library</string>
-    <string name="pref_graphicsLibrary_default">gles1</string>
+    <string name="pref_graphicsLibrary_default">gles2</string>
     <string name="pref_advanced">Advanced</string>
     <string name="pref_commandLine">Custom command line arguments</string>
     <string name="pref_ui">User interface</string>
-    <string name="pref_uiScaling">GUI scaling factor</string>
+    <string name="pref_gamma">Gamma</string>
+    <string name="pref_uiScaling">UI scaling factor</string>
     <string name="uiScaling_auto">Auto (%1$.2f)</string>
     <string name="pref_screen_keeper">Keep screen always on</string>
     <string name="pref_touchpadSensitivity">Virtual touchpad sensitivity</string>
@@ -166,7 +167,7 @@
     <string name="bugsnag_consent_restart_message">You must restart the application for these settings to come into effect.</string>
     <string name="action_bugsnag_consent">Crash reporting</string>
 
-    <string name="dialog_howto">How-To</string>
+    <string name="dialog_howto">How To</string>
 
     <string name="no_browser_title">Unable to open a URL</string>
     <string name="no_browser_message">You don\'t appear to have a web browser installed. Tried to open the following URL:\n\n%1$s</string>

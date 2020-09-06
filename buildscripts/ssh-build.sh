@@ -45,7 +45,7 @@ echo "==> Uploading the script"
 scp -i $PEM tmp_script.sh ubuntu@$REMOTE:/home/ubuntu/
 
 echo "==> Running the script"
-ssh -i $PEM ubuntu@$REMOTE "bash tmp_script.sh"
+ssh -i $PEM -o ServerAliveInterval=60 ubuntu@$REMOTE "bash tmp_script.sh"
 
 echo "==> Retrieving the libraries"
 scp -r -i $PEM ubuntu@$REMOTE:/mnt/openmw-android/app/src/main/jniLibs ../app/src/main/

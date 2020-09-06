@@ -1,6 +1,10 @@
 # OpenMW for Android
 
-[Google Play](https://play.google.com/store/apps/details?id=is.xyz.omw) | [Google Play (Nightly)](https://play.google.com/store/apps/details?id=is.xyz.omw_nightly) | [FAQ & Info](https://omw.xyz.is/)
+[Google Play](https://play.google.com/store/apps/details?id=is.xyz.omw) | [Google Play (Nightly)](https://play.google.com/store/apps/details?id=is.xyz.omw_nightly)
+
+[F-Droid](https://f-droid.org/packages/is.xyz.omw/) | [F-Droid (Nightly)](https://f-droid.org/packages/is.xyz.omw_nightly/)
+
+[FAQ & Info](https://omw.xyz.is/)
 
 ## Building
 
@@ -20,7 +24,7 @@ Go into the `buildscripts` directory and run `./build.sh`. The script will autom
 
 ### Step 2: Build the Java launcher
 
-To get an APK file you can install, open the `android-port` directory in Android Studio and run the project.
+To get an APK file you can install, open the `openmw-android` directory in Android Studio and run the project.
 
 Alternatively, if you do not have Android Studio installed or would rather not use it, run `./gradlew assembleDebug` from the root directory of this repository. The resulting APK, located at `./app/build/outputs/apk/debug/app-debug.apk`, can be transferred to the device and installed.
 

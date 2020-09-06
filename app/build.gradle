@@ -27,11 +27,12 @@ android {
 
     defaultConfig {
         applicationId "is.xyz.omw"
-        versionCode 18
+        versionCode 36
         versionName calculateVersion()
 
         minSdkVersion 21
-        targetSdkVersion 27
+        // Do not update past 28 -- see https://github.com/xyzz/openmw-android/issues/30
+        targetSdkVersion 28
 
         ndk {
             abiFilters "arm64-v8a", "armeabi-v7a", "x86", "x86_64"
@@ -58,23 +59,31 @@ android {
         }
     }
 
+    flavorDimensions "version"
+
+    productFlavors {
+        mainline {
+            dimension "version"
+        }
+
+        nightly {
+            dimension "version"
+            applicationId "is.xyz.omw_nightly"
+            versionNameSuffix "-nightly"
+        }
+    }
+
     applicationVariants.all { variant ->
         variant.outputs.all {
             outputFileName = "omw_${variant.buildType.name}_${defaultConfig.versionName}.apk"
         }
     }
 }
-repositories {
-    jcenter()
-    maven {
-        url "https://jitpack.io"
-    }
-}
 
 dependencies {
-    implementation 'androidx.appcompat:appcompat:1.0.2'
-    implementation 'com.google.android.material:material:1.0.0'
-    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'com.google.android.material:material:1.2.0'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
 
     implementation 'com.github.codekidX:storage-chooser:2.0.4.4'
 

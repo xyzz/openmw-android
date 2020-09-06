@@ -39,6 +39,8 @@ class ModsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mods)
 
+        setSupportActionBar(findViewById(R.id.mods_toolbar))
+
         // Enable the "back" icon in the action bar
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 

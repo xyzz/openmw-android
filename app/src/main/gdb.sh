@@ -18,4 +18,4 @@ echo "set solib-search-path ../../../buildscripts/symbols/$ABI/" >> gdb.exec
 echo "set history save on" >> gdb.exec
 echo "set breakpoint pending on" >> gdb.exec
 
-../../../buildscripts/toolchain/ndk/ndk-gdb --launch --nowait -x "gdb.exec"
+../../../buildscripts/toolchain/ndk/ndk-gdb --attach is.xyz.omw_nightly.debug -x "gdb.exec"

@@ -1,0 +1,18 @@
+diff --git a/src/sensor/android/SDL_androidsensor.c b/src/sensor/android/SDL_androidsensor.c
+index d7c0a7e2d..a8018d8a3 100644
+--- a/src/sensor/android/SDL_androidsensor.c
++++ b/src/sensor/android/SDL_androidsensor.c
+@@ -149,7 +149,12 @@ SDL_ANDROID_SensorOpen(SDL_Sensor *sensor, int device_index)
+         return SDL_SetError("Couldn't enable sensor");
+     }
+ 
+-    /* FIXME: What rate should we set for this sensor? 60 FPS? Let's try the default rate for now... */
++    {
++        int delay = ASensor_getMinDelay(hwdata->asensor);
++        /* No need to update gyroscope faster than 120 Hz */
++        delay = SDL_max(delay, 8333);
++        ASensorEventQueue_setEventRate(hwdata->eventqueue, hwdata->asensor, delay);
++    }
+ 
+     sensor->hwdata = hwdata;
+     return 0;

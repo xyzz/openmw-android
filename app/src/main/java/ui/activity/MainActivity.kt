@@ -29,6 +29,8 @@ import android.content.*
 import android.net.Uri
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.system.ErrnoException
+import android.system.Os
 import android.util.DisplayMetrics
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import androidx.appcompat.app.AppCompatActivity
@@ -73,6 +75,8 @@ class MainActivity : AppCompatActivity() {
         fragmentManager.beginTransaction()
             .replace(R.id.content_frame, FragmentSettings()).commit()
 
+        setSupportActionBar(findViewById(R.id.main_toolbar))
+
         val fab = findViewById<FloatingActionButton>(R.id.fab)
         fab.setOnClickListener { checkStartGame() }
 
@@ -114,7 +118,7 @@ class MainActivity : AppCompatActivity() {
      * Opens the url in a web browser and gracefully handles the failure
      * @param url Url to open
      */
-    private fun openUrl(url: String) {
+    fun openUrl(url: String) {
         try {
             val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
             startActivity(browserIntent)
@@ -356,6 +360,24 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        // set up gamma, if invalid, use the default (1.0)
+        var gamma = 1.0f
+        try {
+            gamma = prefs.getString("pref_gamma", "")!!.toFloat()
+        } catch (e: NumberFormatException) {
+            // Reset the invalid setting
+            with(prefs.edit()) {
+                putString("pref_gamma", "")
+                apply()
+            }
+        }
+
+        try {
+            Os.setenv("OPENMW_GAMMA", "%.2f".format(Locale.ROOT, gamma), true)
+        } catch (e: ErrnoException) {
+            // can't really do much if that fails...
+        }
+
         // If scaling didn't get set, determine it automatically
         if (scaling == 0f) {
             scaling = MyApp.app.defaultScaling
@@ -397,13 +419,6 @@ class MainActivity : AppCompatActivity() {
                 file.Writer.write(Constants.SETTINGS_DEFAULT_CFG, "scaling factor", "%.2f".format(Locale.ROOT, scaling))
 
                 file.Writer.write(Constants.SETTINGS_DEFAULT_CFG, "allow capsule shape", prefs!!.getString("pref_allowCapsuleShape", "true")!!)
-
-                file.Writer.write(Constants.SETTINGS_DEFAULT_CFG,
-                    "allow unsafe optimizations",
-                    prefs.getString("pref_unsafe_state_graph",
-                                    getString(R.string.pref_unsafe_state_graph_default))!!)
-
-                file.Writer.write(Constants.SETTINGS_DEFAULT_CFG, "preload enabled", prefs!!.getString("pref_preload", "false")!!)
 
                 runOnUiThread {
                     obtainFixedScreenResolution()

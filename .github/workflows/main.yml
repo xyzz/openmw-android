@@ -1,0 +1,62 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        arch: [arm, arm64, x86, x86_64]
+
+    runs-on: ubuntu-18.04
+
+    env:
+      CMAKE_VERSION: 3.11
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get install -y build-essential python unzip pkg-config p7zip-full
+        cd /home/runner/
+        wget https://cmake.org/files/v$CMAKE_VERSION/cmake-$CMAKE_VERSION.0-Linux-x86_64.tar.gz
+        tar xvf cmake-$CMAKE_VERSION.0-Linux-x86_64.tar.gz
+
+    - name: Build native libraries
+      run: |
+        export PATH=/home/runner/cmake-$CMAKE_VERSION.0-Linux-x86_64/bin/:$PATH
+        cd buildscripts
+        ./build.sh --arch ${{ matrix.arch }}
+
+    - name: Build the APK
+      run: |
+        ARCH=${{ matrix.arch }} source buildscripts/include/version.sh
+        sed -i "s/abiFilters.*/abiFilters '$ABI'/" app/build.gradle
+        export ANDROID_NDK_HOME=$(pwd)/buildscripts/toolchain/ndk/
+        ./gradlew assembleNightlyDebug
+
+    - name: Compress symbols
+      run: |
+        cd buildscripts
+        ./package-symbols.sh
+        mv symbols.7z ../symbols-$(git rev-parse --short "$GITHUB_SHA")-${{ matrix.arch }}.7z
+
+    - name: Collect outputs
+      id: getfilename
+      run: |
+        mv app/build/outputs/apk/nightly/debug/omw_debug_*.apk omw-debug-$(git rev-parse --short "$GITHUB_SHA")-${{ matrix.arch }}.apk
+        echo "::set-output name=apk_file::$(ls omw-debug-*.apk | sed 's/\(.*\)\..*/\1/')"
+        echo "::set-output name=symbols_file::$(ls symbols-*.7z | sed 's/\(.*\)\..*/\1/')"
+
+    - name: Upload the APK
+      uses: actions/upload-artifact@v1
+      with:
+        name: ${{ steps.getfilename.outputs.apk_file }}
+        path: ${{ steps.getfilename.outputs.apk_file }}.apk
+
+    - name: Upload debug symbols
+      uses: actions/upload-artifact@v1
+      with:
+        name: ${{ steps.getfilename.outputs.symbols_file }}
+        path: ${{ steps.getfilename.outputs.symbols_file }}.7z
