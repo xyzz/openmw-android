@@ -258,6 +258,9 @@ public class ChooserDialogFragment extends android.app.DialogFragment {
         storages.setMemoryAvailableSize(memoryUtil.formatSize(memoryUtil.getAvailableMemorySize(internalStoragePath)));
         storagesList.add(storages);
 
+        /* This is null on Android 11. Let's not crash here. */
+        if (volumeList == null)
+            return;
 
         for (File f : volumeList) {
             if (!f.getName().equals(MemoryUtil.SELF_DIR_NAME)
