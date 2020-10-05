@@ -36,6 +36,7 @@ append "export PATH=/home/ubuntu/cmake-$CMAKE_VERSION.0-Linux-x86_64/bin/:\$PATH
 append "cd /mnt"
 append "git clone https://github.com/xyzz/openmw-android.git"
 append "cd openmw-android/buildscripts"
+append "git checkout $(git rev-parse HEAD)"
 append "time ./full-build.sh"
 append "./package-symbols.sh"
 
