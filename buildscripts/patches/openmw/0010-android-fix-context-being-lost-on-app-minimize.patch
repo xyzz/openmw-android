@@ -4,74 +4,15 @@ Date: Sun, 28 Apr 2019 18:16:37 -0400
 Subject: [PATCH] android: fix context being lost on app minimize
 
 ---
- apps/openmw/android_main.cpp   | 39 ++++++++++++++++++++++++++++++++++
- apps/openmw/engine.cpp         |  8 +++++++
- components/debug/debugging.cpp |  5 +++++
- 3 files changed, 52 insertions(+)
+ apps/openmw/engine.cpp         | 8 ++++++++
+ components/debug/debugging.cpp | 5 +++++
+ 2 files changed, 13 insertions(+)
 
-diff --git a/apps/openmw/android_main.cpp b/apps/openmw/android_main.cpp
-index cc36388b0..1176384f2 100644
---- a/apps/openmw/android_main.cpp
-+++ b/apps/openmw/android_main.cpp
-@@ -1,10 +1,14 @@
- int stderr = 0; // Hack: fix linker error
- 
- #include "SDL_main.h"
-+#include "engine.hpp"
- #include <SDL_gamecontroller.h>
- #include <SDL_mouse.h>
- #include <SDL_events.h>
- 
-+#include <osg/GraphicsContext>
-+#include <osg/OperationThread>
-+
- /*******************************************************************************
-  Functions called by JNI
-  *******************************************************************************/
-@@ -54,3 +58,38 @@ extern "C" int Java_org_libsdl_app_SDLActivity_nativeInit(JNIEnv* env, jclass cl
- 
-     return 0;
- }
-+
-+extern osg::ref_ptr<osgViewer::Viewer> g_viewer;
-+static osg::GraphicsContext *ctx;
-+
-+class CtxReleaseOperation : public osg::Operation {
-+public:
-+    virtual void operator () (osg::Object* caller) {
-+        ctx->releaseContext();
-+    }
-+};
-+
-+class CtxAcquireOperation : public osg::Operation {
-+public:
-+    virtual void operator () (osg::Object* caller) {
-+        ctx->makeCurrent();
-+    }
-+};
-+
-+extern "C" void Java_org_libsdl_app_SDLActivity_omwSurfaceDestroyed(JNIEnv *env, jclass cls, jobject obj) {
-+    if (!g_viewer)
-+        return;
-+
-+    osg::ref_ptr<CtxReleaseOperation> op = new CtxReleaseOperation();
-+    ctx = g_viewer->getCamera()->getGraphicsContext();
-+    ctx->add(op);
-+}
-+
-+extern "C" void Java_org_libsdl_app_SDLActivity_omwSurfaceRecreated(JNIEnv *env, jclass cls, jobject obj) {
-+    if (!g_viewer)
-+        return;
-+
-+    osg::ref_ptr<CtxAcquireOperation> op = new CtxAcquireOperation();
-+    ctx = g_viewer->getCamera()->getGraphicsContext();
-+    ctx->add(op);
-+}
 diff --git a/apps/openmw/engine.cpp b/apps/openmw/engine.cpp
-index 1c95ccc93..25f37d953 100644
+index 012ab8f59..84b6d60b2 100644
 --- a/apps/openmw/engine.cpp
 +++ b/apps/openmw/engine.cpp
-@@ -336,6 +336,9 @@ std::string OMW::Engine::loadSettings (Settings::Manager & settings)
+@@ -482,6 +482,9 @@ std::string OMW::Engine::loadSettings (Settings::Manager & settings)
      return settingspath;
  }
  
@@ -81,17 +22,17 @@ index 1c95ccc93..25f37d953 100644
  void OMW::Engine::createWindow(Settings::Manager& settings)
  {
      int screen = settings.getInt("screen", "Video");
-@@ -433,6 +436,9 @@ void OMW::Engine::createWindow(Settings::Manager& settings)
+@@ -599,6 +602,9 @@ void OMW::Engine::createWindow(Settings::Manager& settings)
      mViewer->realize();
  
-     mViewer->getEventQueue()->getCurrentEventState()->setWindowRectangle(0, 0, traits->width, traits->height);
+     mViewer->getEventQueue()->getCurrentEventState()->setWindowRectangle(0, 0, graphicsWindow->getTraits()->width, graphicsWindow->getTraits()->height);
 +
 +    // To share the viewer with Android interfaces
 +    g_viewer = mViewer;
  }
  
  void OMW::Engine::setWindowIcon()
-@@ -764,6 +770,8 @@ void OMW::Engine::go()
+@@ -942,6 +948,8 @@ void OMW::Engine::go()
          mEnvironment.limitFrameRate(frameTimer.time_s());
      }
  
@@ -101,7 +42,7 @@ index 1c95ccc93..25f37d953 100644
      settings.saveUser(settingspath);
  
 diff --git a/components/debug/debugging.cpp b/components/debug/debugging.cpp
-index 28446ccc7..9c9a8ddf0 100644
+index dfed077e3..75fca4e3c 100644
 --- a/components/debug/debugging.cpp
 +++ b/components/debug/debugging.cpp
 @@ -8,6 +8,8 @@
@@ -122,7 +63,7 @@ index 28446ccc7..9c9a8ddf0 100644
  int wrapApplication(int (*innerApplication)(int argc, char *argv[]), int argc, char *argv[], const std::string& appName)
  {
  #if defined _WIN32
-@@ -138,6 +142,7 @@ int wrapApplication(int (*innerApplication)(int argc, char *argv[]), int argc, c
+@@ -139,6 +143,7 @@ int wrapApplication(int (*innerApplication)(int argc, char *argv[]), int argc, c
      }
      catch (std::exception& e)
      {
@@ -131,5 +72,5 @@ index 28446ccc7..9c9a8ddf0 100644
          if (!isatty(fileno(stdin)))
  #endif
 -- 
-2.19.2
+2.28.0
 
