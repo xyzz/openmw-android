@@ -5,7 +5,8 @@ set -e
 REMOTE=$1
 PEM=$2
 
-CMAKE_VERSION="3.11"
+CMAKE_VERSION="3.18.4"
+CMAKE_HASH="149e0cee002e59e0bb84543cf3cb099f108c08390392605e944daeb6594cbc29"
 
 if [[ $REMOTE = "" || $PEM = "" ]]; then
 	echo "Usage: ./ssh-build.sh HOST-IP PEM-FILE"
@@ -15,6 +16,9 @@ fi
 append() {
 	echo $1 >> tmp_script.sh
 }
+
+CMAKE_DIR="cmake-$CMAKE_VERSION-Linux-x86_64"
+CMAKE_FILE="$CMAKE_DIR.tar.gz"
 
 rm -rf ../app/src/main/jniLibs/
 rm -rf ../app/wrap/
@@ -29,10 +33,11 @@ append "sudo DEBIAN_FRONTEND=noninteractive apt-get upgrade -yq"
 append "sudo apt -y install build-essential htop python unzip pkg-config p7zip-full"
 append "sudo umount /mnt || true"
 append "sudo mount -t tmpfs -o size=64G tmpfs /mnt"
-append "wget https://cmake.org/files/v$CMAKE_VERSION/cmake-$CMAKE_VERSION.0-Linux-x86_64.tar.gz"
-append "tar xvf cmake-$CMAKE_VERSION.0-Linux-x86_64.tar.gz"
+append "wget https://github.com/Kitware/CMake/releases/download/v$CMAKE_VERSION/$CMAKE_FILE"
+append "echo '$CMAKE_HASH $CMAKE_FILE' | sha256sum -c - || exit 1"
+append "tar xvf $CMAKE_FILE"
 append "cd /home/ubuntu/"
-append "export PATH=/home/ubuntu/cmake-$CMAKE_VERSION.0-Linux-x86_64/bin/:\$PATH"
+append "export PATH=/home/ubuntu/$CMAKE_DIR/bin/:\$PATH"
 append "cd /mnt"
 append "git clone https://github.com/xyzz/openmw-android.git"
 append "cd openmw-android/buildscripts"
