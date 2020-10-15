@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-18.04
 
     env:
-      CMAKE_VERSION: 3.11
+      CMAKE_VERSION: 3.18.4
 
     steps:
     - uses: actions/checkout@v2
@@ -20,12 +20,12 @@ jobs:
       run: |
         sudo apt-get install -y build-essential python unzip pkg-config p7zip-full
         cd /home/runner/
-        wget https://cmake.org/files/v$CMAKE_VERSION/cmake-$CMAKE_VERSION.0-Linux-x86_64.tar.gz
-        tar xvf cmake-$CMAKE_VERSION.0-Linux-x86_64.tar.gz
+        wget https://github.com/Kitware/CMake/releases/download/v$CMAKE_VERSION/cmake-$CMAKE_VERSION-Linux-x86_64.tar.gz
+        tar xvf cmake-$CMAKE_VERSION-Linux-x86_64.tar.gz
 
     - name: Build native libraries
       run: |
-        export PATH=/home/runner/cmake-$CMAKE_VERSION.0-Linux-x86_64/bin/:$PATH
+        export PATH=/home/runner/cmake-$CMAKE_VERSION-Linux-x86_64/bin/:$PATH
         cd buildscripts
         ./build.sh --arch ${{ matrix.arch }}
 
