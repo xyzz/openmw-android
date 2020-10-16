@@ -14,3 +14,4 @@ captures
 output.json
 .ccls-cache
 app/nightly
+app/mainline
