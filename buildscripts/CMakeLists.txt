@@ -44,6 +44,10 @@ set(GL4ES_HASH SHA256=b565e717c7d192e936bda25f3cb90ad8db398af56414ec08294b671657
 set(OSG_VERSION 3.6.5)
 set(OSG_HASH SHA256=aea196550f02974d6d09291c5d83b51ca6a03b3767e234a8c0e21322927d1e12)
 
+# https://github.com/lz4/lz4
+set(LZ4_VERSION 1.9.2)
+set(LZ4_HASH )
+
 # https://github.com/OpenMW/openmw/commits/master
 set(OPENMW_VERSION 6326bb7d2e3b4b89250793dcac1a20f1c53bbc3a)
 set(OPENMW_HASH SHA256=7522d9ad37927dedc97d9b77deb5a6bca8877c000644f8bc042f7b68d74c0b48)
@@ -348,6 +352,21 @@ ExternalProject_Add(mygui
 	INSTALL_COMMAND ${wrapper_command} $(MAKE) install
 )
 
+ExternalProject_Add(lz4
+		URL https://github.com/lz4/lz4/archive/v${LZ4_VERSION}.tar.gz
+		https://github.com/xyzz/openmw-deps/releases/download/v0/v${LZ4_VERSION}.tar.gz
+		URL_HASH ${LZ4_HASH}
+		DOWNLOAD_DIR ${download_dir}
+
+		CONFIGURE_COMMAND ${wrapper_command} cmake <SOURCE_DIR>/contrib/cmake_unofficial/
+		${COMMON_CMAKE_ARGS}
+		-DBUILD_STATIC_LIBS=ON
+
+		BUILD_COMMAND ${wrapper_command} $(MAKE)
+
+		INSTALL_COMMAND ${wrapper_command} $(MAKE) install
+		)
+
 set(OSG_COMMON
 	-DOPENGL_PROFILE="GL1"
 	-DDYNAMIC_OPENTHREADS=OFF
@@ -442,7 +461,7 @@ set(OPENMW_PATCH
 )
 
 ExternalProject_Add(openmw
-	DEPENDS boost openal osg mygui ffmpeg sdl2 bullet
+	DEPENDS boost openal osg mygui ffmpeg sdl2 bullet lz4
 
 	URL https://github.com/OpenMW/openmw/archive/${OPENMW_VERSION}.tar.gz
 	URL_HASH ${OPENMW_HASH}
