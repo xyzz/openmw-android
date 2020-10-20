@@ -361,7 +361,7 @@ ExternalProject_Add(lz4
 	CONFIGURE_COMMAND ${wrapper_command} cmake <SOURCE_DIR>/contrib/cmake_unofficial/
 	${COMMON_CMAKE_ARGS}
 	-DBUILD_STATIC_LIBS=ON
-	-BUILD_SHARED_LIBS=OFF
+	-DBUILD_SHARED_LIBS=OFF
 
 	BUILD_COMMAND ${wrapper_command} $(MAKE)
 
