@@ -49,8 +49,8 @@ set(LZ4_VERSION 1.9.2)
 set(LZ4_HASH SHA256=658ba6191fa44c92280d4aa2c271b0f4fbc0e34d249578dd05e50e76d0e5efcc)
 
 # https://github.com/OpenMW/openmw/commits/master
-set(OPENMW_VERSION 6326bb7d2e3b4b89250793dcac1a20f1c53bbc3a)
-set(OPENMW_HASH SHA256=7522d9ad37927dedc97d9b77deb5a6bca8877c000644f8bc042f7b68d74c0b48)
+set(OPENMW_VERSION 86fad60c7dec2ae79ab2005631bd3d481a92d938)
+set(OPENMW_HASH SHA256=0c459832ced8e751458d615dc5757c0cb70768976f625e525c5d8a63a3c595c5)
 
 # End of configurable options
 
@@ -453,7 +453,6 @@ set(OPENMW_PATCH
 	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/0004-getUVBuffer-pre-set-array-binding-to-avoid-thread-ra.patch &&
 	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/0005-android-Revert-UI-dimensions.patch &&
 	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/0006-Add-an-option-to-enable-simple-bounding-box.patch &&
-	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/0007-android-Fix-red-sky-after-shadows-merge.patch &&
 	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/0009-windowmanagerimp-always-show-mouse-when-possible-pat.patch &&
     patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/0010-android-fix-context-being-lost-on-app-minimize.patch &&
 	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/0013-android-Update-default-settings-for-android.patch &&
