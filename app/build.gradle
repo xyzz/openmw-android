@@ -12,7 +12,7 @@ ext {
 }
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
 
     sourceSets {
         main {
@@ -31,8 +31,8 @@ android {
         versionName calculateVersion()
 
         minSdkVersion 21
-        // Do not update past 28 -- see https://github.com/xyzz/openmw-android/issues/30
-        targetSdkVersion 28
+        // Do not update past 29 -- see https://github.com/xyzz/openmw-android/issues/30
+        targetSdkVersion 29
 
         ndk {
             abiFilters "arm64-v8a", "armeabi-v7a", "x86", "x86_64"
