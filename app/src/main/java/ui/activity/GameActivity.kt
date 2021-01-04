@@ -69,7 +69,7 @@ class GameActivity : SDLActivity() {
     override fun loadLibraries() {
         prefs = PreferenceManager.getDefaultSharedPreferences(this)
         val graphicsLibrary = prefs!!.getString("pref_graphicsLibrary_v2", "")
-        val physicsFPS = prefs!!.getString("pref_physicsFPS", "")
+        val physicsFPS = prefs!!.getString("pref_physicsFPS2", "")
         if (!physicsFPS!!.isEmpty()) {
             try {
                 Os.setenv("OPENMW_PHYSICS_FPS", physicsFPS, true)

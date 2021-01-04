@@ -8,19 +8,19 @@ Subject: [PATCH] android: Update default settings for android
  1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/files/settings-default.cfg b/files/settings-default.cfg
-index b3cf951c1..5405393b4 100644
+index 09cd88245..7b4a5bba2 100644
 --- a/files/settings-default.cfg
 +++ b/files/settings-default.cfg
 @@ -23,7 +23,7 @@ small feature culling pixel size = 2.0
  
  # Maximum visible distance. Caution: this setting
  # can dramatically affect performance, see documentation for details.
--viewing distance = 6656.0
+-viewing distance = 7168.0
 +viewing distance = 2048.0
  
  # Camera field of view in degrees (e.g. 30.0 to 110.0).
  # Does not affect the player's hands in the first person camera.
-@@ -343,7 +343,7 @@ terrain specular map pattern = _diffusespec
+@@ -448,13 +448,13 @@ radial fog = false
  grab cursor = true
  
  # Key controlling sneak toggles setting instead of being held down.
@@ -29,8 +29,6 @@ index b3cf951c1..5405393b4 100644
  
  # Player is running by default.
  always run = false
-@@ -352,7 +352,7 @@ always run = false
- allow third person zoom = false
  
  # Camera sensitivity when not in GUI mode. (>0.0, e.g. 0.1 to 5.0).
 -camera sensitivity = 1.0
@@ -39,5 +37,5 @@ index b3cf951c1..5405393b4 100644
  # Vertical camera sensitivity multiplier when not in GUI mode.
  # (>0.0, Because it's a multiplier values should be near 1.0)
 -- 
-2.19.2
+2.30.0
 

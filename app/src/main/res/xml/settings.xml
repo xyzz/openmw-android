@@ -88,12 +88,12 @@
 
     <PreferenceCategory android:title="@string/category_performance">
         <ListPreference
-            android:key="pref_physicsFPS"
-            android:title="@string/pref_physicsFPS"
-            android:dialogTitle="@string/pref_physicsFPS"
-            android:entries="@array/pref_physicsFPS_entries"
-            android:entryValues="@array/pref_physicsFPS_entries"
-            android:defaultValue="@string/pref_physicsFPS_default"
+            android:key="pref_physicsFPS2"
+            android:title="@string/pref_physicsFPS2"
+            android:dialogTitle="@string/pref_physicsFPS2"
+            android:entries="@array/pref_physicsFPS2_entries"
+            android:entryValues="@array/pref_physicsFPS2_entries"
+            android:defaultValue="@string/pref_physicsFPS2_default"
             android:summary="%s"
             />
 
