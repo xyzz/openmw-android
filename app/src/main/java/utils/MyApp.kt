@@ -1,13 +1,17 @@
 package utils
 
 import android.app.Application
+import android.content.pm.PackageManager
 import android.os.Environment
 import android.preference.PreferenceManager
-import constants.Constants
-import java.io.File
+import android.util.Base64
+import android.util.Log
 import com.bugsnag.android.Bugsnag
 import com.bugsnag.android.Configuration
 import com.libopenmw.openmw.BuildConfig
+import constants.Constants
+import java.io.File
+import java.security.MessageDigest
 
 class MyApp : Application() {
 
@@ -34,7 +38,7 @@ class MyApp : Application() {
 
         // Enable bugsnag only when API key is provided and we have user consent
         // Also don't enable bugsnag in debug builds
-        if (BugsnagApiKey.API_KEY.isNotEmpty() && !BuildConfig.DEBUG) {
+        if (isProductionBuild() && BugsnagApiKey.API_KEY.isNotEmpty() && !BuildConfig.DEBUG) {
             haveBugsnagApiKey = true
 
             val prefs = PreferenceManager.getDefaultSharedPreferences(this)
@@ -45,6 +49,14 @@ class MyApp : Application() {
                 reportCrashes = true
             }
         }
+    }
+
+    private fun isProductionBuild(): Boolean {
+        val sig = applicationContext.packageManager.getPackageInfo(applicationContext.packageName, PackageManager.GET_SIGNATURES).signatures[0]
+        val digest: MessageDigest = MessageDigest.getInstance("SHA-256")
+        val hashBytes: ByteArray = digest.digest(sig.toByteArray())
+        val hash: String = Base64.encodeToString(hashBytes, Base64.NO_WRAP)
+        return hash == "cOqSYH3ucLraOQ7wyg/v8UKTGHlxP8N8JTN6UXO7rV0="
     }
 
     companion object {
