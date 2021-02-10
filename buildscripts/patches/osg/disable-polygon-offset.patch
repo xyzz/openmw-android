@@ -1,0 +1,15 @@
+diff --git a/include/osg/PolygonOffset b/include/osg/PolygonOffset
+index 15ad397e9..613222a03 100644
+--- a/include/osg/PolygonOffset
++++ b/include/osg/PolygonOffset
+@@ -57,10 +57,6 @@ class OSG_EXPORT PolygonOffset : public StateAttribute
+         virtual bool getModeUsage(StateAttribute::ModeUsage& usage) const
+         {
+             usage.usesMode(GL_POLYGON_OFFSET_FILL);
+-#if !defined(OSG_GLES1_AVAILABLE) && !defined(OSG_GLES2_AVAILABLE)
+-            usage.usesMode(GL_POLYGON_OFFSET_LINE);
+-            usage.usesMode(GL_POLYGON_OFFSET_POINT);
+-#endif
+             return true;
+         }
+ 
