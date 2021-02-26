@@ -49,8 +49,8 @@ set(LZ4_VERSION 1.9.2)
 set(LZ4_HASH SHA256=658ba6191fa44c92280d4aa2c271b0f4fbc0e34d249578dd05e50e76d0e5efcc)
 
 # https://github.com/OpenMW/openmw/commits/master
-set(OPENMW_VERSION 4b7d00530da0244f89e2b66c3eb1d0461bcc5327)
-set(OPENMW_HASH SHA256=71fd8fa44499e48758d4031259165e53a51226802d1049955da2631642194f62)
+set(OPENMW_VERSION 28be5a259b0afa1d720dac39df698831b9e99cbb)
+set(OPENMW_HASH SHA256=44d044ad0a5546216fe611fe92c37065bb07e2efeeeaac4f049dae03df313186)
 
 # End of configurable options
 
@@ -456,6 +456,7 @@ set(OPENMW_PATCH
 	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/0013-android-Update-default-settings-for-android.patch &&
 	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/0014-settingswindow-save-user-settings-file-when-ok-is-pr.patch &&
 	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/0012-components-misc-stringops-use-boost-format-instead-o.patch &&
+	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/fix-build.patch &&
 	cp ${CMAKE_SOURCE_DIR}/patches/openmw/android_main.cpp <SOURCE_DIR>/apps/openmw/android_main.cpp
 )
 

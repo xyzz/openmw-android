@@ -1,0 +1,15 @@
+diff --git a/apps/openmw/CMakeLists.txt b/apps/openmw/CMakeLists.txt
+index 1c11825ef..a66c4d39b 100644
+--- a/apps/openmw/CMakeLists.txt
++++ b/apps/openmw/CMakeLists.txt
+@@ -158,7 +158,9 @@ if(OSG_STATIC)
+ endif(OSG_STATIC)
+ 
+ if (ANDROID)
+-    target_link_libraries(openmw EGL android log z)
++    find_package(OSGPlugins REQUIRED COMPONENTS ${USED_OSG_PLUGINS})
++    list(APPEND OPENSCENEGRAPH_LIBRARIES ${OSGPlugins_LIBRARIES})
++    target_link_libraries(openmw EGL android log z ${OPENSCENEGRAPH_LIBRARIES} freetype jpeg png)
+ endif (ANDROID)
+ 
+ if (USE_SYSTEM_TINYXML)
