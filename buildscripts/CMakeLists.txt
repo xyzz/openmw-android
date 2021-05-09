@@ -9,28 +9,28 @@ set(LIBPNG_VERSION 1.6.37)
 set(LIBPNG_HASH SHA256=505e70834d35383537b6491e7ae8641f1a4bed1876dbfe361201fc80868d88ca)
 
 # https://www.freetype.org/index.html#news
-set(FREETYPE2_VERSION 2.10.2)
-set(FREETYPE2_HASH SHA256=e09aa914e4f7a5d723ac381420949c55c0b90b15744adce5d1406046022186ab)
+set(FREETYPE2_VERSION 2.10.4)
+set(FREETYPE2_HASH SHA256=5eab795ebb23ac77001cfb68b7d4d50b5d6c7469247b0b01b2c953269f658dac)
 
 # https://github.com/kcat/openal-soft/releases
-set(OPENAL_VERSION 1.19.1)
-set(OPENAL_HASH SHA256=9f3536ab2bb7781dbafabc6a61e0b34b17edd16bd6c2eaf2ae71bc63078f98c7)
+set(OPENAL_VERSION 1.21.1)
+set(OPENAL_HASH SHA256=8ac17e4e3b32c1af3d5508acfffb838640669b4274606b7892aa796ca9d7467f)
 
 # http://www.boost.org/users/download/
 set(BOOST_VERSION 1.69.0)
 set(BOOST_HASH SHA256=8f32d4617390d1c2d16f26a27ab60d97807b35440d45891fa340fc2648b04406)
 
 # https://www.ffmpeg.org/download.html
-set(FFMPEG_VERSION 4.3.1)
-set(FFMPEG_HASH SHA256=f4a4ac63946b6eee3bbdde523e298fca6019d048d6e1db0d1439a62cea65f0d9)
+set(FFMPEG_VERSION 4.4)
+set(FFMPEG_HASH SHA256=42093549751b582cf0f338a21a3664f52e0a9fbe0d238d3c992005e493607d0e)
 
 # https://www.libsdl.org/download-2.0.php
 set(SDL2_VERSION 2.0.12)
 set(SDL2_HASH SHA256=349268f695c02efbc9b9148a70b85e58cefbbf704abd3e91be654db7f1e2c863)
 
 # https://github.com/bulletphysics/bullet3/releases
-set(BULLET_VERSION 2.89)
-set(BULLET_HASH SHA256=621b36e91c0371933f3c2156db22c083383164881d2a6b84636759dc4cbb0bb8)
+set(BULLET_VERSION 3.17)
+set(BULLET_HASH SHA256=baa642c906576d4d98d041d0acb80d85dd6eff6e3c16a009b1abf1ccd2bc0a61)
 
 # https://github.com/MyGUI/mygui/releases
 set(MYGUI_VERSION 3.4.0)
@@ -45,8 +45,8 @@ set(OSG_VERSION 3.6.5)
 set(OSG_HASH SHA256=aea196550f02974d6d09291c5d83b51ca6a03b3767e234a8c0e21322927d1e12)
 
 # https://github.com/lz4/lz4/releases
-set(LZ4_VERSION 1.9.2)
-set(LZ4_HASH SHA256=658ba6191fa44c92280d4aa2c271b0f4fbc0e34d249578dd05e50e76d0e5efcc)
+set(LZ4_VERSION 1.9.3)
+set(LZ4_HASH SHA256=030644df4611007ff7dc962d981f390361e6c97a34e5cbc393ddfbe019ffe2c1)
 
 # https://github.com/OpenMW/openmw/commits/master
 set(OPENMW_VERSION 28be5a259b0afa1d720dac39df698831b9e99cbb)
@@ -168,12 +168,10 @@ ExternalProject_Add(freetype2
 )
 
 ExternalProject_Add(openal
-	URL https://github.com/kcat/openal-soft/archive/openal-soft-${OPENAL_VERSION}.tar.gz
+	URL https://github.com/kcat/openal-soft/archive/${OPENAL_VERSION}.tar.gz
 	https://github.com/xyzz/openmw-deps/releases/download/v0/openal-soft-${OPENAL_VERSION}.tar.gz
 	URL_HASH ${OPENAL_HASH}
 	DOWNLOAD_DIR ${download_dir}
-
-	PATCH_COMMAND patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openal-unset-compiler.patch
 
 	CONFIGURE_COMMAND ${wrapper_command} cmake <SOURCE_DIR>
 	${COMMON_CMAKE_ARGS}
@@ -359,7 +357,7 @@ ExternalProject_Add(lz4
 	URL_HASH ${LZ4_HASH}
 	DOWNLOAD_DIR ${download_dir}
 
-	CONFIGURE_COMMAND ${wrapper_command} cmake <SOURCE_DIR>/contrib/cmake_unofficial/
+	CONFIGURE_COMMAND ${wrapper_command} cmake <SOURCE_DIR>/build/cmake/
 	${COMMON_CMAKE_ARGS}
 	-DBUILD_STATIC_LIBS=ON
 	-DBUILD_SHARED_LIBS=OFF
