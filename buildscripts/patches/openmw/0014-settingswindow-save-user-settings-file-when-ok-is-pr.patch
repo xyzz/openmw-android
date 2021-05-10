@@ -10,11 +10,11 @@ Subject: [PATCH] settingswindow: save user settings file when "ok" is pressed
  3 files changed, 9 insertions(+), 1 deletion(-)
 
 diff --git a/apps/openmw/main.cpp b/apps/openmw/main.cpp
-index 51a256345..a2522c98e 100644
+index 709ffda2c..cfc5db224 100644
 --- a/apps/openmw/main.cpp
 +++ b/apps/openmw/main.cpp
-@@ -243,6 +243,8 @@ bool parseOptions (int argc, char** argv, OMW::Engine& engine, Files::Configurat
-     return true;
+@@ -278,6 +278,8 @@ namespace
+     };
  }
  
 +Files::ConfigurationManager *g_cfgMgr;
@@ -22,27 +22,27 @@ index 51a256345..a2522c98e 100644
  int runApplication(int argc, char *argv[])
  {
  #ifdef __APPLE__
-@@ -252,6 +254,7 @@ int runApplication(int argc, char *argv[])
- #endif
+@@ -288,6 +290,7 @@ int runApplication(int argc, char *argv[])
  
+     osg::setNotifyHandler(new OSGLogHandler());
      Files::ConfigurationManager cfgMgr;
 +    g_cfgMgr = &cfgMgr;
      std::unique_ptr<OMW::Engine> engine;
      engine.reset(new OMW::Engine(cfgMgr));
  
 diff --git a/apps/openmw/mwgui/settingswindow.cpp b/apps/openmw/mwgui/settingswindow.cpp
-index c1483ff73..39662d31c 100644
+index 3b4afc852..a05f80b4c 100644
 --- a/apps/openmw/mwgui/settingswindow.cpp
 +++ b/apps/openmw/mwgui/settingswindow.cpp
-@@ -19,6 +19,7 @@
- #include <components/misc/constants.hpp>
- #include <components/widgets/sharedstatebutton.hpp>
- #include <components/settings/settings.hpp>
+@@ -21,6 +21,7 @@
+ #include <components/resource/resourcesystem.hpp>
+ #include <components/resource/scenemanager.hpp>
+ #include <components/sceneutil/lightmanager.hpp>
 +#include <components/files/configurationmanager.hpp>
  
  #include "../mwbase/environment.hpp"
  #include "../mwbase/world.hpp"
-@@ -107,6 +108,8 @@ namespace
+@@ -125,6 +126,8 @@ namespace
      }
  }
  
@@ -50,8 +50,8 @@ index c1483ff73..39662d31c 100644
 +
  namespace MWGui
  {
-     void SettingsWindow::configureWidgets(MyGUI::Widget* widget)
-@@ -287,6 +290,8 @@ namespace MWGui
+     void SettingsWindow::configureWidgets(MyGUI::Widget* widget, bool init)
+@@ -324,6 +327,8 @@ namespace MWGui
  
      void SettingsWindow::onOkButtonClicked(MyGUI::Widget* _sender)
      {
@@ -61,7 +61,7 @@ index c1483ff73..39662d31c 100644
      }
  
 diff --git a/components/settings/settings.hpp b/components/settings/settings.hpp
-index 3d1cabede..4b0a83cc7 100644
+index ecc5aa5fd..6f20535be 100644
 --- a/components/settings/settings.hpp
 +++ b/components/settings/settings.hpp
 @@ -32,7 +32,7 @@ namespace Settings
@@ -74,5 +74,5 @@ index 3d1cabede..4b0a83cc7 100644
  
          static void resetPendingChange(const std::string &setting, const std::string &category);
 -- 
-2.21.0
+2.31.1
 
