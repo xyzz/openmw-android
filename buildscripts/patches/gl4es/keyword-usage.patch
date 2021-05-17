@@ -1,0 +1,12 @@
+diff --git a/Android.mk b/Android.mk
+index ae9d41f..b3c8b7a 100755
+--- a/Android.mk
++++ b/Android.mk
+@@ -93,6 +93,7 @@ LOCAL_CFLAGS += -DNOX11
+ LOCAL_CFLAGS += -DNO_GBM
+ #LOCAL_CFLAGS += -DNO_INIT_CONSTRUCTOR
+ #LOCAL_CFLAGS += -DDEFAULT_ES=2
++LOCAL_CFLAGS += -Dasm=__asm__ -Dvolatile=__volatile__
+ 
+ LOCAL_LDLIBS := -ldl -llog
+ 
