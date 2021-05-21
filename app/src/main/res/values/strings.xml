@@ -92,21 +92,6 @@
 
     <string name="pref_physicsFPS2_default">30</string>
 
-    <string name="pref_allowCapsuleShape">Force a simple collision box for actors</string>
-
-    <!-- Oops. This has inverted true/false between entries and values -->
-    <string-array name="pref_allowCapsuleShape_entries">
-        <item>Yes</item>
-        <item>No</item>
-    </string-array>
-
-    <string-array name="pref_allowCapsuleShape_values">
-        <item>false</item>
-        <item>true</item>
-    </string-array>
-
-    <string name="pref_allowCapsuleShape_default">false</string>
-
     <string name="pref_preload">Preloading</string>
     <string-array name="pref_preload_entries">
         <item>Enabled</item>
