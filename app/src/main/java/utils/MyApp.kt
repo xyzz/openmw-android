@@ -28,7 +28,7 @@ class MyApp : Application() {
         Constants.USER_FILE_STORAGE = Environment.getExternalStorageDirectory().toString() + "/$slug/"
         Constants.USER_CONFIG = "${Constants.USER_FILE_STORAGE}/config"
         Constants.USER_OPENMW_CFG =  "${Constants.USER_CONFIG}/openmw.cfg"
-        Constants.SETTINGS_DEFAULT_CFG = File(filesDir, "config/settings-default.cfg").absolutePath
+        Constants.DEFAULTS_BIN = File(filesDir, "config/defaults.bin").absolutePath
         Constants.OPENMW_CFG = File(filesDir, "config/openmw.cfg").absolutePath
         Constants.OPENMW_BASE_CFG = File(filesDir, "config/openmw.base.cfg").absolutePath
         Constants.OPENMW_FALLBACK_CFG = File(filesDir, "config/openmw.fallback.cfg").absolutePath

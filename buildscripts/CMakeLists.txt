@@ -49,8 +49,8 @@ set(LZ4_VERSION 1.9.3)
 set(LZ4_HASH SHA256=030644df4611007ff7dc962d981f390361e6c97a34e5cbc393ddfbe019ffe2c1)
 
 # https://github.com/OpenMW/openmw/commits/master
-set(OPENMW_VERSION e65b285f062089ae113331531980c426c149d82c)
-set(OPENMW_HASH SHA256=a5f34fca02fb62c2475df3fd4c4e34d91458625630217c38a1e697d9570945db)
+set(OPENMW_VERSION f27d7c66ff61502a70b2f93bde6d8942c16ec1c3)
+set(OPENMW_HASH SHA256=f07e97bf49c4a9710a5d7b967792e9addc0b4c054ad24bbcdea1a1e5a1daf5e0)
 
 # End of configurable options
 
@@ -449,10 +449,8 @@ set(OPENMW_COMMON
 set(OPENMW_PATCH
 	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/gamma.patch &&
 	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/0001-loadingscreen-disable-for-now.patch &&
-	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/0005-android-Revert-UI-dimensions.patch &&
 	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/0009-windowmanagerimp-always-show-mouse-when-possible-pat.patch &&
     patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/0010-android-fix-context-being-lost-on-app-minimize.patch &&
-	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/0013-android-Update-default-settings-for-android.patch &&
 	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/0014-settingswindow-save-user-settings-file-when-ok-is-pr.patch &&
 	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/0012-components-misc-stringops-use-boost-format-instead-o.patch &&
 	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/fix-build.patch &&

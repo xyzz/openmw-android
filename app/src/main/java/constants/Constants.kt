@@ -37,8 +37,8 @@ object Constants {
     // e.g. /sdcard/omw
     var USER_FILE_STORAGE = ""
 
-    // e.g. /data/data/is.xyz.omw/files/config/settings-default.cfg
-    var SETTINGS_DEFAULT_CFG = ""
+    // e.g. /data/data/is.xyz.omw/files/config/defaults.bin
+    var DEFAULTS_BIN = ""
 
     // e.g. /data/data/is.xyz.omw/files/config/openmw.cfg
     var OPENMW_CFG = ""

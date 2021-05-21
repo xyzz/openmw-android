@@ -346,6 +346,21 @@ class MainActivity : AppCompatActivity() {
         deleteRecursive(File(Constants.USER_CONFIG))
     }
 
+    private fun configureDefaultsBin(args: Map<String, String>) {
+        val defaults = File(Constants.DEFAULTS_BIN).readText()
+        val decoded = String(Base64.getDecoder().decode(defaults))
+        val lines = decoded.lines().map {
+            for ((k, v) in args) {
+                if (it.startsWith("$k ="))
+                    return@map "$k = $v"
+            }
+            it
+        }
+        val data = lines.joinToString("\n")
+        val encoded = Base64.getEncoder().encodeToString(data.toByteArray())
+        File(Constants.DEFAULTS_BIN).writeText(encoded)
+    }
+
     private fun startGame() {
         // Get scaling factor from config; if invalid or not provided, generate one
         var scaling = 0f
@@ -416,7 +431,59 @@ class MainActivity : AppCompatActivity() {
 
                 file.Writer.write(Constants.OPENMW_CFG, "encoding", prefs!!.getString("pref_encoding", GameInstaller.DEFAULT_CHARSET_PREF)!!)
 
-                file.Writer.write(Constants.SETTINGS_DEFAULT_CFG, "scaling factor", "%.2f".format(Locale.ROOT, scaling))
+                configureDefaultsBin(mapOf(
+                        "scaling factor" to "%.2f".format(Locale.ROOT, scaling),
+                        // android-specific defaults
+                        "viewing distance" to "2048.0",
+                        "toggle sneak" to "true",
+                        "camera sensitivity" to "0.4",
+                        // and a bunch of windows positioning
+                        "stats x" to "0.0",
+                        "stats y" to "0.0",
+                        "stats w" to "0.375",
+                        "stats h" to "0.4275",
+                        "spells x" to "0.625",
+                        "spells y" to "0.5725",
+                        "spells w" to "0.375",
+                        "spells h" to "0.4275",
+                        "map x" to "0.625",
+                        "map y" to "0.0",
+                        "map w" to "0.375",
+                        "map h" to "0.5725",
+                        "inventory y" to "0.4275",
+                        "inventory w" to "0.6225",
+                        "inventory h" to "0.5725",
+                        "inventory container x" to "0.0",
+                        "inventory container y" to "0.4275",
+                        "inventory container w" to "0.6225",
+                        "inventory container h" to "0.5725",
+                        "inventory barter x" to "0.0",
+                        "inventory barter y" to "0.4275",
+                        "inventory barter w" to "0.6225",
+                        "inventory barter h" to "0.5725",
+                        "inventory companion x" to "0.0",
+                        "inventory companion y" to "0.4275",
+                        "inventory companion w" to "0.6225",
+                        "inventory companion h" to "0.5725",
+                        "dialogue x" to "0.095",
+                        "dialogue y" to "0.095",
+                        "dialogue w" to "0.810",
+                        "dialogue h" to "0.890",
+                        "console x" to "0.0",
+                        "console y" to "0.0",
+                        "container x" to "0.25",
+                        "container y" to "0.0",
+                        "container w" to "0.75",
+                        "container h" to "0.375",
+                        "barter x" to "0.25",
+                        "barter y" to "0.0",
+                        "barter w" to "0.75",
+                        "barter h" to "0.375",
+                        "companion x" to "0.25",
+                        "companion y" to "0.0",
+                        "companion w" to "0.75",
+                        "companion h" to "0.375"
+                ))
 
                 runOnUiThread {
                     obtainFixedScreenResolution()

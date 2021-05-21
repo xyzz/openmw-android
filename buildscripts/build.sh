@@ -198,7 +198,7 @@ if [[ $DEPLOY_RESOURCES = "true" ]]; then
 
 	# global config
 	mkdir -p "$DST/openmw/"
-	cp "$SRC/settings-default.cfg" "$DST/openmw/"
+	cp "$SRC/defaults.bin" "$DST/openmw/"
 	cp "$SRC/gamecontrollerdb.txt" "$DST/openmw/"
 	cat "$SRC/openmw.cfg" | grep -v "data=" | grep -v "data-local=" >> "$DST/openmw/openmw.base.cfg"
 	cat "$DIR/../app/openmw.base.cfg" >> "$DST/openmw/openmw.base.cfg"
