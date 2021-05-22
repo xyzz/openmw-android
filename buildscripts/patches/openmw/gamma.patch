@@ -1,10 +1,10 @@
 diff --git a/apps/openmw/mwrender/renderingmanager.cpp b/apps/openmw/mwrender/renderingmanager.cpp
-index 964aaa9de..3c221514b 100644
+index e497fdecd..cc654e629 100644
 --- a/apps/openmw/mwrender/renderingmanager.cpp
 +++ b/apps/openmw/mwrender/renderingmanager.cpp
-@@ -78,6 +78,32 @@ namespace
-     float DLInteriorFogEnd;
- }
+@@ -69,6 +69,32 @@
+ #include "screenshotmanager.hpp"
+ #include "groundcover.hpp"
  
 +namespace {
 +    class GammaCorrection : public osg::StateAttribute
@@ -35,7 +35,7 @@ index 964aaa9de..3c221514b 100644
  namespace MWRender
  {
  
-@@ -106,6 +132,19 @@ namespace MWRender
+@@ -97,6 +123,19 @@ namespace MWRender
              }
              else
                  stateset->removeAttribute(osg::StateAttribute::POLYGONMODE);
@@ -54,10 +54,21 @@ index 964aaa9de..3c221514b 100644
 +            }
          }
  
-         virtual void apply(osg::StateSet* stateset, osg::NodeVisitor*)
-@@ -316,6 +355,9 @@ namespace MWRender
+         void apply(osg::StateSet* stateset, osg::NodeVisitor*) override
+@@ -252,6 +291,10 @@ namespace MWRender
+         for (auto itr = shadowDefines.begin(); itr != shadowDefines.end(); itr++)
+             globalDefines[itr->first] = itr->second;
  
-         mCamera.reset(new Camera(mViewer->getCamera()));
++        const char *s = getenv("OPENMW_GAMMA");
++        if (s) globalDefines["gamma"] = s;
++            else globalDefines["gamma"] = "1.0";
++
+         globalDefines["forcePPL"] = Settings::Manager::getBool("force per pixel lighting", "Shaders") ? "1" : "0";
+         globalDefines["clamp"] = Settings::Manager::getBool("clamp lighting", "Shaders") ? "1" : "0";
+         globalDefines["preLightEnv"] = Settings::Manager::getBool("apply lighting to environment maps", "Shaders") ? "1" : "0";
+@@ -363,6 +406,9 @@ namespace MWRender
+ 
+         mScreenshotManager.reset(new ScreenshotManager(viewer, mRootNode, sceneRoot, mResourceSystem, mWater.get()));
  
 +        osg::ref_ptr<GammaCorrection> gamma = new GammaCorrection(1.0);
 +        mViewer->getCamera()->getOrCreateStateSet()->setAttribute(gamma);
@@ -65,3 +76,69 @@ index 964aaa9de..3c221514b 100644
          mViewer->setLightingMode(osgViewer::View::NO_LIGHT);
  
          osg::ref_ptr<osg::LightSource> source = new osg::LightSource;
+diff --git a/files/shaders/groundcover_fragment.glsl b/files/shaders/groundcover_fragment.glsl
+index d66963419..52223cc6c 100644
+--- a/files/shaders/groundcover_fragment.glsl
++++ b/files/shaders/groundcover_fragment.glsl
+@@ -86,4 +86,6 @@ void main()
+     gl_FragData[0].xyz = mix(gl_FragData[0].xyz, gl_Fog.color.xyz, fogValue);
+ 
+     applyShadowDebugOverlay();
++
++    gl_FragData[0].xyz = pow(gl_FragData[0].xyz, vec3(1.0/@gamma));
+ }
+diff --git a/files/shaders/nv_default_fragment.glsl b/files/shaders/nv_default_fragment.glsl
+index 1bd0f4e31..0150f46fb 100644
+--- a/files/shaders/nv_default_fragment.glsl
++++ b/files/shaders/nv_default_fragment.glsl
+@@ -101,4 +101,6 @@ void main()
+ #endif
+ 
+     applyShadowDebugOverlay();
++
++    gl_FragData[0].xyz = pow(gl_FragData[0].xyz, vec3(1.0/@gamma));
+ }
+diff --git a/files/shaders/nv_nolighting_fragment.glsl b/files/shaders/nv_nolighting_fragment.glsl
+index 27679a069..0477cd4a7 100644
+--- a/files/shaders/nv_nolighting_fragment.glsl
++++ b/files/shaders/nv_nolighting_fragment.glsl
+@@ -52,4 +52,6 @@ void main()
+ #endif
+ 
+     gl_FragData[0].xyz = mix(gl_FragData[0].xyz, gl_Fog.color.xyz, fogValue);
++
++    gl_FragData[0].xyz = pow(gl_FragData[0].xyz, vec3(1.0/@gamma));
+ }
+diff --git a/files/shaders/objects_fragment.glsl b/files/shaders/objects_fragment.glsl
+index 74929ec24..0a9d602e5 100644
+--- a/files/shaders/objects_fragment.glsl
++++ b/files/shaders/objects_fragment.glsl
+@@ -225,4 +225,6 @@ void main()
+ #endif
+ 
+     applyShadowDebugOverlay();
++
++    gl_FragData[0].xyz = pow(gl_FragData[0].xyz, vec3(1.0/@gamma));
+ }
+diff --git a/files/shaders/terrain_fragment.glsl b/files/shaders/terrain_fragment.glsl
+index d9d4a6dc3..dd29aa304 100644
+--- a/files/shaders/terrain_fragment.glsl
++++ b/files/shaders/terrain_fragment.glsl
+@@ -116,4 +116,6 @@ void main()
+     gl_FragData[0].xyz = mix(gl_FragData[0].xyz, gl_Fog.color.xyz, fogValue);
+ 
+     applyShadowDebugOverlay();
++
++    gl_FragData[0].xyz = pow(gl_FragData[0].xyz, vec3(1.0/@gamma));
+ }
+diff --git a/files/shaders/water_fragment.glsl b/files/shaders/water_fragment.glsl
+index 24c93d11a..dc241b093 100644
+--- a/files/shaders/water_fragment.glsl
++++ b/files/shaders/water_fragment.glsl
+@@ -275,4 +275,6 @@ void main(void)
+     gl_FragData[0].xyz = mix(gl_FragData[0].xyz,  gl_Fog.color.xyz,  fogValue);
+ 
+     applyShadowDebugOverlay();
++
++    gl_FragData[0].xyz = pow(gl_FragData[0].xyz, vec3(1.0/@gamma));
+ }
