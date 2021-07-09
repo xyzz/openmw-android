@@ -104,6 +104,11 @@
             android:title="@string/pref_commandLine"
             />
 
+        <EditTextPreference
+            android:key="envLine"
+            android:title="@string/pref_envLine"
+            />
+
         <ListPreference
             android:key="pref_graphicsLibrary_v2"
             android:title="@string/pref_graphicsLibrary"

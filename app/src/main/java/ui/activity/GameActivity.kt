@@ -94,6 +94,20 @@ class GameActivity : SDLActivity() {
             }
 
         }
+
+        val envline: String = PreferenceManager.getDefaultSharedPreferences(this).getString("envLine", "").toString()
+        if (envline.length > 0) {
+            val envs: List<String> = envline.split(" ", "\n")
+            var i = 0
+
+            repeat(envs.count())
+            {
+                val env: List<String> = envs[i].split("=")
+                if (env.count() == 2) Os.setenv(env[0], env[1], true)
+                i = i + 1
+            }
+        }
+
         System.loadLibrary("GL")
         System.loadLibrary("openmw")
     }
