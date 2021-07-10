@@ -18,7 +18,7 @@ jobs:
 
     - name: Install dependencies
       run: |
-        sudo apt-get install -y build-essential python unzip pkg-config p7zip-full
+        sudo apt-get install -y build-essential gcc-multilib python unzip pkg-config p7zip-full
         cd /home/runner/
         wget https://github.com/Kitware/CMake/releases/download/v$CMAKE_VERSION/cmake-$CMAKE_VERSION-Linux-x86_64.tar.gz
         tar xvf cmake-$CMAKE_VERSION-Linux-x86_64.tar.gz
