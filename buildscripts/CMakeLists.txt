@@ -48,9 +48,13 @@ set(OSG_HASH SHA256=aea196550f02974d6d09291c5d83b51ca6a03b3767e234a8c0e21322927d
 set(LZ4_VERSION 1.9.3)
 set(LZ4_HASH SHA256=030644df4611007ff7dc962d981f390361e6c97a34e5cbc393ddfbe019ffe2c1)
 
+# https://luajit.org/download.html
+set(LUAJIT_VERSION 2.1.0-beta3)
+set(LUAJIT_HASH SHA256=1ad2e34b111c802f9d0cdf019e986909123237a28c746b21295b63c9e785d9c3)
+
 # https://github.com/OpenMW/openmw/commits/master
-set(OPENMW_VERSION f27d7c66ff61502a70b2f93bde6d8942c16ec1c3)
-set(OPENMW_HASH SHA256=f07e97bf49c4a9710a5d7b967792e9addc0b4c054ad24bbcdea1a1e5a1daf5e0)
+set(OPENMW_VERSION 83af0402b89ddd3f669ff31232f7d806aba95e45)
+set(OPENMW_HASH SHA256=dca79a004d1c00f8c3ca3202b86a25f6f957cfc5d00a3af2e734979a4789213e)
 
 # End of configurable options
 
@@ -366,7 +370,35 @@ ExternalProject_Add(lz4
 	BUILD_COMMAND ${wrapper_command} $(MAKE)
 
 	INSTALL_COMMAND ${wrapper_command} $(MAKE) install
-	)
+)
+
+set(LUAJIT_MAKE_FLAGS
+	HOST_CC=${LUAJIT_HOST_CC}
+	CFLAGS=
+	TARGET_CFLAGS=$ENV{CFLAGS}
+	CROSS=${host}-
+	STATIC_CC=${host}-clang
+	DYNAMIC_CC=${host}-clang\ -fPIC
+	TARGET_LD=${host}-clang
+	PREFIX=${prefix}
+)
+
+ExternalProject_Add(luajit
+	URL https://luajit.org/download/LuaJIT-${LUAJIT_VERSION}.tar.gz
+	URL_HASH ${LUAJIT_HASH}
+	DOWNLOAD_DIR ${download_dir}
+
+	BUILD_IN_SOURCE 1
+
+	CONFIGURE_COMMAND ""
+
+	BUILD_COMMAND ${wrapper_command} $(MAKE) amalg
+	${LUAJIT_MAKE_FLAGS}
+
+	INSTALL_COMMAND ${wrapper_command} $(MAKE) install
+	${LUAJIT_MAKE_FLAGS}
+	COMMAND bash -c "rm ${prefix}/lib/libluajit*.so*"
+)
 
 set(OSG_COMMON
 	-DOPENGL_PROFILE="GL1"
@@ -458,7 +490,7 @@ set(OPENMW_PATCH
 )
 
 ExternalProject_Add(openmw
-	DEPENDS boost openal osg mygui ffmpeg sdl2 bullet lz4
+	DEPENDS boost openal osg mygui ffmpeg sdl2 bullet lz4 luajit
 
 	URL https://github.com/OpenMW/openmw/archive/${OPENMW_VERSION}.tar.gz
 	URL_HASH ${OPENMW_HASH}
