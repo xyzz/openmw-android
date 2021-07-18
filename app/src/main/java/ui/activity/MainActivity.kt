@@ -21,9 +21,7 @@
 package ui.activity
 
 import android.annotation.SuppressLint
-import android.app.AlarmManager
 import android.app.AlertDialog
-import android.app.PendingIntent
 import android.app.ProgressDialog
 import android.content.*
 import android.net.Uri
@@ -38,18 +36,14 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
-import com.bugsnag.android.Bugsnag
 
 import com.libopenmw.openmw.BuildConfig
 import com.libopenmw.openmw.R
 import constants.Constants
 import file.GameInstaller
 
-import java.io.BufferedReader
 import java.io.File
-import java.io.FileInputStream
 import java.io.IOException
-import java.io.InputStreamReader
 
 import file.utils.CopyFilesFromAssets
 import mods.ModType
@@ -82,6 +76,15 @@ class MainActivity : AppCompatActivity() {
 
         if (prefs.getString("bugsnag_consent", "")!! == "") {
             askBugsnagConsent()
+        }
+
+        checkIfShouldInstantlyRunGame()
+    }
+
+    private fun checkIfShouldInstantlyRunGame() {
+        val shouldStartGame = intent?.hasExtra("runGame") ?: false
+        if (shouldStartGame) {
+            checkStartGame()
         }
     }
 

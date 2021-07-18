@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:shortcutId="start_game"
+        android:enabled="true"
+        android:icon="@mipmap/ic_shortcut_start"
+        android:shortcutShortLabel="@string/start_game_label"
+        android:shortcutLongLabel="@string/start_game_label"
+        android:shortcutDisabledMessage="@string/start_game_label">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="is.xyz.omw"
+            android:targetClass="ui.activity.MainActivity" >
+            <extra android:name="runGame" android:value="true" />
+        </intent>
+    </shortcut>
+</shortcuts>
