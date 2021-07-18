@@ -104,7 +104,9 @@ abstract class OskButton(
         target.addView(v)
         view = v
     }
-
+    fun remove(target: RelativeLayout) {
+        target.removeView(view);
+    }
     /**
      * This is called when the button is pressed down.
      * Optionally, children can override this method.
@@ -169,38 +171,84 @@ class OskShift(val buttons: ArrayList<OskSimpleButton>, positionX: Int, position
             btn.shift(false)
     }
 }
+class OskCaps(val buttons: ArrayList<OskSimpleButton>, positionX: Int, positionY: Int, sizeW: Int, sizeH: Int):
+        OskButton("Caps Lock", positionX, positionY, sizeW, sizeH) {
+
+    private var state = false
+
+    override fun pressed() {
+        state = !state
+        for (btn in buttons)
+            btn.shift(state)
+    }
+
+}
+
+class OskLanguage(val reference: Osk, positionX: Int, positionY: Int, sizeW: Int, sizeH: Int):
+        OskButton("Lang", positionX, positionY, sizeW, sizeH) {
+
+    override fun pressed() {
+        reference.changeLanguage()
+    }
+}
 
 class Osk {
     /* Every key is defined by two characters, first is input normally, second is input when shift is active
      * Note: This is only the "middle" part of the virtual keyboard
      */
-    private val keyboardLayout = arrayListOf(
-        "1!2@3#4$5%6^7&8*9(0)-_=+",
-        "qQwWeErRtTyYuUiIoOpP[{]}\\|",
-        "aAsSdDfFgGhHjJkKlL;:'\"",
-        "zZxXcCvVbBnNmM,<.>/?"
-    )
 
     private var elements = ArrayList<OskButton>()
 
     private var visible = false
 
+    private lateinit var relativelayouttarget: RelativeLayout
+
+    private var russian = false
+
     init {
+        placeKeyboard(russian)
+    }
+
+    fun placeKeyboard(isRussian: Boolean) {
+        var keyboardLayout: ArrayList<String>
+
         val buttonWidth = 60
         val buttonHeight = 100
         val buttonMarginX = 3
         val buttonMarginY = 1
-        val offsetX = 30
+        val offsetX: Int
+
+        if( isRussian )
+            offsetX = 0
+        else
+            offsetX = 30
+
         val offsetY = 110
 
         var curX: Int
         var curY = offsetY
 
+        if( isRussian ) {
+            keyboardLayout = arrayListOf(
+                    "1!2@3#4$5%6^7&8*9(0)-_=+",
+                    "йЙцЦуУкКеЕнНгГшШщЩзЗхХ[{]}\\|",
+                    "фФыЫвВаАпПрРоОлЛдДжЖэЭ;:'\"",
+                    "яЯчЧсСмМиИтТьЬбБюЮ,<.>/?"
+            )
+        } else {
+            keyboardLayout = arrayListOf(
+                    "1!2@3#4$5%6^7&8*9(0)-_=+",
+                    "qQwWeErRtTyYuUiIoOpP[{]}\\|",
+                    "aAsSdDfFgGhHjJkKlL;:'\"",
+                    "zZxXcCvVbBnNmM,<.>/?"
+            )
+        }
+
         val lineOffset = arrayOf(
-            (offsetX + buttonWidth * 1.0 + buttonMarginX).toInt(),
-            (offsetX + buttonWidth * 0.5 + buttonMarginX).toInt(),
-            (offsetX + buttonWidth * 1.0 + buttonMarginX).toInt(),
-            (offsetX + buttonWidth * 1.5 + buttonMarginX).toInt()
+                (offsetX + buttonWidth * 1.0 + buttonMarginX).toInt(),
+                (offsetX + buttonWidth * 0.5 + buttonMarginX).toInt(),
+                (offsetX + buttonWidth * 1.25 + buttonMarginX).toInt(),
+                (offsetX + buttonWidth * 1.5 + buttonMarginX).toInt()
         )
 
         val simpleButtons = ArrayList<OskSimpleButton>()
@@ -218,31 +266,39 @@ class Osk {
         // Shift
         elements.add(OskShift(simpleButtons, offsetX, offsetY + 3 * (buttonHeight + buttonMarginY), (buttonWidth * 1.5).toInt(), buttonHeight))
 
+        // Capslock
+        elements.add(OskCaps(simpleButtons, offsetX, offsetY + 2 * (buttonHeight + buttonMarginY), (buttonWidth * 1.25).toInt(), buttonHeight))
+
         // Backspace
         elements.add(OskRawButton(
-            "Bksp",
-            KeyEvent.KEYCODE_DEL,
-            lineOffset[0] + (buttonWidth + buttonMarginX) * keyboardLayout[0].length / 2,
-            offsetY,
-            buttonWidth * 2,
-            buttonHeight
+                "⌫",
+                KeyEvent.KEYCODE_DEL,
+                lineOffset[0] + (buttonWidth + buttonMarginX) * keyboardLayout[0].length / 2,
+                offsetY,
+                buttonWidth * 2,
+                buttonHeight
         ))
 
         // Enter
         elements.add(OskRawButton(
-            "Return",
-            KeyEvent.KEYCODE_ENTER,
-            lineOffset[2] + (buttonWidth + buttonMarginX) * keyboardLayout[2].length / 2,
-            offsetY + (buttonHeight + buttonMarginY) * 2,
-            buttonWidth * 3,
-            buttonHeight
+                "⏎",
+                KeyEvent.KEYCODE_ENTER,
+                lineOffset[2] + (buttonWidth + buttonMarginX) * keyboardLayout[2].length / 2,
+                offsetY + (buttonHeight + buttonMarginY) * 2,
+                buttonWidth * 3,
+                buttonHeight
         ))
+
+        // Language
+        elements.add(OskLanguage(this, offsetX, curY, (buttonWidth * 1.5).toInt(), buttonHeight))
 
         // Spacebar
         elements.add(OskSimpleButton(' ', ' ', offsetX + buttonWidth * 3, curY, buttonWidth * 7, buttonHeight))
 
         // Arrows
         var arrowsCurX = lineOffset[3] + (buttonWidth + buttonMarginX) * keyboardLayout[3].length / 2 + buttonWidth
+        if (isRussian)
+            arrowsCurX -= 15
         var arrowsCurY = offsetY + (buttonHeight + buttonMarginY) * 3
         elements.add(OskRawButton("↑", KeyEvent.KEYCODE_DPAD_UP, arrowsCurX, arrowsCurY, buttonWidth, buttonHeight))
         arrowsCurX -= buttonWidth + buttonMarginX
@@ -261,6 +317,25 @@ class Osk {
         for (element in elements) {
             element.place(target)
         }
+        relativelayouttarget = target
+    }
+
+    fun removeElements(target: RelativeLayout) {
+        for (element in elements) {
+            element.remove(target)
+        }
+    }
+
+    fun changeLanguage() {
+        removeElements(relativelayouttarget)
+        elements = ArrayList<OskButton>()
+
+        russian = !russian
+        placeKeyboard(russian)
+        placeElements(relativelayouttarget)
+        // hack, make visible into false so it can do the keyboard again
+        visible = false
+        toggle()
     }
 
     fun toggle() {
