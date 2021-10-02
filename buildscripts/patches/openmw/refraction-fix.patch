@@ -1,0 +1,13 @@
+diff --git a/files/shaders/water_fragment.glsl b/files/shaders/water_fragment.glsl
+index 26f83e052..b40d9004f 100644
+--- a/files/shaders/water_fragment.glsl
++++ b/files/shaders/water_fragment.glsl
+@@ -141,7 +141,7 @@ uniform sampler2D normalMap;
+ uniform sampler2D reflectionMap;
+ #if REFRACTION
+ uniform sampler2D refractionMap;
+-uniform sampler2D refractionDepthMap;
++uniform highp sampler2D refractionDepthMap;
+ #endif
+ 
+ uniform float osg_SimulationTime;
