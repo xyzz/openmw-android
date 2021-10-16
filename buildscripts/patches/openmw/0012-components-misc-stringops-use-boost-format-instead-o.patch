@@ -1,0 +1,38 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Ilya Zhuravlev <whatever@xyz.is>
+Date: Tue, 23 Feb 2021 11:52:20 -0500
+Subject: [PATCH] components/misc/stringops: use boost format instead of
+ snprintf
+
+snprintf randomly returns -1 on android
+---
+ components/misc/stringops.hpp | 9 ++-------
+ 1 file changed, 2 insertions(+), 7 deletions(-)
+
+diff --git a/components/misc/stringops.hpp b/components/misc/stringops.hpp
+index 086352235..52d54acb8 100644
+--- a/components/misc/stringops.hpp
++++ b/components/misc/stringops.hpp
+@@ -6,6 +6,7 @@
+ #include <algorithm>
+ #include <string_view>
+ #include <iterator>
++#include <boost/format.hpp>
+ 
+ #include "utf8stream.hpp"
+ 
+@@ -250,13 +251,7 @@ public:
+     template <typename ... Args>
+     static std::string format(const char* fmt, Args const & ... args)
+     {
+-        auto size = std::snprintf(nullptr, 0, fmt, argument(args) ...);
+-        // Note: sprintf also writes a trailing null character. We should remove it.
+-        std::string ret(size+1, '\0');
+-        std::sprintf(&ret[0], fmt, argument(args) ...);
+-        ret.erase(size);
+-
+-        return ret;
++        return boost::str((boost::format(fmt) % ... % args));
+     }
+ 
+     template <typename ... Args>
